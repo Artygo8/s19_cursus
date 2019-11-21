@@ -1,54 +1,5 @@
 #include "ft_printf.h"
 
-void		ft_convert(va_list *ap, char c, infos *inf)
-{
-	inf->cv = c;
-	if (c == 'c')
-		inf->str = ft_strdup_char(va_arg(*ap, int));
-	else if (c == 's')
-		inf->str = ft_strdup(va_arg(*ap, char*));
-	else if (c == 'd' || c == 'i')
-		inf->str = ft_itoa(va_arg(*ap, int));
-	else if (c == 'u')
-		inf->str = NULL;/*ft_itoa_unsigned(va_arg(ap, int));*/
-	else if (c == 'x')
-		inf->str = ft_utoa_base(va_arg(*ap, int), X_MIN_BASE);
-	else if (c == 'X' || c == 'p')
-		inf->str = ft_utoa_base(va_arg(*ap, int), X_MAJ_BASE);
-	else if (c == '%')
-		inf->str = ft_strdup_char('%');
-}
-
-int			ft_flags(va_list *ap, char *str, infos *inf)
-{
-	int i;
-
-	i = 0;
-	if (str[i] == '*' || str[i] == '-' || ft_isdigit(str[i]))
-		inf->spaces = ((str[i] == '*') ? va_arg(*ap, int) : ft_atoi_p(str));
-	while (str[i] == '*' || str[i] == '-' || ft_isdigit(str[i]))
-		i++;
-	if (str[i] == '.')
-		i++;
-	if (str[i] == '*' || ft_isdigit(str[i]))
-		inf->precision = ((str[i] == '*') ? va_arg(*ap, int) : ft_atoi_p(str));
-	while (str[i] == '*' || ft_isdigit(str[i]))
-		i++;
-	if (ft_isconvert(str[i]))
-		ft_convert(ap, str[i], inf);
-	else
-		i = -1;
-	return (i + 1);
-}
-
-void		ft_init_infos(infos *inf)
-{
-	inf->str = NULL;
-	inf->cv = 0;
-	inf->precision = 0;
-	inf->spaces = 0;
-}
-
 int			ft_printf(const char *format, ...)
 {
 	va_list			ap;
@@ -62,7 +13,7 @@ int			ft_printf(const char *format, ...)
 	{
 		ft_init_infos(inf);
 		if (*format == '%')
-			format += ft_flags(&ap, (char *)format + 1, inf);
+			format += ft_process(&ap, (char *)format + 1, inf);
 		if (inf->str)
 		{
 			new_s = ft_strjoin(new_s, inf->str);
@@ -74,5 +25,131 @@ int			ft_printf(const char *format, ...)
 	}
 	va_end(ap);
 	ft_putstr_fd(new_s, 1);
+	return (0);
+}
+
+void		ft_init_infos(infos *inf)
+{
+	inf->str = NULL;
+	inf->cv = 0;
+	inf->p = -1;
+	inf->spaces = 0;
+}
+
+int			ft_process(va_list *ap, char *str, infos *inf)
+{
+	int i;
+
+	i = 0;
+	if (str[i] == '*' || str[i] == '-' || ft_isdigit(str[i]))
+	inf->spaces = ((str[i] == '*') ? va_arg(*ap, int) : ft_atoi_p(str));
+	while (str[i] == '*' || str[i] == '-' || ft_isdigit(str[i]))
+	i++;
+	if (str[i] == '.')
+	i++;
+	if (str[i] == '*' || ft_isdigit(str[i]))
+	inf->p = ((str[i] == '*') ? va_arg(*ap, int) : ft_atoi_p(&str[i]));
+	while (str[i] == '*' || ft_isdigit(str[i]))
+	i++;
+	if (ft_isconvert(str[i]))
+	ft_convert(ap, str[i], inf);
+	else
+	i = -1;
+	return (i + 1);
+}
+
+void		ft_convert(va_list *ap, char c, infos *inf)
+{
+	inf->cv = c;
+	if (c == 'c')
+		inf->str = ft_strdup_char(va_arg(*ap, int));
+	else if (c == 's')
+		inf->str = ft_strdup(va_arg(*ap, char*));
+	else if (c == 'd' || c == 'i')
+		inf->str = ft_itoa(va_arg(*ap, int));
+	else if (c == 'u')
+		inf->str = ft_itoa((unsigned int)va_arg(*ap, int));
+	else if (c == 'x')
+		inf->str = ft_utoa_base(va_arg(*ap, int), X_MIN_BASE);
+	else if (c == 'X' || c == 'p')
+		inf->str = ft_utoa_base(va_arg(*ap, int), X_MAJ_BASE);
+	else if (c == '%')
+		inf->str = ft_strdup_char('%');
+	ft_flag_applier(inf);
+}
+
+void		ft_flag_applier(infos *inf)
+{
+	char *tmp;
+
+	ft_point_flag(inf);
+	if (inf->cv == 'p')
+	{
+		tmp = ft_strjoin("0x", inf->str);
+		free(inf->str);
+		inf->str = tmp;
+	}
+	if (inf->spaces >= 0)
+		ft_space_flags(inf);
+}
+
+void		ft_point_flag(infos *inf)
+{
+	char	*s;
+	int		i;
+
+	i = 0;
+	if (inf->cv == 's')
+	{
+		s = ft_substr(inf->str, 0, inf->p);
+		free(inf->str);
+		inf->str = s;
+	}
+	if (ft_isinstr(inf->cv, "dipuxX")
+			&& (inf->p > (int)ft_strlen(&(inf->str[(inf->str[0] == '-')]))))
+	{
+		if (!(s = malloc(sizeof(char*) * (inf->p + (inf->str[0] == '-') + 1))))
+			return ;
+		if (inf->str[0] == '-')
+			s[i++] = '-';
+		while (inf->p-- > (int)ft_strlen(&(inf->str[(inf->str[0] == '-')])))
+			s[i++] = '0';
+		s[i] = '\0';
+		s = ft_strjoin(s, &(inf->str[(inf->str[0] == '-')]));
+		free(inf->str);
+		inf->str = s;
+	}
+}
+
+void		ft_space_flags(infos *inf)
+{
+	char	*tmp;
+	int		i;
+	int		abs;
+
+	i = 0;
+	abs = ((inf->spaces > 0) ? inf->spaces : -inf->spaces);
+	tmp = malloc(sizeof(char) * (abs + 1));
+	if (!tmp)
+		return ;
+	while (abs-- > (int)ft_strlen(inf->str))
+		tmp[i++] = ' ';
+	tmp[i] = '\0';
+	if (inf->spaces > 0)
+		tmp = ft_strjoin(tmp, inf->str);
+	else
+		tmp = ft_strjoin(inf->str, tmp);
+	free(inf->str);
+	inf->str = tmp;
+}
+
+int			ft_isinstr(char c, char *str)
+{
+	while (str && *str)
+	{
+		if (*str == c)
+			return (1);
+		str++;
+	}
 	return (0);
 }
