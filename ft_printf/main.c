@@ -2,6 +2,18 @@
 
 int main()
 {
-	ft_printf("hello %s hi %s  et %s + %s", "these", "are", "my", "arguments");
+	printf("====================================\n");
+	printf("=============MY PRINTF==============\n");
+	printf("====================================\n");
+	printf("\n");
+	ft_printf("%s = %x\n", "2000000", 2000000);
+	ft_printf("%s = %x\n", "123", 123);
+	printf("\n");
+	printf("====================================\n");
+	printf("=============LIB PRINTF=============\n");
+	printf("====================================\n");
+	printf("\n");
+	printf("%s = %x\n", "2000000", 2000000);
+	printf("%s = %x\n", "123", 123);
 	return 0;
 }

@@ -4,6 +4,9 @@
 # include <unistd.h>
 # include <stdio.h>
 # include "libft/libft.h"
+# define X_MAJ_BASE "0123456789ABCDEF"
+# define X_MIN_BASE "0123456789abcdef"
+
 
 typedef struct informations
 {

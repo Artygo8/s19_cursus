@@ -1,7 +1,7 @@
 SRCSC		= ft_printf.c\
 				ft_atoi_printf.c\
 				ft_isconvert.c\
-				ft_itoa_base.c\
+				ft_utoa_base.c\
 				ft_strdup_char.c\
 				ft_strjoin_char.c
 
@@ -45,6 +45,6 @@ bonus:		all ${OBONUS}
 			${AR} ${NAME} ${OBONUS}
 
 test:		all
-			${CC} ${NAME} ${LIBFT} main.c
+			${CC} ${NAME} ${LIBFT} ${SRCSC} main.c libft/*.c
 
 .PHONY:		all clean fclean re
