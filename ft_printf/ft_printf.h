@@ -4,12 +4,6 @@
 # include <unistd.h>
 # include <stdio.h>
 # include "libft/libft.h"
-# include "utils/utils.h"
-
-void		ft_convert(va_list *ap, char c, infos *inf);
-char		*ft_flags(va_list *ap, char *str, infos *inf);
-void		ft_init_infos(infos *inf);
-int			ft_printf(const char *format, ...);
 
 typedef struct informations
 {
@@ -18,5 +12,17 @@ typedef struct informations
 	int		precision;
 	int		spaces;
 }infos;
+
+int			ft_flags(va_list *ap, char *str, infos *inf);
+void		ft_convert(va_list *ap, char c, infos *inf);
+void		ft_init_infos(infos *inf);
+int			ft_printf(const char *format, ...);
+
+int		ft_isconvert(int c);
+int		ft_atoi_p(const char *str);
+char	*ft_strdup_char(char c);
+char	*ft_strjoin_char(char const *s1, char c);
+int		int_size_base(long long n, int base_size);
+char	*ft_utoa_base(unsigned int n, char *base);
 
 #endif

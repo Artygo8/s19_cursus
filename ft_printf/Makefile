@@ -1,4 +1,9 @@
-SRCSC		= ft_printf.c
+SRCSC		= ft_printf.c\
+				ft_atoi_printf.c\
+				ft_isconvert.c\
+				ft_itoa_base.c\
+				ft_strdup_char.c\
+				ft_strjoin_char.c
 
 SBONUS		= ft_printf_bonus.c
 
@@ -24,7 +29,7 @@ $(NAME):	${OBJS} libft
 			${AR} ${NAME} ${OBJS} ${SRCSH} ${LIBFT}
 
 libft:
-			make -C libft
+			make -C libft all
 
 all:		${NAME}
 
@@ -40,6 +45,6 @@ bonus:		all ${OBONUS}
 			${AR} ${NAME} ${OBONUS}
 
 test:		all
-			${CC} ${NAME} main.c
+			${CC} ${NAME} ${LIBFT} main.c
 
 .PHONY:		all clean fclean re

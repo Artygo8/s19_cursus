@@ -7,7 +7,7 @@ int			ft_atoi_p(const char *str)
 
 	sign = 1;
 	value = 0;
-	while (ft_is_space(*str))
+	while (ft_isspace(*str))
 		str++;
 	while (*str == '+' || *str == '-')
 	{

@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "ft_printf.h"
 
 char	*ft_strdup_char(char c)
 {
@@ -6,7 +6,7 @@ char	*ft_strdup_char(char c)
 	int		i;
 
 	i = 0;
-	if (!(new_s = malloc((c != 0) + 1) * sizeof(char))))
+	if (!(new_s = malloc((c != 0) + 1 * sizeof(char))))
 		return (NULL);
 	if (c)
 		new_s[i++] = c;
