@@ -14,12 +14,9 @@ int			ft_printf(const char *format, ...)
 		ft_init_infos(inf);
 		if (*format == '%')
 			format += ft_process(&ap, (char *)format + 1, inf);
-		if (inf->str)
-		{
-			new_s = ft_strjoin(new_s, inf->str);
-			free(inf->str);
-		}
-		else
+		new_s = ft_strjoin(new_s, inf->str);
+		free(inf->str);
+		if (!inf->str)
 			new_s = ft_strjoin_char(new_s, *format);
 		format++;
 	}
@@ -93,9 +90,13 @@ void		ft_flag_applier(infos *inf)
 {
 	char *tmp;
 
-	if (inf->p >= 0 && inf->cv == 's')
+	if (inf->p == -1) /*WORKING ON IT*/
+		inf->p = (inf->str[0] == '0') ? inf->zeros : inf->zeros - 1;
+	if (inf->str == NULL)
+		inf->str = ft_strdup("(null)");
+	if (inf->cv == 's' && inf->p >= 0)
 		ft_point_flag_str(inf);
-	else if (inf->p >= 0 && inf->cv != 'c')
+	else if (inf->p >= 0 && inf->cv != 'c' && inf->cv != 's')
 		ft_point_flag_nbr(inf);
 	if (inf->cv == 'p')
 	{
@@ -113,14 +114,9 @@ void		ft_point_flag_str(infos *inf)
 	int		i;
 
 	i = 0;
-	if (inf->str == NULL)
-		inf->str = ft_strdup("(null)");
-	else
-	{
-		s = ft_substr(inf->str, 0, inf->p);
-		free(inf->str);
-		inf->str = s;
-	}
+	s = ft_substr(inf->str, 0, inf->p);
+	free(inf->str);
+	inf->str = s;
 }
 
 void		ft_point_flag_nbr(infos *inf)
@@ -159,6 +155,8 @@ void		ft_space_flags(infos *inf)
 
 	i = 0;
 	abs = ((inf->spaces > 0) ? inf->spaces : -inf->spaces);
+	if (inf->zeros > abs)
+		abs = inf->zeros;
 	tmp = malloc(sizeof(char) * (abs + 1));
 	if (!tmp)
 		return ;
@@ -171,11 +169,6 @@ void		ft_space_flags(infos *inf)
 		tmp = ft_strjoin(inf->str, tmp);
 	free(inf->str);
 	inf->str = tmp;
-}
-
-void		ft_zeros_flag()
-{
-
 }
 
 int			ft_isinset(char c, char *set)
