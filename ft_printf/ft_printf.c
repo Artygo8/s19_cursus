@@ -25,6 +25,7 @@ int			ft_printf(const char *format, ...)
 	}
 	va_end(ap);
 	ft_putstr_fd(new_s, 1);
+	free(new_s);
 	return (0);
 }
 
@@ -42,19 +43,19 @@ int			ft_process(va_list *ap, char *str, infos *inf)
 
 	i = 0;
 	if (str[i] == '*' || str[i] == '-' || ft_isdigit(str[i]))
-	inf->spaces = ((str[i] == '*') ? va_arg(*ap, int) : ft_atoi_p(str));
+		inf->spaces = ((str[i] == '*') ? va_arg(*ap, int) : ft_atoi_p(str));
 	while (str[i] == '*' || str[i] == '-' || ft_isdigit(str[i]))
-	i++;
+		i++;
 	if (str[i] == '.')
-	i++;
+		i++;
 	if (str[i] == '*' || ft_isdigit(str[i]))
-	inf->p = ((str[i] == '*') ? va_arg(*ap, int) : ft_atoi_p(&str[i]));
+		inf->p = ((str[i] == '*') ? va_arg(*ap, int) : ft_atoi_p(&str[i]));
 	while (str[i] == '*' || ft_isdigit(str[i]))
-	i++;
+		i++;
 	if (ft_isconvert(str[i]))
-	ft_convert(ap, str[i], inf);
+		ft_convert(ap, str[i], inf);
 	else
-	i = -1;
+		return (0);
 	return (i + 1);
 }
 
@@ -68,7 +69,7 @@ void		ft_convert(va_list *ap, char c, infos *inf)
 	else if (c == 'd' || c == 'i')
 		inf->str = ft_itoa(va_arg(*ap, int));
 	else if (c == 'u')
-		inf->str = ft_itoa((unsigned int)va_arg(*ap, int));
+		inf->str = ft_utoa_base(va_arg(*ap, int), BASE_TEN);
 	else if (c == 'x')
 		inf->str = ft_utoa_base(va_arg(*ap, int), X_MIN_BASE);
 	else if (c == 'X' || c == 'p')
@@ -85,11 +86,12 @@ void		ft_flag_applier(infos *inf)
 	ft_point_flag(inf);
 	if (inf->cv == 'p')
 	{
-		tmp = ft_strjoin("0x", inf->str);
+		tmp = (inf->str[0] == '0' && inf->str[1] == '\0') ?
+					ft_strdup("(nil)") : ft_strjoin("0x", inf->str);
 		free(inf->str);
 		inf->str = tmp;
 	}
-	if (inf->spaces >= 0)
+	if (inf->spaces != 0)
 		ft_space_flags(inf);
 }
 
@@ -105,7 +107,7 @@ void		ft_point_flag(infos *inf)
 		free(inf->str);
 		inf->str = s;
 	}
-	if (ft_isinstr(inf->cv, "dipuxX")
+	if (ft_isinset(inf->cv, "dipuxX")
 			&& (inf->p > (int)ft_strlen(&(inf->str[(inf->str[0] == '-')]))))
 	{
 		if (!(s = malloc(sizeof(char*) * (inf->p + (inf->str[0] == '-') + 1))))
@@ -143,13 +145,13 @@ void		ft_space_flags(infos *inf)
 	inf->str = tmp;
 }
 
-int			ft_isinstr(char c, char *str)
+int			ft_isinset(char c, char *set)
 {
-	while (str && *str)
+	while (set && *set)
 	{
-		if (*str == c)
+		if (*set == c)
 			return (1);
-		str++;
+		set++;
 	}
 	return (0);
 }

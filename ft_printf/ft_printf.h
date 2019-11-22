@@ -6,7 +6,7 @@
 # include "libft/libft.h"
 # define X_MAJ_BASE "0123456789ABCDEF"
 # define X_MIN_BASE "0123456789abcdef"
-
+# define BASE_TEN "0123456789"
 
 typedef struct informations
 {
@@ -23,7 +23,7 @@ void		ft_convert(va_list *ap, char c, infos *inf);
 void		ft_flag_applier(infos *inf);
 void		ft_point_flag(infos *inf);
 void		ft_space_flags(infos *inf);
-int			ft_isinstr(char c, char *str);
+int			ft_isinset(char c, char *str);
 
 int			ft_isconvert(int c);
 int			ft_atoi_p(const char *str);

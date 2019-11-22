@@ -37,6 +37,13 @@ int main()
 	ft_printf("%s = %.4d\n", "%.4d", -123);
 	ft_printf("%s = %.3p\n", "%.3p", 1);
 	ft_printf("%s = %.4%\n", "%.4%", 0);
+	ft_printf("%s = %.4u\n", "%.4u", -33);
+	ft_printf("%s = %*d\n", "%.4u", 40, 5);
+	ft_printf("%s = %p\n", "%p 0", 0);
+	ft_printf("%s = %p\n", "%p 1", 1);
+	ft_printf("%s = %p\n", "%p NULL", NULL);
+	ft_printf("%s = %s\n", "%s NULL", NULL);
+	ft_printf("%s = %s\n", "%s NULL", "");
 	printf("\n");
 	printf("====================================\n");
 	printf("=============LIB PRINTF=============\n");
@@ -49,6 +56,14 @@ int main()
 	printf("%s = %.4d\n", "%.4d", -123);
 	printf("%s = %.3p\n", "%.3p", 1);
 	printf("%s = %.4%\n", "%.4%", 0);
+	printf("%s = %.4u\n", "%.4u", -33);
+	printf("%s = %*d\n", "%.4u", 40, 5);
+	printf("%s = %p\n", "%p 0", 0);
+	printf("%s = %p\n", "%p 1", 1);
+	printf("%s = %p\n", "%p NULL", NULL);
+	printf("%s = %s\n", "%s NULL", NULL);
+	printf("%s = %s\n", "%s NULL", "");
+
 	printf("\n");
 
 	return 0;
