@@ -1,8 +1,9 @@
 SRCSC		= ft_printf.c\
-				ft_atoi_printf.c\
-				ft_isconvert.c\
-				ft_strdup_char.c\
-				ft_strjoin_char.c
+				ft_infos.c\
+				ft_convert.c\
+				ft_flags.c\
+				ft_istype.c\
+				ft_utils_str.c
 
 SBONUS		= ft_printf_bonus.c
 
@@ -12,13 +13,15 @@ OBJS		= $(SRCSC:%.c=%.o)
 
 OBONUS		= $(SBONUS:%.c=%.o)
 
+LIBFTDIR	= libft
+
 LIBFT		= libft/libft.a
 
 NAME		= libftprintf.a
 
 CC			= gcc
 
-AR			= ar rc
+AR			= ar -rc
 
 RM			= rm -f
 
@@ -28,7 +31,7 @@ $(NAME):	${OBJS} libft
 			${AR} ${NAME} ${OBJS} ${SRCSH} ${LIBFT}
 
 libft:
-			make -C libft all
+			@(cd $(LIBFT) && $(MAKE))
 
 all:		${NAME}
 
@@ -38,12 +41,15 @@ clean:
 fclean:		clean
 			${RM} ${NAME}
 
+clean_lib:
+			@(cd libft && $(MAKE) $@)
+
 re:			fclean all
 
 bonus:		all ${OBONUS}
 			${AR} ${NAME} ${OBONUS}
 
 test:		all
-			${CC} ${NAME} ${LIBFT} ${SRCSC} main.c libft/*.c
+			${CC} ${CFLAGS} ${NAME} ${SRCSC} main.c libft/*.c
 
 .PHONY:		all clean fclean re
