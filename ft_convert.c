@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_convert.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/27 15:09:47 by agossuin          #+#    #+#             */
+/*   Updated: 2019/11/27 15:09:49 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void		ft_convert(va_list *ap, char c, t_inf *inf)
@@ -19,5 +31,7 @@ void		ft_convert(va_list *ap, char c, t_inf *inf)
 		inf->str = ft_strdup_char('%');
 	else if (c == 'p')
 		inf->str = ft_utoa_base(va_arg(*ap, unsigned long), X_MIN_BASE);
+	else if (c == 'f')
+		inf->str = ft_ftoa(va_arg(*ap, double), inf->p);
 	ft_flag_applier(inf);
 }

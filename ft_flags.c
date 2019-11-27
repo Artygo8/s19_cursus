@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_flags.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/27 15:09:59 by agossuin          #+#    #+#             */
+/*   Updated: 2019/11/27 15:10:02 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void		ft_flag_applier(t_inf *inf)
@@ -18,7 +30,7 @@ void		ft_flag_applier(t_inf *inf)
 		ft_space_flags(inf);
 }
 
-void 		ft_special_cases(t_inf *inf)
+void		ft_special_cases(t_inf *inf)
 {
 	char	*tmp;
 
@@ -52,10 +64,6 @@ void		ft_point_flag_str(t_inf *inf)
 		inf->str = tmp;
 	}
 }
-
-/*
- * We dont care about undefined behaviors
- */
 
 void		ft_point_flag_nbr(t_inf *inf)
 {

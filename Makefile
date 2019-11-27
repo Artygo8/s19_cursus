@@ -1,17 +1,26 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: agossuin <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/11/27 15:08:48 by agossuin          #+#    #+#              #
+#    Updated: 2019/11/27 15:08:51 by agossuin         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRCSC		= ft_printf.c\
 				ft_infos.c\
 				ft_convert.c\
 				ft_flags.c\
 				ft_istype.c\
+				ft_ftoa.c\
 				ft_utils_str.c
-
-SBONUS		= ft_printf_bonus.c
 
 SRCSH		= ft_printf.h
 
 OBJS		= $(SRCSC:%.c=%.o)
-
-OBONUS		= $(SBONUS:%.c=%.o)
 
 LIBFTDIR	= libft
 
@@ -27,29 +36,26 @@ RM			= rm -f
 
 CFLAGS		= -Wall -Wextra -Werror
 
-$(NAME):	${OBJS} libft
+$(NAME):	${OBJS} ${LIBFT}
 			${AR} ${NAME} ${OBJS} ${SRCSH} ${LIBFT}
 
-libft:
-			@(cd $(LIBFT) && $(MAKE))
+
+$(LIBFT):
+			cd ${LIBFTDIR} && make && make clean && cd ..
 
 all:		${NAME}
 
 clean:
-			${RM} ${OBJS} ${OBONUS}
+			${RM} ${OBJS}
 
-fclean:		clean
+fclean:		clean fcleanlib
 			${RM} ${NAME}
 
-clean_lib:
-			@(cd libft && $(MAKE) $@)
+fcleanlib:
+			cd ${LIBFTDIR} && make fclean && cd ..
 
 re:			fclean all
 
-bonus:		all ${OBONUS}
-			${AR} ${NAME} ${OBONUS}
-
-test:		all
-			${CC} ${CFLAGS} ${NAME} ${SRCSC} main.c libft/*.c
+bonus:		all
 
 .PHONY:		all clean fclean re

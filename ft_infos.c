@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_infos.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/27 15:10:22 by agossuin          #+#    #+#             */
+/*   Updated: 2019/11/27 15:10:24 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void		ft_init_inf(t_inf *inf)
@@ -21,7 +33,7 @@ int			ft_flag_inf(char *str, t_inf *inf)
 		if (str[i] == '0' && inf->fw != -1)
 			inf->zeros = 1;
 		if (inf->fw == -1)
-			inf->zeros = 0; /* if i have zeros, i cant have spaces */
+			inf->zeros = 0;
 		i++;
 	}
 	return (i);

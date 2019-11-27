@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/27 15:10:53 by agossuin          #+#    #+#             */
+/*   Updated: 2019/11/27 15:10:54 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int			ft_printf(const char *format, ...)
@@ -56,7 +68,6 @@ int			ft_process(va_list *ap, char *str, t_inf *inf)
 		i++;
 	}
 	i += ft_precision_inf(ap, &str[i], inf);
-	/* LENGTH MODIFIER SHOULD BE HERE */
 	if (ft_isconvert(str[i]))
 		ft_convert(ap, str[i], inf);
 	return ((ft_isconvert(str[i])) ? i + 1 : 0);
