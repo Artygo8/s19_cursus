@@ -25,7 +25,7 @@ static int	int_size_base(unsigned long n, unsigned int base_size)
 	return (size);
 }
 
-char		*ft_utoa_base(unsigned long n, char *base)
+char		*ft_utoa_base(unsigned long n, const char *base)
 {
 	unsigned int	base_size;
 	int				int_size;
@@ -35,7 +35,7 @@ char		*ft_utoa_base(unsigned long n, char *base)
 	i = 0;
 	base_size = ft_strlen(base);
 	int_size = int_size_base(n, base_size);
-	if (!(new = malloc(int_size * sizeof(char))))
+	if (!(new = malloc((int_size + 1) * sizeof(char))))
 		return (NULL);
 	new[int_size] = '\0';
 	while (n >= base_size)

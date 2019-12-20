@@ -16,22 +16,20 @@ void		ft_convert(va_list *ap, char c, t_inf *inf)
 {
 	inf->cv = c;
 	if (c == 'c')
-		inf->str = ft_strdup_char(va_arg(*ap, int));
+		return ;
 	else if (c == 's')
 		inf->str = ft_strdup(va_arg(*ap, char*));
-	if (c == 'd' || c == 'i')
+	else if (c == 'd' || c == 'i')
 		inf->str = ft_itoa(va_arg(*ap, int));
 	else if (c == 'u')
-		inf->str = ft_utoa_base(va_arg(*ap, unsigned long), BASE_TEN);
+		inf->str = ft_utoa_base(va_arg(*ap, unsigned int), BASE_TEN);
 	else if (c == 'x')
-		inf->str = ft_utoa_base(va_arg(*ap, unsigned long), X_MIN_BASE);
+		inf->str = ft_utoa_base(va_arg(*ap, unsigned int), X_MIN_BASE);
 	else if (c == 'X')
-		inf->str = ft_utoa_base(va_arg(*ap, unsigned long), X_MAJ_BASE);
+		inf->str = ft_utoa_base(va_arg(*ap, unsigned int), X_MAJ_BASE);
 	else if (c == '%')
-		inf->str = ft_strdup_char('%');
+		inf->str = ft_strdup("%");
 	else if (c == 'p')
 		inf->str = ft_utoa_base(va_arg(*ap, unsigned long), X_MIN_BASE);
-	else if (c == 'f')
-		inf->str = ft_ftoa(va_arg(*ap, double), inf->p);
 	ft_flag_applier(inf);
 }

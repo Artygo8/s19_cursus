@@ -16,43 +16,45 @@ int			ft_printf(const char *format, ...)
 {
 	va_list			ap;
 	t_inf			*inf;
-	char			*new_s;
 	unsigned int	size;
 
-	va_start(ap, format);
-	if (!(inf = (t_inf*)malloc(sizeof(t_inf))))
+	if (!format)
 		return (0);
-	new_s = ft_format(format, &ap, inf);
-	ft_putstr_fd(new_s, 1);
-	size = ft_strlen(new_s);
+	if (!(inf = (t_inf*)(malloc(sizeof(t_inf)))))
+		return (0);
+	va_start(ap, format);
+	size = ft_format(format, &ap, inf);
 	va_end(ap);
-	free(new_s);
-	return (0);
+	free(inf);
+	return (size);
 }
 
-char		*ft_format(const char *format, va_list *ap, t_inf *inf)
+int			ft_format(const char *format, va_list *ap, t_inf *inf)
 {
-	char	*new_s;
-	char	*tmp;
+	int		size;
 
-	new_s = NULL;
+	size = 0;
 	while (*format)
 	{
 		ft_init_inf(inf);
 		if (*format == '%')
 		{
 			format += ft_process(ap, (char *)format + 1, inf);
+			size += (inf->cv == 'c') ? ft_pchar(ap, inf) : ft_strlen(inf->str);
 			if (inf->str)
-				tmp = ft_strjoin(new_s, inf->str);
+				ft_putstr_fd(inf->str, 1);
 		}
-		if (!inf->str)
-			tmp = ft_strjoin_char(new_s, *format);
+		if (!inf->str && (inf->cv != 'c' || inf->cv == 0))
+		{
+			write(1, format, 1);
+			size++;
+		}
+		else if (!inf->str && inf->cv != 0 && inf->cv != 'c')
+			break ;
 		free(inf->str);
-		free(new_s);
-		new_s = tmp;
 		format++;
 	}
-	return (new_s);
+	return (size);
 }
 
 int			ft_process(va_list *ap, char *str, t_inf *inf)
@@ -66,9 +68,30 @@ int			ft_process(va_list *ap, char *str, t_inf *inf)
 	{
 		inf->p = 0;
 		i++;
+		i += ft_precision_inf(ap, &str[i], inf);
 	}
-	i += ft_precision_inf(ap, &str[i], inf);
 	if (ft_isconvert(str[i]))
 		ft_convert(ap, str[i], inf);
 	return ((ft_isconvert(str[i])) ? i + 1 : 0);
+}
+
+int			ft_pchar(va_list *ap, t_inf *inf)
+{
+	int i;
+
+	i = 1;
+	while (inf->fw > 1)
+	{
+		write(1, " ", 1);
+		inf->fw--;
+		i++;
+	}
+	ft_putchar_fd(va_arg(*ap, int), 1);
+	while (inf->fw < -1)
+	{
+		write(1, " ", 1);
+		inf->fw++;
+		i++;
+	}
+	return (i);
 }

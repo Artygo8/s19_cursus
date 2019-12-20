@@ -69,6 +69,6 @@ t_list				*ft_lstnew(void *content);
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 											void (*del)(void *));
 int					ft_isspace(int c);
-char				*ft_utoa_base(unsigned long n, char *base);
+char				*ft_utoa_base(unsigned long n, const char *base);
 
 #endif

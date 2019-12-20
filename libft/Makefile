@@ -67,7 +67,7 @@ NAME		= libft.a
 
 CC			= gcc
 
-AR			= ar rc
+AR			= ar -rc
 
 RM			= rm -f
 

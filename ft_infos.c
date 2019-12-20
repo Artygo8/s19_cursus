@@ -42,16 +42,27 @@ int			ft_flag_inf(char *str, t_inf *inf)
 int			ft_fw_inf(va_list *ap, char *str, t_inf *inf)
 {
 	int		i;
+	int		sign;
 
 	i = 0;
+	sign = 1;
 	if (str[i] == '*' || ft_isdigit(str[i]))
 	{
 		if (inf->fw != -1)
-			inf->fw = 1;
-		inf->fw *= ((str[i] == '*') ? va_arg(*ap, unsigned int) : ft_atoi(str));
+			sign = 1;
+		else
+			sign = -1;
+		if (str[i] == '*')
+			inf->fw = va_arg(*ap, int);
+		else
+			inf->fw = ft_atoi(str);
 		inf->zeros *= inf->fw;
 		i++;
 	}
+	else
+		inf->fw = 0;
+	if (inf->fw > 0)
+		inf->fw *= sign;
 	while (ft_isdigit(str[i]) && str[0] != '*')
 		i++;
 	return (i);
