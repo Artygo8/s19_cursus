@@ -6,7 +6,7 @@
 /*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:01:46 by agossuin          #+#    #+#             */
-/*   Updated: 2019/11/18 14:01:50 by agossuin         ###   ########.fr       */
+/*   Updated: 2020/01/15 12:54:13 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ int		get_next_line(int fd, char **line)
 					|| !(*line = ft_strjoin_to_eol(NULL, buf[fd])))
 		return (-1);
 	ret = 1;
-	while (ft_strchr_pos(buf[fd], '\n') == -1 && ret && ret != -1)
+	while (ft_strchr_pos(buf[fd], '\n') == -1 && ret)
 	{
 		ret = read(fd, buf[fd], BUFFER_SIZE);
+		if (ret == -1)
+			return (-1);
 		buf[fd][ret] = '\0';
 		if (!(*line = ft_strjoin_to_eol(*line, buf[fd])))
 			return (-1);
