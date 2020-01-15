@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   equation.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/08 19:21:33 by agossuin          #+#    #+#             */
+/*   Updated: 2020/01/08 19:21:35 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minirt.h"
 
-double		ft_quad_solv(double a, double b, double c) //toujours des reponses positives ! et les plus petites !
+double		ft_quad_solv(double a, double b, double c)
 {
 	double	d;
 	double	val1;

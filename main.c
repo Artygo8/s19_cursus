@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/07 17:45:55 by agossuin          #+#    #+#             */
+/*   Updated: 2020/01/07 17:45:57 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 int main(int argc, char const *argv[])
@@ -23,6 +35,8 @@ int main(int argc, char const *argv[])
 }
 
 
+
+/*
 void	ft_place_objects(t_list *objects, t_cam cam, t_mat **tab)
 {
 	while (objects)
@@ -31,6 +45,7 @@ void	ft_place_objects(t_list *objects, t_cam cam, t_mat **tab)
 		objects = objects->next;
 	}
 }
+*/
 
 /*
 int		main(void)

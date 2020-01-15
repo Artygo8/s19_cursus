@@ -19,10 +19,12 @@ SRCSC		= objects/cam.c	\
 				objects/triangle.c \
 				utils/ato.c \
 				utils/colors.c \
+				utils/colors2.c \
 				utils/equation.c \
 				utils/vector.c \
+				utils/vector2.c \
 				init.c \
-				main.c \
+				minirt.c \
 				tab.c \
 				get_next_line/*.c \
 				libft/*.c
@@ -43,17 +45,16 @@ AR		= ar -rc
 
 RM		= rm -f
 
-#PATHLIB	= -I /usr/X11/include -L /usr/X11/lib -l mlx
+PATHLIB	= #-I /usr/X11/include -L /usr/X11/lib -l mlx
 #for linux -I /usr/include -g -L /usr/lib  -lX11 -lmlx -lXext -lm
-PATHLIB		= -I /usr/include -g -lmlx -L /usr/lib
+#PATHLIB		= -I /usr/include -g -lmlx -L /usr/lib
 
-#CFLAGS		= -framework OpenGL -framework AppKit
+CFLAGS		= -framework OpenGL -framework AppKit
 
-CFLAGS		= -lXext -lX11 -lm
+#CFLAGS		= -lXext -lX11 -lm
 
-$(NAME):	${OBJS}
-			gcc -o ${NAME} ${OBJS} ${PATHLIB} ${CFLAGS}
-			./${NAME}
+$(NAME):
+			gcc ${SRCSC} ${PATHLIB} ${MINILIB} ${CFLAGS}
 
 all:		${NAME}
 

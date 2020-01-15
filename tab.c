@@ -1,4 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tab.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/07 17:46:29 by agossuin          #+#    #+#             */
+/*   Updated: 2020/01/07 17:46:31 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
+
+void ft_place_objects(t_obj *objs, t_cam cam, t_mat **tab)
+{
+	while ((*objs).id)
+	{
+		ft_obj_in_tab(*objs, cam, tab);
+		objs++;
+	}
+}
 
 void ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab)
 {
@@ -42,10 +63,9 @@ t_mat	**ft_init_tab(t_cam cam, int color)
 				ft_vect_mult(cam.top, ((float)j - (float)cam.size_y/2))),
 				ft_vect_mult(cam.right, ((float)i - (float)cam.size_x/2))),
 				cam.pos), {0, 0, 0}, INFINITY, 0, color};
-	//		printf("j = %d, i = %d\ncam x = %f\ncam y = %f\ncam z = %f\n",j,i, tab[j][i].pos.x, tab[j][i].pos.y, tab[j][i].pos.z);
 			i++;
 		}
-		tab[j][i] = (t_mat){{0, 0, 0}, {0, 0, 0}, -1, 0, color}; //negative value
+		tab[j][i] = (t_mat){{0, 0, 0}, {0, 0, 0}, -1, 0, color};
 		j++;
 	}
 	tab[j] = NULL;
