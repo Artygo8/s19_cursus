@@ -19,6 +19,7 @@
 # include "minilibx/mlx.h"
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
+# define SMALL_DOUBLE 0.000001
 
 /*
 ** Utils ***********************************************************************
@@ -176,7 +177,6 @@ t_mat	ft_axis_plane(t_obj pl, t_line line);
 
 t_obj	ft_init_sphere(char *line, int id);
 t_mat	ft_axis_sphere(t_obj s, t_line line);
-//double	ft_closest(t_quad sol, t_line line);
 
 /*
 ** square.c
@@ -227,6 +227,7 @@ int		ft_enlight_color(int color, int light);
 */
 
 double	ft_quad_solv(double a, double b, double c);
+double	ft_quad_solv2(double a, double b, double c);
 
 /*
 ** vect.c
@@ -240,5 +241,6 @@ t_vect	ft_vect_add(t_vect v1, t_vect v2);
 t_vect	ft_vect_sub(t_vect v1, t_vect v2);
 t_vect	ft_vect_mult(t_vect v, double d);
 t_vect	ft_vect_uni(t_vect v);
+t_vect	ft_vect_init(double a, double b, double c);
 
 #endif

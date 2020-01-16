@@ -12,6 +12,12 @@
 
 #include "../minirt.h"
 
+/*
+** All objects share the same structure.
+** v1 is the Center of the sphere.
+** d1 is the Radius.
+*/
+
 t_obj	ft_init_sphere(char *line, int id)
 {
 	t_obj object;
@@ -20,7 +26,7 @@ t_obj	ft_init_sphere(char *line, int id)
 	object.fct = ft_axis_sphere;
 	object.v1 = ft_atovect(line);
 	line += ft_next_arg(line);
-	object.d1 = ft_atof(line);
+	object.d1 = ft_atof(line) / 2;
 	line += ft_next_arg(line);
 	object.color = ft_rgb_color(ft_atorgb(line));
 	return (object);

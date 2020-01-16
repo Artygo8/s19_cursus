@@ -68,8 +68,7 @@ re:			fclean all
 bonus:		all
 
 test:
-			gcc utils/ato.c libft/ft_atoi.c libft/ft_isdigit.c -lm
-			./a.out
+			make
+			./a.out scenes/simple/sphere.rt
 
 .PHONY:		all clean fclean re
-

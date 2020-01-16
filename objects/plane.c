@@ -12,6 +12,12 @@
 
 #include "../minirt.h"
 
+/*
+** All objects share the same structure.
+** v1 is a Point of the plane.
+** v2 is the Normal Vector.
+*/
+
 t_obj	ft_init_plane(char *line, int id)
 {
 	t_obj object;

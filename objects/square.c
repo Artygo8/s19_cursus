@@ -12,26 +12,30 @@
 
 #include "../minirt.h"
 
+/*
+** All objects share the same structure.
+** v1 is the Center Point.
+** v2 is the Normal Vector.
+** v3 is a Vector Orthogonal to the normal vector coplanar with the square.
+** d1 is the Height.
+*/
+
 t_obj	ft_init_square(char *line, int id)
 {
 	t_obj	object;
 	t_vect	up;
 
-	up.x = 0;
-	up.y = 0;
-	up.z = 1;
+	up = ft_vect_init(0,-1,0);
 	object.id = id;
 	object.fct = ft_axis_square;
 	object.v1 = ft_atovect(line);
 	line += ft_next_arg(line);
-	object.v2 = ft_atovect(line);
+	object.v2 = ft_vect_uni(ft_atovect(line));
+	if (ft_vect_len(object.v2) < SMALL_DOUBLE)
+		object.v2 = ft_vect_init(0,0,1);
 	object.v3 = ft_vect_uni(ft_cross_prod(object.v2, up));
 	if (object.v3.x == 0 && object.v3.y == 0 && object.v3.z == 0)
-	{
-		up.y = 1;
-		up.z = 0;
-		object.v3 = up;
-	}
+		object.v3 = ft_vect_init(0,1,0);
 	line += ft_next_arg(line);
 	object.d1 = ft_atof(line);
 	line += ft_next_arg(line);

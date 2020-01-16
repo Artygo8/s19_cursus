@@ -50,7 +50,7 @@ t_vect	ft_atovect(char *s)
 	while (ft_isdigit(*s) || *s == '.' || *s == '-')
 		s++;
 	s++;
-	v.z = -ft_atof(s);
+	v.z = ft_atof(s);
 	return (v);
 }
 

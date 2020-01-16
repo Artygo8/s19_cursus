@@ -56,6 +56,7 @@ t_vect		ft_vect_mult(t_vect v, double d)
 
 /*
 ** Gets a unitary vector from a vector.
+** Doesnt try if the length of the vector is too small.
 */
 
 t_vect		ft_vect_uni(t_vect v)
@@ -63,8 +64,21 @@ t_vect		ft_vect_uni(t_vect v)
 	double l;
 
 	l = ft_vect_len(v);
-	if (l > 0.000001)
-		return (ft_vect_mult(v, 1 / ft_vect_len(v)));
-	else
-		return (v);
+	if (l > SMALL_DOUBLE)
+		v = ft_vect_mult(v, 1 / ft_vect_len(v));
+	return (v);
+}
+
+/*
+** Create a vector with values x=a, y=b, z=c.
+*/
+
+t_vect		ft_vect_init(double a, double b, double c)
+{
+	t_vect v;
+
+	v.x = a;
+	v.y = b;
+	v.z = c;
+	return (v);
 }

@@ -14,24 +14,21 @@
 
 void	ft_init_cam(t_cam *cam, char *line)
 {
-	t_vect	up;
+	static int	id;
+	t_vect		up;
 
-	up.x = 0;
-	up.y = 0;
-	up.z = 1;
-	cam->id = 1;
 	cam->pos = ft_atovect(line);
 	line += ft_next_arg(line);
-	cam->dir = ft_atovect(line);
+	cam->dir = ft_vect_uni(ft_atovect(line));
 	line += ft_next_arg(line);
 	cam->dist = ft_atof(line);
+	up = ft_vect_init(0,-1,0);
+	cam->id = ++id;
+	if (ft_vect_len(cam->dir) < SMALL_DOUBLE)
+		cam->dir = ft_vect_init(0,0,1);
 	cam->right = ft_vect_uni(ft_cross_prod(cam->dir, up));
-	if (ft_vect_len(cam->right) < 0.0001)
-	{
-		up.y = 1;
-		up.z = 0;
-		cam->right = up;
-	}
+	if (ft_vect_len(cam->right) < SMALL_DOUBLE)
+		cam->right = ft_vect_init(0,1,0);
 	cam->top = ft_cross_prod(cam->right, cam->dir);
 	cam->top = ft_vect_uni(cam->top);
 }

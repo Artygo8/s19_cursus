@@ -47,7 +47,7 @@ t_mat	ft_closest_obj(t_obj *objs, t_line ray)
 	mat.dist = INFINITY;
 	while ((*objs).id)
 	{
-		if ((*objs).fct((*objs), ray).dist > 0.0001
+		if ((*objs).fct((*objs), ray).dist > SMALL_DOUBLE
 			&& (*objs).fct((*objs), ray).dist < mat.dist)
 			mat = (*objs).fct((*objs), ray);
 		objs++;
