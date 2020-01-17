@@ -10,6 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
+#################
+##  VARIABLES  ##
+#################
+
+#	Sources
+SRCDIR		= ./src
 SRCSC		= objects/cam.c	\
 				objects/cylinder.c \
 				objects/light.c \
@@ -29,34 +35,44 @@ SRCSC		= objects/cam.c	\
 				get_next_line/*.c \
 				libft/*.c
 
-SRCSH		= minirt.h
-
+#	Objects
+OBJDIR		= obj
 OBJS		= $(SRCSC:*.c=*.o)
 
-MINILIBDIR	= minilib
+#	Headers
+DIRH		= ./src
+SRCSH		= minirt.h
 
-MINILIB		= minilibx/libmlx.a
+#	Libraries
+MINILIBDIR	= minilibx
+MINILIB		= ./src/minilibx/libmlx.a
 
+#	Name
 NAME		= miniRT
 
+#	Compiling Utilities
 CC		= gcc
-
 AR		= ar -rc
-
 RM		= rm -f
 
-OS		:= $(shell uname -s)
+#################
+##    AUTO     ##
+#################
+
+OBJS	=	$(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(SRC))))
+OS		:=	$(shell uname -s)
+
+$(foreach S, $(SRCSC), $(eval VPATH += $(SRCDIR)/$(S)))
 
 ifeq (${OS},Linux)
 	PATHLIB		= -I /usr/include -g -lmlx -L /usr/lib
 	CFLAGS		= -lXext -lX11 -lm
 else
-	PATHLIB	=
 	CFLAGS		= -framework OpenGL -framework AppKit
 endif
 
 $(NAME):
-			gcc ${SRCSC} ${PATHLIB} ${MINILIB} ${CFLAGS}
+			${CC} ${VPATH} ${PATHLIB} ${MINILIB} ${CFLAGS} -o ${NAME}
 
 all:		${NAME}
 
@@ -70,18 +86,14 @@ re:			fclean all
 bonus:		all
 
 test:		make
-			./a.out scenes/simple/sphere.rt
-
+			./miniRT scenes/simple/sphere.rt
 tr:
-			./a.out scenes/simple/triangle.rt
-
+			./miniRT scenes/simple/triangle.rt
 cy:
-			./a.out scenes/simple/cylinder.rt
-
+			./miniRT scenes/simple/cylinder.rt
 sq:
-			./a.out scenes/simple/square.rt
-
+			./miniRT scenes/simple/square.rt
 sp:
-			./a.out scenes/simple/sphere.rt
+			./miniRT scenes/simple/sphere.rt
 
 .PHONY:		all clean fclean re

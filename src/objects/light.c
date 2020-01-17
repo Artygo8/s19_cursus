@@ -86,6 +86,7 @@ void	ft_put_ambi(t_cam cam, t_light light, t_mat **tab)
 	t_line	ray;
 	int		i;
 	int		j;
+	double	m;
 
 	j = 0;
 	while (j < cam.size_y)
@@ -93,10 +94,15 @@ void	ft_put_ambi(t_cam cam, t_light light, t_mat **tab)
 		i = 0;
 		while (i < cam.size_x)
 		{
+			ray = (t_line){tab[j][i].pos,
+				ft_vect_uni(ft_vect_sub(light.pos, tab[j][i].pos))};
+			m = ft_dot_prod(tab[j][i].norm, ray.dir);
+			m = (m > 0) ? m : -m;
 			if (tab[j][i].color)
 				tab[j][i].pxl = ft_add_color(tab[j][i].pxl,
 					ft_enlight_color(tab[j][i].color,
-					ft_mult_color(light.color, light.percent)));
+					ft_mult_color(light.color, light.percent * m
+					)));
 			i++;
 		}
 		j++;
