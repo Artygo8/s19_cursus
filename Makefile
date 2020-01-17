@@ -45,13 +45,15 @@ AR		= ar -rc
 
 RM		= rm -f
 
-PATHLIB	= #-I /usr/X11/include -L /usr/X11/lib -l mlx
-#for linux -I /usr/include -g -L /usr/lib  -lX11 -lmlx -lXext -lm
-#PATHLIB		= -I /usr/include -g -lmlx -L /usr/lib
+OS		:= $(shell uname -s)
 
-CFLAGS		= -framework OpenGL -framework AppKit
-
-#CFLAGS		= -lXext -lX11 -lm
+ifeq (${OS},Linux)
+	PATHLIB		= -I /usr/include -g -lmlx -L /usr/lib
+	CFLAGS		= -lXext -lX11 -lm
+else
+	PATHLIB	=
+	CFLAGS		= -framework OpenGL -framework AppKit
+endif
 
 $(NAME):
 			gcc ${SRCSC} ${PATHLIB} ${MINILIB} ${CFLAGS}
@@ -67,8 +69,19 @@ re:			fclean all
 
 bonus:		all
 
-test:
-			make
+test:		make
+			./a.out scenes/simple/sphere.rt
+
+tr:
+			./a.out scenes/simple/triangle.rt
+
+cy:
+			./a.out scenes/simple/cylinder.rt
+
+sq:
+			./a.out scenes/simple/square.rt
+
+sp:
 			./a.out scenes/simple/sphere.rt
 
 .PHONY:		all clean fclean re

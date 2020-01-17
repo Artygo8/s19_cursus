@@ -14,6 +14,9 @@
 
 void	ft_bzero(void *b, size_t len)
 {
+	char *c;
+
+	c = (char*)b;
 	while (len > 0)
-		*(char *)&b[--len] = 0;
+		c[--len] = 0;
 }
