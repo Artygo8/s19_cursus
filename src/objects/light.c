@@ -24,7 +24,7 @@ t_light	ft_init_light(char *line, int type)
 	}
 	light.percent = ft_atof(line);
 	line += ft_next_arg(line);
-	light.color = ft_rgb_color(ft_atorgb(line));
+	light.color = ft_atocol(line);
 	return (light);
 }
 
@@ -42,14 +42,15 @@ void	ft_put_lights(t_obj *objs, t_cam cam, t_light *lights, t_mat **tab)
 
 t_mat	ft_closest_obj(t_obj *objs, t_line ray)
 {
-	t_mat mat;
+	t_mat	mat;
+	t_mat	tmp;
 
 	mat.dist = INFINITY;
 	while ((*objs).id)
 	{
-		if ((*objs).fct((*objs), ray).dist > SMALL_DOUBLE
-			&& (*objs).fct((*objs), ray).dist < mat.dist)
-			mat = (*objs).fct((*objs), ray);
+		tmp = (*objs).fct((*objs), ray);
+		if (tmp.dist > EPS && tmp.dist < mat.dist)
+			mat = tmp;
 		objs++;
 	}
 	return (mat);
@@ -67,14 +68,13 @@ void	ft_put_light(t_obj *objs, t_cam cam, t_light light, t_mat **tab)
 		i = 0;
 		while (i < cam.size_x)
 		{
-			ray = (t_line){tab[j][i].pos,
-				ft_vect_uni(ft_vect_sub(light.pos, tab[j][i].pos))};
-			if (ft_dot_prod(tab[j][i].norm, ray.dir) > 0 && ft_closest_obj(objs,
-				ray).dist > ft_vect_dist(tab[j][i].pos, light.pos))
+			ray = ft_ray(tab[j][i].pos, light.pos);
+			if (ft_dot(tab[j][i].norm, ray.dir) > 0 &&
+			ft_closest_obj(objs, ray).dist > ft_v_dist(ray.ori, light.pos))
 				tab[j][i].pxl = ft_add_color(tab[j][i].pxl,
-					ft_enlight_color(tab[j][i].color, ft_mult_color(light.color,
-					ft_dot_prod(tab[j][i].norm, ray.dir) * light.percent
-					/ pow(ft_vect_dist(tab[j][i].pos, light.pos), 1 / 2))));
+					ft_enlight(tab[j][i].color, light.color,
+					ft_dot(tab[j][i].norm, ray.dir) * light.percent
+					/ pow(ft_v_dist(tab[j][i].pos, light.pos), 1 / 2)));
 			i++;
 		}
 		j++;
@@ -83,10 +83,8 @@ void	ft_put_light(t_obj *objs, t_cam cam, t_light light, t_mat **tab)
 
 void	ft_put_ambi(t_cam cam, t_light light, t_mat **tab)
 {
-	t_line	ray;
-	int		i;
 	int		j;
-	double	m;
+	int		i;
 
 	j = 0;
 	while (j < cam.size_y)
@@ -94,15 +92,8 @@ void	ft_put_ambi(t_cam cam, t_light light, t_mat **tab)
 		i = 0;
 		while (i < cam.size_x)
 		{
-			ray = (t_line){tab[j][i].pos,
-				ft_vect_uni(ft_vect_sub(light.pos, tab[j][i].pos))};
-			m = ft_dot_prod(tab[j][i].norm, ray.dir);
-			m = (m > 0) ? m : -m;
-			if (tab[j][i].color)
-				tab[j][i].pxl = ft_add_color(tab[j][i].pxl,
-					ft_enlight_color(tab[j][i].color,
-					ft_mult_color(light.color, light.percent * m
-					)));
+			tab[j][i].pxl = ft_add_color(tab[j][i].pxl,
+			ft_enlight(tab[j][i].color, light.color, light.percent));
 			i++;
 		}
 		j++;

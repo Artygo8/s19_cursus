@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minirt.h"
+#include "../../minirt.h"
 
 /*
 ** All objects share the same structure.
@@ -28,7 +28,7 @@ t_obj	ft_init_plane(char *line, int id)
 	line += ft_next_arg(line);
 	object.v2 = ft_atovect(line);
 	line += ft_next_arg(line);
-	object.color = ft_rgb_color(ft_atorgb(line));
+	object.color = ft_atocol(line);
 	return (object);
 }
 
@@ -37,15 +37,15 @@ t_mat	ft_axis_plane(t_obj pl, t_line line)
 	double	sol;
 	t_mat	mat;
 
-	sol = ft_dot_prod(pl.v2, ft_vect_sub(pl.v1, line.point))
-			/ ft_dot_prod(pl.v2, line.dir);
-	if (sol > 0 && ft_dot_prod(pl.v2, line.dir) != 0)
+	sol = ft_dot(pl.v2, ft_v_sub(pl.v1, line.ori))
+			/ ft_dot(pl.v2, line.dir);
+	if (sol > 0 && ft_dot(pl.v2, line.dir) != 0)
 	{
-		mat.pos = ft_vect_add(line.point, ft_vect_mult(line.dir, sol));
-		mat.norm = ft_vect_uni(pl.v2);
-		if (ft_dot_prod(line.dir, mat.norm) > 0)
-			mat.norm = ft_vect_mult(mat.norm, -1);
-		mat.dist = ft_vect_dist(line.point, mat.pos);
+		mat.pos = ft_v_add(line.ori, ft_v_mult(line.dir, sol));
+		mat.norm = ft_v_uni(pl.v2);
+		if (ft_dot(line.dir, mat.norm) > 0)
+			mat.norm = ft_v_mult(mat.norm, -1);
+		mat.dist = ft_v_dist(line.ori, mat.pos);
 		mat.color = pl.color;
 		mat.pxl = 0;
 	}

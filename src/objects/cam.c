@@ -19,18 +19,18 @@ void	ft_init_cam(t_cam *cam, char *line)
 
 	cam->pos = ft_atovect(line);
 	line += ft_next_arg(line);
-	cam->dir = ft_vect_uni(ft_atovect(line));
+	cam->dir = ft_v_uni(ft_atovect(line));
 	line += ft_next_arg(line);
 	cam->dist = ft_atof(line);
-	up = ft_vect_init(0,-1,0);
+	up = ft_v_init(0,-1,0);
 	cam->id = ++id;
-	if (ft_vect_len(cam->dir) < SMALL_DOUBLE)
-		cam->dir = ft_vect_init(0,0,1);
-	cam->right = ft_vect_uni(ft_cross_prod(cam->dir, up));
-	if (ft_vect_len(cam->right) < SMALL_DOUBLE)
-		cam->right = ft_vect_init(0,1,0);
-	cam->top = ft_cross_prod(cam->right, cam->dir);
-	cam->top = ft_vect_uni(cam->top);
+	if (ft_v_len(cam->dir) < EPS)
+		cam->dir = ft_v_init(0,0,1);
+	cam->right = ft_v_uni(ft_cross(cam->dir, up));
+	if (ft_v_len(cam->right) < EPS)
+		cam->right = ft_v_init(0,1,0);
+	cam->top = ft_cross(cam->right, cam->dir);
+	cam->top = ft_v_uni(cam->top);
 }
 
 void	ft_cam_res(t_cam *cam, char *line)

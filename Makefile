@@ -17,19 +17,19 @@
 #	Sources
 SRCDIR		= ./src
 SRCSC		= objects/cam.c	\
-				objects/cylinder.c \
 				objects/light.c \
-				objects/plane.c \
-				objects/sphere.c \
-				objects/square.c \
-				objects/triangle.c \
+				objects/shapes/cylinder.c \
+				objects/shapes/plane.c \
+				objects/shapes/sphere.c \
+				objects/shapes/square.c \
+				objects/shapes/triangle.c \
 				utils/ato.c \
 				utils/colors.c \
-				utils/colors2.c \
 				utils/equation.c \
 				utils/vector.c \
 				utils/vector2.c \
 				init.c \
+				materials.c \
 				minirt.c \
 				tab.c \
 				get_next_line/*.c \
@@ -85,15 +85,15 @@ re:			fclean all
 
 bonus:		all
 
-test:		make
+test:		re
 			./miniRT scenes/simple/sphere.rt
-tr:
+tr:			re
 			./miniRT scenes/simple/triangle.rt
-cy:
+cy:			re
 			./miniRT scenes/simple/cylinder.rt
-sq:
+sq:			re
 			./miniRT scenes/simple/square.rt
-sp:
+sp:			re
 			./miniRT scenes/simple/sphere.rt
 
 .PHONY:		all clean fclean re

@@ -19,7 +19,11 @@
 # include "minilibx/mlx.h"
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
-# define SMALL_DOUBLE 0.000001
+# define EPS 0.000001
+# define INF INFINITY
+# define R 0xff0000
+# define G 0xff00
+# define B 0xff
 
 /*
 ** Utils ***********************************************************************
@@ -52,12 +56,13 @@ typedef struct	s_data
 
 typedef struct	s_line
 {
-	t_vect	point;
+	t_vect	ori;
 	t_vect	dir;
 }				t_line;
 
 typedef struct	s_material
 {
+	int		id;
 	t_vect	pos;
 	t_vect	norm;
 	double	dist;
@@ -69,7 +74,12 @@ typedef struct	s_material
 ** Objects *********************************************************************
 */
 
-typedef struct	s_camera
+typedef struct	s_camera t_cam;
+typedef struct	s_object t_obj;
+typedef struct	s_light t_light;
+
+
+struct	s_camera
 {
 	int		id;
 	t_vect	pos;
@@ -79,9 +89,10 @@ typedef struct	s_camera
 	int		dist;
 	int		size_x;
 	int		size_y;
-}				t_cam; //attention, c'est idem que t_line
+	t_cam	*next;
+};		 //attention, c'est idem que t_line
 
-typedef struct	s_object
+struct	s_object
 {
 	int		id;
 	t_vect	v1;
@@ -90,16 +101,18 @@ typedef struct	s_object
 	double	d1;
 	double	d2;
 	int		color;
-	t_mat	(*fct)(struct s_object s, t_line l);
-}				t_obj;
+	t_mat	(*fct)(t_obj s, t_line l);
+	t_obj	*next;
+};
 
-typedef struct	s_light
+struct	s_light
 {
 	int		type;
 	t_vect	pos;
 	double	percent;
 	int		color;
-}				t_light;
+	t_light	*next;
+};
 
 
 /*
@@ -115,7 +128,6 @@ typedef struct	s_light
 ** init.c
 */
 
-int		ft_isspace(int c);
 void	ft_objs_counter(char *line, t_rgb *count);
 t_rgb	ft_objs_number(char *file);
 void	ft_fill_objs(char *line, t_obj **objs, t_light **lights, t_cam **cams, t_rgb *id);
@@ -130,6 +142,13 @@ void ft_place_objects(t_obj *objs, t_cam cam, t_mat **tab);
 void	ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab);//, t_mat (*f)(t_obj, t_line));
 t_mat	**ft_init_tab(t_cam cam, int color);
 void	ft_put_tab(t_data data, t_mat **tab);
+t_vect	ft_screen(t_cam cam, int i, int j);
+
+/*
+** materials.c
+*/
+
+t_mat	ft_init_mat(t_vect pos, double dist, int color);
 
 /*
 **             __      _           __
@@ -204,23 +223,17 @@ t_mat	ft_axis_tri(t_obj pl, t_line line);
 ** ato.c
 */
 
-double ft_atof(char *s);
+double	ft_atof(char *s);
 t_vect	ft_atovect(char *s);
-t_rgb	ft_atorgb(char *s);
+int		ft_atocol(char *s);
 
 /*
 ** colors.c
 */
 
-int		ft_rgb(int r, int g, int b);
-int		ft_rgb_color(t_rgb rgb);
-t_rgb	ft_color_rgb(int color);
-t_rgb	ft_mult_rgb(t_rgb rgb, float m);
 int		ft_mult_color(int color, float m);
-t_rgb	ft_add_rgb(t_rgb rgb_1, t_rgb rgb_2);
 int		ft_add_color(int color_1, int color_2);
-t_rgb	ft_enlight_rgb(t_rgb rgb, t_rgb light);
-int		ft_enlight_color(int color, int light);
+int		ft_enlight(int color, int light, double percent);
 
 /*
 ** equation.c
@@ -233,14 +246,16 @@ double	ft_quad_solv2(double a, double b, double c);
 ** vect.c
 */
 
-t_vect	ft_cross_prod(t_vect v1, t_vect v2);
-double	ft_dot_prod(t_vect v1, t_vect v2);
-double	ft_vect_len(t_vect v);
-double	ft_vect_dist(t_vect v1, t_vect v2);
-t_vect	ft_vect_add(t_vect v1, t_vect v2);
-t_vect	ft_vect_sub(t_vect v1, t_vect v2);
-t_vect	ft_vect_mult(t_vect v, double d);
-t_vect	ft_vect_uni(t_vect v);
-t_vect	ft_vect_init(double a, double b, double c);
+t_vect	ft_cross(t_vect v1, t_vect v2);
+double	ft_dot(t_vect v1, t_vect v2);
+double	ft_v_len(t_vect v);
+double	ft_v_dist(t_vect v1, t_vect v2);
+t_vect	ft_v_add(t_vect v1, t_vect v2);
+t_vect	ft_v_sub(t_vect v1, t_vect v2);
+t_vect	ft_v_mult(t_vect v, double d);
+t_vect	ft_v_uni(t_vect v);
+t_vect	ft_v_init(double a, double b, double c);
+t_vect	ft_v_dir(t_vect v1, t_vect v2);
+t_line	ft_ray(t_vect origin, t_vect point);
 
 #endif

@@ -13,49 +13,61 @@
 #include "../minirt.h"
 
 /*
-** Get a int from the 3 values, RGB.
-** and other transformations.
-*/
-
-int		ft_rgb(int r, int g, int b)
-{
-	return (r * 256 * 256 + g * 256 + b);
-}
-
-int		ft_rgb_color(t_rgb rgb)
-{
-	return (rgb.r * 256 * 256 + rgb.g * 256 + rgb.b);
-}
-
-t_rgb	ft_color_rgb(int color)
-{
-	t_rgb rgb;
-
-	rgb.r = color / (256 * 256);
-	rgb.g = (color / 256) % 256;
-	rgb.b = color % 256;
-	return (rgb);
-}
-
-/*
 ** Multiplies the rgb values by a constant.
 */
 
-t_rgb	ft_mult_rgb(t_rgb rgb, float m)
-{
-	rgb.r *= m;
-	rgb.g *= m;
-	rgb.b *= m;
-	if (rgb.r > 255)
-		rgb.r = 255;
-	if (rgb.g > 255)
-		rgb.g = 255;
-	if (rgb.b > 255)
-		rgb.b = 255;
-	return (rgb);
-}
-
 int		ft_mult_color(int color, float m)
 {
-	return (ft_rgb_color(ft_mult_rgb(ft_color_rgb(color), m)));
+	int res;
+
+	res = (color & B) * m;
+	if (res > B)
+		res = B;
+	res += (color & G) * m;
+	if (res > (G | B))
+		res &= (G | B);
+	res += (color & R) * m;
+	if (res > (R | G | B))
+		res &= (R | G | B);
+	return (res);
+}
+
+/*
+** Adds colors to one another.
+*/
+
+int		ft_add_color(int color_1, int color_2)
+{
+	int res;
+
+	res = (color_1 & 0xff) + (color_2 & 0xff);
+	if (res > B)
+		res = B;
+	res += (color_1 & 0xff00) + (color_2 & 0xff00);
+	if (res > (G | B))
+		res = G + (res & B);
+	res += (color_1 & 0xff0000) + (color_2 & 0xff0000);
+	if (res > (R | G | B))
+		res = R + (res & (G | B));
+	return (res);
+}
+
+/*
+** Applies a colored light.
+*/
+
+int		ft_enlight(int color, int light, double ratio)
+{
+	int res;
+
+	res = (int)((color & B) * (double)(light & B) / B * ratio) & B;
+	if (res > B)
+		res = B;
+	res += (int)((color & G) * (double)(light & G) / G * ratio) & G;
+	if (res > (G | B))
+		res &= (G | B);
+	res += (int)((color & R) * (double)(light & R) / R * ratio) & R;
+	if (res > (R | G | B))
+		res &= (R | G | B);
+	return (res);
 }

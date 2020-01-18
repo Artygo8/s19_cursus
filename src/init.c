@@ -119,10 +119,9 @@ int		ft_next_arg(char *line)
 	int i;
 
 	i = 0;
-	while (line && line[i] && ft_isspace(line[i]))
+	while (line && ft_isspace(line[i]))
 		i++;
-	while (line && line[i] && (ft_isdigit(line[i])
-	|| line[i] == '.' || line[i] == ',' || line[i] == '-'))
+	while (line && (ft_isdigit(line[i]) || ft_isinset(line[i], ".,-")))
 		i++;
 	return (i);
 }

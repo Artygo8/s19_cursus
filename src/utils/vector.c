@@ -16,7 +16,7 @@
 ** Cross Product.
 */
 
-t_vect		ft_cross_prod(t_vect v1, t_vect v2)
+t_vect		ft_cross(t_vect v1, t_vect v2)
 {
 	t_vect new;
 
@@ -30,7 +30,7 @@ t_vect		ft_cross_prod(t_vect v1, t_vect v2)
 ** Dot Product.
 */
 
-double		ft_dot_prod(t_vect v1, t_vect v2)
+double		ft_dot(t_vect v1, t_vect v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
@@ -39,16 +39,16 @@ double		ft_dot_prod(t_vect v1, t_vect v2)
 ** Length of a vector from the origin.
 */
 
-double		ft_vect_len(t_vect v)
+double		ft_v_len(t_vect v)
 {
-	return (sqrt(ft_dot_prod(v, v)));
+	return (sqrt(ft_dot(v, v)));
 }
 
 /*
 ** Distance between 2 points.
 */
 
-double		ft_vect_dist(t_vect v1, t_vect v2)
+double		ft_v_dist(t_vect v1, t_vect v2)
 {
 	double x;
 	double y;
@@ -58,4 +58,22 @@ double		ft_vect_dist(t_vect v1, t_vect v2)
 	y = (v2.y - v1.y);
 	z = (v2.z - v1.z);
 	return (sqrt(x * x + y * y + z * z));
+}
+
+/*
+** Normalized direction from one point to the other
+*/
+
+t_vect		ft_v_dir(t_vect v1, t_vect v2)
+{
+	return(ft_v_uni(ft_v_sub(v2, v1)));
+}
+
+t_line		ft_ray(t_vect origin, t_vect point)
+{
+	t_line ray;
+
+	ray.ori = origin;
+	ray.dir = ft_v_dir(origin, point);
+	return (ray);
 }

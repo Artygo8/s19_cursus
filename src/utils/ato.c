@@ -54,20 +54,20 @@ t_vect	ft_atovect(char *s)
 	return (v);
 }
 
-t_rgb	ft_atorgb(char *s)
+int	ft_atocol(char *s)
 {
-	t_rgb c;
+	int c;
 
-	c.r = ft_atoi(s);
+	c = ft_atoi(s) * 0x10000;
 	while (ft_isspace(*s))
 		s++;
 	while (ft_isdigit(*s) || *s == '-')
 		s++;
 	s++;
-	c.g = ft_atoi(s);
+	c += ft_atoi(s) * 0x100;
 	while (ft_isdigit(*s) || *s == '-')
 		s++;
 	s++;
-	c.b = ft_atoi(s);
+	c += ft_atoi(s);
 	return (c);
 }

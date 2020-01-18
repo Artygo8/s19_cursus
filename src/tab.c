@@ -23,9 +23,10 @@ void ft_place_objects(t_obj *objs, t_cam cam, t_mat **tab)
 
 void ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab)
 {
-	t_line axis;
-	int i;
-	int j;
+	t_line	axis;
+	t_mat	tmp;
+	int		i;
+	int		j;
 
 	j = 0;
 	while (tab[j])
@@ -33,13 +34,24 @@ void ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab)
 		i = 0;
 		while (tab[j][i].dist != -1)
 		{
-			axis = (t_line){cam.pos, ft_vect_uni(ft_vect_sub(tab[j][i].pos, cam.pos))}; //ATTENTION !
-			if (s.fct(s, axis).dist > 0 && s.fct(s, axis).dist < tab[j][i].dist)
-				tab[j][i] = s.fct(s, axis);
+			axis = ft_ray(cam.pos, tab[j][i].pos);
+			tmp = s.fct(s, axis);
+			if (tmp.dist > 0 && tmp.dist < tab[j][i].dist)
+				tab[j][i] = tmp;
 			i++;
 		}
 		j++;
 	}
+}
+
+t_vect	ft_screen(t_cam cam, int i, int j)
+{
+	t_vect v;
+
+	v = ft_v_mult(cam.dir, cam.dist);
+	v = ft_v_add(v, ft_v_mult(cam.top, ((float)j - (float)cam.size_y/2)));
+	v = ft_v_add(v, ft_v_mult(cam.right, ((float)i - (float)cam.size_x/2)));
+	return (ft_v_add(v, cam.pos));
 }
 
 t_mat	**ft_init_tab(t_cam cam, int color)
@@ -57,16 +69,8 @@ t_mat	**ft_init_tab(t_cam cam, int color)
 		if (!(tab[j] = (t_mat*)malloc((cam.size_x + 1) * sizeof(t_mat))))
 			return (NULL);
 		while (i < cam.size_x)
-		{
-			tab[j][i] = (t_mat){ft_vect_add(ft_vect_add(ft_vect_add(
-				ft_vect_mult(cam.dir, cam.dist),
-				ft_vect_mult(cam.top, ((float)j - (float)cam.size_y/2))),
-				ft_vect_mult(cam.right, ((float)i - (float)cam.size_x/2))),
-				cam.pos), {0, 0, 0}, INFINITY, 0, color};
-			i++;
-		}
-		tab[j][i] = (t_mat){{0, 0, 0}, {0, 0, 0}, -1, 0, color};
-		j++;
+			tab[j][i++] = ft_init_mat(ft_screen(cam, i, j), INFINITY, color);
+		tab[j++][i] = ft_init_mat(ft_screen(cam, i, j), -1, color);
 	}
 	tab[j] = NULL;
 	return (tab);
@@ -81,7 +85,7 @@ void	ft_put_tab(t_data data, t_mat **tab)
 	while (tab[j])
 	{
 		i = 0;
-		while (tab[j][i].dist > 0)
+		while (tab[j][i].dist >= 0)
 		{
 			mlx_pixel_put(data.mlx_ptr, data.mlx_win, i, j, tab[j][i].pxl);
 			i++;

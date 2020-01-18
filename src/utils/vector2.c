@@ -16,7 +16,7 @@
 ** Vectorial addition.
 */
 
-t_vect		ft_vect_add(t_vect v1, t_vect v2)
+t_vect		ft_v_add(t_vect v1, t_vect v2)
 {
 	t_vect new;
 
@@ -30,7 +30,7 @@ t_vect		ft_vect_add(t_vect v1, t_vect v2)
 ** Vectorial substraction.
 */
 
-t_vect		ft_vect_sub(t_vect v1, t_vect v2)
+t_vect		ft_v_sub(t_vect v1, t_vect v2)
 {
 	t_vect new;
 
@@ -44,7 +44,7 @@ t_vect		ft_vect_sub(t_vect v1, t_vect v2)
 ** Multiplication of a vector by a scalar.
 */
 
-t_vect		ft_vect_mult(t_vect v, double d)
+t_vect		ft_v_mult(t_vect v, double d)
 {
 	t_vect	new;
 
@@ -59,13 +59,13 @@ t_vect		ft_vect_mult(t_vect v, double d)
 ** Doesnt try if the length of the vector is too small.
 */
 
-t_vect		ft_vect_uni(t_vect v)
+t_vect		ft_v_uni(t_vect v)
 {
 	double l;
 
-	l = ft_vect_len(v);
-	if (l > SMALL_DOUBLE)
-		v = ft_vect_mult(v, 1 / ft_vect_len(v));
+	l = ft_v_len(v);
+	if (l > EPS)
+		v = ft_v_mult(v, 1 / ft_v_len(v));
 	return (v);
 }
 
@@ -73,7 +73,7 @@ t_vect		ft_vect_uni(t_vect v)
 ** Create a vector with values x=a, y=b, z=c.
 */
 
-t_vect		ft_vect_init(double a, double b, double c)
+t_vect		ft_v_init(double a, double b, double c)
 {
 	t_vect v;
 
