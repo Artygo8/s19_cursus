@@ -12,12 +12,15 @@
 
 #include "minirt.h"
 
-void ft_place_objects(t_obj *objs, t_cam cam, t_mat **tab)
+void ft_place_objects(t_data *data, t_cam *cam, t_mat **tab)
 {
-	while ((*objs).id)
+	t_list *obj;
+
+	obj = data->objs;
+	while (obj)
 	{
-		ft_obj_in_tab(*objs, cam, tab);
-		objs++;
+		ft_obj_in_tab(*((t_obj*)obj->content), *cam, tab);
+		obj = obj->next;
 	}
 }
 
@@ -32,7 +35,7 @@ void ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab)
 	while (tab[j])
 	{
 		i = 0;
-		while (tab[j][i].dist != -1)
+		while (tab[j][i].id != -1)
 		{
 			axis = ft_ray(cam.pos, tab[j][i].pos);
 			tmp = s.fct(s, axis);
@@ -54,7 +57,7 @@ t_vect	ft_screen(t_cam cam, int i, int j)
 	return (ft_v_add(v, cam.pos));
 }
 
-t_mat	**ft_init_tab(t_cam cam, int color)
+t_mat	**ft_init_tab(t_cam cam)
 {
 	t_mat	**tab;
 	int		i;
@@ -69,8 +72,8 @@ t_mat	**ft_init_tab(t_cam cam, int color)
 		if (!(tab[j] = (t_mat*)malloc((cam.size_x + 1) * sizeof(t_mat))))
 			return (NULL);
 		while (i < cam.size_x)
-			tab[j][i++] = ft_init_mat(ft_screen(cam, i, j), INFINITY, color);
-		tab[j++][i] = ft_init_mat(ft_screen(cam, i, j), -1, color);
+			tab[j][i++] = ft_init_mat(ft_screen(cam, i, j));
+		tab[j++][i].id = -1;
 	}
 	tab[j] = NULL;
 	return (tab);
@@ -85,7 +88,7 @@ void	ft_put_tab(t_data data, t_mat **tab)
 	while (tab[j])
 	{
 		i = 0;
-		while (tab[j][i].dist >= 0)
+		while (tab[j][i].id >= 0)
 		{
 			mlx_pixel_put(data.mlx_ptr, data.mlx_win, i, j, tab[j][i].pxl);
 			i++;

@@ -20,21 +20,22 @@
 ** d2 is the Small Radius.
 */
 
-t_obj	ft_init_tor(char *line, int id)
+t_obj	*ft_init_tor(char *line, int id)
 {
-	t_obj object;
+	t_obj *object;
 
-	object.id = id;
-	object.fct = ft_axis_cyl;
-	object.v1 = ft_v_uni(ft_atovect(line));
+	object = (t_obj*)(malloc(sizeof(t_obj)));
+	object->id = id;
+	object->fct = ft_axis_cyl;
+	object->v1 = ft_v_uni(ft_atovect(line));
 	line += ft_next_arg(line);
-	object.v2 = ft_v_uni(ft_atovect(line));
+	object->v2 = ft_v_uni(ft_atovect(line));
 	line += ft_next_arg(line);
-	object.d1 = ft_atof(line) / 2;
+	object->d1 = ft_atof(line) / 2;
 	line += ft_next_arg(line);
-	object.d2 = ft_atof(line) / 2;
+	object->d2 = ft_atof(line) / 2;
 	line += ft_next_arg(line);
-	object.color = ft_atocol(line);
+	object->color = ft_atocol(line);
 	return (object);
 }
 

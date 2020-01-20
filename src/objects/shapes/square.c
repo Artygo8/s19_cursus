@@ -20,26 +20,42 @@
 ** d1 is the Height.
 */
 
-t_obj	ft_init_square(char *line, int id)
+void ft_init_sq_sys(t_obj *object)
 {
-	t_obj	object;
 	t_vect	up;
 
 	up = ft_v_init(0,-1,0);
-	object.id = id;
-	object.fct = ft_axis_square;
-	object.v1 = ft_atovect(line);
-	line += ft_next_arg(line);
-	object.v2 = ft_v_uni(ft_atovect(line));
-	if (ft_v_len(object.v2) < EPS)
-		object.v2 = ft_v_init(0,0,1);
-	object.v3 = ft_v_uni(ft_cross(object.v2, up));
-	if (object.v3.x == 0 && object.v3.y == 0 && object.v3.z == 0)
-		object.v3 = ft_v_init(0,1,0);
-	line += ft_next_arg(line);
-	object.d1 = ft_atof(line);
-	line += ft_next_arg(line);
-	object.color = ft_atocol(line);
+	if (ft_v_len(object->v2) < EPS)
+		object->v2 = ft_v_init(0,0,1);
+	object->v3 = ft_v_uni(ft_cross(object->v2, up));
+	if (ft_v_len(object->v3) < EPS)
+		object->v3 = ft_v_init(0,1,0);
+}
+
+t_obj	*ft_init_square(char *line)
+{
+	t_obj	*object;
+	int		valid;
+
+	valid = 1;
+	if (!(object = (t_obj*)malloc(sizeof(t_obj))))
+		return (NULL);
+	object->fct = ft_axis_square;
+	object->v1 = ft_atovect(line);
+	valid &= ft_isvect(line);
+	object->v2 = ft_v_uni(ft_atovect((line += ft_next_arg(line))));
+	valid &= ft_isvect(line);
+	object->d1 = ft_atof((line += ft_next_arg(line)));
+	valid &= ft_isfloat(line);
+	object->color = ft_atocol((line += ft_next_arg(line)));
+	valid &= ft_isrgb(line);
+	valid &= (*(line + ft_next_arg(line)) == 0);
+	ft_init_sq_sys(object);
+	if (!valid)
+	{
+		free(object);
+		return (NULL);
+	}
 	return (object);
 }
 

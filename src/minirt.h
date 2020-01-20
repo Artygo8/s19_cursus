@@ -20,10 +20,11 @@
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
 # define EPS 0.000001
-# define INF INFINITY
 # define R 0xff0000
-# define G 0xff00
-# define B 0xff
+# define G 0x00ff00
+# define B 0x0000ff
+# define BACKGROUND 0
+# define SIZE_MAX_FLOAT 15
 
 /*
 ** Utils ***********************************************************************
@@ -52,6 +53,11 @@ typedef struct	s_data
 	void	*mlx_ptr;
 	void	*mlx_win;
 	void	*img_ptr;
+	int		res_x;
+	int		res_y;
+	t_list	*objs;
+	t_list	*lights;
+	t_list	*cams;
 }				t_data;
 
 typedef struct	s_line
@@ -63,6 +69,8 @@ typedef struct	s_line
 typedef struct	s_material
 {
 	int		id;
+	int		x;
+	int		y;
 	t_vect	pos;
 	t_vect	norm;
 	double	dist;
@@ -128,19 +136,26 @@ struct	s_light
 ** init.c
 */
 
+t_list	*ft_lst_obj(char *line);
+int		ft_init_rt(char *file, t_data *data);
+int		ft_fill_objs(char *line, t_data *data);
+int		ft_next_arg(char *line);
+
+/*
 void	ft_objs_counter(char *line, t_rgb *count);
 t_rgb	ft_objs_number(char *file);
 void	ft_fill_objs(char *line, t_obj **objs, t_light **lights, t_cam **cams, t_rgb *id);
 int		ft_init_rt(char *file, t_cam **cams, t_light **lights, t_obj **objs);
 int		ft_next_arg(char *line);
+*/
 
 /*
 ** tab.c
 */
 
-void ft_place_objects(t_obj *objs, t_cam cam, t_mat **tab);
+void ft_place_objects(t_data *data, t_cam *cam, t_mat **tab);
 void	ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab);//, t_mat (*f)(t_obj, t_line));
-t_mat	**ft_init_tab(t_cam cam, int color);
+t_mat	**ft_init_tab(t_cam cam);
 void	ft_put_tab(t_data data, t_mat **tab);
 t_vect	ft_screen(t_cam cam, int i, int j);
 
@@ -148,7 +163,7 @@ t_vect	ft_screen(t_cam cam, int i, int j);
 ** materials.c
 */
 
-t_mat	ft_init_mat(t_vect pos, double dist, int color);
+t_mat	ft_init_mat(t_vect pos);
 
 /*
 **             __      _           __
@@ -162,53 +177,57 @@ t_mat	ft_init_mat(t_vect pos, double dist, int color);
 /*
 ** cam.c
 */
-
-void	ft_init_cam(t_cam *cam, char *line);
-void	ft_cam_res(t_cam *cam, char *line);
-
 /*
-** cylinder.c
+**void	ft_init_cam(t_cam *cam, char *line);
+**void	ft_cam_res(t_cam *cam, char *line);
 */
-
-t_obj	ft_init_cyl(char *line, int id);
-t_mat	ft_axis_cyl(t_obj cyl, t_line line);
+t_cam	*ft_init_cam(char *line);
+void	ft_data_res(t_data *data, char *line);
+void	ft_cam_ids(t_list *cam, int res_x, int res_y);
 
 /*
 ** light.c
 */
 
-t_light	ft_init_light(char *line, int type);
-t_mat ft_closest_obj(t_obj *objs, t_line ray);
-void ft_put_lights(t_obj *objs, t_cam cam, t_light *lights, t_mat **tab);
-void ft_put_light(t_obj *objs, t_cam cam, t_light light, t_mat **tab);
-void ft_put_ambi(t_cam cam, t_light light, t_mat **tab);
+t_light	*ft_init_light(char *line);
+t_mat ft_closest_obj(t_list *objs, t_line ray);
+void ft_put_lights(t_data *data, t_cam *cam, t_mat **tab);
+void ft_put_light(t_list *objs, t_cam *cam, t_light *light, t_mat **tab);
+void ft_put_ambi(t_cam *cam, t_light *light, t_mat **tab);
+
+/*
+** cylinder.c
+*/
+
+t_obj	*ft_init_cyl(char *line);
+t_mat	ft_axis_cyl(t_obj cyl, t_line line);
 
 /*
 ** plane.c
 */
 
-t_obj	ft_init_plane(char *line, int id);
+t_obj	*ft_init_plane(char *line);
 t_mat	ft_axis_plane(t_obj pl, t_line line);
 
 /*
 ** sphere.c
 */
 
-t_obj	ft_init_sphere(char *line, int id);
+t_obj	*ft_init_sphere(char *line);
 t_mat	ft_axis_sphere(t_obj s, t_line line);
 
 /*
 ** square.c
 */
 
-t_obj	ft_init_square(char *line, int id);
+t_obj	*ft_init_square(char *line);
 t_mat	ft_axis_square(t_obj sq, t_line line);
 
 /*
 ** triangle.c
 */
 
-t_obj	ft_init_tri(char *line, int id);
+t_obj	*ft_init_tri(char *line);
 t_mat	ft_axis_tri(t_obj pl, t_line line);
 
 /*
@@ -241,6 +260,16 @@ int		ft_enlight(int color, int light, double percent);
 
 double	ft_quad_solv(double a, double b, double c);
 double	ft_quad_solv2(double a, double b, double c);
+
+/*
+** istype.c
+*/
+
+int		ft_ischar(char *s);
+int		ft_isrgb(char *s);
+int		ft_len_float(char *s);
+int		ft_isfloat(char *s);
+int		ft_isvect(char *s);
 
 /*
 ** vect.c

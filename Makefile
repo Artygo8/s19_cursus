@@ -26,6 +26,7 @@ SRCSC		= objects/cam.c	\
 				utils/ato.c \
 				utils/colors.c \
 				utils/equation.c \
+				utils/istype.c \
 				utils/vector.c \
 				utils/vector2.c \
 				init.c \

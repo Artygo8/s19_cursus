@@ -18,23 +18,34 @@
 ** v2 is the Direction.
 ** d1 is the Radius.
 ** d2 is the Length.
+** returns NULL if allocation fails || if the format is not perfect
 */
 
-t_obj	ft_init_cyl(char *line, int id)
+t_obj	*ft_init_cyl(char *line)
 {
-	t_obj object;
+	t_obj *object;
+	int		valid;
 
-	object.id = id;
-	object.fct = ft_axis_cyl;
-	object.v1 = ft_v_uni(ft_atovect(line));
-	line += ft_next_arg(line);
-	object.v2 = ft_v_uni(ft_atovect(line));
-	line += ft_next_arg(line);
-	object.d1 = ft_atof(line) / 2;
-	line += ft_next_arg(line);
-	object.d2 = ft_atof(line);
-	line += ft_next_arg(line);
-	object.color = ft_atocol(line);
+	valid = 1;
+	if (!(object = (t_obj*)malloc(sizeof(t_obj))))
+		return (NULL);
+	object->fct = ft_axis_cyl;
+	object->v1 = ft_atovect(line);
+	valid &= ft_isvect(line);
+	object->v2 = ft_v_uni(ft_atovect((line += ft_next_arg(line))));
+	valid &= ft_isvect(line);
+	object->d1 = ft_atof((line += ft_next_arg(line))) / 2;
+	valid &= ft_isfloat(line);
+	object->d2 = ft_atof((line += ft_next_arg(line)));
+	valid &= ft_isfloat(line);
+	object->color = ft_atocol((line += ft_next_arg(line)));
+	valid &= ft_isrgb(line);
+	valid &= (*(line + ft_next_arg(line)) == 0);
+	if (!valid)
+	{
+		free(object);
+		return (NULL);
+	}
 	return (object);
 }
 

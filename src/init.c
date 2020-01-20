@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-
+/*
 void	ft_objs_counter(char *line, t_rgb *count)
 {
 	if (!line)
@@ -80,11 +80,13 @@ void	ft_fill_objs(char *line, t_obj **objs, t_light **lights, t_cam **cams, t_rg
 	else if (line[0] == 't' && line[1] == 'r' && ft_isspace(line[2]))
 		(*objs)[id->b-- - 1] = ft_init_tri(&line[2], nb++);
 }
+*/
 
 /*
 ** ft_init_rt returns 0 if malloc or anything fails in this case we have to free
 */
 
+/*
 int	ft_init_rt(char *file, t_cam **cams, t_light **lights, t_obj **objs)
 {
 	static t_rgb id;
@@ -112,6 +114,72 @@ int	ft_init_rt(char *file, t_cam **cams, t_light **lights, t_obj **objs)
 	free(line);
 	(fd > 0) ? close(fd) : 0;
 	return ((fd > 0) ? 1 : 0);
+}
+*/
+
+t_list	*ft_lst_obj(char *line)
+{
+	t_list *lst;
+
+	lst = ft_lstnew(NULL);
+	if (line[0] == 'p' && line[1] == 'l' && ft_isspace(line[2]))
+		lst = ft_lstnew(ft_init_plane(&line[2]));
+	else if (line[0] == 's' && line[1] == 'p' && ft_isspace(line[2]))
+		lst = ft_lstnew(ft_init_sphere(&line[2]));
+	else if (line[0] == 's' && line[1] == 'q' && ft_isspace(line[2]))
+		lst = ft_lstnew(ft_init_square(&line[2]));
+	else if (line[0] == 'c' && line[1] == 'y' && ft_isspace(line[2]))
+		lst = ft_lstnew(ft_init_cyl(&line[2]));
+	else if (line[0] == 't' && line[1] == 'r' && ft_isspace(line[2]))
+		lst = ft_lstnew(ft_init_tri(&line[2]));
+	return (lst);
+}
+
+int	ft_fill_objs(char *line, t_data *data)
+{
+	t_list *lst;
+
+	if (!line)
+		return (0);
+	if (line[0] == 0)
+		return (1);
+	if (line[0] == 'R' && ft_isspace(line[1]))
+	{
+		ft_data_res(data, &line[1]);
+		return (1);
+	}
+	if (line[0] == 'c' && ft_isspace(line[1]))
+		ft_lstadd_back(&data->cams, (lst = ft_lstnew(ft_init_cam(&line[1]))));
+	else if ((line[0] == 'A' || line[0] == 'l') && ft_isspace(line[1]))
+		ft_lstadd_back(&data->lights, (lst = ft_lstnew(ft_init_light(line))));
+	else
+		ft_lstadd_back(&data->objs, (lst = ft_lst_obj(line)));
+	if (!lst->content)
+		return (0);
+	return (1);
+}
+
+int	ft_init_rt(char *file, t_data *data)
+{
+	int		fd;
+	char	*line;
+	int		res;
+
+	res = 1;
+	line = NULL;
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		ft_putstr_fd("Error Reading file\n", 1);
+	while (get_next_line(fd, &line))
+	{
+		printf("line : %s\n", line);
+		res &= ft_fill_objs(line, data);
+		free(line);
+	}
+	res &= ft_fill_objs(line, data);
+	free(line);
+	(fd > 0) ? close(fd) : 0;
+	return ((fd > 0 && res) ? 1 : 0);
 }
 
 int		ft_next_arg(char *line)

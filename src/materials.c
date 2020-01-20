@@ -12,15 +12,15 @@
 
 #include "minirt.h"
 
-t_mat	ft_init_mat(t_vect pos, double dist, int color)
+t_mat	ft_init_mat(t_vect pos)
 {
 	t_mat mat;
 
 	mat.id = 0;
 	mat.pos = pos;
 	mat.norm = ft_v_init(0, 0, 0);
-	mat.dist = dist;
-	mat.color = color;
-	mat.pxl = 0;
+	mat.dist = INFINITY;
+	mat.color = 0;
+	mat.pxl = BACKGROUND;
 	return (mat);
 }

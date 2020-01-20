@@ -12,19 +12,29 @@
 
 #include "../../minirt.h"
 
-t_obj	ft_init_tri(char *line, int id)
+t_obj	*ft_init_tri(char *line)
 {
-	t_obj object;
+	t_obj *object;
+	int		valid;
 
-	object.id = id;
-	object.fct = ft_axis_tri;
-	object.v1 = ft_atovect(line);
-	line += ft_next_arg(line);
-	object.v2 = ft_atovect(line);
-	line += ft_next_arg(line);
-	object.v3 = ft_atovect(line);
-	line += ft_next_arg(line);
-	object.color = ft_atocol(line);
+	valid = 1;
+	if (!(object = (t_obj*)malloc(sizeof(t_obj))))
+		return (NULL);
+	object->fct = ft_axis_tri;
+	object->v1 = ft_atovect(line);
+	valid &= ft_isvect(line);
+	object->v2 = ft_atovect((line += ft_next_arg(line)));
+	valid &= ft_isvect(line);
+	object->v3 = ft_atovect((line += ft_next_arg(line)));
+	valid &= ft_isvect(line);
+	object->color = ft_atocol((line += ft_next_arg(line)));
+	valid &= ft_isrgb(line);
+	valid &= (*(line + ft_next_arg(line)) == 0);
+	if (!valid)
+	{
+		free(object);
+		return (NULL);
+	}
 	return (object);
 }
 
