@@ -43,7 +43,8 @@ SBONUS		= ft_lstadd_front_bonus.c\
 				ft_lstsize_bonus.c\
 				ft_lstlast_bonus.c\
 				ft_lstnew_bonus.c\
-				ft_lstmap_bonus.c
+				ft_lstmap_bonus.c\
+				ft_lstpush_back.c
 
 SRCSH		= libft.h
 

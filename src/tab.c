@@ -57,22 +57,24 @@ t_vect	ft_screen(t_cam cam, int i, int j)
 	return (ft_v_add(v, cam.pos));
 }
 
-t_mat	**ft_init_tab(t_cam cam)
+t_mat	**ft_init_tab(t_cam *cam)
 {
 	t_mat	**tab;
 	int		i;
 	int		j;
 
 	j = 0;
-	if (!(tab = (t_mat**)malloc((cam.size_y + 1) * sizeof(t_mat*))))
+	if (!cam)
 		return (NULL);
-	while (j < cam.size_y)
+	if (!(tab = (t_mat**)malloc((cam->size_y + 1) * sizeof(t_mat*))))
+		return (NULL);
+	while (j < cam->size_y)
 	{
 		i = 0;
-		if (!(tab[j] = (t_mat*)malloc((cam.size_x + 1) * sizeof(t_mat))))
+		if (!(tab[j] = (t_mat*)malloc((cam->size_x + 1) * sizeof(t_mat))))
 			return (NULL);
-		while (i < cam.size_x)
-			tab[j][i++] = ft_init_mat(ft_screen(cam, i, j));
+		while (i < cam->size_x)
+			tab[j][i++] = ft_init_mat(ft_screen(*cam, i, j));
 		tab[j++][i].id = -1;
 	}
 	tab[j] = NULL;

@@ -48,17 +48,6 @@ typedef struct	s_rgb
 ** Mains ***********************************************************************
 */
 
-typedef struct	s_data
-{
-	void	*mlx_ptr;
-	void	*mlx_win;
-	void	*img_ptr;
-	int		res_x;
-	int		res_y;
-	t_list	*objs;
-	t_list	*lights;
-	t_list	*cams;
-}				t_data;
 
 typedef struct	s_line
 {
@@ -77,6 +66,19 @@ typedef struct	s_material
 	int		color;
 	int		pxl;
 }				t_mat;
+
+typedef struct	s_data
+{
+	t_mat	**tab;
+	void	*mlx_ptr;
+	void	*mlx_win;
+	void	*img_ptr;
+	int		res_x;
+	int		res_y;
+	t_list	*objs;
+	t_list	*lights;
+	t_list	*cams;
+}				t_data;
 
 /*
 ** Objects *********************************************************************
@@ -131,6 +133,8 @@ struct	s_light
 **    /_/    \__,_/_/ /_/\___/\__/_/\____/_/ /_/____/
 */
 
+void ft_free_data(t_data *data);
+
 
 /*
 ** init.c
@@ -155,7 +159,7 @@ int		ft_next_arg(char *line);
 
 void ft_place_objects(t_data *data, t_cam *cam, t_mat **tab);
 void	ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab);//, t_mat (*f)(t_obj, t_line));
-t_mat	**ft_init_tab(t_cam cam);
+t_mat	**ft_init_tab(t_cam *cam);
 void	ft_put_tab(t_data data, t_mat **tab);
 t_vect	ft_screen(t_cam cam, int i, int j);
 
