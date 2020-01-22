@@ -29,12 +29,15 @@ SRCSC		= objects/cam.c	\
 				utils/istype.c \
 				utils/vector.c \
 				utils/vector2.c \
+				events.c \
 				init.c \
+				main.c \
 				materials.c \
 				minirt.c \
 				tab.c \
-				get_next_line/*.c \
-				libft/*.c
+				end.c \
+				libft/*.c \
+				libft/get_next_line/*.c
 
 #	Objects
 OBJDIR		= obj
@@ -46,7 +49,7 @@ SRCSH		= minirt.h
 
 #	Libraries
 MINILIBDIR	= minilibx
-MINILIB		= ./src/minilibx/libmlx.a
+MINILIB		= ./includes/minilibx/libmlx.a
 
 #	Name
 NAME		= miniRT

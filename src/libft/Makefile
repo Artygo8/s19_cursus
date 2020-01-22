@@ -33,7 +33,9 @@ SRCSC		= ft_memset.c \
 				ft_putstr_fd.c \
 				ft_putendl_fd.c \
 				ft_putnbr_fd.c \
-				ft_split.c
+				ft_split.c \
+				get_next_line/get_next_line.c \
+				get_next_line/get_next_line_utils.c
 
 SBONUS		= ft_lstadd_front_bonus.c\
 				ft_lstadd_back_bonus.c\

@@ -33,6 +33,7 @@ t_cam	*ft_init_cam(char *line)
 	valid = 1;
 	if (!(cam = (t_cam*)malloc(sizeof(t_cam))))
 		return (NULL);
+	ft_bzero(cam, sizeof(t_cam));
 	cam->pos = ft_atovect(line);
 	valid &= ft_isvect(line);
 	cam->dir = ft_v_uni(ft_atovect((line += ft_next_arg(line))));

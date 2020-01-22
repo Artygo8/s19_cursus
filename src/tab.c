@@ -31,19 +31,17 @@ void ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab)
 	int		i;
 	int		j;
 
-	j = 0;
-	while (tab[j])
+	j = cam.size_y;
+	while (j--)
 	{
-		i = 0;
-		while (tab[j][i].id != -1)
+		i = cam.size_x;
+		while (i--)
 		{
 			axis = ft_ray(cam.pos, tab[j][i].pos);
 			tmp = s.fct(s, axis);
 			if (tmp.dist > 0 && tmp.dist < tab[j][i].dist)
 				tab[j][i] = tmp;
-			i++;
 		}
-		j++;
 	}
 }
 
@@ -57,25 +55,24 @@ t_vect	ft_screen(t_cam cam, int i, int j)
 	return (ft_v_add(v, cam.pos));
 }
 
-t_mat	**ft_init_tab(t_cam *cam)
+t_mat	**ft_init_tab(t_cam cam)
 {
 	t_mat	**tab;
 	int		i;
 	int		j;
 
-	j = 0;
-	if (!cam)
+	if (!(tab = (t_mat**)malloc((cam.size_y + 1) * sizeof(t_mat*))))
 		return (NULL);
-	if (!(tab = (t_mat**)malloc((cam->size_y + 1) * sizeof(t_mat*))))
-		return (NULL);
-	while (j < cam->size_y)
+	j = cam.size_y;
+	while (j--)
 	{
-		i = 0;
-		if (!(tab[j] = (t_mat*)malloc((cam->size_x + 1) * sizeof(t_mat))))
+		if (!(tab[j] = (t_mat*)malloc((cam.size_x + 1) * sizeof(t_mat))))
 			return (NULL);
-		while (i < cam->size_x)
-			tab[j][i++] = ft_init_mat(ft_screen(*cam, i, j));
-		tab[j++][i].id = -1;
+		ft_bzero(tab[j], sizeof(t_mat));
+		i = cam.size_x;
+		while (i--)
+			tab[j][i] = ft_init_mat(ft_screen(cam, i, j));
+		tab[j][i].id = -1;
 	}
 	tab[j] = NULL;
 	return (tab);
@@ -86,15 +83,11 @@ void	ft_put_tab(t_data data, t_mat **tab)
 	int i;
 	int j;
 
-	j = 0;
-	while (tab[j])
+	j = data.res_y;
+	while (j--)
 	{
-		i = 0;
-		while (tab[j][i].id >= 0)
-		{
+		i = data.res_x;
+		while (i--)
 			mlx_pixel_put(data.mlx_ptr, data.mlx_win, i, j, tab[j][i].pxl);
-			i++;
-		}
-		j++;
 	}
 }

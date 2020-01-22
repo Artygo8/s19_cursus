@@ -20,6 +20,7 @@ t_obj	*ft_init_tri(char *line)
 	valid = 1;
 	if (!(object = (t_obj*)malloc(sizeof(t_obj))))
 		return (NULL);
+	ft_bzero(object, sizeof(t_obj));
 	object->fct = ft_axis_tri;
 	object->v1 = ft_atovect(line);
 	valid &= ft_isvect(line);

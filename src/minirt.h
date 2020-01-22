@@ -16,9 +16,8 @@
 # include <string.h>
 # include <math.h>
 # include <stdio.h>
-# include "minilibx/mlx.h"
+# include "../includes/minilibx/mlx.h"
 # include "libft/libft.h"
-# include "get_next_line/get_next_line.h"
 # define EPS 0.000001
 # define R 0xff0000
 # define G 0x00ff00
@@ -133,7 +132,24 @@ struct	s_light
 **    /_/    \__,_/_/ /_/\___/\__/_/\____/_/ /_/____/
 */
 
+/*
+** events.c
+*/
+
+int ft_key(int key, void *p);
+int	ft_expose(void *p);
+int	ft_mouse(int button,int x,int y, void *p);
+int ft_events(t_data *data);
+
+/*
+** minirt.c
+*/
+void ft_show(t_data *data);
+void ft_free_tab(t_mat **tab);
 void ft_free_data(t_data *data);
+int	ft_minirt(char *file);
+t_data	*ft_data(char *file);
+void	ft_obj_ids(t_list *objs);
 
 
 /*
@@ -146,20 +162,12 @@ int		ft_fill_objs(char *line, t_data *data);
 int		ft_next_arg(char *line);
 
 /*
-void	ft_objs_counter(char *line, t_rgb *count);
-t_rgb	ft_objs_number(char *file);
-void	ft_fill_objs(char *line, t_obj **objs, t_light **lights, t_cam **cams, t_rgb *id);
-int		ft_init_rt(char *file, t_cam **cams, t_light **lights, t_obj **objs);
-int		ft_next_arg(char *line);
-*/
-
-/*
 ** tab.c
 */
 
 void ft_place_objects(t_data *data, t_cam *cam, t_mat **tab);
 void	ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab);//, t_mat (*f)(t_obj, t_line));
-t_mat	**ft_init_tab(t_cam *cam);
+t_mat	**ft_init_tab(t_cam cam);
 void	ft_put_tab(t_data data, t_mat **tab);
 t_vect	ft_screen(t_cam cam, int i, int j);
 
