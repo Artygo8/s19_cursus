@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cam->c                                              :+:      :+:    :+:   */
+/*   cam.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/07 17:43:26 by agossuin          #+#    #+#             */
-/*   Updated: 2020/01/07 17:43:28 by agossuin         ###   ########.fr       */
+/*   Created: 2020/01/22 17:39:52 by agossuin          #+#    #+#             */
+/*   Updated: 2020/01/22 17:39:58 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minirt.h"
 
-void ft_init_cam_sys(t_cam *cam)
+void	ft_init_cam_sys(t_cam *cam)
 {
 	t_vect	up;
 
-	up = ft_v_init(0,-1,0);
+	up = (t_vect){0, -1, 0};
 	if (ft_v_len(cam->dir) < EPS)
-		cam->dir = ft_v_init(0,0,1);
+		cam->dir = (t_vect){0, 0, 1};
 	cam->right = ft_v_uni(ft_cross(cam->dir, up));
 	if (ft_v_len(cam->right) < EPS)
-		cam->right = ft_v_init(0,1,0);
+		cam->right = (t_vect){0, 1, 0};
 	cam->top = ft_v_uni(ft_cross(cam->right, cam->dir));
 }
 

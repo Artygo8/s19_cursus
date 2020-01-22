@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   end.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/22 17:34:07 by agossuin          #+#    #+#             */
+/*   Updated: 2020/01/22 17:34:34 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-void ft_free_tab(t_mat **tab)
+void	ft_free_tab(t_mat **tab)
 {
 	int i;
 
@@ -10,7 +22,7 @@ void ft_free_tab(t_mat **tab)
 	free(tab);
 }
 
-void ft_free_data(t_data *data)
+void	ft_free_data(t_data *data)
 {
 	ft_lstclear(&(data->objs), free);
 	ft_lstclear(&(data->cams), free);

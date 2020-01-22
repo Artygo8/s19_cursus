@@ -64,11 +64,6 @@ double		ft_v_dist(t_vect v1, t_vect v2)
 ** Normalized direction from one point to the other
 */
 
-t_vect		ft_v_dir(t_vect v1, t_vect v2)
-{
-	return(ft_v_uni(ft_v_sub(v2, v1)));
-}
-
 t_line		ft_ray(t_vect origin, t_vect point)
 {
 	t_line ray;

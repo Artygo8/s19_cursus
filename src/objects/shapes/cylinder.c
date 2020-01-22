@@ -23,7 +23,7 @@
 
 t_obj	*ft_init_cyl(char *line)
 {
-	t_obj *object;
+	t_obj	*object;
 	int		valid;
 
 	valid = 1;
@@ -68,16 +68,16 @@ int		ft_valid_sol_cyl(t_line line, t_obj cyl, double sol)
 	pos = ft_v_add(line.ori, ft_v_mult(line.dir, sol));
 	if (ft_v_dist(pos, cyl.v1) > sqrt(pow(cyl.d1, 2) + pow(cyl.d2, 2)))
 		return (0);
- 	if (ft_dot(ft_v_sub(pos, cyl.v1), cyl.v2) < 0)
+	if (ft_dot(ft_v_sub(pos, cyl.v1), cyl.v2) < 0)
 		return (0);
 	return (1);
 }
 
 double	ft_cyl_sol(t_obj cyl, t_line line)
 {
-	double a;
-	double b;
-	double c;
+	double	a;
+	double	b;
+	double	c;
 	t_vect	vx;
 	double	sol;
 
@@ -85,7 +85,7 @@ double	ft_cyl_sol(t_obj cyl, t_line line)
 	a = ft_dot(line.dir, line.dir) - pow(ft_dot(line.dir, cyl.v2), 2);
 	b = 2 * ((ft_dot(line.dir, vx) -
 		(ft_dot(line.dir, cyl.v2) * ft_dot(vx, cyl.v2))));
-	c = ft_dot(vx, vx) - pow(ft_dot(vx, cyl.v2), 2) - cyl.d1 *cyl.d1;
+	c = ft_dot(vx, vx) - pow(ft_dot(vx, cyl.v2), 2) - cyl.d1 * cyl.d1;
 	sol = ft_quad_solv(a, b, c);
 	if (!(ft_valid_sol_cyl(line, cyl, sol)))
 		sol = ft_quad_solv2(a, b, c);

@@ -20,7 +20,7 @@
 
 t_obj	*ft_init_sphere(char *line)
 {
-	t_obj *object;
+	t_obj	*object;
 	int		valid;
 
 	valid = 1;

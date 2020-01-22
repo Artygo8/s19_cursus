@@ -76,7 +76,7 @@ int		ft_len_float(char *s)
 	{
 		i++;
 		while (ft_isdigit(s[i]))
-		i++;
+			i++;
 	}
 	return (i);
 }

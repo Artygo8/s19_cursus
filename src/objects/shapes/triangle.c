@@ -14,7 +14,7 @@
 
 t_obj	*ft_init_tri(char *line)
 {
-	t_obj *object;
+	t_obj	*object;
 	int		valid;
 
 	valid = 1;

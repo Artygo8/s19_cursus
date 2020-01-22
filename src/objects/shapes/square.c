@@ -20,16 +20,16 @@
 ** d1 is the Height.
 */
 
-void ft_init_sq_sys(t_obj *object)
+void	ft_init_sq_sys(t_obj *object)
 {
 	t_vect	up;
 
-	up = ft_v_init(0,-1,0);
+	up = (t_vect){0, -1, 0};
 	if (ft_v_len(object->v2) < EPS)
-		object->v2 = ft_v_init(0,0,1);
+		object->v2 = (t_vect){0, 0, 1};
 	object->v3 = ft_v_uni(ft_cross(object->v2, up));
 	if (ft_v_len(object->v3) < EPS)
-		object->v3 = ft_v_init(0,1,0);
+		object->v3 = (t_vect){0, 1, 0};
 }
 
 t_obj	*ft_init_square(char *line)

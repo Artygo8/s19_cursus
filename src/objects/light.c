@@ -40,7 +40,7 @@ t_light	*ft_init_light(char *line)
 	return (light);
 }
 
-void ft_put_lights(t_data *data, t_cam *cam, t_mat **tab)
+void	ft_put_lights(t_data *data, t_cam *cam, t_mat **tab)
 {
 	t_list *light;
 
@@ -71,7 +71,7 @@ t_mat	ft_closest_obj(t_list *objs, t_line ray)
 	return (mat);
 }
 
-void ft_put_light(t_list *objs, t_cam *cam, t_light *light, t_mat **tab)
+void	ft_put_light(t_list *objs, t_cam *cam, t_light *light, t_mat **tab)
 {
 	t_line	ray;
 	int		i;

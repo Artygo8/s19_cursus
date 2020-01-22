@@ -54,7 +54,7 @@ t_vect	ft_atovect(char *s)
 	return (v);
 }
 
-int	ft_atocol(char *s)
+int		ft_atocol(char *s)
 {
 	int c;
 

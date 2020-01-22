@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-void ft_show(t_data *data)
+void	ft_show(t_data *data)
 {
 	mlx_clear_window(data->mlx_ptr, data->mlx_win);
 	if (!(data->tab = ft_init_tab(*((t_cam*)data->cams->content))))
@@ -33,32 +33,32 @@ void	ft_obj_ids(t_list *objs)
 	}
 }
 
-t_data	*ft_data(char *file) //ft_data
+t_data	*ft_data(char *file)
 {
 	t_data	*data;
 
 	if (!(data = (t_data*)malloc(sizeof(t_data))))
-		return 0;
+		return (0);
 	ft_bzero(data, sizeof(t_data));
 	if ((data->mlx_ptr = mlx_init()) == NULL)
-		return 0;
+		return (0);
 	if (!(ft_init_rt(file, data)))
 	{
 		ft_free_data(data);
-		return 0;
+		return (0);
 	}
 	if ((data->mlx_win = mlx_new_window(data->mlx_ptr, data->res_x,
 		data->res_y, file)) == NULL)
 	{
 		ft_free_data(data);
-		return 0;
+		return (0);
 	}
 	ft_cam_ids(data->cams, data->res_x, data->res_y);
 	ft_obj_ids(data->objs);
 	return (data);
 }
 
-int	ft_minirt(char *file) //ft_data
+int		ft_minirt(char *file)
 {
 	t_data *data;
 

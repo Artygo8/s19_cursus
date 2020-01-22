@@ -69,16 +69,7 @@ t_vect		ft_v_uni(t_vect v)
 	return (v);
 }
 
-/*
-** Create a vector with values x=a, y=b, z=c.
-*/
-
-t_vect		ft_v_init(double a, double b, double c)
+t_vect		ft_v_dir(t_vect v1, t_vect v2)
 {
-	t_vect v;
-
-	v.x = a;
-	v.y = b;
-	v.z = c;
-	return (v);
+	return (ft_v_uni(ft_v_sub(v2, v1)));
 }
