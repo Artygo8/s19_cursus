@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../minirt.h"
 
 t_list	*ft_lst_obj(char *line)
 {
@@ -64,7 +64,10 @@ int		ft_init_rt(char *file, t_data *data)
 	line = NULL;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
+	{
 		ft_putstr_fd("Error Reading file\n", 1);
+		return (0);
+	}
 	while (get_next_line(fd, &line))
 	{
 		res &= ft_fill_objs(line, data);
@@ -72,7 +75,7 @@ int		ft_init_rt(char *file, t_data *data)
 	}
 	res &= ft_fill_objs(line, data);
 	free(line);
-	(fd > 0) ? close(fd) : 0;
+	close(fd);
 	return ((fd > 0 && res) ? 1 : 0);
 }
 

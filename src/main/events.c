@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../minirt.h"
 
 int	exit_hook(void *p)
 {
@@ -22,11 +22,10 @@ int	ft_key(int key, void *p)
 {
 	if (key == 8)
 	{
-		((t_data *)p)->cams = (((t_data *)p)->cams)->next;
 		if (!((t_data *)p)->cams)
 		{
 			ft_putstr_fd("No More Cameras\n", 1);
-			exit(0);
+			ft_free_data((t_data *)p);
 		}
 		else
 			ft_show((t_data *)p);

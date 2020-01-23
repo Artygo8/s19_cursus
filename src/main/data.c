@@ -10,16 +10,48 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../minirt.h"
+
+t_mat	**ft_free_tab(t_mat **tab, int res_y)
+{
+	int i;
+
+	i = 0;
+	while (tab && i < res_y)
+	{
+		free(tab[i]);
+		tab[i++] = NULL;
+	}
+	free(tab);
+	return (NULL);
+}
+
+void	ft_free_data(t_data *data, const char *str)
+{
+	ft_putstr_fd(str, 1);
+	ft_lstclear(&(data->objs), free);
+	ft_lstclear(&(data->cams), free);
+	ft_lstclear(&(data->lights), free);
+	data->tab = ft_free_tab(data->tab, data->res_y);
+	free(data->mlx_ptr);
+	free(data->mlx_win);
+	free(data);
+	exit(0);
+}
 
 void	ft_show(t_data *data)
 {
-	mlx_clear_window(data->mlx_ptr, data->mlx_win);
+	t_list *tmp;
+
 	if (!(data->tab = ft_init_tab(*((t_cam*)data->cams->content))))
-		ft_free_data(data);
+		ft_free_data(data, "FAILED INIT TAB");
 	ft_place_objects(data, (t_cam*)data->cams->content, data->tab);
 	ft_put_lights(data, (t_cam*)data->cams->content, data->tab);
 	ft_put_tab(*data, data->tab);
+	tmp = (t_list *)(data->cams);
+	data->cams = (data->cams)->next;
+	free(tmp);
+	data->tab = ft_free_tab(data->tab, data->res_y);
 }
 
 void	ft_obj_ids(t_list *objs)
@@ -56,19 +88,4 @@ t_data	*ft_data(char *file)
 	ft_cam_ids(data->cams, data->res_x, data->res_y);
 	ft_obj_ids(data->objs);
 	return (data);
-}
-
-int		ft_minirt(char *file)
-{
-	t_data *data;
-
-	if (!(data = ft_data(file)))
-	{
-		ft_putstr_fd("PARSING ERROR\n", 1);
-		return (0);
-	}
-	ft_show(data);
-	ft_events(data);
-	ft_free_data(data);
-	return (0);
 }

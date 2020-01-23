@@ -29,15 +29,12 @@ SRCSC		= objects/cam.c	\
 				utils/istype.c \
 				utils/vector.c \
 				utils/vector2.c \
-				events.c \
-				init.c \
-				main.c \
-				materials.c \
-				minirt.c \
-				tab.c \
-				end.c \
-				libft/*.c \
-				libft/get_next_line/*.c
+				main/events.c \
+				main/parse.c \
+				main/main.c \
+				main/materials.c \
+				main/data.c \
+				main/tab.c \
 
 #	Objects
 OBJDIR		= obj
@@ -48,8 +45,10 @@ DIRH		= ./src
 SRCSH		= minirt.h
 
 #	Libraries
-MINILIBDIR	= minilibx
-MINILIB		= ./includes/minilibx/libmlx.a
+MINILIBDIR	= ./includes/minilibx
+MINILIB		= libmlx.a
+LIBFTDIR	= ./includes/libft
+LIBFT		= libft.a
 
 #	Name
 NAME		= miniRT
@@ -75,15 +74,26 @@ else
 	CFLAGS		= -framework OpenGL -framework AppKit
 endif
 
-$(NAME):
-			${CC} ${VPATH} ${PATHLIB} ${MINILIB} ${CFLAGS} -o ${NAME}
+$(NAME):	${OBJS} ${MINILIB} ${LIBFT}
+			${CC} ${VPATH} ${PATHLIB} ${OBJS} ${MINILIBDIR}/${MINILIB} \
+			${LIBFTDIR}/${LIBFT} ${CFLAGS} -o ${NAME}
+
+$(MINILIB):	${MINILIBDIR}
+			cd ${MINILIBDIR} && make $@
+
+$(LIBFT):	${LIBFTDIR}
+			cd ${LIBFTDIR} && make bonus
 
 all:		${NAME}
 
 clean:
+			${RM} ${OBJS}
+			cd ${MINILIBDIR} && make $@
+			cd ${LIBFTDIR} && make $@
 
 fclean:		clean
 			${RM} ${NAME}
+			cd ${LIBFTDIR} && make $@
 
 re:			fclean all
 

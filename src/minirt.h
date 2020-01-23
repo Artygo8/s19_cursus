@@ -17,8 +17,9 @@
 # include <math.h>
 # include <stdio.h>
 # include "../includes/minilibx/mlx.h"
-# include "libft/libft.h"
+# include "../includes/libft/libft.h"
 # define EPS 0.000001
+# define PI 3.14159265
 # define R 0xff0000
 # define G 0x00ff00
 # define B 0x0000ff
@@ -35,13 +36,6 @@ typedef struct	s_vector
 	double	y;
 	double	z;
 }				t_vect;
-
-typedef struct	s_rgb
-{
-	int	r;
-	int	g;
-	int	b;
-}				t_rgb;
 
 /*
 ** Mains ***********************************************************************
@@ -70,7 +64,6 @@ typedef struct	s_data
 	t_mat	**tab;
 	void	*mlx_ptr;
 	void	*mlx_win;
-	void	*img_ptr;
 	int		res_x;
 	int		res_y;
 	t_list	*objs;
@@ -130,26 +123,32 @@ struct			s_light
 */
 
 /*
+** data.c
+*/
+
+t_mat			**ft_free_tab(t_mat **tab, int res_y);
+void			ft_free_data(t_data *data);
+void			ft_show(t_data *data);
+void			ft_obj_ids(t_list *objs);
+t_data			*ft_data(char *file);
+
+/*
 ** events.c
 */
 
 int				ft_key(int key, void *p);
-int				ft_expose(void *p);
 int				ft_mouse(int button, int x, int y, void *p);
 int				ft_events(t_data *data);
 
 /*
-** minirt.c
+** materials.c
 */
-void			ft_show(t_data *data);
-void			ft_free_tab(t_mat **tab);
-void			ft_free_data(t_data *data);
-int				ft_minirt(char *file);
-t_data			*ft_data(char *file);
-void			ft_obj_ids(t_list *objs);
+
+t_vect			ft_screen(t_cam cam, int i, int j);
+t_mat			ft_init_mat(t_vect pos);
 
 /*
-** init.c
+** parse.c
 */
 
 t_list			*ft_lst_obj(char *line);
@@ -165,13 +164,6 @@ void			ft_place_objects(t_data *data, t_cam *cam, t_mat **tab);
 void			ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab);
 t_mat			**ft_init_tab(t_cam cam);
 void			ft_put_tab(t_data data, t_mat **tab);
-t_vect			ft_screen(t_cam cam, int i, int j);
-
-/*
-** materials.c
-*/
-
-t_mat			ft_init_mat(t_vect pos);
 
 /*
 **             __      _           __

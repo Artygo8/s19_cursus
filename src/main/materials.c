@@ -10,7 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../minirt.h"
+
+t_vect	ft_screen(t_cam cam, int i, int j)
+{
+	t_vect v;
+
+	v = ft_v_mult(cam.dir, cam.dist);
+	v = ft_v_add(v, ft_v_mult(cam.top, ((float)j - (float)cam.size_y / 2)));
+	v = ft_v_add(v, ft_v_mult(cam.right, ((float)i - (float)cam.size_x / 2)));
+	return (ft_v_add(v, cam.pos));
+}
 
 t_mat	ft_init_mat(t_vect pos)
 {

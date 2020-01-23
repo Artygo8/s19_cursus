@@ -10,10 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../minirt.h"
+
+int	ft_explain(char *str)
+{
+	ft_putstr_fd(str, 1);
+	write(1, "\n", 1);
+	return (0);
+}
 
 int	main(int argc, char const *argv[])
 {
-	ft_minirt((char*)argv[1]);
+	t_data *data;
+
+	if (!(argc == 2 || argc == 1))
+		return (ft_explain("WRONG NUMBER OF ARGUMENTS"));
+	if (!(data = ft_data((char*)argv[1])))
+		return (ft_explain("PARSING ERROR"));
+	if (argc == 2)
+	{
+		ft_show(data);
+		ft_events(data);
+		ft_free_data(data);
+	}
+	if (argc == 3 && ft_strncmp((char*)argv[2], "-save", 6))
+	{
+
+	}
 	return (0);
 }

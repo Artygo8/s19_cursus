@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../minirt.h"
 
 void	ft_place_objects(t_data *data, t_cam *cam, t_mat **tab)
 {
@@ -45,16 +45,6 @@ void	ft_obj_in_tab(t_obj s, t_cam cam, t_mat **tab)
 	}
 }
 
-t_vect	ft_screen(t_cam cam, int i, int j)
-{
-	t_vect v;
-
-	v = ft_v_mult(cam.dir, cam.dist);
-	v = ft_v_add(v, ft_v_mult(cam.top, ((float)j - (float)cam.size_y / 2)));
-	v = ft_v_add(v, ft_v_mult(cam.right, ((float)i - (float)cam.size_x / 2)));
-	return (ft_v_add(v, cam.pos));
-}
-
 t_mat	**ft_init_tab(t_cam cam)
 {
 	t_mat	**tab;
@@ -67,7 +57,10 @@ t_mat	**ft_init_tab(t_cam cam)
 	while (j--)
 	{
 		if (!(tab[j] = (t_mat*)malloc((cam.size_x + 1) * sizeof(t_mat))))
+		{
+			ft_free_tab(tab, j);
 			return (NULL);
+		}
 		ft_bzero(tab[j], sizeof(t_mat));
 		i = cam.size_x;
 		while (i--)
