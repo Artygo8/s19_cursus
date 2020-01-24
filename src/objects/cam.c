@@ -74,7 +74,7 @@ void	ft_cam_ids(t_list *cams, int res_x, int res_y)
 		((t_cam*)cams->content)->size_x = res_x;
 		((t_cam*)cams->content)->size_y = res_y;
 		d = ((t_cam*)cams->content)->dist;
-		((t_cam*)cams->content)->dist = res_x / (2 * tan(d * PI / 180));
+		((t_cam*)cams->content)->dist = res_x / (tan(d * PI / 180));
 		ft_cam_ids(cams->next, res_x, res_y);
 	}
 }

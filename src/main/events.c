@@ -14,7 +14,7 @@
 
 int	exit_hook(void *p)
 {
-	ft_free_data(((t_data *)p));
+	ft_free_data(((t_data *)p), "");
 	return (0);
 }
 
@@ -23,15 +23,12 @@ int	ft_key(int key, void *p)
 	if (key == 8)
 	{
 		if (!((t_data *)p)->cams)
-		{
-			ft_putstr_fd("No More Cameras\n", 1);
-			ft_free_data((t_data *)p);
-		}
+			ft_free_data((t_data *)p, "No More Cameras");
 		else
 			ft_show((t_data *)p);
 	}
 	if (key == 53)
-		ft_free_data((t_data *)p);
+		ft_free_data((t_data *)p, "Closing Window");
 	return (0);
 }
 

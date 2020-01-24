@@ -31,7 +31,7 @@ int	main(int argc, char const *argv[])
 	{
 		ft_show(data);
 		ft_events(data);
-		ft_free_data(data);
+		ft_free_data(data, "End Of Program");
 	}
 	if (argc == 3 && ft_strncmp((char*)argv[2], "-save", 6))
 	{

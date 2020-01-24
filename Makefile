@@ -74,12 +74,9 @@ else
 	CFLAGS		= -framework OpenGL -framework AppKit
 endif
 
-$(NAME):	${OBJS} ${MINILIB} ${LIBFT}
+$(NAME):	${OBJS} ${LIBFT}
 			${CC} ${VPATH} ${PATHLIB} ${OBJS} ${MINILIBDIR}/${MINILIB} \
 			${LIBFTDIR}/${LIBFT} ${CFLAGS} -o ${NAME}
-
-$(MINILIB):	${MINILIBDIR}
-			cd ${MINILIBDIR} && make $@
 
 $(LIBFT):	${LIBFTDIR}
 			cd ${LIBFTDIR} && make bonus
@@ -88,7 +85,6 @@ all:		${NAME}
 
 clean:
 			${RM} ${OBJS}
-			cd ${MINILIBDIR} && make $@
 			cd ${LIBFTDIR} && make $@
 
 fclean:		clean

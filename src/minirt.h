@@ -127,7 +127,7 @@ struct			s_light
 */
 
 t_mat			**ft_free_tab(t_mat **tab, int res_y);
-void			ft_free_data(t_data *data);
+void			ft_free_data(t_data *data, const char *str);
 void			ft_show(t_data *data);
 void			ft_obj_ids(t_list *objs);
 t_data			*ft_data(char *file);

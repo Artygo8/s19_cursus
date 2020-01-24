@@ -28,7 +28,7 @@ t_mat	**ft_free_tab(t_mat **tab, int res_y)
 
 void	ft_free_data(t_data *data, const char *str)
 {
-	ft_putstr_fd(str, 1);
+	ft_putstr_fd((char*)str, 1);
 	ft_lstclear(&(data->objs), free);
 	ft_lstclear(&(data->cams), free);
 	ft_lstclear(&(data->lights), free);
@@ -50,8 +50,8 @@ void	ft_show(t_data *data)
 	ft_put_tab(*data, data->tab);
 	tmp = (t_list *)(data->cams);
 	data->cams = (data->cams)->next;
-	free(tmp);
-	data->tab = ft_free_tab(data->tab, data->res_y);
+//	free(tmp);
+//	data->tab = ft_free_tab(data->tab, data->res_y);
 }
 
 void	ft_obj_ids(t_list *objs)
@@ -76,13 +76,13 @@ t_data	*ft_data(char *file)
 		return (0);
 	if (!(ft_init_rt(file, data)))
 	{
-		ft_free_data(data);
+		ft_free_data(data, "PARSING FAILED");
 		return (0);
 	}
 	if ((data->mlx_win = mlx_new_window(data->mlx_ptr, data->res_x,
 		data->res_y, file)) == NULL)
 	{
-		ft_free_data(data);
+		ft_free_data(data, "PARSING FAILED");
 		return (0);
 	}
 	ft_cam_ids(data->cams, data->res_x, data->res_y);
