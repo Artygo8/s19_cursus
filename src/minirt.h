@@ -24,6 +24,7 @@
 # define G 0x00ff00
 # define B 0x0000ff
 # define BACKGROUND 0
+# define SPECULAR 8
 # define SIZE_MAX_FLOAT 15
 
 /*
@@ -89,7 +90,6 @@ struct			s_camera
 	int		dist;
 	int		size_x;
 	int		size_y;
-	t_cam	*next;
 };
 
 struct			s_object
@@ -102,7 +102,6 @@ struct			s_object
 	double	d2;
 	int		color;
 	t_mat	(*fct)(t_obj s, t_line l);
-	t_obj	*next;
 };
 
 struct			s_light
@@ -111,7 +110,6 @@ struct			s_light
 	t_vect	pos;
 	double	percent;
 	int		color;
-	t_light	*next;
 };
 
 /*
@@ -173,6 +171,8 @@ void			ft_put_tab(t_data data, t_mat **tab);
 **    \____/_.___/_/ /\___/\___/\__/____/
 **              /___/
 */
+
+void	ft_specular(t_list *objs, t_cam *cam, t_light *light, t_mat **tab);
 
 /*
 ** cam.c
@@ -282,5 +282,7 @@ t_vect			ft_v_mult(t_vect v, double d);
 t_vect			ft_v_uni(t_vect v);
 t_vect			ft_v_dir(t_vect v1, t_vect v2);
 t_line			ft_ray(t_vect origin, t_vect point);
+t_vect			ft_refl(t_vect inc, t_vect norm);
+
 
 #endif

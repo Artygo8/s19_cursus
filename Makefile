@@ -18,6 +18,7 @@
 SRCDIR		= ./src
 SRCSC		= objects/cam.c	\
 				objects/light.c \
+				objects/mirror.c \
 				objects/shapes/cylinder.c \
 				objects/shapes/plane.c \
 				objects/shapes/sphere.c \
@@ -29,6 +30,7 @@ SRCSC		= objects/cam.c	\
 				utils/istype.c \
 				utils/vector.c \
 				utils/vector2.c \
+				main/bmp.c \
 				main/events.c \
 				main/parse.c \
 				main/main.c \
@@ -96,7 +98,7 @@ re:			fclean all
 bonus:		all
 
 test:		re
-			./miniRT scenes/simple/sphere.rt
+			./miniRT scenes/shades_of_grey.rt
 tr:			re
 			./miniRT scenes/simple/triangle.rt
 cy:			re

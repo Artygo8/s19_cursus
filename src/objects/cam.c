@@ -55,12 +55,12 @@ t_cam	*ft_init_cam(char *line)
 void	ft_data_res(t_data *data, char *line)
 {
 	data->res_x = ft_atoi(line);
-	if (data->res_x > 2560)
-		data->res_x = 2560;
+	if (data->res_x > 3200)
+		data->res_x = 3200;
 	line += ft_next_arg(line);
 	data->res_y = ft_atoi(line);
-	if (data->res_y > 1440)
-		data->res_y = 1440;
+	if (data->res_y > 1800)
+		data->res_y = 1800;
 }
 
 void	ft_cam_ids(t_list *cams, int res_x, int res_y)
@@ -74,7 +74,7 @@ void	ft_cam_ids(t_list *cams, int res_x, int res_y)
 		((t_cam*)cams->content)->size_x = res_x;
 		((t_cam*)cams->content)->size_y = res_y;
 		d = ((t_cam*)cams->content)->dist;
-		((t_cam*)cams->content)->dist = res_x / (tan(d * PI / 180));
+		((t_cam*)cams->content)->dist = res_x / (tan(d * PI / 360));
 		ft_cam_ids(cams->next, res_x, res_y);
 	}
 }

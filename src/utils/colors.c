@@ -23,12 +23,12 @@ int		ft_mult_color(int color, float m)
 	res = (color & B) * m;
 	if (res > B)
 		res = B;
-	res += (color & G) * m;
+	res += (int)((color & G) * m) & G;
 	if (res > (G | B))
-		res &= (G | B);
-	res += (color & R) * m;
+		res = G + (res & B);
+	res += (int)((color & R) * m) & R;
 	if (res > (R | G | B))
-		res &= (R | G | B);
+		res = R + (res & (G | B));
 	return (res);
 }
 
@@ -39,16 +39,19 @@ int		ft_mult_color(int color, float m)
 int		ft_add_color(int color_1, int color_2)
 {
 	int res;
+	int add;
 
-	res = (color_1 & 0xff) + (color_2 & 0xff);
+	res = (color_1 & B) + (color_2 & B);
 	if (res > B)
 		res = B;
-	res += (color_1 & 0xff00) + (color_2 & 0xff00);
-	if (res > (G | B))
-		res = G + (res & B);
-	res += (color_1 & 0xff0000) + (color_2 & 0xff0000);
-	if (res > (R | G | B))
-		res = R + (res & (G | B));
+	add = (color_1 & G) + (color_2 & G);
+	if (add > G)
+		add = G;
+	res += add;
+	add = (color_1 & R) + (color_2 & R);
+	if (add > R)
+		add = R;
+	res += add;
 	return (res);
 }
 

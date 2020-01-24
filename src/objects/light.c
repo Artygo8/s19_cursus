@@ -50,7 +50,10 @@ void	ft_put_lights(t_data *data, t_cam *cam, t_mat **tab)
 		if (((t_light*)light->content)->type == 'A')
 			ft_put_ambi(cam, ((t_light*)light->content), tab);
 		if (((t_light*)light->content)->type == 'l')
+		{
 			ft_put_light(data->objs, cam, ((t_light*)light->content), tab);
+			ft_specular(data->objs, cam, ((t_light*)light->content), tab);
+		}
 		light = light->next;
 	}
 }

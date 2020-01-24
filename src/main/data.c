@@ -29,6 +29,7 @@ t_mat	**ft_free_tab(t_mat **tab, int res_y)
 void	ft_free_data(t_data *data, const char *str)
 {
 	ft_putstr_fd((char*)str, 1);
+	ft_putchar_fd('\n', 1);
 	ft_lstclear(&(data->objs), free);
 	ft_lstclear(&(data->cams), free);
 	ft_lstclear(&(data->lights), free);
@@ -50,8 +51,8 @@ void	ft_show(t_data *data)
 	ft_put_tab(*data, data->tab);
 	tmp = (t_list *)(data->cams);
 	data->cams = (data->cams)->next;
-//	free(tmp);
-//	data->tab = ft_free_tab(data->tab, data->res_y);
+	free(tmp);
+	data->tab = ft_free_tab(data->tab, data->res_y);
 }
 
 void	ft_obj_ids(t_list *objs)
