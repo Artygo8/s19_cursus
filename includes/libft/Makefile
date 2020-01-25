@@ -78,6 +78,6 @@ fclean:		clean
 re:			fclean all
 
 bonus:		all ${OBONUS}
-			${AR} ${NAME} ${OBONUS}
+			${AR} ${NAME} ${OBJS} ${OBONUS}
 
 .PHONY:		all clean fclean re

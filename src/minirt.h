@@ -20,11 +20,12 @@
 # include "../includes/libft/libft.h"
 # define EPS 0.000001
 # define PI 3.14159265
+# define ALPHA 0xff000000
 # define R 0xff0000
 # define G 0x00ff00
 # define B 0x0000ff
 # define BACKGROUND 0
-# define SPECULAR 8
+# define SPECULAR 256
 # define SIZE_MAX_FLOAT 15
 
 /*
@@ -119,6 +120,10 @@ struct			s_light
 **     / __/ / /_/ / / / / /__/ /_/ / /_/ / / / (__  )
 **    /_/    \__,_/_/ /_/\___/\__/_/\____/_/ /_/____/
 */
+
+
+int	ft_bmp(t_data *data, char *file);
+
 
 /*
 ** data.c

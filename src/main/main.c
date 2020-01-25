@@ -23,7 +23,7 @@ int	main(int argc, char const *argv[])
 {
 	t_data *data;
 
-	if (!(argc == 2 || argc == 1))
+	if (!(argc == 2 || argc == 3))
 		return (ft_explain("WRONG NUMBER OF ARGUMENTS"));
 	if (!(data = ft_data((char*)argv[1])))
 		return (ft_explain("PARSING ERROR"));
@@ -33,9 +33,9 @@ int	main(int argc, char const *argv[])
 		ft_events(data);
 		ft_free_data(data, "End Of Program");
 	}
-	if (argc == 3 && ft_strncmp((char*)argv[2], "-save", 6))
+	if (argc == 3 && !ft_strncmp((char*)argv[2], "-save", 6))
 	{
-
+		ft_bmp(data, (char*)argv[1]);
 	}
 	return (0);
 }
