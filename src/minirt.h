@@ -25,7 +25,7 @@
 # define G 0x00ff00
 # define B 0x0000ff
 # define BACKGROUND 0
-# define SPECULAR 256
+# define SPECULAR 64
 # define SIZE_MAX_FLOAT 15
 
 /*

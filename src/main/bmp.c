@@ -2,9 +2,9 @@
 
 void	ft_putcolor_fd(int color, int fd)
 {
-	ft_putchar_fd((color & R) >> 16, fd);
-	ft_putchar_fd((color & G) >> 8, fd);
-	ft_putchar_fd(color & B, fd);
+	ft_putchar_fd(color >> 16, fd);
+	ft_putchar_fd(color >> 8, fd);
+	ft_putchar_fd(color, fd);
 }
 
 void	ft_putint_fd(int nb, int fd)
@@ -51,7 +51,6 @@ void ft_puttab_fd(t_mat **tab, int res_x, int res_y, int fd)
 		i = -1;
 		while (++i < res_x)
 			ft_putcolor_fd(tab[j][i].pxl, fd);
-		ft_putchar_fd(0, fd);
 	}
 }
 
@@ -65,15 +64,18 @@ int	ft_bmp(t_data *data, char *file)
 	name = ft_bmp_name(file);
 	if (!(data->tab = ft_init_tab(*((t_cam*)data->cams->content))))
 		ft_free_data(data, "FAILED INIT TAB");
+	ft_place_objects(data, (t_cam*)data->cams->content, data->tab);
+	ft_put_lights(data, (t_cam*)data->cams->content, data->tab);
 	if ((fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
 		ft_free_data(data, "FAIL OPENING FILE IN WRITING MODE");
 	ft_putstr_fd("BM", fd);
 	ft_putint_fd(0, fd);
-	ft_putint_fd(0, fd);
+	ft_putchar_fd(0, fd);
 	ft_putint_fd(54, fd);
 	ft_putint_fd(40, fd);
 	ft_putint_fd(data->res_x, fd);
 	ft_putint_fd(data->res_y, fd);
+	ft_putcolor_fd(0, fd);
 	ft_putint_fd(0x01001800, fd);
 	while (i++ < 6)
 		ft_putint_fd(0, fd);
