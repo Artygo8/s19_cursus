@@ -77,7 +77,9 @@ int	ft_bmp(t_data *data, char *file)
 	ft_putint_fd(data->res_y, fd);
 	ft_putcolor_fd(0, fd);
 	ft_putint_fd(0x01001800, fd);
-	while (i++ < 6)
+	ft_putint_fd(0, fd);
+	ft_putint_fd(((data->res_x * 3) + 1) * data->res_y + 54, fd);
+	while (i++ < 4)
 		ft_putint_fd(0, fd);
 	ft_puttab_fd(data->tab, data->res_x, data->res_y, fd);
 	free(name);
