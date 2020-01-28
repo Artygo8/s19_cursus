@@ -25,7 +25,7 @@ int	main(int argc, char const *argv[])
 
 	if (!(argc == 2 || argc == 3))
 		return (ft_explain("WRONG NUMBER OF ARGUMENTS"));
-	if (!(data = ft_data((char*)argv[1])))
+	if (!(data = ft_data((char*)argv[1], (argc == 2))))
 		return (ft_explain("PARSING ERROR"));
 	if (argc == 2)
 	{

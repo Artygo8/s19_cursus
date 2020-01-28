@@ -22,7 +22,7 @@ t_mat	**ft_free_tab(t_mat **tab, int res_y)
 		free(tab[i]);
 		tab[i++] = NULL;
 	}
-//	free(tab);
+	free(tab);
 	return (NULL);
 }
 
@@ -66,26 +66,23 @@ void	ft_obj_ids(t_list *objs)
 	}
 }
 
-t_data	*ft_data(char *file)
+t_data	*ft_data(char *file, int s)
 {
 	t_data	*data;
 
 	if (!(data = (t_data*)malloc(sizeof(t_data))))
 		return (0);
 	ft_bzero(data, sizeof(t_data));
-	if ((data->mlx_ptr = mlx_init()) == NULL)
-		return (0);
+	if (s == 1)
+		if ((data->mlx_ptr = mlx_init()) == NULL)
+			return (0);
+	data->filter = 0xffffff;
 	if (!(ft_init_rt(file, data)))
-	{
 		ft_free_data(data, "PARSING FAILED");
-		return (0);
-	}
-	if ((data->mlx_win = mlx_new_window(data->mlx_ptr, data->res_x,
-		data->res_y, file)) == NULL)
-	{
-		ft_free_data(data, "PARSING FAILED");
-		return (0);
-	}
+	if (s == 1)
+		if ((data->mlx_win = mlx_new_window(data->mlx_ptr, data->res_x,
+			data->res_y, file)) == NULL)
+			ft_free_data(data, "PARSING FAILED");
 	ft_cam_ids(data->cams, data->res_x, data->res_y);
 	ft_obj_ids(data->objs);
 	return (data);

@@ -52,7 +52,7 @@ t_cam	*ft_init_cam(char *line)
 	return (cam);
 }
 
-void	ft_data_res(t_data *data, char *line)
+int		ft_data_res(t_data *data, char *line)
 {
 	data->res_x = ft_atoi(line);
 	if (data->res_x > 3200)
@@ -61,6 +61,9 @@ void	ft_data_res(t_data *data, char *line)
 	data->res_y = ft_atoi(line);
 	if (data->res_y > 1800)
 		data->res_y = 1800;
+	if (!data->res_y || !data->res_x)
+		return (0);
+	return (1);
 }
 
 void	ft_cam_ids(t_list *cams, int res_x, int res_y)

@@ -38,11 +38,10 @@ int		ft_fill_objs(char *line, t_data *data)
 		return (0);
 	if (line[0] == 0)
 		return (1);
+	if (line[0] == 'F' && ft_isspace(line[1]))
+		return (ft_filter(data, &line[1]));
 	if (line[0] == 'R' && ft_isspace(line[1]))
-	{
-		ft_data_res(data, &line[1]);
-		return (1);
-	}
+		return (ft_data_res(data, &line[1]));
 	if (line[0] == 'c' && ft_isspace(line[1]))
 		ft_lstadd_back(&data->cams, (lst = ft_lstnew(ft_init_cam(&line[1]))));
 	else if ((line[0] == 'A' || line[0] == 'l') && ft_isspace(line[1]))
@@ -60,7 +59,7 @@ int		ft_init_rt(char *file, t_data *data)
 	char	*line;
 	int		res;
 
-	res = 1;
+	res = 0;
 	line = NULL;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -70,6 +69,7 @@ int		ft_init_rt(char *file, t_data *data)
 	}
 	while (get_next_line(fd, &line))
 	{
+		res = 1;
 		res &= ft_fill_objs(line, data);
 		free(line);
 	}

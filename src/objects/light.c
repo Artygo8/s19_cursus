@@ -47,6 +47,7 @@ void	ft_put_lights(t_data *data, t_cam *cam, t_mat **tab)
 	light = data->lights;
 	while (light)
 	{
+		((t_light*)light->content)->color &= data->filter;
 		if (((t_light*)light->content)->type == 'A')
 			ft_put_ambi(cam, ((t_light*)light->content), tab);
 		if (((t_light*)light->content)->type == 'l')

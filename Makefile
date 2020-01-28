@@ -32,6 +32,7 @@ SRCSC		= objects/cam.c	\
 				utils/vector2.c \
 				main/bmp.c \
 				main/events.c \
+				main/filter.c \
 				main/parse.c \
 				main/main.c \
 				main/materials.c \

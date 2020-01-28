@@ -14,7 +14,7 @@
 
 int	exit_hook(void *p)
 {
-	ft_free_data(((t_data *)p), "");
+	ft_free_data(((t_data *)p), "Closing Window");
 	return (0);
 }
 
@@ -28,7 +28,7 @@ int	ft_key(int key, void *p)
 			ft_show((t_data *)p);
 	}
 	if (key == 53)
-		ft_free_data((t_data *)p, "Closing Window");
+		exit_hook(p);
 	return (0);
 }
 

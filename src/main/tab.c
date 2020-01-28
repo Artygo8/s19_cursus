@@ -81,6 +81,11 @@ void	ft_put_tab(t_data data, t_mat **tab)
 	{
 		i = data.res_x;
 		while (i--)
-			mlx_pixel_put(data.mlx_ptr, data.mlx_win, i, j, tab[j][i].pxl);
+			mlx_pixel_put(data.mlx_ptr, data.mlx_win, i, j,
+			ft_mult_color(tab[j][i].pxl,
+			(cos((float)j / data.res_y * PI * SINH) + 1) / 2
+			* (cos((float)i / data.res_x * PI * SINV) + 1) / 2
+			* ((cos((pow((float)(i - data.res_x / 2) / data.res_x * 2, 2) +
+			pow((float)(j - data.res_y / 2) / data.res_y * 2, 2)) * PI * SINC) + 1) / 2)));
 	}
 }

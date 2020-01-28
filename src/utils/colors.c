@@ -19,16 +19,19 @@
 int		ft_mult_color(int color, float m)
 {
 	int res;
+	int add;
 
-	res = (color & B) * m;
+	res = (int)((color & B) * m) & B;
 	if (res > B)
 		res = B;
-	res += (int)((color & G) * m) & G;
-	if (res > (G | B))
-		res = G + (res & B);
-	res += (int)((color & R) * m) & R;
+	add = (color & G) * m;
+	if (add > (G | B))
+		add = G;
+	res += add & G;
+	add = (color & R) * m;
 	if (res > (R | G | B))
-		res = R + (res & (G | B));
+		add = R;
+	res += add & R;
 	return (res);
 }
 

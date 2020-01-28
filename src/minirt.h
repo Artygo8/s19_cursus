@@ -26,6 +26,9 @@
 # define B 0x0000ff
 # define BACKGROUND 0
 # define SPECULAR 64
+# define SINH 0
+# define SINV 0
+# define SINC 0
 # define SIZE_MAX_FLOAT 15
 
 /*
@@ -66,6 +69,7 @@ typedef struct	s_data
 	t_mat	**tab;
 	void	*mlx_ptr;
 	void	*mlx_win;
+	int		filter;
 	int		res_x;
 	int		res_y;
 	t_list	*objs;
@@ -133,7 +137,7 @@ t_mat			**ft_free_tab(t_mat **tab, int res_y);
 void			ft_free_data(t_data *data, const char *str);
 void			ft_show(t_data *data);
 void			ft_obj_ids(t_list *objs);
-t_data			*ft_data(char *file);
+t_data			*ft_data(char *file, int s);
 
 /*
 ** events.c
@@ -184,7 +188,7 @@ void	ft_specular(t_list *objs, t_cam *cam, t_light *light, t_mat **tab);
 */
 
 t_cam			*ft_init_cam(char *line);
-void			ft_data_res(t_data *data, char *line);
+int				ft_data_res(t_data *data, char *line);
 void			ft_cam_ids(t_list *cam, int res_x, int res_y);
 
 /*
@@ -288,6 +292,19 @@ t_vect			ft_v_uni(t_vect v);
 t_vect			ft_v_dir(t_vect v1, t_vect v2);
 t_line			ft_ray(t_vect origin, t_vect point);
 t_vect			ft_refl(t_vect inc, t_vect norm);
+
+
+
+
+
+int		ft_filter(t_data *data, char *str);
+
+
+
+
+
+
+
 
 
 #endif
