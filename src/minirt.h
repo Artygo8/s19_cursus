@@ -26,6 +26,7 @@
 # define B 0x0000ff
 # define BACKGROUND 0
 # define SPECULAR 64
+# define RAINBOW 1
 # define SINH 0
 # define SINV 0
 # define SINC 0
@@ -298,6 +299,7 @@ t_vect			ft_refl(t_vect inc, t_vect norm);
 
 
 int		ft_filter(t_data *data, char *str);
+int		ft_rainbow(float ratio);
 
 
 
