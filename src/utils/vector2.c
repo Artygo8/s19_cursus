@@ -73,11 +73,3 @@ t_vect		ft_v_dir(t_vect v1, t_vect v2)
 {
 	return (ft_v_uni(ft_v_sub(v2, v1)));
 }
-
-t_vect		ft_refl(t_vect inc, t_vect norm)
-{
-	t_vect ref;
-
-	ref = ft_v_add(inc, ft_v_mult(norm, 2 * ft_dot(ft_v_mult(inc, -1), norm)));
-	return (ft_v_uni(ref));
-}

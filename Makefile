@@ -6,7 +6,7 @@
 #    By: agossuin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 15:08:48 by agossuin          #+#    #+#              #
-#    Updated: 2019/11/27 15:08:51 by agossuin         ###   ########.fr        #
+#    Updated: 2020/01/29 12:50:58 by agossuin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ SRCSC		= objects/cam.c	\
 				utils/vector2.c \
 				main/bmp.c \
 				main/events.c \
-				main/filter.c \
 				main/parse.c \
 				main/main.c \
 				main/materials.c \
@@ -52,6 +51,7 @@ MINILIBDIR	= ./includes/minilibx
 MINILIB		= libmlx.a
 LIBFTDIR	= ./includes/libft
 LIBFT		= libft.a
+BMPS		= bmps
 
 #	Name
 NAME		= miniRT
@@ -74,41 +74,42 @@ ifeq (${OS},Linux)
 	PATHLIB		= -I /usr/include -g -lmlx -L /usr/lib
 	CFLAGS		= -lXext -lX11 -lm
 else
-	CFLAGS		= -framework OpenGL -framework AppKit
+	CFLAGS		= -framework OpenGL -framework AppKit -Wall -Wextra -Werror
 endif
 
-$(NAME):	${OBJS} ${LIBFT}
+$(NAME):	${OBJS} ${LIBFT} ${MINILIB} ${BMPS}
 			@echo "miniRT - compiling"
-			@${CC} ${VPATH} ${PATHLIB} ${OBJS} ${MINILIBDIR}/${MINILIB} \
+			@${CC} ${CFLAGS} ${VPATH} ${PATHLIB} ${OBJS} ${MINILIBDIR}/${MINILIB} \
 			${LIBFTDIR}/${LIBFT} ${CFLAGS} -o ${NAME}
-			@echo "miniRT - done"
+			@echo "done."
 
 $(LIBFT):	${LIBFTDIR}
 			@cd ${LIBFTDIR} && make bonus
+
+$(MINILIB):	${MINILIBDIR}
+			@cd ${MINILIBDIR} && make $@
+
+$(BMPS):
+			@mkdir -p bmps
 
 all:		${NAME}
 
 clean:
 			${RM} ${OBJS}
 			cd ${LIBFTDIR} && make $@
+			cd ${MINILIBDIR} && make $@
 
 fclean:		clean
-			${RM} ${NAME}
-			cd ${LIBFTDIR} && make $@
+			@echo "miniRT - fclean"
+			@${RM} ${NAME}
+			@echo "done."
+			@echo "libft - fclean"
+			@cd ${LIBFTDIR} && make $@
+			@echo "done."
+			@echo "bmp - removal"
+			@rm -rf ${BMPS}
+			@echo "done."
 
 re:			fclean all
-
-bonus:		all
-
-test:		re
-			./miniRT scenes/shades_of_grey.rt
-tr:			re
-			./miniRT scenes/simple/triangle.rt
-cy:			re
-			./miniRT scenes/simple/cylinder.rt
-sq:			re
-			./miniRT scenes/simple/square.rt
-sp:			re
-			./miniRT scenes/simple/sphere.rt
 
 .PHONY:		all clean fclean re

@@ -22,7 +22,7 @@ t_mat	**ft_free_tab(t_mat **tab, int res_y)
 		free(tab[i]);
 		tab[i++] = NULL;
 	}
-//	free(tab);
+	free(tab);
 	return (NULL);
 }
 

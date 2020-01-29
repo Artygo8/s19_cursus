@@ -16,10 +16,10 @@
 ** Multiplies the rgb values by a constant.
 */
 
-int		ft_mult_color(int color, float m)
+size_t		ft_mult_color(size_t color, float m)
 {
-	int res;
-	int add;
+	size_t res;
+	size_t add;
 
 	res = (int)((color & B) * m) & B;
 	if (res > B)
@@ -32,6 +32,8 @@ int		ft_mult_color(int color, float m)
 	if (res > (R | G | B))
 		add = R;
 	res += add & R;
+	add = (color & ALPHA) * m;
+	res += add & ALPHA;
 	return (res);
 }
 
@@ -39,10 +41,10 @@ int		ft_mult_color(int color, float m)
 ** Adds colors to one another.
 */
 
-int		ft_add_color(int color_1, int color_2)
+size_t		ft_add_color(size_t color_1, size_t color_2)
 {
-	int res;
-	int add;
+	size_t res;
+	size_t add;
 
 	res = (color_1 & B) + (color_2 & B);
 	if (res > B)
@@ -55,6 +57,8 @@ int		ft_add_color(int color_1, int color_2)
 	if (add > R)
 		add = R;
 	res += add;
+	add = (color_1 & ALPHA) + (color_2 & ALPHA);
+	res += add & ALPHA;
 	return (res);
 }
 
@@ -62,19 +66,21 @@ int		ft_add_color(int color_1, int color_2)
 ** Applies a colored light.
 */
 
-int		ft_enlight(int color, int light, double ratio)
+size_t		ft_enlight(size_t color, size_t light, double ratio)
 {
-	int res;
+	size_t res;
 
-	res = (int)((color & B) * (double)(light & B) / B * ratio) & B;
+	res = (size_t)((color & B) * (double)(light & B) / B * ratio) & B;
 	if (res > B)
 		res = B;
-	res += (int)((color & G) * (double)(light & G) / G * ratio) & G;
+	res += (size_t)((color & G) * (double)(light & G) / G * ratio) & G;
 	if (res > (G | B))
 		res &= (G | B);
-	res += (int)((color & R) * (double)(light & R) / R * ratio) & R;
+	res += (size_t)((color & R) * (double)(light & R) / R * ratio) & R;
 	if (res > (R | G | B))
 		res &= (R | G | B);
+	res += (size_t)((color & ALPHA) * (double)(light & ALPHA)
+		/ ALPHA * ratio) & ALPHA;
 	return (res);
 }
 
@@ -82,22 +88,33 @@ int		ft_enlight(int color, int light, double ratio)
 ** Applies a color depending on a ratio.
 */
 
-int		ft_rainbow(float ratio)
+size_t		ft_rainbow(float ratio)
 {
 	int col;
 
 	ratio = ratio * 6;
-	if (ratio < 1) //rouge a jaune
+	if (ratio < 1)
 		col = R + ft_mult_color(G, sin(ratio * PI / 2));
-	else if (ratio < 2) //jaune a vert
+	else if (ratio < 2)
 		col = G + ft_mult_color(R, cos((ratio - 1) * PI / 2));
-	else if (ratio < 3) //vert a cyan
+	else if (ratio < 3)
 		col = G + ft_mult_color(B, sin((ratio - 2) * PI / 2));
-	else if (ratio < 4) //cyan a bleu
+	else if (ratio < 4)
 		col = B + ft_mult_color(G, cos((ratio - 3) * PI / 2));
-	else if (ratio < 5) //bleu a violet
+	else if (ratio < 5)
 		col = B + ft_mult_color(R, sin((ratio - 4) * PI / 2));
-	else if (ratio < 6) //violet a rouge
+	else
 		col = R + ft_mult_color(B, cos((ratio - 5) * PI / 2));
 	return (col);
+}
+
+int			ft_filter(t_data *data, char *line)
+{
+	int		valid;
+
+	valid = 1;
+	data->filter &= ft_atocol(line);
+	valid &= ft_isrgb(line);
+	valid &= (*(line + ft_next_arg(line)) == 0);
+	return (valid);
 }

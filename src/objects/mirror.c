@@ -1,4 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mirror.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/29 16:59:02 by agossuin          #+#    #+#             */
+/*   Updated: 2020/01/29 16:59:04 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minirt.h"
+
+t_vect	ft_refl(t_vect inc, t_vect norm)
+{
+	t_vect ref;
+
+	ref = ft_v_add(inc, ft_v_mult(norm, 2 * ft_dot(ft_v_mult(inc, -1), norm)));
+	return (ft_v_uni(ref));
+}
 
 void	ft_specular(t_list *objs, t_cam *cam, t_light *light, t_mat **tab)
 {

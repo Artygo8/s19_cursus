@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bmp.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/29 16:51:10 by agossuin          #+#    #+#             */
+/*   Updated: 2020/01/29 16:51:12 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minirt.h"
 
 void	ft_putbuf_fd(unsigned int nb, int max, int fd)
@@ -9,7 +21,7 @@ void	ft_putbuf_fd(unsigned int nb, int max, int fd)
 		ft_putchar_fd(nb >> (i++ * 8), fd);
 }
 
-char *ft_bmp_name(char *file)
+char	*ft_bmp_name(char *file)
 {
 	char	*name;
 	char	*tmp;
@@ -34,7 +46,7 @@ char *ft_bmp_name(char *file)
 	return (tmp);
 }
 
-void ft_puttab_fd(t_mat **tab, int res_x, int res_y, int fd)
+void	ft_puttab_fd(t_mat **tab, int res_x, int res_y, int fd)
 {
 	int i;
 	int j;
@@ -48,7 +60,7 @@ void ft_puttab_fd(t_mat **tab, int res_x, int res_y, int fd)
 	}
 }
 
-int	ft_bmp(t_data *data, char *file)
+int		ft_bmp(t_data *data, char *file)
 {
 	int		fd;
 	char	*name;
@@ -68,8 +80,8 @@ int	ft_bmp(t_data *data, char *file)
 	ft_putbuf_fd(3 * data->res_x * data->res_y + 54, 8, fd);
 	ft_putbuf_fd(26, 4, fd);
 	ft_putbuf_fd(12, 4, fd);
-	ft_putbuf_fd(data->res_x + (data->res_y<<16), 4, fd);
-	ft_putbuf_fd(1 + ((8 * 3)<<16), 4, fd);
+	ft_putbuf_fd(data->res_x + (data->res_y << 16), 4, fd);
+	ft_putbuf_fd(1 + ((8 * 3) << 16), 4, fd);
 	ft_puttab_fd(data->tab, data->res_x, data->res_y, fd);
 	close(fd);
 	ft_free_data(data, "Save Succeed");

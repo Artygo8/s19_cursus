@@ -117,7 +117,6 @@ t_mat	ft_axis_cyl(t_obj cyl, t_line line)
 {
 	double	sol;
 	t_mat	mat;
-	double	mult;
 
 	mat.dist = -1;
 	sol = ft_cyl_sol(cyl, line);

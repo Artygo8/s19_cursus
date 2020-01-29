@@ -26,11 +26,12 @@
 # define B 0x0000ff
 # define BACKGROUND 0
 # define SPECULAR 64
-# define RAINBOW 1
+# define RAINBOW 0
 # define SINH 0
 # define SINV 0
 # define SINC 0
 # define SIZE_MAX_FLOAT 15
+# define AA 16
 
 /*
 ** Utils ***********************************************************************
@@ -61,7 +62,7 @@ typedef struct	s_material
 	t_vect	pos;
 	t_vect	norm;
 	double	dist;
-	int		color;
+	size_t	color;
 	int		pxl;
 }				t_mat;
 
@@ -106,7 +107,7 @@ struct			s_object
 	t_vect	v3;
 	double	d1;
 	double	d2;
-	int		color;
+	size_t	color;
 	t_mat	(*fct)(t_obj s, t_line l);
 };
 
@@ -115,7 +116,7 @@ struct			s_light
 	int		type;
 	t_vect	pos;
 	double	percent;
-	int		color;
+	size_t	color;
 };
 
 /*
@@ -126,9 +127,11 @@ struct			s_light
 **    /_/    \__,_/_/ /_/\___/\__/_/\____/_/ /_/____/
 */
 
+/*
+** bmp.c
+*/
 
-int	ft_bmp(t_data *data, char *file);
-
+int				ft_bmp(t_data *data, char *file);
 
 /*
 ** data.c
@@ -182,7 +185,7 @@ void			ft_put_tab(t_data data, t_mat **tab);
 **              /___/
 */
 
-void	ft_specular(t_list *objs, t_cam *cam, t_light *light, t_mat **tab);
+void			ft_specular(t_list *objs, t_cam *cam, t_light *l, t_mat **tab);
 
 /*
 ** cam.c
@@ -257,9 +260,11 @@ int				ft_atocol(char *s);
 ** colors.c
 */
 
-int				ft_mult_color(int color, float m);
-int				ft_add_color(int color_1, int color_2);
-int				ft_enlight(int color, int light, double percent);
+size_t			ft_mult_color(size_t color, float m);
+size_t			ft_add_color(size_t color_1, size_t color_2);
+size_t			ft_rainbow(float ratio);
+size_t			ft_enlight(size_t color, size_t light, double ratio);
+int				ft_filter(t_data *data, char *str);
 
 /*
 ** equation.c
@@ -293,20 +298,5 @@ t_vect			ft_v_uni(t_vect v);
 t_vect			ft_v_dir(t_vect v1, t_vect v2);
 t_line			ft_ray(t_vect origin, t_vect point);
 t_vect			ft_refl(t_vect inc, t_vect norm);
-
-
-
-
-
-int		ft_filter(t_data *data, char *str);
-int		ft_rainbow(float ratio);
-
-
-
-
-
-
-
-
 
 #endif

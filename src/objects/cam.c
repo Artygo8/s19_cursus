@@ -6,7 +6,7 @@
 /*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:39:52 by agossuin          #+#    #+#             */
-/*   Updated: 2020/01/22 17:39:58 by agossuin         ###   ########.fr       */
+/*   Updated: 2020/01/29 17:00:07 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int		ft_data_res(t_data *data, char *line)
 
 void	ft_cam_ids(t_list *cams, int res_x, int res_y)
 {
-	static int id;
-	float	d;
+	static int	id;
+	float		d;
 
 	if (cams)
 	{

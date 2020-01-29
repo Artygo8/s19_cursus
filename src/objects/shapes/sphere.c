@@ -59,8 +59,9 @@ t_mat	ft_axis_sphere(t_obj s, t_line line)
 	if (ft_dot(line.dir, mat.norm) > 0)
 		mat.norm = ft_v_mult(mat.norm, -1);
 	mat.dist = ft_v_dist(line.ori, mat.pos);
-//	mat.color = s.color;
-	mat.color = ft_rainbow((ft_dot(mat.norm, (t_vect){0,-1, 0}) + 1) / 2);
+	mat.color = s.color;
+	if (RAINBOW)
+		mat.color = ft_rainbow((ft_dot(mat.norm, (t_vect){0, -1, 0}) + 1) / 2);
 	mat.pxl = 0;
 	if (sol <= 0)
 		mat.dist = -1;
