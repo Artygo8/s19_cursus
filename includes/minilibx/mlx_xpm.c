@@ -133,7 +133,7 @@ void	*mlx_int_parse_xpm(mlx_ptr_t *xvar,void *info,int info_size,char *(*f)())
 {
   int	pos;
   char	*line;
-  char	**tab;
+  char	*tab;
   char	*data;
   char	*clip_data;
   int	nc;

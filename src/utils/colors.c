@@ -85,18 +85,19 @@ int		ft_enlight(int color, int light, double ratio)
 int		ft_rainbow(float ratio)
 {
 	int col;
-	int start;
 
-	start = ratio * 3;
-	if (ratio < (1 - ratio))
-		ratio /= ratio;
-	else
-		ratio /= (1 - ratio);
-	if (start < 1)
-		col = ft_mult_color(R, 1 - ratio) + ft_mult_color(G, ratio);
-	else if (start < 2)
-		col = ft_mult_color(G, 1 - (ratio - 1)) + ft_mult_color(B, ratio - 1);
-	else
-		col = ft_mult_color(B, 1 - (ratio - 2)) + ft_mult_color(R, ratio - 2);
+	ratio = ratio * 6;
+	if (ratio < 1) //rouge a jaune
+		col = R + ft_mult_color(G, sin(ratio * PI / 2));
+	else if (ratio < 2) //jaune a vert
+		col = G + ft_mult_color(R, cos((ratio - 1) * PI / 2));
+	else if (ratio < 3) //vert a cyan
+		col = G + ft_mult_color(B, sin((ratio - 2) * PI / 2));
+	else if (ratio < 4) //cyan a bleu
+		col = B + ft_mult_color(G, cos((ratio - 3) * PI / 2));
+	else if (ratio < 5) //bleu a violet
+		col = B + ft_mult_color(R, sin((ratio - 4) * PI / 2));
+	else if (ratio < 6) //violet a rouge
+		col = R + ft_mult_color(B, cos((ratio - 5) * PI / 2));
 	return (col);
 }

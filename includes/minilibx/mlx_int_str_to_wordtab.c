@@ -66,7 +66,7 @@ int	mlx_int_str_str_cote(char *str,char *find,int len)
 
 char	**mlx_int_str_to_wordtab(char *str)
 {
-  char	**tab;
+  char	*tab;
   int	pos;
   int	nb_word;
   int	len;

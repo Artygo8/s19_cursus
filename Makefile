@@ -78,11 +78,13 @@ else
 endif
 
 $(NAME):	${OBJS} ${LIBFT}
-			${CC} ${VPATH} ${PATHLIB} ${OBJS} ${MINILIBDIR}/${MINILIB} \
+			@echo "miniRT - compiling"
+			@${CC} ${VPATH} ${PATHLIB} ${OBJS} ${MINILIBDIR}/${MINILIB} \
 			${LIBFTDIR}/${LIBFT} ${CFLAGS} -o ${NAME}
+			@echo "miniRT - done"
 
 $(LIBFT):	${LIBFTDIR}
-			cd ${LIBFTDIR} && make bonus
+			@cd ${LIBFTDIR} && make bonus
 
 all:		${NAME}
 
