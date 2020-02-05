@@ -1,7 +1,7 @@
 FROM debian:buster
 
-COPY ./srcs ./srcs
+COPY ./srcs ./root/
 
 RUN apt-get update \
 	&& apt-get install make \
-	&& cd srcs && make
+	&& cd root && make

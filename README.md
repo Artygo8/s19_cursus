@@ -9,3 +9,6 @@ docker build -t hello:hello .
 docker run -it 72b34c405a19 bash
 
 docker build --ssh default .
+
+
+/var/lib/wordpress#
