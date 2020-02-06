@@ -12,3 +12,10 @@ docker build --ssh default .
 
 
 /var/lib/wordpress#
+
+docker-machine create
+docker-machine ls
+docker-machine env
+
+docker run -d -p 80:80 7fefabbbf0e4
+docker run -d -i -p 80:80 13d5ad650769
