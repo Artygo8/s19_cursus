@@ -6,6 +6,8 @@ NG			= nginx
 PHP			= php
 SQL			= mysql
 MDB			= mariadb
+GNUP		= gnupg
+PMA			= phpmyadmin
 
 # Package Manager
 PM			= apt-get
@@ -15,59 +17,41 @@ INST		= install -y
 BF			= echo "======================="
 
 # RULES
-$(NAME):	${PM} ${NG} ${SQL}
-			@${BF} && echo "=== BUILDING SERVER ===" && ${BF}
-
-$(PM):
-			@${BF} && echo "===   UPDATING PM   ===" && ${BF}
-			@${PM} update
-			@apt update
-
-$(WP):
-			@${BF} && echo "===    WordPress    ===" && ${BF}
-			@${PM} ${INST} ${WP}
-
-$(NG):		${PM}
-			@${BF} && echo "=== BUILDING NGINX  ===" && ${BF}
-			${PM} ${INST} ${NG}
-			@${BF} && echo "===   START NGINX   ===" && ${BF}
+$(NAME):	${NG} ${MDB}
 			service ${NG} start
 
-$(PHP):
-			@${BF} && echo "===    PhpMyAdmin   ===" && ${BF}
-			@${PM} ${INST} ${PHP}
+# # # # # # # #
+# THE OBJECTS #
+# # # # # # # #
 
-$(SQL):		${PHP}
-			@${BF} && echo "===      MySQL      ===" && ${BF}
-			@${PM} ${INST} ${PHP}-${SQL}
+$(GNUP):
+			${PM} ${INST} $(GNUP)
 
-$(MDB):		${SQL}
-			@${BF} && echo "===     MariaDB     ===" && ${BF}
-			@${PM} ${INST} ${MDB}
+$(PM):
+			${PM} ${INST} lsb-release
+			${PM} update
 
+$(WP):		${PM}
+			${PM} ${INST} ${WP}
 
+$(NG):		${PM}
+			${PM} ${INST} ${NG}
 
+$(MDB):		${PM} sudo
+			${PM} ${INST} ${MDB}-server ${MDB}-client
+			sudo mysql_secure_installation
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$(PMA):		${PM} mysql sudo
+	sudo mv phpMyAdmin-4.9.0.1-english/ /usr/share/phpmyadmin
+	sudo mkdir -p /var/lib/phpmyadmin/tmp
+	sudo chown -R www-data:www-data /var/lib/phpmyadmin
 
 # Utils
-wget:
-			@echo "########### wget ###########"
+wget:		${PM}
 			${PM} ${INST} wget
 
-tar:
-			@echo "########### tar  ###########"
+tar:		${PM}
 			${PM} ${INST} tar
+
+sudo:		${PM}
+			${PM} ${INST} sudo
