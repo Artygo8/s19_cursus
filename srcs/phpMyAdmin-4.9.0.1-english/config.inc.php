@@ -15,7 +15,6 @@
  * This is needed for cookie based authentication to encrypt password in
  * cookie. Needs to be 32 chars long.
  */
-$cfg['blowfish_secret'] = 'STRINGOFTHIRTYTWORANDOMCHARACTERS'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
 
 /**
  * Servers configuration
@@ -155,5 +154,3 @@ $cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';
  * You can find more configuration options in the documentation
  * in the doc/ folder or at <https://docs.phpmyadmin.net/>.
  */
-
-$cfg['TempDir'] = '/var/lib/phpmyadmin/tmp';

@@ -6,7 +6,7 @@ docker system prune -f
 docker build -t hello:hello .
 
 # Run the image
-docker run -it 7d11f30f40d9 bash
+docker run -it hello:hello bash
 
 docker build --ssh default .
 
@@ -19,9 +19,12 @@ docker-machine ls
 docker-machine env
 
 docker run -d -p 80:80 9ee3b6c48418
-docker run -d -i -p 80:80 2449d3d70c73
+docker run -d -i -p 80:80 hello:hello
 
 #####################
 srcs/config.inc.php
 $cfg['blowfish_secret'] = 'STRINGOFTHIRTYTWORANDOMCHARACTERS';
 ####################
+
+
+docker run --name he:he -d -i -p 80:80 -p 443:443 yo:yo
