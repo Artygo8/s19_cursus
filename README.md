@@ -3,10 +3,10 @@ docker image rm debian:buster
 docker system prune -f
 
 # Build the image
-docker build -t hello:hello .
+docker build -t test:test .
 
 # Run the image
-docker run -it hello:hello bash
+docker run -it test:test bash
 
 docker build --ssh default .
 
@@ -18,7 +18,7 @@ docker-machine create
 docker-machine ls
 docker-machine env
 
-docker run -d -p 80:80 9ee3b6c48418
+docker run -d -p 80:80 yo:yo
 docker run -d -i -p 80:80 hello:hello
 
 #####################
@@ -27,4 +27,4 @@ $cfg['blowfish_secret'] = 'STRINGOFTHIRTYTWORANDOMCHARACTERS';
 ####################
 
 
-docker run --name he:he -d -i -p 80:80 -p 443:443 yo:yo
+docker run --name hello -d -i -p 80:80 -p 443:443 yo:yo

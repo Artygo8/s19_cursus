@@ -1,4 +1,6 @@
-<!doctype html>
+<?php phpinfo(); ?>
+
+<!--<!doctype html>
 <html>
   <head>
 	  <head>
@@ -13,4 +15,4 @@
 	<h5><a href="wordpress/">WordPress</a></h5>
 	<h5><a href="phpmyadmin/">phpMyAdmin</a></h5>
   </body>
-</html>
+</html>-->
