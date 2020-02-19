@@ -1,16 +1,19 @@
 FROM debian:buster
-COPY ./srcs/scripts/* ./
-COPY ./srcs/phpMyAdmin-4.9.0.1-english ./var/www/html/phpmyadmin
-COPY ./srcs/index.php ./var/www/html/
+COPY ./srcs/scripts/* /
+COPY ./srcs/ft_server /var/www/html
 
 RUN bash 1-*.sh
 RUN bash 2-*.sh
-RUN bash 3-*.sh
-COPY ./srcs/default /etc/nginx/sites-enabled/
-COPY ./srcs/default /etc/nginx/sites-availables/
-RUN bash 4-*.sh
-RUN bash 5-*.sh
+#COPY ./srcs/original /etc/nginx/sites-available/default
+#COPY ./srcs/original /etc/nginx/sites-enabled/default
+#RUN bash 4-*.sh
+#RUN bash 5-*.sh
+#RUN bash 6-*.sh
+
+EXPOSE 80 443
 
 # Start the LEMP !
-CMD service nginx restart
+RUN service nginx start
+#RUN service php7.3-fpm start
+#RUN service mysql start
 CMD nginx -g 'daemon off;'
