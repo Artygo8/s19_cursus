@@ -26,5 +26,4 @@ srcs/config.inc.php
 $cfg['blowfish_secret'] = 'STRINGOFTHIRTYTWORANDOMCHARACTERS';
 ####################
 
-
 docker run --name hello -d -i -p 80:80 -p 443:443 yo:yo
