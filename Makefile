@@ -32,8 +32,9 @@ fclean:		clean
 
 re:			fclean all
 
-test:		re bonus
-			@$(CC) -o $(EXE) libasm.a testing/*.c backups/ft_atoi_base.c && ./$(EXE)
+main:		re bonus
+			@$(CC) -o $(EXE) libasm.a testing/*.c backups/ft_atoi_base.c \
+			&& ./$(EXE)
 
 %.o: 		%.s
 			@$(ASM) $(ASFLAGS) $< -o $@
