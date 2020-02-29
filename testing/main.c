@@ -8,6 +8,5 @@ int main()
 	test_write();
 	test_read();
 	test_strdup();
-	test_atoi_base();
 	return (0);
 }

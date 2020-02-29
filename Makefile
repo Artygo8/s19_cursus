@@ -2,7 +2,7 @@ S_SRC	=	ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s
 SRC		=	$(addprefix srcs/, $(S_SRC))
 OBJ		=	$(SRC:.s=.o)
 
-S_BONUS	=	ft_atoi_base.s
+S_BONUS	=
 SRC_BONUS	=	$(addprefix bonus/, $(BONUS_FILES))
 OBJ_BONUS	=	$(SRC_BONUS:.s=.o)
 
@@ -33,8 +33,7 @@ fclean:		clean
 re:			fclean all
 
 main:		re bonus
-			@$(CC) -o $(EXE) libasm.a testing/*.c backups/ft_atoi_base.c \
-			&& ./$(EXE)
+			@$(CC) -o $(EXE) libasm.a testing/*.c && ./$(EXE)
 
 %.o: 		%.s
 			@$(ASM) $(ASFLAGS) $< -o $@
