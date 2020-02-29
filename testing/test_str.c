@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-
-unsigned long		ft_strlen(char *s);
-char				*ft_strcpy(char *s1, char *s2);
-short					ft_strcmp(const char *s1, const char *s2);
+#include "test.h"
 
 int	test_strlen(void)
 {
@@ -21,18 +16,18 @@ int	test_strlen(void)
 
 int test_strcpy(void)
 {
-	char dst[12] = "destination";
-	char *src = "source";
-	char dst2[12] = "destination";
-	char *src2 = "source";
+	char dst[12];
+	char dst2[12];
 
+	strcpy(dst, "destination");
+	strcpy(dst2, "destination");
 	printf("\n--- test strcpy VS ft_strcpy ---\n\n");
 	printf("initialization :\n");
-	printf("dst = %s\tsrc = %s\n\n", dst, src);
-	printf("strcpy(dst, src) = %s :\n", strcpy(dst, src));
-	printf("dst = %s\tsrc = %s\n\n", dst, src);
-	printf("ft_strcpy(dst, src) = %s :\n", ft_strcpy(dst2, src2));
-	printf("dst = %s\tsrc = %s\n\n", dst2, src2);
+	printf("dst = %s\tsrc = %s\n\n", dst, "source");
+	printf("strcpy(dst, src) = %s :\n", strcpy(dst, "source"));
+	printf("dst = %s\tsrc = %s\n\n", dst, "source");
+	printf("ft_strcpy(dst, src) = %s :\n", ft_strcpy(dst2, "source"));
+	printf("dst = %s\tsrc = %s\n\n", dst2, "source");
 	return (1);
 }
 
@@ -62,10 +57,16 @@ int test_strcmp(void)
 	return (1);
 }
 
-int main()
+int	test_strdup(void)
 {
-	test_strlen();
-	test_strcpy();
-	test_strcmp();
-	return (0);
+	char	*s;
+
+	printf("\n--- test strdup VS ft_strdup ---\n\n");
+	s = strdup("hello world!");
+	printf("strdup : %s\n", s);
+	free(s);
+	s = ft_strdup("hello world!");
+	printf("ft_strdup : %s\n", s);
+	free(s);
+	return (1);
 }

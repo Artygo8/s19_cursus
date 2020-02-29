@@ -5,12 +5,16 @@ loop:
 	inc		rax
 	mov		dl,					[rsi + rax]
 	cmp		byte [rdi + rax],	0
-	jz		end
+	jz		diff
 	cmp		byte [rdi + rax],	dl
 	jz		loop
-end:
+diff:
 	mov		rdi,				[rdi + rax]
 	mov		rsi,				[rsi + rax]
-	mov		rax,				rdi
-	sub		rax,				rsi
+	mov		ax,					di
+	sub		ax,					si
+	cmp		di,					si
+	jge		return
+	sub		rax,				65536
+return:
 	ret
