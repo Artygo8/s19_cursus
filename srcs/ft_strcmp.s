@@ -11,10 +11,10 @@ loop:
 diff:
 	mov		rdi,				[rdi + rax]
 	mov		rsi,				[rsi + rax]
-	mov		ax,					di
-	sub		ax,					si
-	cmp		di,					si
+	mov		al,					dil
+	sub		al,					sil
+	cmp		dil,				sil
 	jge		return
-	sub		rax,				65536
+	sub		rax,				256
 return:
 	ret

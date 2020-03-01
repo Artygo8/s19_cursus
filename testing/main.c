@@ -6,7 +6,8 @@ int main()
 	test_strcpy();
 	test_strcmp();
 	test_write();
-	test_read();
+//	test_read();
+	ft_putstr("HELLO YOU\n");
 	test_strdup();
 	return (0);
 }

@@ -14,8 +14,8 @@ int test_write(void)
 
 int	test_read(void)
 {
-	int	ret;
-	char buf[1024];
+	int		ret;
+	char	buf[1024];
 
 	printf("\n--- test read VS ft_read ---\n\n");
 	printf("WRITE SOMETHING\n");

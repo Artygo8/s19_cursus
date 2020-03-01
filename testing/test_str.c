@@ -14,10 +14,10 @@ int	test_strlen(void)
 	return (1);
 }
 
-int test_strcpy(void)
+int	test_strcpy(void)
 {
-	char dst[12];
-	char dst2[12];
+	char	dst[12];
+	char	dst2[12];
 
 	strcpy(dst, "destination");
 	strcpy(dst2, "destination");
@@ -31,7 +31,7 @@ int test_strcpy(void)
 	return (1);
 }
 
-int test_strcmp(void)
+int	test_strcmp(void)
 {
 	printf("\n--- test strcmp VS ft_strcmp ---\n\n");
 	printf("strcmp(\"a\", \"c\") = %d\n", strcmp("a", "c"));
@@ -65,7 +65,7 @@ int	test_strdup(void)
 	s = strdup("hello world!");
 	printf("strdup : %s\n", s);
 	free(s);
-	s = ft_strdup("hello world!");
+	s = ft_strdup("HELLO WORLD!\0");
 	printf("ft_strdup : %s\n", s);
 	free(s);
 	return (1);

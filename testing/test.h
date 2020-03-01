@@ -7,6 +7,7 @@
 # include <string.h>
 # include <stdlib.h>
 
+size_t		ft_putstr(char *s);
 size_t		ft_strlen(char *s);
 char		*ft_strcpy(char *s1, char *s2);
 int			ft_strcmp(const char *s1, const char *s2);
