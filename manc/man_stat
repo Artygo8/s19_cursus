@@ -1,0 +1,336 @@
+
+STAT(2)                     BSD System Calls Manual                    STAT(2)
+
+NNAAMMEE
+     ffssttaatt, ffssttaatt6644, llssttaatt, llssttaatt6644, ssttaatt, ssttaatt6644, ffssttaattaatt -- get file status
+
+SSYYNNOOPPSSIISS
+     ##iinncclluuddee <<ssyyss//ssttaatt..hh>>
+
+     _i_n_t
+     ffssttaatt(_i_n_t _f_i_l_d_e_s, _s_t_r_u_c_t _s_t_a_t _*_b_u_f);
+
+     _i_n_t
+     llssttaatt(const _c_h_a_r _*_r_e_s_t_r_i_c_t _p_a_t_h, _s_t_r_u_c_t _s_t_a_t _*_r_e_s_t_r_i_c_t _b_u_f);
+
+     _i_n_t
+     ssttaatt(const _c_h_a_r _*_r_e_s_t_r_i_c_t _p_a_t_h, _s_t_r_u_c_t _s_t_a_t _*_r_e_s_t_r_i_c_t _b_u_f);
+
+     _i_n_t
+     ffssttaattaatt(_i_n_t _f_d, const _c_h_a_r _*_p_a_t_h, _s_t_r_u_c_t _s_t_a_t _*_b_u_f, _i_n_t _f_l_a_g);
+
+TTRRAANNSSIITTIIIIOONNAALL SSYYNNOOPPSSIISS ((NNOOWW DDEEPPRREECCAATTEEDD))
+     _i_n_t
+     ffssttaatt6644(_i_n_t _f_i_l_d_e_s, _s_t_r_u_c_t _s_t_a_t_6_4 _*_b_u_f);
+
+     _i_n_t
+     llssttaatt6644(const _c_h_a_r _*_r_e_s_t_r_i_c_t _p_a_t_h, _s_t_r_u_c_t _s_t_a_t_6_4 _*_r_e_s_t_r_i_c_t _b_u_f);
+
+     _i_n_t
+     ssttaatt6644(const _c_h_a_r _*_r_e_s_t_r_i_c_t _p_a_t_h, _s_t_r_u_c_t _s_t_a_t_6_4 _*_r_e_s_t_r_i_c_t _b_u_f);
+
+DDEESSCCRRIIPPTTIIOONN
+     The ssttaatt() function obtains information about the file pointed to by
+     _p_a_t_h.  Read, write or execute permission of the named file is not
+     required, but all directories listed in the path name leading to the file
+     must be searchable.
+
+     The llssttaatt() function is like ssttaatt() except in the case where the named
+     file is a symbolic link; llssttaatt() returns information about the link,
+     while ssttaatt() returns information about the file the link references.  For
+     symbolic links, the st_mode member contains meaningful information when
+     used with the file type macros, and the st_size member contains the
+     length of the pathname contained in the symbolic link. File mode bits and
+     the contents of the remaining members of the stat structure are unspeci-
+     fied. The value returned in the st_size member is the length of the con-
+     tents of the symbolic link, and does not count any trailing null.
+
+     The ffssttaatt() obtains the same information about an open file known by the
+     file descriptor _f_i_l_d_e_s.
+
+     The ffssttaattaatt() system call is equivalent to ssttaatt() and llssttaatt() except in
+     the case where the _p_a_t_h specifies a relative path.  In this case the sta-
+     tus is retrieved from a file relative to the directory associated with
+     the file descriptor _f_d instead of the current working directory.
+
+     The values for the _f_l_a_g are constructed by a bitwise-inclusive OR of
+     flags from the following list, defined in <_f_c_n_t_l_._h>:
+
+     AT_SYMLINK_NOFOLLOW
+             If _p_a_t_h names a symbolic link, the status of the symbolic link is
+             returned.
+
+     If ffssttaattaatt() is passed the special value AT_FDCWD in the _f_d parameter,
+     the current working directory is used and the behavior is identical to a
+     call to ssttaatt() or llssttaatt() respectively, depending on whether or not the
+     AT_SYMLINK_NOFOLLOW bit is set in _f_l_a_g.
+
+     The _b_u_f argument is a pointer to a _s_t_a_t structure as defined by
+     <_s_y_s_/_s_t_a_t_._h> and into which information is placed concerning the file.
+     When the macro _DARWIN_FEATURE_64_BIT_INODE is not defined (see below for
+     more information about this macro), the _s_t_a_t structure is defined as:
+
+     struct stat { /* when _DARWIN_FEATURE_64_BIT_INODE is NOT defined */
+         dev_t    st_dev;    /* device inode resides on */
+         ino_t    st_ino;    /* inode's number */
+         mode_t   st_mode;   /* inode protection mode */
+         nlink_t  st_nlink;  /* number of hard links to the file */
+         uid_t    st_uid;    /* user-id of owner */
+         gid_t    st_gid;    /* group-id of owner */
+         dev_t    st_rdev;   /* device type, for special file inode */
+         struct timespec st_atimespec;  /* time of last access */
+         struct timespec st_mtimespec;  /* time of last data modification */
+         struct timespec st_ctimespec;  /* time of last file status change */
+         off_t    st_size;   /* file size, in bytes */
+         quad_t   st_blocks; /* blocks allocated for file */
+         u_long   st_blksize;/* optimal file sys I/O ops blocksize */
+         u_long   st_flags;  /* user defined flags for file */
+         u_long   st_gen;    /* file generation number */
+     };
+
+     However, when the macro _DARWIN_FEATURE_64_BIT_INODE is defined, the _s_t_a_t
+     structure will now be defined as:
+
+     struct stat { /* when _DARWIN_FEATURE_64_BIT_INODE is defined */
+         dev_t           st_dev;           /* ID of device containing file */
+         mode_t          st_mode;          /* Mode of file (see below) */
+         nlink_t         st_nlink;         /* Number of hard links */
+         ino_t           st_ino;           /* File serial number */
+         uid_t           st_uid;           /* User ID of the file */
+         gid_t           st_gid;           /* Group ID of the file */
+         dev_t           st_rdev;          /* Device ID */
+         struct timespec st_atimespec;     /* time of last access */
+         struct timespec st_mtimespec;     /* time of last data modification */
+         struct timespec st_ctimespec;     /* time of last status change */
+         struct timespec st_birthtimespec; /* time of file creation(birth) */
+         off_t           st_size;          /* file size, in bytes */
+         blkcnt_t        st_blocks;        /* blocks allocated for file */
+         blksize_t       st_blksize;       /* optimal blocksize for I/O */
+         uint32_t        st_flags;         /* user defined flags for file */
+         uint32_t        st_gen;           /* file generation number */
+         int32_t         st_lspare;        /* RESERVED: DO NOT USE! */
+         int64_t         st_qspare[2];     /* RESERVED: DO NOT USE! */
+     };
+
+     The time-related fields of _s_t_r_u_c_t _s_t_a_t are as follows:
+
+     st_atime         Time when file data last accessed.  Changed by the
+                      mknod(2), utimes(2) and read(2) system calls.
+
+     st_mtime         Time when file data last modified.  Changed by the
+                      mknod(2), utimes(2) and write(2) system calls.
+
+     st_ctime         Time when file status was last changed (inode data modi-
+                      fication).  Changed by the chmod(2), chown(2), link(2),
+                      mknod(2), rename(2), unlink(2), utimes(2) and write(2)
+                      system calls.
+
+     st_birthtime     Time of file creation. Only set once when the file is
+                      created. This field is only available in the 64 bit
+                      inode variants. On filesystems where birthtime is not
+                      available, this field is set to 0 (i.e. epoch).
+
+     The size-related fields of the structures are as follows:
+
+     st_blksize     The optimal I/O block size for the file.
+
+     st_blocks      The actual number of blocks allocated for the file in
+                    512-byte units.  As short symbolic links are stored in the
+                    inode, this number may be zero.
+
+     The status information word _s_t___m_o_d_e has the following bits:
+
+     #define S_IFMT 0170000           /* type of file */
+     #define        S_IFIFO  0010000  /* named pipe (fifo) */
+     #define        S_IFCHR  0020000  /* character special */
+     #define        S_IFDIR  0040000  /* directory */
+     #define        S_IFBLK  0060000  /* block special */
+     #define        S_IFREG  0100000  /* regular */
+     #define        S_IFLNK  0120000  /* symbolic link */
+     #define        S_IFSOCK 0140000  /* socket */
+     #define        S_IFWHT  0160000  /* whiteout */
+     #define S_ISUID 0004000  /* set user id on execution */
+     #define S_ISGID 0002000  /* set group id on execution */
+     #define S_ISVTX 0001000  /* save swapped text even after use */
+     #define S_IRUSR 0000400  /* read permission, owner */
+     #define S_IWUSR 0000200  /* write permission, owner */
+     #define S_IXUSR 0000100  /* execute/search permission, owner */
+
+     For a list of access modes, see <_s_y_s_/_s_t_a_t_._h>, access(2) and chmod(2).
+
+     For a list of the file flags in the _s_t___f_l_a_g_s field, see <_s_y_s_/_s_t_a_t_._h> and
+     chflags(2).
+
+__DDAARRWWIINN__FFEEAATTUURREE__6644__BBIITT__IINNOODDEE
+     In order to accommodate advanced capabilities of newer file systems, the
+     _s_t_r_u_c_t _s_t_a_t, _s_t_r_u_c_t _s_t_a_t_f_s, and _s_t_r_u_c_t _d_i_r_e_n_t data structures were
+     updated in Mac OSX 10.5.
+
+     The most obvious change is the increased size of _i_n_o___t from 32 bits to 64
+     bits.  As a consequence, storing an ino_t in an int is no longer safe,
+     and file formats storing ino_t as 32-bit values may need to be updated.
+     There are other changes as well, such as the widening of _f___f_s_t_y_p_e_n_a_m_e,
+     _f___m_n_t_o_n_n_a_m_e, and _f___m_n_t_f_r_o_m_n_a_m_e in _s_t_r_u_c_t _s_t_a_t_f_s.  Please refer to stat(2)
+     and dir(5) for more detail on the specific changes to the other affected
+     data structures.
+
+     On platforms that existed before these updates were available, ABI com-
+     patibility is achieved by providing two implementations for related func-
+     tions: one using the legacy data structures and one using the updated
+     data structures.  Variants which make use of the newer structures have
+     their symbols suffixed with $INODE64.  These $INODE64 suffixes are auto-
+     matically appended by the compiler tool-chain and should not be used
+     directly.
+
+     Platforms that were released after these updates only have the newer
+     variants available to them.  These platforms have the macro
+     _DARWIN_FEATURE_ONLY_64_BIT_INODE defined.
+
+     The _DARWIN_FEATURE_64_BIT_INODE macro should not be set directly.
+     Instead, developers should make use of the _DARWIN_NO_64_BIT_INODE or
+     _DARWIN_USE_64_BIT_INODE macros when the default variant is not desired.
+     The following table details the effects of defining these macros for dif-
+     ferent deployment targets.
+
+                  _DARWIN_FEATURE_ONLY_64_BIT_INODE nnoott ddeeffiinneedd
+             -------------------------+-------------------------------
+                                              Deployment Target
+
+                  user defines:       |   < 10.5       10.5    > 10.5
+             -------------------------+-------------------------------
+                      _(_n_o_n_e_)          |   32-bit      32-bit   64-bit
+             _DARWIN_NO_64_BIT_INODE  |   32-bit      32-bit   32-bit
+             _DARWIN_USE_64_BIT_INODE |   32-bit      64-bit   64-bit
+             -------------------------+-------------------------------
+
+                    _DARWIN_FEATURE_ONLY_64_BIT_INODE ddeeffiinneedd
+             -------------------------+-------------------------------
+                  user defines:       | Any Deployment Target
+             -------------------------+-------------------------------
+                      _(_n_o_n_e_)          | 64-bit-only
+             _DARWIN_NO_64_BIT_INODE  |   _(_e_r_r_o_r_)
+             _DARWIN_USE_64_BIT_INODE | 64-bit-only
+             -------------------------+-------------------------------
+
+           32-bit       32-bit inode values are enabled, and the legacy struc-
+                        tures involving the _i_n_o___t type are in use.  The macro
+                        _DARWIN_FEATURE_64_BIT_INODE is not defined.
+
+           64-bit       64-bit inode values are enabled, and the expanded
+                        structures involving the _i_n_o___t type are in use.  The
+                        macro _DARWIN_FEATURE_64_BIT_INODE is defined, and
+                        loader symbols will contain the $INODE64 suffix.
+
+           64-bit-only  Like 64-bit, except loader symbols do not have the
+                        $INODE64 suffix.
+
+           _(_e_r_r_o_r_)      A compile time error is generated.
+
+     Due to the increased benefits of the larger structure, it is highly rec-
+     ommended that developers not define _DARWIN_NO_64_BIT_INODE and make use
+     of _DARWIN_USE_64_BIT_INODE when targeting Mac OSX 10.5.
+
+     In addition to the $INODE64 suffixed symbols, variants suffixed with 64
+     are also available for related functions.  These functions were provided
+     as a way for developers to use the updated structures in code that also
+     made use of the legacy structures.  The enlarged stat structures were
+     also prefixed with 64 to distinguish them from their legacy variants.
+     These functions have been deprecated and should be avoided.
+
+RREETTUURRNN VVAALLUUEESS
+     Upon successful completion a value of 0 is returned.  Otherwise, a value
+     of -1 is returned and _e_r_r_n_o is set to indicate the error.
+
+CCOOMMPPAATTIIBBIILLIITTYY
+     Previous versions of the system used different types for the st_dev,
+     st_uid, st_gid, st_rdev, st_size, st_blksize and st_blocks fields.
+
+EERRRROORRSS
+     The ffssttaatt() system call will fail if:
+
+     [EBADF]            _f_i_l_d_e_s is not a valid open file descriptor.
+
+     [EFAULT]           _S_b points to an invalid address.
+
+     [EIO]              An I/O error occurs while reading from or writing to
+                        the file system.
+
+     The llssttaatt() and ssttaatt() system calls will fail if:
+
+     [EACCES]           Search permission is denied for a component of the
+                        path prefix.
+
+     [EFAULT]           _S_b or _n_a_m_e points to an invalid address.
+
+     [EIO]              An I/O error occurs while reading from or writing to
+                        the file system.
+
+     [ELOOP]            Too many symbolic links are encountered in translating
+                        the pathname.  This is taken to be indicative of a
+                        looping symbolic link.
+
+     [ENAMETOOLONG]     A component of a pathname exceeds {NAME_MAX} charac-
+                        ters, or an entire path name exceeds {PATH_MAX} char-
+                        acters.
+
+     [ENOENT]           The named file does not exist.
+
+     [ENOTDIR]          A component of the path prefix is not a directory.
+
+     The ffssttaatt(), llssttaatt(), and ssttaatt() system calls will fail if:
+
+     [EOVERFLOW]        The file size in bytes or the number of blocks allo-
+                        cated to the file or the file serial number cannot be
+                        represented correctly in the structure pointed to by
+                        _b_u_f.
+
+     In addition to the errors returned by the ssttaatt() and llssttaatt(), ffssttaattaatt()
+     may fail if:
+
+     [EBADF]            The _p_a_t_h argument does not specify an absolute path
+                        and the _f_d argument is neither AT_FDCWD nor a valid
+                        file descriptor open for searching.
+
+     [EINVAL]           The value of the _f_l_a_g argument is not valid.
+
+     [ENOTDIR]          The _p_a_t_h argument is not an absolute path and _f_d is
+                        neither AT_FDCWD nor a file descriptor associated with
+                        a directory.
+
+CCAAVVEEAATTSS
+     The file generation number, _s_t___g_e_n, is only available to the super-user.
+     The fields in the stat structure currently marked _s_t___s_p_a_r_e_1, _s_t___s_p_a_r_e_2,
+     and _s_t___s_p_a_r_e_3 are present in preparation for inode time stamps expanding
+     to 64 bits.  This, however, can break certain programs that depend on the
+     time stamps being contiguous (in calls to utimes(2)).
+
+TTRRAANNSSIITTIIOONNAALL DDEESSCCRRIIPPTTIIOONN ((NNOOWW DDEEPPRREECCAATTEEDD))
+     The _f_s_t_a_t_6_4, _l_s_t_a_t_6_4 and _s_t_a_t_6_4 routines are equivalent to their corre-
+     sponding non-64-suffixed routine, when 64-bit inodes are in effect.  They
+     were added before there was support for the symbol variants, and so are
+     now deprecated.  Instead of using these, set the _DARWIN_USE_64_BIT_INODE
+     macro before including header files to force 64-bit inode support.
+
+     The _s_t_a_t_6_4 structure used by these deprecated routines is the same as the
+     _s_t_a_t structure when 64-bit inodes are in effect (see above).
+
+SSEEEE AALLSSOO
+     chflags(2), chmod(2), chown(2), utimes(2), compat(5), statfs(2),
+     symlink(7)
+
+BBUUGGSS
+     Applying fstat to a socket (and thus to a pipe) returns a zero'd buffer,
+     except for the blocksize field, and a unique device and inode number.
+
+SSTTAANNDDAARRDDSS
+     The ssttaatt() and ffssttaatt() function calls are expected to conform to IEEE Std
+     1003.1-1988 (``POSIX.1'').  The ffssttaattaatt() system call is expected to con-
+     form to POSIX.1-2008 .
+
+HHIISSTTOORRYY
+     An llssttaatt() function call appeared in 4.2BSD.  The ssttaatt6644(), ffssttaatt6644(),
+     and llssttaatt6644() system calls first appeared in Mac OS X 10.5 (Leopard) and
+     are now deprecated in favor of the corresponding symbol variants.  The
+     ffssttaattaatt() system call appeared in OS X 10.10
+
+4th Berkeley Distribution        May 15, 2008        4th Berkeley Distribution
