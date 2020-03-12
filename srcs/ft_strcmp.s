@@ -10,11 +10,9 @@ loop:
 	jz		loop
 diff:
 	mov		rdi,				[rdi + rax]
+	and		rdi,				255
 	mov		rsi,				[rsi + rax]
-	mov		al,					dil
-	sub		al,					sil
-	cmp		dil,				sil
-	jge		return
-	sub		rax,				256
-return:
+	and		rsi,				255
+	mov		rax,				rdi
+	sub		rax,				rsi
 	ret
