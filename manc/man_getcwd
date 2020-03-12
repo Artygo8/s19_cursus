@@ -1,74 +1,54 @@
+getcwd, getwd -- get working directory pathname
 
-GETCWD(3)                BSD Library Functions Manual                GETCWD(3)
+#include <unistd.h>
 
-NNAAMMEE
-     ggeettccwwdd, ggeettwwdd -- get working directory pathname
+char *		getcwd(char *buf, sizet size);
+char *		getwd(char *buf);
 
-LLIIBBRRAARRYY
-     Standard C Library (libc, -lc)
 
-SSYYNNOOPPSSIISS
-     ##iinncclluuddee <<uunniissttdd..hh>>
+DESCRIPTION
+The getcwd() function copies the absolute pathname of the current working
+directory into the memory referenced by buf and returns a pointer to buf.
+The size argument is the size, in bytes, of the array referenced by buf.
 
-     _c_h_a_r _*
-     ggeettccwwdd(_c_h_a_r _*_b_u_f, _s_i_z_e___t _s_i_z_e);
+If buf is NULL, space is allocated as necessary to store the pathname.
+This space may later be free(3)'d.
 
-     _c_h_a_r _*
-     ggeettwwdd(_c_h_a_r _*_b_u_f);
+The function getwd() is a compatibility routine which calls getcwd() with
+its buf argument and a size of MAXPATHLEN (as defined in the include file
+<sys/param.h>).  Obviously, buf should be at least MAXPATHLEN bytes in
+length.
 
-DDEESSCCRRIIPPTTIIOONN
-     The ggeettccwwdd() function copies the absolute pathname of the current working
-     directory into the memory referenced by _b_u_f and returns a pointer to _b_u_f.
-     The _s_i_z_e argument is the size, in bytes, of the array referenced by _b_u_f.
-
-     If _b_u_f is NULL, space is allocated as necessary to store the pathname.
-     This space may later be free(3)'d.
-
-     The function ggeettwwdd() is a compatibility routine which calls ggeettccwwdd() with
-     its _b_u_f argument and a size of MAXPATHLEN (as defined in the include file
-     <_s_y_s_/_p_a_r_a_m_._h>).  Obviously, _b_u_f should be at least MAXPATHLEN bytes in
-     length.
-
-     These routines have traditionally been used by programs to save the name
-     of a working directory for the purpose of returning to it.  A much faster
-     and less error-prone method of accomplishing this is to open the current
-     directory (`.') and use the fchdir(2) function to return.
+These routines have traditionally been used by programs to save the name
+of a working directory for the purpose of returning to it.  A much faster
+and less error-prone method of accomplishing this is to open the current
+directory (`.') and use the fchdir(2) function to return.
 
 RREETTUURRNN VVAALLUUEESS
-     Upon successful completion, a pointer to the pathname is returned.  Oth-
-     erwise a NULL pointer is returned and the global variable _e_r_r_n_o is set to
-     indicate the error.  In addition, ggeettwwdd() copies the error message asso-
-     ciated with _e_r_r_n_o into the memory referenced by _b_u_f.
+Upon successful completion, a pointer to the pathname is returned.  Oth-
+erwise a NULL pointer is returned and the global variable errno is set to
+indicate the error.  In addition, getwd() copies the error message asso-
+ciated with errno into the memory referenced by buf.
 
-EERRRROORRSS
-     The ggeettccwwdd() function will fail if:
 
-     [EACCES]           Read or search permission was denied for a component
-                        of the pathname.
+ERRORS
+The getcwd() function will fail if:
 
-     [EINVAL]           The _s_i_z_e argument is zero.
+	[EACCES]	Read or search permission was denied for a component of the
+				pathname.
 
-     [ENOENT]           A component of the pathname no longer exists.
+	[EINVAL]	The size argument is zero.
 
-     [ENOMEM]           Insufficient memory is available.
+	[ENOENT]	A component of the pathname no longer exists.
 
-     [ERANGE]           The _s_i_z_e argument is greater than zero but smaller
-                        than the length of the pathname plus 1.
+	[ENOMEM]	Insufficient memory is available.
 
-SSEEEE AALLSSOO
-     chdir(2), fchdir(2), malloc(3), strerror(3)
+	[ERANGE]	The size argument is greater than zero but smaller than the
+				length of the pathname plus 1.
 
-SSTTAANNDDAARRDDSS
-     The ggeettccwwdd() function conforms to ISO/IEC 9945-1:1990 (``POSIX.1'').  The
-     ability to specify a NULL pointer and have ggeettccwwdd() allocate memory as
-     necessary is an extension.
+RELATED
+chdir(2), fchdir(2), malloc(3), strerror(3)
 
-HHIISSTTOORRYY
-     The ggeettwwdd() function appeared in 4.0BSD.
-
-BBUUGGSS
-     The ggeettwwdd() function does not do sufficient error checking and is not
-     able to return very long, but valid, paths.  It is provided for compati-
-     bility.
-
-BSD                            November 24, 1997                           BSD
+BUGS
+The getwd() function does not do sufficient error checking and is not
+able to return very long, but valid, paths.  It is provided for compatibility.

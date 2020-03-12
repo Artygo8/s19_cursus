@@ -1,169 +1,140 @@
+wait, wait3, wait4, waitpid -- wait for process termination
 
-WAIT(2)                     BSD System Calls Manual                    WAIT(2)
+#include <sys/wait.h>
 
-NNAAMMEE
-     wwaaiitt, wwaaiitt33, wwaaiitt44, wwaaiittppiidd -- wait for process termination
+pidt	wait(int *statloc);
+pidt	wait33(int *statloc, int options, struct rusage *rusage);
+pidt	wait44(pidt pid, int *statloc, int options, struct rusage *rusage);
+pidt	waitpid(pidt pid, int *statloc, int options);
 
-SSYYNNOOPPSSIISS
-     ##iinncclluuddee <<ssyyss//wwaaiitt..hh>>
 
-     _p_i_d___t
-     wwaaiitt(_i_n_t _*_s_t_a_t___l_o_c);
+DESCRIPTION
+The wait() function suspends execution of its calling process until
+statloc information is available for a terminated child process, or a
+signal is received.  On return from a successful wait() call, the
+statloc area contains termination information about the process that
+exited as defined below.
 
-     _p_i_d___t
-     wwaaiitt33(_i_n_t _*_s_t_a_t___l_o_c, _i_n_t _o_p_t_i_o_n_s, _s_t_r_u_c_t _r_u_s_a_g_e _*_r_u_s_a_g_e);
+The wait44() call provides a more general interface for programs that need
+to wait for certain child processes, that need resource utilization sta-
+tistics accumulated by child processes, or that require options.  The
+other wait functions are implemented using wait44().
 
-     _p_i_d___t
-     wwaaiitt44(_p_i_d___t _p_i_d, _i_n_t _*_s_t_a_t___l_o_c, _i_n_t _o_p_t_i_o_n_s, _s_t_r_u_c_t _r_u_s_a_g_e _*_r_u_s_a_g_e);
+The pid parameter specifies the set of child processes for which to wait.
+If pid is -1, the call waits for any child process.  If pid is 0, the
+call waits for any child process in the process group of the caller.  If
+pid is greater than zero, the call waits for the process with process id
+pid.  If pid is less than -1, the call waits for any process whose
+process group id equals the absolute value of pid.
 
-     _p_i_d___t
-     wwaaiittppiidd(_p_i_d___t _p_i_d, _i_n_t _*_s_t_a_t___l_o_c, _i_n_t _o_p_t_i_o_n_s);
+The statloc parameter is defined below.  The options parameter contains
+the bitwise OR of any of the following options.  The WNOHANG option is
+used to indicate that the call should not block if there are no processes
+that wish to report status.  If the WUNTRACED option is set, children of
+the current process that are stopped due to a SIGTTIN, SIGTTOU, SIGTSTP,
+or SIGSTOP signal also have their status reported.
 
-DDEESSCCRRIIPPTTIIOONN
-     The wwaaiitt() function suspends execution of its calling process until
-     _s_t_a_t___l_o_c information is available for a terminated child process, or a
-     signal is received.  On return from a successful wwaaiitt() call, the
-     _s_t_a_t___l_o_c area contains termination information about the process that
-     exited as defined below.
+If rusage is non-zero, a summary of the resources used by the terminated
+process and all its children is returned (this information is currently
+not available for stopped processes).
 
-     The wwaaiitt44() call provides a more general interface for programs that need
-     to wait for certain child processes, that need resource utilization sta-
-     tistics accumulated by child processes, or that require options.  The
-     other wait functions are implemented using wwaaiitt44().
+When the WNOHANG option is specified and no processes wish to report sta-
+tus, wait44() returns a process id of 0.
 
-     The _p_i_d parameter specifies the set of child processes for which to wait.
-     If _p_i_d is -1, the call waits for any child process.  If _p_i_d is 0, the
-     call waits for any child process in the process group of the caller.  If
-     _p_i_d is greater than zero, the call waits for the process with process id
-     _p_i_d.  If _p_i_d is less than -1, the call waits for any process whose
-     process group id equals the absolute value of _p_i_d.
+The waitpid() call is identical to wait44() with an rusage value of zero.
+The older wait33() call is the same as wait44() with a pid value of -1.
 
-     The _s_t_a_t___l_o_c parameter is defined below.  The _o_p_t_i_o_n_s parameter contains
-     the bitwise OR of any of the following options.  The WNOHANG option is
-     used to indicate that the call should not block if there are no processes
-     that wish to report status.  If the WUNTRACED option is set, children of
-     the current process that are stopped due to a SIGTTIN, SIGTTOU, SIGTSTP,
-     or SIGSTOP signal also have their status reported.
+The following macros may be used to test the manner of exit of the
+process.  One of the first three macros will evaluate to a non-zero
+(true) value:
 
-     If _r_u_s_a_g_e is non-zero, a summary of the resources used by the terminated
-     process and all its children is returned (this information is currently
-     not available for stopped processes).
+	WIFEXITED(status)
+		True if the process terminated normally by a call to exit(2) or exit(3).
 
-     When the WNOHANG option is specified and no processes wish to report sta-
-     tus, wwaaiitt44() returns a process id of 0.
+	WIFSIGNALED(status)
+		True if the process terminated due to receipt of a signal.
 
-     The wwaaiittppiidd() call is identical to wwaaiitt44() with an _r_u_s_a_g_e value of zero.
-     The older wwaaiitt33() call is the same as wwaaiitt44() with a _p_i_d value of -1.
+	WIFSTOPPED(status)
+		True if the process has not terminated, but has stopped and can be
+		restarted.  This macro can be true only if the wait call specified the
+		WUNTRACED option or if the child process is being traced (see
+		ptrace(2)).
 
-     The following macros may be used to test the manner of exit of the
-     process.  One of the first three macros will evaluate to a non-zero
-     (true) value:
+Depending on the values of those macros, the following macros produce the
+remaining status information about the child process:
 
-     WWIIFFEEXXIITTEEDD(_s_t_a_t_u_s)
-             True if the process terminated normally by a call to _exit(2) or
-             exit(3).
+	WEXITSTATUS(status)
+		If WIFEXITED(status) is true, evaluates to the low-order 8 bits of the
+		argument passed to exit(2) or exit(3) by the child.
 
-     WWIIFFSSIIGGNNAALLEEDD(_s_t_a_t_u_s)
-             True if the process terminated due to receipt of a signal.
+	WTERMSIG(status)
+		If WIFSIGNALED(status) is true, evaluates to the number of the signal
+		that caused the termination of the process.
 
-     WWIIFFSSTTOOPPPPEEDD(_s_t_a_t_u_s)
-             True if the process has not terminated, but has stopped and can
-             be restarted.  This macro can be true only if the wait call spec-
-             ified the WUNTRACED option or if the child process is being
-             traced (see ptrace(2)).
+	WCOREDUMP(status)
+		If WIFSIGNALED(status) is true, evaluates as true if the termination of
+		the process was accompanied by the creation of a core file containing an
+		image of the process when the signal was received.
 
-     Depending on the values of those macros, the following macros produce the
-     remaining status information about the child process:
+	WSTOPSIG(status)
+		If WIFSTOPPED(status) is true, evaluates to the number of the signal
+		that caused the process to stop.
 
-     WWEEXXIITTSSTTAATTUUSS(_s_t_a_t_u_s)
-             If WWIIFFEEXXIITTEEDD(_s_t_a_t_u_s) is true, evaluates to the low-order 8 bits
-             of the argument passed to _exit(2) or exit(3) by the child.
 
-     WWTTEERRMMSSIIGG(_s_t_a_t_u_s)
-             If WWIIFFSSIIGGNNAALLEEDD(_s_t_a_t_u_s) is true, evaluates to the number of the
-             signal that caused the termination of the process.
+NOTES
+See sigaction(2) for a list of termination signals.  A status of 0 indicates
+normal termination.
 
-     WWCCOORREEDDUUMMPP(_s_t_a_t_u_s)
-             If WWIIFFSSIIGGNNAALLEEDD(_s_t_a_t_u_s) is true, evaluates as true if the termina-
-             tion of the process was accompanied by the creation of a core
-             file containing an image of the process when the signal was
-             received.
+If a parent process terminates without waiting for all of its child pro-
+cesses to terminate, the remaining child processes are assigned the par-
+ent process 1 ID (the init process ID).
 
-     WWSSTTOOPPSSIIGG(_s_t_a_t_u_s)
-             If WWIIFFSSTTOOPPPPEEDD(_s_t_a_t_u_s) is true, evaluates to the number of the
-             signal that caused the process to stop.
+If a signal is caught while any of the wait() calls is pending, the call
+may be interrupted or restarted when the signal-catching routine returns,
+depending on the options in effect for the signal; see intro(2), System
+call restart.
 
-NNOOTTEESS
-     See sigaction(2) for a list of termination signals.  A status of 0 indi-
-     cates normal termination.
 
-     If a parent process terminates without waiting for all of its child pro-
-     cesses to terminate, the remaining child processes are assigned the par-
-     ent process 1 ID (the init process ID).
+RETURN VALUES
+If wait() returns due to a stopped or terminated child process, the
+process ID of the child is returned to the calling process.  Otherwise, a
+value of -1 is returned and errno is set to indicate the error.
 
-     If a signal is caught while any of the wwaaiitt() calls is pending, the call
-     may be interrupted or restarted when the signal-catching routine returns,
-     depending on the options in effect for the signal; see intro(2), System
-     call restart.
+If wait33(), wait44(), or waitpid() returns due to a stopped or terminated
+child process, the process ID of the child is returned to the calling
+process.  If there are no children not previously awaited, -1 is returned
+with errno set to [ECHILD].  Otherwise, if WNOHANG is specified and there
+are no stopped or exited children, 0 is returned.  If an error is
+detected or a caught signal aborts the call, a value of -1 is returned
+and errno is set to indicate the error.
 
-RREETTUURRNN VVAALLUUEESS
-     If wwaaiitt() returns due to a stopped or terminated child process, the
-     process ID of the child is returned to the calling process.  Otherwise, a
-     value of -1 is returned and _e_r_r_n_o is set to indicate the error.
 
-     If wwaaiitt33(), wwaaiitt44(), or wwaaiittppiidd() returns due to a stopped or terminated
-     child process, the process ID of the child is returned to the calling
-     process.  If there are no children not previously awaited, -1 is returned
-     with _e_r_r_n_o set to [ECHILD].  Otherwise, if WNOHANG is specified and there
-     are no stopped or exited children, 0 is returned.  If an error is
-     detected or a caught signal aborts the call, a value of -1 is returned
-     and _e_r_r_n_o is set to indicate the error.
+ERRORS
+The wait() system call will fail and return immediately if:
 
-EERRRROORRSS
-     The wwaaiitt() system call will fail and return immediately if:
+	[ECHILD]	The calling process has no existing unwaited-for child
+				processes.
 
-     [ECHILD]           The calling process has no existing unwaited-for child
-                        processes.
+	[EFAULT]	The status or rusage argument points to an illegal address (may
+				not be detected before the exit of a child process).
 
-     [EFAULT]           The _s_t_a_t_u_s or _r_u_s_a_g_e argument points to an illegal
-                        address (may not be detected before the exit of a
-                        child process).
+	[EINVAL]	Invalid or undefined flags are passed in the options argument.
 
-     [EINVAL]           Invalid or undefined flags are passed in the _o_p_t_i_o_n_s
-                        argument.
+The wait33() and waitpid() calls will fail and return immediately if:
 
-     The wwaaiitt33() and wwaaiittppiidd() calls will fail and return immediately if:
+	[ECHILD]	The process specified by pid does not exist or is not a child of
+				the calling process, or the process group specified by pid does
+				not exist or does not have any member process that is a child of
+				the calling process.
 
-     [ECHILD]           The process specified by _p_i_d does not exist or is not
-                        a child of the calling process, or the process group
-                        specified by _p_i_d does not exist or does not have any
-                        member process that is a child of the calling process.
+The waitpid() call will fail and return immediately if:
 
-     The wwaaiittppiidd() call will fail and return immediately if:
+	[EINVAL]	The options argument is not valid.
 
-     [EINVAL]           The options argument is not valid.
+Any of these calls will fail and return immediately if:
 
-     Any of these calls will fail and return immediately if:
+	[EINTR]		The call is interrupted by a caught signal or the signal does
+				not have the SARESTART flag set.
 
-     [EINTR]            The call is interrupted by a caught signal or the sig-
-                        nal does not have the SA_RESTART flag set.
-
-SSTTAANNDDAARRDDSS
-     The wwaaiitt() and wwaaiittppiidd() functions are defined by POSIX; wwaaiitt33() and
-     wwaaiitt44() are not specified by POSIX.  The WWCCOORREEDDUUMMPP() macro and the abil-
-     ity to restart a pending wwaaiitt() call are extensions to the POSIX inter-
-     face.
-
-LLEEGGAACCYY SSYYNNOOPPSSIISS
-     ##iinncclluuddee <<ssyyss//ttyyppeess..hh>>
-     ##iinncclluuddee <<ssyyss//wwaaiitt..hh>>
-
-     The include file <_s_y_s_/_t_y_p_e_s_._h> is necessary.
-
-SSEEEE AALLSSOO
-     sigaction(2), exit(3), compat(5)
-
-HHIISSTTOORRYY
-     A wwaaiitt() function call appeared in Version 6 AT&T UNIX.
-
-4th Berkeley Distribution       April 19, 1994       4th Berkeley Distribution
+RELATED
+sigaction(2), exit(3), compat(5)

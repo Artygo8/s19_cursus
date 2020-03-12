@@ -1,117 +1,89 @@
+opendir, fdopendir, readdir, readdirr, telldir, seekdir, rewinddir,
+closedir, dirfd -- directory operations
 
-DIRECTORY(3)             BSD Library Functions Manual             DIRECTORY(3)
+#include <dirent.h>
 
-NNAAMMEE
-     ooppeennddiirr, ffddooppeennddiirr, rreeaaddddiirr, rreeaaddddiirr__rr, tteellllddiirr, sseeeekkddiirr, rreewwiinnddddiirr,
-     cclloosseeddiirr, ddiirrffdd -- directory operations
+DIR				*opendir(const char *filename);
+DIR				*fdopendir(int fd);
+struct dirent	*readdir(DIR *dirp);
+int				readdirr(DIR *dirp, struct dirent *entry, struct dirent **res);
+long			telldir(DIR *dirp);
+void			seekdir(DIR *dirp, long loc);
+void			rewinddir(DIR *dirp);
+int				closedir(DIR *dirp);
+int				dirfd(DIR *dirp);
 
-LLIIBBRRAARRYY
-     Standard C Library (libc, -lc)
 
-SSYYNNOOPPSSIISS
-     ##iinncclluuddee <<ddiirreenntt..hh>>
+DESCRIPTION
+The opendir() function opens the directory named by filename, associates
+a directory stream with it and returns a pointer to be used to identify
+the directory stream in subsequent operations.  The pointer NULL is
+returned if filename cannot be accessed, or if it cannot malloc(3) enough
+memory to hold the whole thing, and sets the global variable errno to
+indicate the error.
 
-     _D_I_R _*
-     ooppeennddiirr(const _c_h_a_r _*_f_i_l_e_n_a_m_e);
+The fdopendir() function is equivalent to the opendir() function except
+that the directory is specified by a file descriptor fd rather than by a
+name.
 
-     _D_I_R _*
-     ffddooppeennddiirr(_i_n_t _f_d);
+Upon successful return from fdopendir(), the file descriptor is under the
+control of the system, and if any attempt is made to close the file
+descriptor, or to modify the state of the associated description other
+than by means of closedir(), readdir(), readdirr(), or rewinddir(), the
+behavior is undefined.  Upon calling closedir() the file descriptor is
+closed.  The FDCLOEXEC flag is set on the file descriptor by a success-
+ful call to fdopendir().
 
-     _s_t_r_u_c_t _d_i_r_e_n_t _*
-     rreeaaddddiirr(_D_I_R _*_d_i_r_p);
+The readdir() function returns a pointer to the next directory entry.  It
+returns NULL upon reaching the end of the directory or on error.  In the
+event of an error, errno may be set to any of the values documented for
+the getdirentries(2) system call.
 
-     _i_n_t
-     rreeaaddddiirr__rr(_D_I_R _*_d_i_r_p, _s_t_r_u_c_t _d_i_r_e_n_t _*_e_n_t_r_y, _s_t_r_u_c_t _d_i_r_e_n_t _*_*_r_e_s_u_l_t);
+The readdirr() function provides the same functionality as readdir(),
+but the caller must provide a directory entry buffer to store the results
+in.  If the read succeeds, result is pointed at the entry; upon reaching
+the end of the directory result is set to NULL.  The readdirr() function
+returns 0 on success or an error number to indicate failure.
 
-     _l_o_n_g
-     tteellllddiirr(_D_I_R _*_d_i_r_p);
+The telldir() function returns the current location associated with the
+named directory stream.  Values returned by telldir() are good only for
+the lifetime of the DIR pointer, dirp, from which they are derived.  If
+the directory is closed and then reopened, prior values returned by
+telldir() will no longer be valid.
 
-     _v_o_i_d
-     sseeeekkddiirr(_D_I_R _*_d_i_r_p, _l_o_n_g _l_o_c);
+The seekdir() function sets the position of the next readdir() operation
+on the directory stream.  The new position reverts to the one associated
+with the directory stream when the telldir() operation was performed.
 
-     _v_o_i_d
-     rreewwiinnddddiirr(_D_I_R _*_d_i_r_p);
+The rewinddir() function resets the position of the named directory
+stream to the beginning of the directory.
 
-     _i_n_t
-     cclloosseeddiirr(_D_I_R _*_d_i_r_p);
+The closedir() function closes the named directory stream and frees the
+structure associated with the dirp pointer, returning 0 on success.  On
+failure, -1 is returned and the global variable errno is set to indicate
+the error.
 
-     _i_n_t
-     ddiirrffdd(_D_I_R _*_d_i_r_p);
+The dirfd() function returns the integer file descriptor associated with
+the named directory stream, see open(2).  On failure, -1 is returned and
+the global variable errno is set to indicate the error.
 
-DDEESSCCRRIIPPTTIIOONN
-     The ooppeennddiirr() function opens the directory named by _f_i_l_e_n_a_m_e, associates
-     a _d_i_r_e_c_t_o_r_y _s_t_r_e_a_m with it and returns a pointer to be used to identify
-     the _d_i_r_e_c_t_o_r_y _s_t_r_e_a_m in subsequent operations.  The pointer NULL is
-     returned if _f_i_l_e_n_a_m_e cannot be accessed, or if it cannot malloc(3) enough
-     memory to hold the whole thing, and sets the global variable _e_r_r_n_o to
-     indicate the error.
+Sample code which searches a directory for entry ``name'' is:
 
-     The ffddooppeennddiirr() function is equivalent to the ooppeennddiirr() function except
-     that the directory is specified by a file descriptor _f_d rather than by a
-     name.
+	dirp = opendir(".");
+	if (dirp == NULL)
+		return (ERROR);
+	len = strlen(name);
+	while ((dp = readdir(dirp)) != NULL)
+	{
+		if (dp->dnamlen == len && strcmp(dp->dname, name) == 0)
+		{
+			(void)closedir(dirp);
+			return (FOUND);
+		}
+	}
+	(void)closedir(dirp);
+	return (NOTFOUND);
 
-     Upon successful return from ffddooppeennddiirr(), the file descriptor is under the
-     control of the system, and if any attempt is made to close the file
-     descriptor, or to modify the state of the associated description other
-     than by means of cclloosseeddiirr(), rreeaaddddiirr(), rreeaaddddiirr__rr(), or rreewwiinnddddiirr(), the
-     behavior is undefined.  Upon calling cclloosseeddiirr() the file descriptor is
-     closed.  The FD_CLOEXEC flag is set on the file descriptor by a success-
-     ful call to ffddooppeennddiirr().
 
-     The rreeaaddddiirr() function returns a pointer to the next directory entry.  It
-     returns NULL upon reaching the end of the directory or on error.  In the
-     event of an error, _e_r_r_n_o may be set to any of the values documented for
-     the getdirentries(2) system call.
-
-     The rreeaaddddiirr__rr() function provides the same functionality as rreeaaddddiirr(),
-     but the caller must provide a directory _e_n_t_r_y buffer to store the results
-     in.  If the read succeeds, _r_e_s_u_l_t is pointed at the _e_n_t_r_y; upon reaching
-     the end of the directory _r_e_s_u_l_t is set to NULL.  The rreeaaddddiirr__rr() function
-     returns 0 on success or an error number to indicate failure.
-
-     The tteellllddiirr() function returns the current location associated with the
-     named _d_i_r_e_c_t_o_r_y _s_t_r_e_a_m.  Values returned by tteellllddiirr() are good only for
-     the lifetime of the DIR pointer, _d_i_r_p, from which they are derived.  If
-     the directory is closed and then reopened, prior values returned by
-     tteellllddiirr() will no longer be valid.
-
-     The sseeeekkddiirr() function sets the position of the next rreeaaddddiirr() operation
-     on the _d_i_r_e_c_t_o_r_y _s_t_r_e_a_m.  The new position reverts to the one associated
-     with the _d_i_r_e_c_t_o_r_y _s_t_r_e_a_m when the tteellllddiirr() operation was performed.
-
-     The rreewwiinnddddiirr() function resets the position of the named _d_i_r_e_c_t_o_r_y
-     _s_t_r_e_a_m to the beginning of the directory.
-
-     The cclloosseeddiirr() function closes the named _d_i_r_e_c_t_o_r_y _s_t_r_e_a_m and frees the
-     structure associated with the _d_i_r_p pointer, returning 0 on success.  On
-     failure, -1 is returned and the global variable _e_r_r_n_o is set to indicate
-     the error.
-
-     The ddiirrffdd() function returns the integer file descriptor associated with
-     the named _d_i_r_e_c_t_o_r_y _s_t_r_e_a_m, see open(2).  On failure, -1 is returned and
-     the global variable _e_r_r_n_o is set to indicate the error.
-
-     Sample code which searches a directory for entry ``name'' is:
-
-           dirp = opendir(".");
-           if (dirp == NULL)
-                   return (ERROR);
-           len = strlen(name);
-           while ((dp = readdir(dirp)) != NULL) {
-                   if (dp->d_namlen == len && strcmp(dp->d_name, name) == 0) {
-                           (void)closedir(dirp);
-                           return (FOUND);
-                   }
-           }
-           (void)closedir(dirp);
-           return (NOT_FOUND);
-
-SSEEEE AALLSSOO
-     close(2), lseek(2), open(2), read(2), dir(5)
-
-HHIISSTTOORRYY
-     The ooppeennddiirr(), rreeaaddddiirr(), tteellllddiirr(), sseeeekkddiirr(), rreewwiinnddddiirr(), cclloosseeddiirr(),
-     and ddiirrffdd() functions appeared in 4.2BSD.  The ffddooppeennddiirr() function
-     appeared in FreeBSD 8.0.
-
-BSD                             April 16, 2008                             BSD
+RELATED
+close(2), lseek(2), open(2), read(2), dir(5)
