@@ -1,9 +1,8 @@
-getcwd, getwd -- get working directory pathname
+getcwd -- get working directory pathname
 
 #include <unistd.h>
 
 char *		getcwd(char *buf, sizet size);
-char *		getwd(char *buf);
 
 
 DESCRIPTION
@@ -14,17 +13,12 @@ The size argument is the size, in bytes, of the array referenced by buf.
 If buf is NULL, space is allocated as necessary to store the pathname.
 This space may later be free(3)'d.
 
-The function getwd() is a compatibility routine which calls getcwd() with
-its buf argument and a size of MAXPATHLEN (as defined in the include file
-<sys/param.h>).  Obviously, buf should be at least MAXPATHLEN bytes in
-length.
-
 These routines have traditionally been used by programs to save the name
 of a working directory for the purpose of returning to it.  A much faster
 and less error-prone method of accomplishing this is to open the current
 directory (`.') and use the fchdir(2) function to return.
 
-RREETTUURRNN VVAALLUUEESS
+RETURN VALUES
 Upon successful completion, a pointer to the pathname is returned.  Oth-
 erwise a NULL pointer is returned and the global variable errno is set to
 indicate the error.  In addition, getwd() copies the error message asso-

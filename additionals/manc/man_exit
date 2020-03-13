@@ -1,13 +1,11 @@
-exit, Exit -- perform normal program termination
+exit -- perform normal program termination
 
 #include <stdlib.h>
 
 void	exit(int status);
-void	Exit(int status);
-
 
 DESCRIPTION
-The exit() and Exit() functions terminate a process.
+The exit() functions terminate a process.
 
 Before termination, exit() performs the following functions in the order
 listed:
@@ -18,12 +16,6 @@ listed:
 	3.	Close all open streams.
 	4.	Unlink all files created with the tmpfile(3) function.
 
-The Exit() function terminates without calling the functions registered
-with the atexitit(3) function, and may or may not perform the other actions
-listed.  Both functions make the low-order eight bits of the status argu-
-ment available to a parent process which has called a wait(2)-family
-function.
-
 The C Standard (ISO/IEC 9899:1999 (``ISO C99'')) defines the values 0,
 EXITSUCCESS, and EXITFAILURE as possible values of status.  Cooperating
 processes may use other values; in a program which might be called by a
@@ -31,13 +23,11 @@ mail transfer agent, the values described in sysexitits(3) may be used to
 provide more information to the parent process.
 
 Note that exit() does nothing to prevent bottomless recursion should a
-function registered using atexitit(3) itself call exit().  Such functions
-must call Exit() instead (although this has other effects as well which
-may not be desired).
+function registered using atexitit(3) itself call exit().
 
 
 RETURN VALUE
-The exit() and Exit() functions never return.
+The exit() functions never return.
 
 
 RELATED

@@ -1,140 +1,60 @@
-wait, wait3, wait4, waitpid -- wait for process termination
+fork -- create a new process
 
-#include <sys/wait.h>
+#include <unistd.h>
 
-pidt	wait(int *statloc);
-pidt	wait33(int *statloc, int options, struct rusage *rusage);
-pidt	wait44(pidt pid, int *statloc, int options, struct rusage *rusage);
-pidt	waitpid(pidt pid, int *statloc, int options);
-
+pidt	fork(void);
 
 DESCRIPTION
-The wait() function suspends execution of its calling process until
-statloc information is available for a terminated child process, or a
-signal is received.  On return from a successful wait() call, the
-statloc area contains termination information about the process that
-exited as defined below.
+fork() causes creation of a new process.  The new process (child process)
+is an exact copy of the calling process (parent process) except for the
+following:
 
-The wait44() call provides a more general interface for programs that need
-to wait for certain child processes, that need resource utilization sta-
-tistics accumulated by child processes, or that require options.  The
-other wait functions are implemented using wait44().
+	++oo   The child process has a unique process ID.
 
-The pid parameter specifies the set of child processes for which to wait.
-If pid is -1, the call waits for any child process.  If pid is 0, the
-call waits for any child process in the process group of the caller.  If
-pid is greater than zero, the call waits for the process with process id
-pid.  If pid is less than -1, the call waits for any process whose
-process group id equals the absolute value of pid.
+	++oo   The child process has a different parent process ID (i.e., the
+			process ID of the parent process).
 
-The statloc parameter is defined below.  The options parameter contains
-the bitwise OR of any of the following options.  The WNOHANG option is
-used to indicate that the call should not block if there are no processes
-that wish to report status.  If the WUNTRACED option is set, children of
-the current process that are stopped due to a SIGTTIN, SIGTTOU, SIGTSTP,
-or SIGSTOP signal also have their status reported.
+	++oo   The child process has its own copy of the parent's descriptors.
+			These descriptors reference the same underlying objects, so
+			that, for instance, file pointers in file objects are shared
+			between the child and the parent, so that an lseek(2) on a
+			descriptor in the child process can affect a subsequent read or
+			write by the parent.  This descriptor copying is also used by
+			the shell to establish standard input and output for newly cre-
+			ated processes as well as to set up pipes.
 
-If rusage is non-zero, a summary of the resources used by the terminated
-process and all its children is returned (this information is currently
-not available for stopped processes).
-
-When the WNOHANG option is specified and no processes wish to report sta-
-tus, wait44() returns a process id of 0.
-
-The waitpid() call is identical to wait44() with an rusage value of zero.
-The older wait33() call is the same as wait44() with a pid value of -1.
-
-The following macros may be used to test the manner of exit of the
-process.  One of the first three macros will evaluate to a non-zero
-(true) value:
-
-	WIFEXITED(status)
-		True if the process terminated normally by a call to exit(2) or exit(3).
-
-	WIFSIGNALED(status)
-		True if the process terminated due to receipt of a signal.
-
-	WIFSTOPPED(status)
-		True if the process has not terminated, but has stopped and can be
-		restarted.  This macro can be true only if the wait call specified the
-		WUNTRACED option or if the child process is being traced (see
-		ptrace(2)).
-
-Depending on the values of those macros, the following macros produce the
-remaining status information about the child process:
-
-	WEXITSTATUS(status)
-		If WIFEXITED(status) is true, evaluates to the low-order 8 bits of the
-		argument passed to exit(2) or exit(3) by the child.
-
-	WTERMSIG(status)
-		If WIFSIGNALED(status) is true, evaluates to the number of the signal
-		that caused the termination of the process.
-
-	WCOREDUMP(status)
-		If WIFSIGNALED(status) is true, evaluates as true if the termination of
-		the process was accompanied by the creation of a core file containing an
-		image of the process when the signal was received.
-
-	WSTOPSIG(status)
-		If WIFSTOPPED(status) is true, evaluates to the number of the signal
-		that caused the process to stop.
-
-
-NOTES
-See sigaction(2) for a list of termination signals.  A status of 0 indicates
-normal termination.
-
-If a parent process terminates without waiting for all of its child pro-
-cesses to terminate, the remaining child processes are assigned the par-
-ent process 1 ID (the init process ID).
-
-If a signal is caught while any of the wait() calls is pending, the call
-may be interrupted or restarted when the signal-catching routine returns,
-depending on the options in effect for the signal; see intro(2), System
-call restart.
-
+	++oo   The child processes resource utilizations are set to 0; see
+			setrlimit(2).
 
 RETURN VALUES
-If wait() returns due to a stopped or terminated child process, the
-process ID of the child is returned to the calling process.  Otherwise, a
-value of -1 is returned and errno is set to indicate the error.
-
-If wait33(), wait44(), or waitpid() returns due to a stopped or terminated
-child process, the process ID of the child is returned to the calling
-process.  If there are no children not previously awaited, -1 is returned
-with errno set to [ECHILD].  Otherwise, if WNOHANG is specified and there
-are no stopped or exited children, 0 is returned.  If an error is
-detected or a caught signal aborts the call, a value of -1 is returned
-and errno is set to indicate the error.
-
+	Upon successful completion, fork() returns a value of 0 to the child
+	process and returns the process ID of the child process to the parent
+	process.  Otherwise, a value of -1 is returned to the parent process, no
+	child process is created, and the global variable errno is set to indi-
+	cate the error.
 
 ERRORS
-The wait() system call will fail and return immediately if:
+fork() will fail and no child process will be created if:
 
-	[ECHILD]	The calling process has no existing unwaited-for child
-				processes.
+	[EAGAIN]	The system-imposed limit on the total number of pro-
+				cesses under execution would be exceeded.  This limit
+				is configuration-dependent.
 
-	[EFAULT]	The status or rusage argument points to an illegal address (may
-				not be detected before the exit of a child process).
+	[EAGAIN]	The system-imposed limit MAXUPRC (<sys/param.h>) on
+				the total number of processes under execution by a
+				single user would be exceeded.
 
-	[EINVAL]	Invalid or undefined flags are passed in the options argument.
-
-The wait33() and waitpid() calls will fail and return immediately if:
-
-	[ECHILD]	The process specified by pid does not exist or is not a child of
-				the calling process, or the process group specified by pid does
-				not exist or does not have any member process that is a child of
-				the calling process.
-
-The waitpid() call will fail and return immediately if:
-
-	[EINVAL]	The options argument is not valid.
-
-Any of these calls will fail and return immediately if:
-
-	[EINTR]		The call is interrupted by a caught signal or the signal does
-				not have the SARESTART flag set.
+	[ENOMEM]	There is insufficient swap space for the new process.
 
 RELATED
-sigaction(2), exit(3), compat(5)
+execve(2), sigaction(2), wait(2), compat(5)
+
+CAVEATS
+There are limits to what you can do in the child process.  To be totally
+safe you should restrict yourself to only executing async-signal safe
+operations until such time as one of the exec functions is called.  All
+APIs, including global data symbols, in any framework or library should
+be assumed to be unsafe after a fork() unless explicitly documented to be
+safe or async-signal safe.  If you need to use these frameworks in the
+child process, you must exec.  In this situation it is reasonable to exec
+yourself.

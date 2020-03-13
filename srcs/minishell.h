@@ -1,8 +1,15 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define BUFFER_SIZE 1000
-# include <unistd.h>
+# include <dirent.h>
+# include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <unistd.h>
+
 # include "../libs/ft_printf/ft_printf.h"
 
 /*

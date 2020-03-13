@@ -107,27 +107,41 @@ execve() will fail and return to the calling process if:
 [E2BIG]		The number of bytes in the new process's argument list is larger
 			than the system-imposed limit.  This limit is specified by the
 			sysctl(3) MIB variable KERNARGMAX.
+
 [EACCES]	Search permission is denied for a component of the path prefix.
+
 [EACCES]	The new process file is not an ordinary file.
+
 [EACCES]	The new process file mode denies execute permission.
+
 [EACCES]	The new process file is on a filesystem mounted with execution
 			disabled (MNTNOEXEC in <sys/mount.h>).
+
 [EFAULT]	The new process file is not as long as indicated by the size values
 			in its header.
+
 [EFAULT]	Path, argv, or envp point to an illegal address.
+
 [EIO]		An I/O error occurred while reading from the file system.
+
 [ELOOP]		Too many symbolic links were encountered in translating the
 			pathname.  This is taken to be indicative of a looping symbolic
 			link.
+
 [ENAMETOOLONG]A component of a pathname exceeded {NAMEMAX} characters, or an
 			entire path name exceeded {PATHMAX} characters.
+
 [ENOENT]	The new process file does not exist.
+
 [ENOEXEC]	The new process file has the appropriate access permission, but has
 			an unrecognized format (e.g., an invalid magic number in its
 			header).
+
 [ENOMEM]	The new process requires more virtual memory than is
 			allowed by the imposed maximum (getrlimit(2)).
+
 [ENOTDIR]	A component of the path prefix is not a directory.
+
 [ETXTBSY]	The new process file is a pure procedure (shared text) file that is
 			currently open for writing or reading by some process.
 

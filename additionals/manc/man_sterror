@@ -1,61 +1,42 @@
-perror, strerror, strerrorr, syserrlist, sysnerr -- system error messages
+strerror -- system error messages
 
-#include <stdio.h>
-
-void				perror(const char *s);
-extern const char	*const syserrlist[];
-extern const int	sysnerr;
-
-#include <string.h>
-
-char				*strerror(int errnum);
-int					strerrorr(int errnum, char *strerrbuf, sizet buflen);
+char	*strerror(int errnum);
 
 
 DESCRIPTION
-The strerror(), strerrorr(), and perror() functions look up the error
-message string corresponding to an error number.
+	The strerror() function look up the error message string corresponding to an
+	error number.
 
-The strerror() function accepts an error number argument errnum and
-returns a pointer to the corresponding message string.
+	The strerror() function accepts an error number argument errnum and
+	returns a pointer to the corresponding message string.
 
-The strerrorr() function renders the same result into strerrbuf for a
-maximum of buflen characters and returns 0 upon success.
+	If the error number is not recognized, these functions return an error
+	message string containing ``Unknown error: '' followed by the error num-
+	ber in decimal.  The strerror() and strerrorr() functions return EINVAL
+	as a warning.  Error numbers recognized by this implementation fall in
+	the range 0 <= errnum < sysnerr.
 
-The perror() function finds the error message corresponding to the cur-
-rent value of the global variable errno (intro(2)) and writes it, fol-
-lowed by a newline, to the standard error file descriptor.  If the argu-
-ment s is non-NULL and does not point to the null character, this string
-is prepended to the message string and separated from it by a colon and
-space (``: ''); otherwise, only the error message string is printed.
+	If insufficient storage is provided in strerrbuf (as specified in buflen)
+	to contain the error string, strerrorr() returns ERANGE and strerrbuf
+	will contain an error message that has been truncated and NUL terminated
+	to fit the length specified by buflen.
 
-If the error number is not recognized, these functions return an error
-message string containing ``Unknown error: '' followed by the error num-
-ber in decimal.  The strerror() and strerrorr() functions return EINVAL
-as a warning.  Error numbers recognized by this implementation fall in
-the range 0 <= errnum < sysnerr.
-
-If insufficient storage is provided in strerrbuf (as specified in buflen)
-to contain the error string, strerrorr() returns ERANGE and strerrbuf
-will contain an error message that has been truncated and NUL terminated
-to fit the length specified by buflen.
-
-The message strings can be accessed directly using the external array
-syserrlist.  The external value sysnerr contains a count of the mes-
-sages in syserrlist.  The use of these variables is deprecated;
-strerror() or strerrorr() should be used instead.
+	The message strings can be accessed directly using the external array
+	syserrlist.  The external value sysnerr contains a count of the mes-
+	sages in syserrlist.  The use of these variables is deprecated;
+	strerror() or strerrorr() should be used instead.
 
 
 RELATED
-intro(2), psignal(3)
+	intro(2), psignal(3)
 
 
 BUGS
-For unknown error numbers, the strerror() function will return its result
-in a static buffer which may be overwritten by subsequent calls.
+	For unknown error numbers, the strerror() function will return its result
+	in a static buffer which may be overwritten by subsequent calls.
 
-The return type for strerror() is missing a type-qualifier; it should
-actually be const char *.
+	The return type for strerror() is missing a type-qualifier; it should
+	actually be const char *.
 
-Programs that use the deprecated syserrlist variable often fail to com-
-pile because they declare it inconsistently.
+	Programs that use the deprecated syserrlist variable often fail to com-
+	pile because they declare it inconsistently.

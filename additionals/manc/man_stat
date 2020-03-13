@@ -5,12 +5,7 @@ fstat, fstat64, lstat, lstat64, stat, stat64, fstatat -- get file status
 int		fstat(int fildes, struct stat *buf);
 int		lstat(const char *restrict path, struct stat *restrict buf);
 int		stat(const char *restrict path, struct stat *restrict buf);
-int		fstatat(int fd, const char *path, struct stat *buf, int flag);
 
-(deprecated)
-int		fstat64(int fildes, struct stat64 *buf);
-int		lstat64(const char *restrict path, struct stat64 *restrict buf);
-int		stat64(const char *restrict path, struct stat64 *restrict buf);
 
 DESCRIPTION
 The stat() function obtains information about the file pointed to by
@@ -31,22 +26,12 @@ tents of the symbolic link, and does not count any trailing null.
 The fstat() obtains the same information about an open file known by the
 file descriptor fildes.
 
-The fstatat() system call is equivalent to stat() and lstat() except in
-the case where the path specifies a relative path.  In this case the sta-
-tus is retrieved from a file relative to the directory associated with
-the file descriptor fd instead of the current working directory.
-
 The values for the flag are constructed by a bitwise-inclusive OR of
 flags from the following list, defined in <fcntl.h>:
 
 ATSYMLINKNOFOLLOW
-	If path names a symbolic link, the status of the symbolic link is
-	returned.
-
-If fstatat() is passed the special value ATFDCWD in the fd parameter,
-the current working directory is used and the behavior is identical to a
-call to stat() or lstat() respectively, depending on whether or not the
-ATSYMLINKNOFOLLOW bit is set in flag.
+If path names a symbolic link, the status of the symbolic link is
+returned.
 
 The buf argument is a pointer to a stat structure as defined by
 <sys/stat.h> and into which information is placed concerning the file.
@@ -264,7 +249,9 @@ may fail if:
 	[EBADF]		The path argument does not specify an absolute path
 				and the fd argument is neither ATFDCWD nor a valid
 				file descriptor open for searching.
+
 	[EINVAL]	The value of the flag argument is not valid.
+
 	[ENOTDIR]	The path argument is not an absolute path and fd is
 				neither ATFDCWD nor a file descriptor associated with
 				a directory.
