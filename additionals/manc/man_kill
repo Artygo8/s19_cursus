@@ -5,43 +5,43 @@ kill -- send signal to a process
 int		kill(pidt pid, int sig);
 
 DESCRIPTION
-The kill() function sends the signal specified by sig to pid, a process
-or a group of processes.  Typically, Sig will be one of the signals spec-
-ified in sigaction(2).  A value of 0, however, will cause error checking
-to be performed (with no signal being sent).  This can be used to check
-the validity of pid.
+	The kill() function sends the signal specified by sig to pid, a process
+	or a group of processes.  Typically, Sig will be one of the signals spec-
+	ified in sigaction(2).  A value of 0, however, will cause error checking
+	to be performed (with no signal being sent).  This can be used to check
+	the validity of pid.
 
-For a process to have permission to send a signal to a process designated
-by pid, the real or effective user ID of the receiving process must match
-that of the sending process or the user must have appropriate privileges
-(such as given by a set-user-ID program or the user is the super-user).
-A single exception is the signal SIGCONT, which may always be sent to any
-descendant of the current process.
+	For a process to have permission to send a signal to a process designated
+	by pid, the real or effective user ID of the receiving process must match
+	that of the sending process or the user must have appropriate privileges
+	(such as given by a set-user-ID program or the user is the super-user).
+	A single exception is the signal SIGCONT, which may always be sent to any
+	descendant of the current process.
 
-If pid is greater than zero:
-	Sig is sent to the process whose ID is equal to pid.
+	If pid is greater than zero:
+		Sig is sent to the process whose ID is equal to pid.
 
-If pid is zero:
-	Sig is sent to all processes whose group ID is equal to the
-	process group ID of the sender, and for which the process has
-	permission; this is a variant of killpg(2).
+	If pid is zero:
+		Sig is sent to all processes whose group ID is equal to the
+		process group ID of the sender, and for which the process has
+		permission; this is a variant of killpg(2).
 
-If pid is -1:
-	If the user has super-user privileges, the signal is sent to all
-	processes excluding system processes and the process sending the
-	signal.  If the user is not the super user, the signal is sent to
-	all processes with the same uid as the user, excluding the
-	process sending the signal.  No error is returned if any process
-	could be signaled.
+	If pid is -1:
+		If the user has super-user privileges, the signal is sent to all
+		processes excluding system processes and the process sending the
+		signal.  If the user is not the super user, the signal is sent to
+		all processes with the same uid as the user, excluding the
+		process sending the signal.  No error is returned if any process
+		could be signaled.
 
-For compatibility with System V, if the process number is negative but
-not -1, the signal is sent to all processes whose process group ID is
-equal to the absolute value of the process number.  This is a variant of
-killpg(2).
+	For compatibility with System V, if the process number is negative but
+	not -1, the signal is sent to all processes whose process group ID is
+	equal to the absolute value of the process number.  This is a variant of
+	killpg(2).
 
 RETURN VALUE
-Upon successful completion, a value of 0 is returned.  Otherwise, a value
-of -1 is returned and errno is set to indicate the error.
+	Upon successful completion, a value of 0 is returned.  Otherwise, a value
+	of -1 is returned and errno is set to indicate the error.
 
 ERRORS
 kill() will fail and no signal will be sent if:
@@ -61,4 +61,4 @@ kill() will fail and no signal will be sent if:
 				does not have a process group.
 
 RELATED
-getpgrp(2), getpid(2), killpg(2), sigaction(2)
+	getpgrp(2), getpid(2), killpg(2), sigaction(2)

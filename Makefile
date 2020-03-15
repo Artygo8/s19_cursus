@@ -13,9 +13,10 @@ AR		=	ar -rc
 all:		$(NAME)
 
 $(NAME):	$(OBJ) libftprintf.a
-			$(CC) -o $(NAME)  $(OBJ) libs/ft_printf/libftprintf.a
-			./$(NAME)
+			$(CC) -o $(NAME) $(OBJ) libs/ft_printf/libftprintf.a
 
+test:		all
+			./minishell
 clean:
 			$(RM) $(OBJ)
 

@@ -6,58 +6,58 @@ chdir, fchdir -- change current working directory
 
 
 DESCRIPTION
-The path argument points to the pathname of a directory.  The chdir()
-function causes the named directory to become the current working direc-
-tory, that is, the starting point for path searches of pathnames not
-beginning with a slash, `/'.
+	The path argument points to the pathname of a directory.  The chdir()
+	function causes the named directory to become the current working direc-
+	tory, that is, the starting point for path searches of pathnames not
+	beginning with a slash, `/'.
 
-In order for a directory to become the current directory, a process must
-have execute (search) access to the directory.
+	In order for a directory to become the current directory, a process must
+	have execute (search) access to the directory.
 
 
 RETURN VALUE
-Upon successful completion, a value of 0 is returned.  Otherwise, a value
-of -1 is returned and errno is set to indicate the error.
+	Upon successful completion, a value of 0 is returned.  Otherwise, a value
+	of -1 is returned and errno is set to indicate the error.
 
 
 ERRORS
-The chdir() system call will fail and the current working directory will
-be unchanged if one or more of the following are true:
+	The chdir() system call will fail and the current working directory will
+	be unchanged if one or more of the following are true:
 
-[EACCES]	Search permission is denied for any component of the path name.
+	[EACCES]	Search permission is denied for any component of the path name.
 
-[EFAULT]	Path points outside the process's allocated address space.
+	[EFAULT]	Path points outside the process's allocated address space.
 
-[EIO]		An I/O error occurred while reading from or writing to the file
-			system.
+	[EIO]		An I/O error occurred while reading from or writing to the file
+				system.
 
-[ELOOP]		Too many symbolic links were encountered in translating the
-			pathname.  This is taken to be indicative of a looping symbolic
-			link.
+	[ELOOP]		Too many symbolic links were encountered in translating the
+				pathname.  This is taken to be indicative of a looping symbolic
+				link.
 
-[ENAMETOOLONG]A component of a pathname exceeded {NAMEMAX} characters, or an
-			entire path name exceeded {PATHMAX} char-
-			acters.
+	[ENAMETOOLONG]A component of a pathname exceeded {NAMEMAX} characters, or an
+				entire path name exceeded {PATHMAX} char-
+				acters.
 
-[ENOENT]	The named directory does not exist.
+	[ENOENT]	The named directory does not exist.
 
-[ENOTDIR]	A component of the path prefix is not a directory.
+	[ENOTDIR]	A component of the path prefix is not a directory.
 
-fchdir() will fail and the current working directory will be unchanged if
-one or more of the following are true:
+	fchdir() will fail and the current working directory will be unchanged if
+	one or more of the following are true:
 
-[EACCES]	Search permission is denied for the directory referenced by the file
-			descriptor.
+	[EACCES]	Search permission is denied for the directory referenced by the file
+				descriptor.
 
-[EBADF]		The argument fildes is not a valid file descriptor.
+	[EBADF]		The argument fildes is not a valid file descriptor.
 
-[EINTR]		fchdir() was interrupted by a signal.
+	[EINTR]		fchdir() was interrupted by a signal.
 
-[EIO]		An I/O error occurred while reading from or writing to the file
-			system.
+	[EIO]		An I/O error occurred while reading from or writing to the file
+				system.
 
-[ENOTDIR]	The file descriptor does not reference a directory.
+	[ENOTDIR]	The file descriptor does not reference a directory.
 
 
 RELATED
-chroot(2)
+	chroot(2)

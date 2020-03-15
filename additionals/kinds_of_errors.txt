@@ -1,0 +1,101 @@
+hello $ error No 0 --> Undefined error: 0
+hello $ error No 1 --> Operation not permitted
+hello $ error No 2 --> No such file or directory
+hello $ error No 3 --> No such process
+hello $ error No 4 --> Interrupted system call
+hello $ error No 5 --> Input/output error
+hello $ error No 6 --> Device not configured
+hello $ error No 7 --> Argument list too long
+hello $ error No 8 --> Exec format error
+hello $ error No 9 --> Bad file descriptor
+hello $ error No 10 --> No child processes
+hello $ error No 11 --> Resource deadlock avoided
+hello $ error No 12 --> Cannot allocate memory
+hello $ error No 13 --> Permission denied
+hello $ error No 14 --> Bad address
+hello $ error No 15 --> Block device required
+hello $ error No 16 --> Resource busy
+hello $ error No 17 --> File exists
+hello $ error No 18 --> Cross-device link
+hello $ error No 19 --> Operation not supported by device
+hello $ error No 20 --> Not a directory
+hello $ error No 21 --> Is a directory
+hello $ error No 22 --> Invalid argument
+hello $ error No 23 --> Too many open files in system
+hello $ error No 24 --> Too many open files
+hello $ error No 25 --> Inappropriate ioctl for device
+hello $ error No 26 --> Text file busy
+hello $ error No 27 --> File too large
+hello $ error No 28 --> No space left on device
+hello $ error No 29 --> Illegal seek
+hello $ error No 30 --> Read-only file system
+hello $ error No 31 --> Too many links
+hello $ error No 32 --> Broken pipe
+hello $ error No 33 --> Numerical argument out of domain
+hello $ error No 34 --> Result too large
+hello $ error No 35 --> Resource temporarily unavailable
+hello $ error No 36 --> Operation now in progress
+hello $ error No 37 --> Operation already in progress
+hello $ error No 38 --> Socket operation on non-socket
+hello $ error No 39 --> Destination address required
+hello $ error No 40 --> Message too long
+hello $ error No 41 --> Protocol wrong type for socket
+hello $ error No 42 --> Protocol not available
+hello $ error No 43 --> Protocol not supported
+hello $ error No 44 --> Socket type not supported
+hello $ error No 45 --> Operation not supported
+hello $ error No 46 --> Protocol family not supported
+hello $ error No 47 --> Address family not supported by protocol family
+hello $ error No 48 --> Address already in use
+hello $ error No 49 --> Can't assign requested address
+hello $ error No 50 --> Network is down
+hello $ error No 51 --> Network is unreachable
+hello $ error No 52 --> Network dropped connection on reset
+hello $ error No 53 --> Software caused connection abort
+hello $ error No 54 --> Connection reset by peer
+hello $ error No 55 --> No buffer space available
+hello $ error No 56 --> Socket is already connected
+hello $ error No 57 --> Socket is not connected
+hello $ error No 58 --> Can't send after socket shutdown
+hello $ error No 59 --> Too many references: can't splice
+hello $ error No 60 --> Operation timed out
+hello $ error No 61 --> Connection refused
+hello $ error No 62 --> Too many levels of symbolic links
+hello $ error No 63 --> File name too long
+hello $ error No 64 --> Host is down
+hello $ error No 65 --> No route to host
+hello $ error No 66 --> Directory not empty
+hello $ error No 67 --> Too many processes
+hello $ error No 68 --> Too many users
+hello $ error No 69 --> Disc quota exceeded
+hello $ error No 70 --> Stale NFS file handle
+hello $ error No 71 --> Too many levels of remote in path
+hello $ error No 72 --> RPC struct is bad
+hello $ error No 73 --> RPC version wrong
+hello $ error No 74 --> RPC prog. not avail
+hello $ error No 75 --> Program version wrong
+hello $ error No 76 --> Bad procedure for program
+hello $ error No 77 --> No locks available
+hello $ error No 78 --> Function not implemented
+hello $ error No 79 --> Inappropriate file type or format
+hello $ error No 80 --> Authentication error
+hello $ error No 81 --> Need authenticator
+hello $ error No 82 --> Device power is off
+hello $ error No 83 --> Device error
+hello $ error No 84 --> Value too large to be stored in data type
+hello $ error No 85 --> Bad executable (or shared library)
+hello $ error No 86 --> Bad CPU type in executable
+hello $ error No 87 --> Shared library version mismatch
+hello $ error No 88 --> Malformed Mach-o file
+hello $ error No 89 --> Operation canceled
+hello $ error No 90 --> Identifier removed
+hello $ error No 91 --> No message of desired type
+hello $ error No 92 --> Illegal byte sequence
+hello $ error No 93 --> Attribute not found
+hello $ error No 94 --> Bad message
+hello $ error No 95 --> EMULTIHOP (Reserved)
+hello $ error No 96 --> No message available on STREAM
+hello $ error No 97 --> ENOLINK (Reserved)
+hello $ error No 98 --> No STREAM resources
+hello $ error No 99 --> Not a STREAM
+hello $ 

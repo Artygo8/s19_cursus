@@ -51,5 +51,5 @@ The dup2() system call will fail if:
 
 
 RELATED
-accept(2), close(2), fcntl(2), getdtablesize(2), open(2), pipe(2),
-socket(2), socketpair(2)
+	accept(2), close(2), fcntl(2), getdtablesize(2), open(2), pipe(2),
+	socket(2), socketpair(2)

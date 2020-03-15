@@ -8,26 +8,26 @@ fstat, fstat64, lstat, lstat64, stat, stat64, fstatat -- get file status
 
 
 DESCRIPTION
-The stat() function obtains information about the file pointed to by
-path.  Read, write or execute permission of the named file is not
-required, but all directories listed in the path name leading to the file
-must be searchable.
+	The stat() function obtains information about the file pointed to by
+	path.  Read, write or execute permission of the named file is not
+	required, but all directories listed in the path name leading to the file
+	must be searchable.
 
-The lstat() function is like stat() except in the case where the named
-file is a symbolic link; lstat() returns information about the link,
-while stat() returns information about the file the link references.  For
-symbolic links, the stmode member contains meaningful information when
-used with the file type macros, and the stsize member contains the
-length of the pathname contained in the symbolic link. File mode bits and
-the contents of the remaining members of the stat structure are unspeci-
-fied. The value returned in the stsize member is the length of the con-
-tents of the symbolic link, and does not count any trailing null.
+	The lstat() function is like stat() except in the case where the named
+	file is a symbolic link; lstat() returns information about the link,
+	while stat() returns information about the file the link references.  For
+	symbolic links, the stmode member contains meaningful information when
+	used with the file type macros, and the stsize member contains the
+	length of the pathname contained in the symbolic link. File mode bits and
+	the contents of the remaining members of the stat structure are unspeci-
+	fied. The value returned in the stsize member is the length of the con-
+	tents of the symbolic link, and does not count any trailing null.
 
-The fstat() obtains the same information about an open file known by the
-file descriptor fildes.
+	The fstat() obtains the same information about an open file known by the
+	file descriptor fildes.
 
-The values for the flag are constructed by a bitwise-inclusive OR of
-flags from the following list, defined in <fcntl.h>:
+	The values for the flag are constructed by a bitwise-inclusive OR of
+	flags from the following list, defined in <fcntl.h>:
 
 ATSYMLINKNOFOLLOW
 If path names a symbolic link, the status of the symbolic link is
@@ -258,25 +258,25 @@ may fail if:
 
 
 CAVEATS
-The file generation number, stgen, is only available to the super-user.
-The fields in the stat structure currently marked stspare1, stspare2,
-and stspare3 are present in preparation for inode time stamps expanding
-to 64 bits.  This, however, can break certain programs that depend on the
-time stamps being contiguous (in calls to utimes(2)).
+	The file generation number, stgen, is only available to the super-user.
+	The fields in the stat structure currently marked stspare1, stspare2,
+	and stspare3 are present in preparation for inode time stamps expanding
+	to 64 bits.  This, however, can break certain programs that depend on the
+	time stamps being contiguous (in calls to utimes(2)).
 
 TRANSITIONAL DESCRIPTION (NOW DEPRECATED)
-The fstat64, lstat64 and stat64 routines are equivalent to their corre-
-sponding non-64-suffixed routine, when 64-bit inodes are in effect.  They
-were added before there was support for the symbol variants, and so are
-now deprecated.  Instead of using these, set the DARWINUSE64BITINODE
-macro before including header files to force 64-bit inode support.
+	The fstat64, lstat64 and stat64 routines are equivalent to their corre-
+	sponding non-64-suffixed routine, when 64-bit inodes are in effect.  They
+	were added before there was support for the symbol variants, and so are
+	now deprecated.  Instead of using these, set the DARWINUSE64BITINODE
+	macro before including header files to force 64-bit inode support.
 
-The stat64 structure used by these deprecated routines is the same as the
-stat structure when 64-bit inodes are in effect (see above).
+	The stat64 structure used by these deprecated routines is the same as the
+	stat structure when 64-bit inodes are in effect (see above).
 
 RELATED
-chflags(2), chmod(2), chown(2), utimes(2), compat(5), statfs(2), symlink(7)
+	chflags(2), chmod(2), chown(2), utimes(2), compat(5), statfs(2), symlink(7)
 
 BUGS
-Applying fstat to a socket (and thus to a pipe) returns a zero'd buffer,
-except for the blocksize field, and a unique device and inode number.
+	Applying fstat to a socket (and thus to a pipe) returns a zero'd buffer,
+	except for the blocksize field, and a unique device and inode number.

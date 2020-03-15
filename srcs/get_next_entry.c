@@ -27,6 +27,25 @@ int		ft_strchr_pos(const char *s, int c)
 	return (pos);
 }
 
+char	*ft_strjoin_buf(char *s1, char *buf)
+{
+	char	*tab;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!(tab = malloc(ft_strlen(s1) + ft_strlen(buf) + 1)))
+		return (NULL);
+	while (s1 && s1[j])
+		tab[i++] = s1[j++];
+	while (buf && *buf)
+		tab[i++] = *buf++;
+	tab[i] = 0;
+	free(s1);
+	return (tab);
+}
+
 char	*ft_strjoin_to_eol(char *s1, char *buf)
 {
 	char	*tab;

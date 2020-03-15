@@ -2,5 +2,5 @@
 
 int main(int argc, char const *argv[])
 {
-	return (ft_prompt("hello"));
+	return (ms_prompt("hello"));
 }
