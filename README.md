@@ -8,32 +8,32 @@ By the way Thank you to Achedeuzot for those files and explanations !
 
 ## How to?
 First, let's install OpenGL ! here is the command for debian based versions.
-```
+```bash
 sudo apt update
 sudo apt install libglu1-mesa-dev freeglut3-dev mesa-common-dev
 ```
 
 Then,
-```
+```bash
 cd minilibx
 make
 ```
 the installation will raise alot of warnings, it doesn't mean it is not working as long as there are no errors.
 
 To test your installation, use
-```
+```bash
 cd ./test
 ./mlx-test
 ```
 
 If for some reason, it didnt work the first time, read the error logs and use
-```
+```bash
 make re
 ```
 It's important ! 
 
 Finally, if, like me, you are starting from a basic OS installation, this commands migh also be useful.
-```
+```bash
 sudo apt install build-essential
 ```
 
