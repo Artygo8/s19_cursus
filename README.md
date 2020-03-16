@@ -36,7 +36,11 @@ Finally, if, like me, you are starting from a basic OS installation, this comman
 ```bash
 sudo apt install build-essential
 ```
-
-## good luck !
+## Compile
+To compile on linux, you need some special flags...
+```Makefile
+$(CC) $(OBJS) libmlx.a -lm -lX11 -lXext -o $(NAME)
+```
+## Good luck !
 If this is useful to you do not hesitate to let me know with a little star !
 You can also contact me by email to agossuin@student.s19.be
