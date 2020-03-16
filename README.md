@@ -38,7 +38,7 @@ sudo apt install build-essential
 ```
 ## Compile
 To compile on linux, you need some special flags...
-```make
+```makefile
 $(CC) $(OBJS) libmlx.a -lm -lX11 -lXext -o $(NAME)
 ```
 ## Good luck !
