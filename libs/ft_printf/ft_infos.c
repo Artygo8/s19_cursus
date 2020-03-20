@@ -74,7 +74,7 @@ int			ft_precision_inf(va_list *ap, char *str, t_inf *inf)
 
 	i = 0;
 	if (str[i] == '*' || ft_isdigit(str[i]))
-		inf->p = ((str[i++] == '*') ? va_arg(*ap, unsigned int) : ft_atoi(str));
+		inf->p = ((str[i++] == '*') ? (int)va_arg(*ap, unsigned int) : ft_atoi(str));
 	while (ft_isdigit(str[i]) && str[0] != '*')
 		i++;
 	return (i);

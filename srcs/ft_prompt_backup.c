@@ -1,6 +1,17 @@
 #include "minishell.h"
 
-
+int		ms_error(int err, char *arg)
+{
+	ft_putstr_fd("-minishell: ", 2);
+	if (err == MALLOC)
+		ft_putendl_fd("malloc failure", 2);
+	if (err == CMD_NOT_FOUND)
+	{
+		ft_putword_fd(arg, 2);
+		ft_putendl_fd(": command not found", 2);
+	}
+	return (-1);
+}
 
 int		ms_echo(char *arg)
 {
@@ -13,11 +24,7 @@ int		ms_apply_cmd(int cmd, char *arg)
 	if (cmd == 0)
 		return (0);
 	if (cmd == -1)
-	{
-		ft_putstr_fd("-minishell: ", 2);
-		ft_putword_fd(arg, 2);
-		ft_putendl_fd(": command not found", 2);
-	}
+		ms_error(CMD_NOT_FOUND, arg);
 	if (cmd == 1)
 		ms_echo(arg);
 	free(arg);
@@ -83,10 +90,11 @@ int		ms_cmd_line(char *line, int busy)
 
 int		ms_prompt(char *name)
 {
-	int			busy;
+	t_cmd		*cmd;
 	char		*line;
 
-	busy = 0;
+	if (!(cmd = (t_cmd)malloc(sizeof(t_cmd))))
+		return (ms_error(MALLOC));
 	ft_printf("%s $ ", name);
 	while (get_next_entry(&line))
 	{

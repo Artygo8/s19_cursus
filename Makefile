@@ -1,4 +1,4 @@
-SRC_NAMES	=	ft_prompt.c minishell.c get_next_entry.c
+SRC_NAMES	=	ms_prompt.c minishell.c get_next_entry.c ms_get.c cmd_struct.c
 
 SRC		=	$(addprefix srcs/, $(SRC_NAMES))
 OBJ		= $(SRC:%.c=%.o)

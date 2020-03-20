@@ -39,7 +39,7 @@ $(NAME):	${OBJS} ${LIBFT}
 
 
 $(LIBFT):
-			cd ${LIBFTDIR} && make bonus
+			cd ${LIBFTDIR} && make $@
 
 all:		${NAME}
 
@@ -58,9 +58,9 @@ bonus:		all
 test:		re
 			@${CC} main.c ${NAME}
 			make clean
-			@echo "\n================"
+			@echo "\n================" 
 			@./a.out
-			@echo "\n================"
+			@echo "\n================" 
 
 
 .PHONY:		all clean fclean re

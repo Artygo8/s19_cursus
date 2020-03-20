@@ -40,7 +40,7 @@ int			ft_format(const char *format, va_list *ap, t_inf *inf)
 		if (*format == '%')
 		{
 			format += ft_process(ap, (char *)format + 1, inf);
-			size += (inf->cv == 'c') ? ft_pchar(ap, inf) : ft_strlen(inf->str);
+			size += (inf->cv == 'c') ? ft_pchar(ap, inf) : (int)ft_strlen(inf->str);
 			if (inf->str)
 				ft_putstr_fd(inf->str, 1);
 		}

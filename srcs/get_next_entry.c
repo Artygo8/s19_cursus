@@ -27,7 +27,7 @@ int		ft_strchr_pos(const char *s, int c)
 	return (pos);
 }
 
-char	*ft_strjoin_buf(char *s1, char *buf)
+char	*ft_strjoin_amount(char *s1, char *buf, int size)
 {
 	char	*tab;
 	int		i;
@@ -35,12 +35,16 @@ char	*ft_strjoin_buf(char *s1, char *buf)
 
 	i = 0;
 	j = 0;
-	if (!(tab = malloc(ft_strlen(s1) + ft_strlen(buf) + 1)))
+	if (!(tab = malloc(ft_strlen(s1) + size + 2))) //size ne tiens pas encore compte de l'exception des '\' (92)
 		return (NULL);
 	while (s1 && s1[j])
 		tab[i++] = s1[j++];
-	while (buf && *buf)
-		tab[i++] = *buf++;
+	j = (j > 0) ? j : 1;
+	if (s1 && *buf != '\n' && s1[j - 1] != '\n')
+		tab[i++] = ' ';
+	j = 0;
+	while (buf && buf[j] && buf[j] != 92 && j < size)
+		tab[i++] = buf[j++];
 	tab[i] = 0;
 	free(s1);
 	return (tab);

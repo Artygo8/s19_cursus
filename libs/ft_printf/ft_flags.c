@@ -56,11 +56,9 @@ void		ft_special_cases(t_inf *inf)
 void		ft_point_flag_str(t_inf *inf)
 {
 	char	*tmp;
-	int		i;
 
 	if (inf->cv == 's' && inf->p >= 0 && inf->str)
 	{
-		i = 0;
 		tmp = ft_substr(inf->str, 0, inf->p);
 		free(inf->str);
 		inf->str = tmp;
