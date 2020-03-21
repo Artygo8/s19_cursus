@@ -1,9 +1,9 @@
-dup, dup2 -- duplicate an existing file descriptor
+dup, dup2 -- duplicate an existing file descriptor
 
-#include <unistd.h>
+#include <unistd.h>
 
-int		dup(int fildes);
-int		dup2(int fildes, int fildes2);
+int		dup(int fildes);
+int		dup2(int fildes, int fildes2);
 
 
 DESCRIPTION

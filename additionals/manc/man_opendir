@@ -1,28 +1,28 @@
 opendir, readdir, closedir -- directory operations
 
-#include <dirent.h>
+#include <dirent.h>
 
-DIR				*opendir(const char *filename);
-struct dirent	*readdir(DIR *dirp);
-int				closedir(DIR *dirp);
+DIR				*opendir(const char *filename);
+struct dirent	*readdir(DIR *dirp);
+int				closedir(DIR *dirp);
 
 
 DESCRIPTION
-	The opendir() function opens the directory named by filename, associates
-	a directory stream with it and returns a pointer to be used to identify
-	the directory stream in subsequent operations.  The pointer NULL is
-	returned if filename cannot be accessed, or if it cannot malloc(3) enough
-	memory to hold the whole thing, and sets the global variable errno to
+	The opendir() function opens the directory named by filename, associates
+	a directory stream with it and returns a pointer to be used to identify
+	the directory stream in subsequent operations.  The pointer NULL is
+	returned if filename cannot be accessed, or if it cannot malloc(3) enough
+	memory to hold the whole thing, and sets the global variable errno to
 	indicate the error.
 
 	The readdir() function returns a pointer to the next directory entry.  It
 	returns NULL upon reaching the end of the directory or on error.  In the
-	event of an error, errno may be set to any of the values documented for
+	event of an error, errno may be set to any of the values documented for
 	the getdirentries(2) system call.
 
-	The closedir() function closes the named directory stream and frees the
-	structure associated with the dirp pointer, returning 0 on success.  On
-	failure, -1 is returned and the global variable errno is set to indicate
+	The closedir() function closes the named directory stream and frees the
+	structure associated with the dirp pointer, returning 0 on success.  On
+	failure, -1 is returned and the global variable errno is set to indicate
 	the error.
 
 	Sample code which searches a directory for entry ``name'' is:

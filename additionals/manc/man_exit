@@ -2,7 +2,7 @@ exit -- perform normal program termination
 
 #include <stdlib.h>
 
-void	exit(int status);
+void	exit(int status);
 
 DESCRIPTION
 	The exit() functions terminate a process.
@@ -17,7 +17,7 @@ DESCRIPTION
 		4.	Unlink all files created with the tmpfile(3) function.
 
 	The C Standard (ISO/IEC 9899:1999 (``ISO C99'')) defines the values 0,
-	EXITSUCCESS, and EXITFAILURE as possible values of status.  Cooperating
+	EXITSUCCESS, and EXITFAILURE as possible values of status.  Cooperating
 	processes may use other values; in a program which might be called by a
 	mail transfer agent, the values described in sysexitits(3) may be used to
 	provide more information to the parent process.

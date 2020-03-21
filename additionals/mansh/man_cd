@@ -6,7 +6,7 @@ name
 	dirs, do, done, echo, echotc, elif, else, end, endif, endsw, esac, eval,
 	exec, exit, export, false, fc, fg, filetest, fi, for, foreach, getopts,
 	glob, goto, hash, hashstat, history, hup, if, jobid, jobs, kil, limit,
-	local, log, login, logout, ls--f, nice, nohup, notify, onintr, popd,
+	local, log, login, logout, ls--f, nice, nohup, notify, onintr, popd,
 	printenv, pushd, pwd, read, readonly, rehash, repeat, return, sched, set,
 	setenv, settc, setty, setvar, shift, source, stop, suspend, switch,
 	teltc, test, then, time, times, trap, true, type, ulimit, umask,
@@ -14,7 +14,7 @@ name
 	where, which, while -- shell built-in commands
 
 synopsis
-	builtin [--options] [args ...]
+	builtin [--options] [args ...]
 
 description
 	Shel builtin commands are commands that can be executed within the run-
@@ -26,8 +26,8 @@ description
 	wil not execute a builtin command, even if the last component of the
 	specified command matches the name of a builtin command.  Thus, while
 	specifying ``echo'' causes a builtin command to be executed under shels
-	that support the echo builtin command, specifying ``//bin//echo'' or
-	``..//echo'' does not.
+	that support the echo builtin command, specifying ``//bin//echo'' or
+	``..//echo'' does not.
 
 	While some builtin commands may exist in more than one shel, their oper-
 	ation may be different under each shel which supports them.  Below is a
@@ -41,10 +41,10 @@ description
 	Users of other shels may need to consult an info(1) page or other
 	sources of documentation.
 
-	Commands marked ``No**'' under External do exist externaly, but are
+	Commands marked ``No**'' under External do exist externaly, but are
 	implemented as scripts using a builtin command of the same name.
 
-		Comand		External	csh(1)	sh(1)
+		Comand		External	csh(1)	sh(1)
 		!			No			No		Yes
 		%No			Yes			No
 		.			No			No		Yes

@@ -1,15 +1,15 @@
 fstat, fstat64, lstat, lstat64, stat, stat64, fstatat -- get file status
 
-#include <sys/stat.h>
+#include <sys/stat.h>
 
-int		fstat(int fildes, struct stat *buf);
-int		lstat(const char *restrict path, struct stat *restrict buf);
-int		stat(const char *restrict path, struct stat *restrict buf);
+int		fstat(int fildes, struct stat *buf);
+int		lstat(const char *restrict path, struct stat *restrict buf);
+int		stat(const char *restrict path, struct stat *restrict buf);
 
 
 DESCRIPTION
 	The stat() function obtains information about the file pointed to by
-	path.  Read, write or execute permission of the named file is not
+	path.  Read, write or execute permission of the named file is not
 	required, but all directories listed in the path name leading to the file
 	must be searchable.
 
@@ -24,19 +24,19 @@ DESCRIPTION
 	tents of the symbolic link, and does not count any trailing null.
 
 	The fstat() obtains the same information about an open file known by the
-	file descriptor fildes.
+	file descriptor fildes.
 
-	The values for the flag are constructed by a bitwise-inclusive OR of
-	flags from the following list, defined in <fcntl.h>:
+	The values for the flag are constructed by a bitwise-inclusive OR of
+	flags from the following list, defined in <fcntl.h>:
 
 ATSYMLINKNOFOLLOW
-If path names a symbolic link, the status of the symbolic link is
+If path names a symbolic link, the status of the symbolic link is
 returned.
 
-The buf argument is a pointer to a stat structure as defined by
-<sys/stat.h> and into which information is placed concerning the file.
+The buf argument is a pointer to a stat structure as defined by
+<sys/stat.h> and into which information is placed concerning the file.
 When the macro DARWINFEATURE64BITINODE is not defined (see below for
-more information about this macro), the stat structure is defined as:
+more information about this macro), the stat structure is defined as:
 
 struct stat { 				/* when DARWINFEATURE64BITINODE is NOT defined */
 	devt			stdev;			/* device inode resides on */
@@ -56,7 +56,7 @@ struct stat { 				/* when DARWINFEATURE64BITINODE is NOT defined */
 	ulong			stgen;			/* file generation number */
 };
 
-However, when the macro DARWINFEATURE64BITINODE is defined, the stat
+However, when the macro DARWINFEATURE64BITINODE is defined, the stat
 structure will now be defined as:
 
 struct stat { /* when DARWINFEATURE64BITINODE is defined */
@@ -80,7 +80,7 @@ struct stat { /* when DARWINFEATURE64BITINODE is defined */
 	int64t			stqspare[2];	/* RESERVED: DO NOT USE! */
 };
 
-The time-related fields of struct stat are as follows:
+The time-related fields of struct stat are as follows:
 
 statime		Time when file data last accessed.  Changed by the
 			mknod(2), utimes(2) and read(2) system calls.
@@ -106,7 +106,7 @@ stblocks	The actual number of blocks allocated for the file in
 			512-byte units.  As short symbolic links are stored in the
 			inode, this number may be zero.
 
-The status information word stmode has the following bits:
+The status information word stmode has the following bits:
 
 #define SIFMT	0170000	/* type of file */
 #define SIFIFO	0010000	/* named pipe (fifo) */
@@ -124,21 +124,21 @@ The status information word stmode has the following bits:
 #define SIWUSR	0000200	/* write permission, owner */
 #define SIXUSR	0000100	/* execute/search permission, owner */
 
-For a list of access modes, see <sys/stat.h>, access(2) and chmod(2).
+For a list of access modes, see <sys/stat.h>, access(2) and chmod(2).
 
-For a list of the file flags in the stflags field, see <sys/stat.h> and
+For a list of the file flags in the stflags field, see <sys/stat.h> and
 chflags(2).
 
 DARWINFEATURE64BITINODE
 In order to accommodate advanced capabilities of newer file systems, the
-struct stat, struct statfs, and struct dirent data structures were
+struct stat, struct statfs, and struct dirent data structures were
 updated in Mac OSX 10.5.
 
-The most obvious change is the increased size of inot from 32 bits to 64
+The most obvious change is the increased size of inot from 32 bits to 64
 bits.  As a consequence, storing an inot in an int is no longer safe,
 and file formats storing inot as 32-bit values may need to be updated.
-There are other changes as well, such as the widening of ffstypename,
-fmntonname, and fmntfromname in struct statfs.  Please refer to stat(2)
+There are other changes as well, such as the widening of ffstypename,
+fmntonname, and fmntfromname in struct statfs.  Please refer to stat(2)
 and dir(5) for more detail on the specific changes to the other affected
 data structures.
 
@@ -166,33 +166,33 @@ ferent deployment targets.
 
 	user defines:  |   < 10.5  10.5    > 10.5
 	-------------------------+-------------------------------
-	(none)|   32-bit 32-bit   64-bit
+	(none)|   32-bit 32-bit   64-bit
 	DARWINNO64BITINODE  |   32-bit 32-bit   32-bit
 	DARWINUSE64BITINODE |   32-bit 64-bit   64-bit
 	-------------------------+-------------------------------
 
-	DARWINFEATUREONLY64BITINODE ddeeffiinneedd
+	DARWINFEATUREONLY64BITINODE ddeeffiinneedd
 	-------------------------+-------------------------------
 	user defines:  | Any Deployment Target
 	-------------------------+-------------------------------
-	(none)| 64-bit-only
-	DARWINNO64BITINODE  |   (error)
+	(none)| 64-bit-only
+	DARWINNO64BITINODE  |   (error)
 	DARWINUSE64BITINODE | 64-bit-only
 	-------------------------+-------------------------------
 
 32-bit  32-bit inode values are enabled, and the legacy struc-
-tures involving the inot type are in use.  The macro
+tures involving the inot type are in use.  The macro
 DARWINFEATURE64BITINODE is not defined.
 
 64-bit  64-bit inode values are enabled, and the expanded
-	structures involving the inot type are in use.  The
+	structures involving the inot type are in use.  The
 	macro DARWINFEATURE64BITINODE is defined, and
 	loader symbols will contain the $INODE64 suffix.
 
 64-bit-only  Like 64-bit, except loader symbols do not have the
 	$INODE64 suffix.
 
-(error) A compile time error is generated.
+(error) A compile time error is generated.
 
 Due to the increased benefits of the larger structure, it is highly rec-
 ommended that developers not define DARWINNO64BITINODE and make use
@@ -208,7 +208,7 @@ These functions have been deprecated and should be avoided.
 
 RETURN VALUE
 Upon successful completion a value of 0 is returned.  Otherwise, a value
-of -1 is returned and errno is set to indicate the error.
+of -1 is returned and errno is set to indicate the error.
 
 COMPATIBILITY
 Previous versions of the system used different types for the stdev,
@@ -217,8 +217,8 @@ stuid, stgid, strdev, stsize, stblksize and stblocks fields.
 ERRORS
 The fstat() system call will fail if:
 
-	[EBADF]		fildes is not a valid open file descriptor.
-	[EFAULT]	Sb points to an invalid address.
+	[EBADF]		fildes is not a valid open file descriptor.
+	[EFAULT]	Sb points to an invalid address.
 	[EIO]		An I/O error occurs while reading from or writing to the
 				file system.
 
@@ -226,7 +226,7 @@ The lstat() and stat() system calls will fail if:
 
 	[EACCES]	Search permission is denied for a component of the
 				path prefix.
-	[EFAULT]	Sb or name points to an invalid address.
+	[EFAULT]	Sb or name points to an invalid address.
 	[EIO]		An I/O error occurs while reading from or writing to
 				the file system.
 	[ELOOP]		Too many symbolic links are encountered in translating
@@ -241,38 +241,38 @@ The fstat(), lstat(), and stat() system calls will fail if:
 
 	[EOVERFLOW]	The file size in bytes or the number of blocks allo-
 				cated to the file or the file serial number cannot be
-				represented correctly in the structure pointed to by buf.
+				represented correctly in the structure pointed to by buf.
 
 In addition to the errors returned by the stat() and lstat(), fstatat()
 may fail if:
 
-	[EBADF]		The path argument does not specify an absolute path
-				and the fd argument is neither ATFDCWD nor a valid
+	[EBADF]		The path argument does not specify an absolute path
+				and the fd argument is neither ATFDCWD nor a valid
 				file descriptor open for searching.
 
-	[EINVAL]	The value of the flag argument is not valid.
+	[EINVAL]	The value of the flag argument is not valid.
 
-	[ENOTDIR]	The path argument is not an absolute path and fd is
+	[ENOTDIR]	The path argument is not an absolute path and fd is
 				neither ATFDCWD nor a file descriptor associated with
 				a directory.
 
 
 CAVEATS
-	The file generation number, stgen, is only available to the super-user.
-	The fields in the stat structure currently marked stspare1, stspare2,
-	and stspare3 are present in preparation for inode time stamps expanding
+	The file generation number, stgen, is only available to the super-user.
+	The fields in the stat structure currently marked stspare1, stspare2,
+	and stspare3 are present in preparation for inode time stamps expanding
 	to 64 bits.  This, however, can break certain programs that depend on the
 	time stamps being contiguous (in calls to utimes(2)).
 
 TRANSITIONAL DESCRIPTION (NOW DEPRECATED)
-	The fstat64, lstat64 and stat64 routines are equivalent to their corre-
+	The fstat64, lstat64 and stat64 routines are equivalent to their corre-
 	sponding non-64-suffixed routine, when 64-bit inodes are in effect.  They
 	were added before there was support for the symbol variants, and so are
 	now deprecated.  Instead of using these, set the DARWINUSE64BITINODE
 	macro before including header files to force 64-bit inode support.
 
-	The stat64 structure used by these deprecated routines is the same as the
-	stat structure when 64-bit inodes are in effect (see above).
+	The stat64 structure used by these deprecated routines is the same as the
+	stat structure when 64-bit inodes are in effect (see above).
 
 RELATED
 	chflags(2), chmod(2), chown(2), utimes(2), compat(5), statfs(2), symlink(7)

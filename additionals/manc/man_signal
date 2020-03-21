@@ -2,9 +2,9 @@ signal -- simplified software signal facilities
 
 #include <signal.h>
 
-void		(*signal(int sig, void (*func)(int)))(int);
-typedf		void (*sigt) (int);
-sigt		signal(int sig, sigt func);
+void		(*signal(int sig, void (*func)(int)))(int);
+typedf		void (*sigt) (int);
+sigt		signal(int sig, sigt func);
 
 
 DESCRIPTION
@@ -26,7 +26,7 @@ DESCRIPTION
 	receiving them to be stopped, or are simply discarded if the process has
 	not requested otherwise.  Except for the SIGKILL and SIGSTOP signals, the
 	signal() function allows for a signal to be caught, to be ignored, or to
-	generate an interrupt.  These signals are defined in the file <signal.h>:
+	generate an interrupt.  These signals are defined in the file <signal.h>:
 
 	No	NAME	DEFAULT ACTION		DESCRIPTION
 	1	SIGHUP	terminate process	terminal line hangup
@@ -61,14 +61,14 @@ DESCRIPTION
 	30	SIGUSR1	terminate process	User defined signal 1
 	31	SIGUSR2	terminate process	User defined signal 2
 
-	The sig argument specifies which signal was received.  The func procedure
+	The sig argument specifies which signal was received.  The func procedure
 	allows a user to choose the action upon receipt of a signal.  To set the
-	default action of the signal to occur as listed above, func should be
+	default action of the signal to occur as listed above, func should be
 	SIGDFL.  A SIGDFL resets the default action.  To ignore the signal,
-	func should be SIGIGN.  This will cause subsequent instances of the sig-
+	func should be SIGIGN.  This will cause subsequent instances of the sig-
 	nal to be ignored and pending instances to be discarded.  If SIGIGN is
 	not used, further occurrences of the signal are automatically blocked and
-	func is called.
+	func is called.
 
 	The handled signal is unblocked when the function returns and the process
 	continues from where it left off when the signal occurred. Unlike previous
@@ -97,7 +97,7 @@ DESCRIPTION
 	status from the child processes.  If the calling process subsequently
 	issues a call to wait(2) or equivalent, it will block until all of the
 	calling process's children terminate, and then return a value of -1 with
-	errno set to ECHILD.
+	errno set to ECHILD.
 
 	See sigaction(2) for a list of functions that are considered safe for use
 	in signal handlers.
@@ -105,14 +105,14 @@ DESCRIPTION
 
 RETURN VALUES
 	The previous action is returned on a successful call.  Otherwise, SIGERR
-	is returned and the global variable errno is set to indicate the error.
+	is returned and the global variable errno is set to indicate the error.
 
 
 ERRORS
 The signal() function will fail and no action will take place if one of
 the following occur:
 
-	[EINVAL]	The sig argument is not a valid signal number.
+	[EINVAL]	The sig argument is not a valid signal number.
 	[EINVAL]	An attempt is made to ignore or supply a handler for
 				SIGKILL or SIGSTOP.
 

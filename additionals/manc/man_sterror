@@ -1,29 +1,29 @@
 strerror -- system error messages
 
-char	*strerror(int errnum);
+char	*strerror(int errnum);
 
 
 DESCRIPTION
 	The strerror() function look up the error message string corresponding to an
 	error number.
 
-	The strerror() function accepts an error number argument errnum and
+	The strerror() function accepts an error number argument errnum and
 	returns a pointer to the corresponding message string.
 
 	If the error number is not recognized, these functions return an error
 	message string containing ``Unknown error: '' followed by the error num-
 	ber in decimal.  The strerror() and strerrorr() functions return EINVAL
 	as a warning.  Error numbers recognized by this implementation fall in
-	the range 0 <= errnum < sysnerr.
+	the range 0 <= errnum < sysnerr.
 
-	If insufficient storage is provided in strerrbuf (as specified in buflen)
-	to contain the error string, strerrorr() returns ERANGE and strerrbuf
+	If insufficient storage is provided in strerrbuf (as specified in buflen)
+	to contain the error string, strerrorr() returns ERANGE and strerrbuf
 	will contain an error message that has been truncated and NUL terminated
-	to fit the length specified by buflen.
+	to fit the length specified by buflen.
 
 	The message strings can be accessed directly using the external array
-	syserrlist.  The external value sysnerr contains a count of the mes-
-	sages in syserrlist.  The use of these variables is deprecated;
+	syserrlist.  The external value sysnerr contains a count of the mes-
+	sages in syserrlist.  The use of these variables is deprecated;
 	strerror() or strerrorr() should be used instead.
 
 
@@ -36,7 +36,7 @@ BUGS
 	in a static buffer which may be overwritten by subsequent calls.
 
 	The return type for strerror() is missing a type-qualifier; it should
-	actually be const char *.
+	actually be const char *.
 
-	Programs that use the deprecated syserrlist variable often fail to com-
+	Programs that use the deprecated syserrlist variable often fail to com-
 	pile because they declare it inconsistently.
