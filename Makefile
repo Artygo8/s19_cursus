@@ -1,29 +1,33 @@
-SRC_NAMES	=	ms_prompt.c minishell.c get_next_entry.c ms_get.c cmd_struct.c
+SRC_NAMES	=	minishell.c env.c
 
-SRC		=	$(addprefix srcs/, $(SRC_NAMES))
-OBJ		= $(SRC:%.c=%.o)
+SRC			=	$(addprefix srcs/, $(SRC_NAMES))
+OBJ			=	$(SRC:%.c=%.o)
 
-NAME	=	minishell
+NAME		=	minishell
+LIBFT		=	libft/libft.a
 
-CC		=	gcc
-FLAGS	=	-Wall -Wextra -Werror
-RM		=	rm -f
-AR		=	ar -rc
+CC			=	gcc
+FLAGS		=	-Wall -Wextra -Werror
+RM			=	rm -f
+AR			=	ar -rc
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ) libftprintf.a
-			$(CC) -o $(NAME) $(OBJ) libs/ft_printf/libftprintf.a
+$(NAME):	$(OBJ) $(LIBFT)
+			$(CC) -o $(NAME) $(OBJ) $(LIBFT)
+			make clean
 
 test:		all
 			./minishell
 clean:
+			cd libft/ && make $@
 			$(RM) $(OBJ)
 
 fclean:		clean
+			$(RM) $(LIBFT)
 			$(RM) $(NAME)
 
 re:			fclean all
 
-libftprintf.a:
-			cd libs/ft_printf/ && make
+$(LIBFT):
+			cd libft/ && make bonus
