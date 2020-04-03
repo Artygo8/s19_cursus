@@ -1,6 +1,5 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# define BUFFER_SIZE 1000
 # include <dirent.h>
 # include <signal.h>
 # include <stdio.h>
@@ -33,7 +32,7 @@ typedef struct	s_cmd
 	char	*line;
 	int		pos;
 	int		cmd;
-	int		option;			// the only option is -n for the echo, so 1
+//	int		option;			// the only option is -n for the echo, so 1
 	t_list	*args;
 	t_list	*env;
 	t_list	*vars;
@@ -50,6 +49,19 @@ typedef struct	s_cmd
 t_list	*ft_lstenv(char **envp);
 void	ft_putenv(t_list *env);
 int 	ft_var_to_env(t_list *env, const char *var);
+
+/*
+ * CMD
+ */
+
+void	put_cmd(t_cmd *cmd);
+void	ft_reset_cmd(t_cmd *cmd);
+
+/*
+ * PROMPT
+ */
+
+int		ft_prompt(char *name, t_cmd *cmd);
 
 
 #endif

@@ -1,4 +1,4 @@
-SRC_NAMES	=	minishell.c env.c
+SRC_NAMES	=	minishell.c env.c cmd.c prompt.c
 
 SRC			=	$(addprefix srcs/, $(SRC_NAMES))
 OBJ			=	$(SRC:%.c=%.o)

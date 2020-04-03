@@ -14,7 +14,9 @@
 # define LIBFT_H
 # include <string.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
+# define BUFFER_SIZE 32
 
 typedef struct		s_list
 {
@@ -70,5 +72,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 											void (*del)(void *));
 int					ft_isspace(int c);
 char				*ft_utoa_base(unsigned long n, const char *base);
+
+int					get_next_line(int fd, char **line);
 
 #endif

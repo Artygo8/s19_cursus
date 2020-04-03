@@ -18,7 +18,7 @@ t_list	*ft_lstenv(char **envp)
 	t_list	*env;
 
 	i = 0;
-	env = ft_lstnew((void *)envp[i++]);
+	env = ft_lstnew((void *)ft_strdup(envp[i++]));
 	while (envp[i])
 		ft_lstadd_back(&env, ft_lstnew((void *)ft_strdup(envp[i++])));
 	return (env);
@@ -35,8 +35,8 @@ void	ft_putenv(t_list *env)
 
 int 	ft_var_to_env(t_list *env, const char *var)
 {
-	int		size;
 	t_list	*cpy_env;
+	int		size;
 
 	cpy_env = env;
 	size = 0;

@@ -9,8 +9,12 @@ int main(int argc, char const *argv[], char **envp)
 	ft_bzero(cmd, sizeof(t_cmd));
 	cmd->env = (t_list *)ft_lstenv(envp);
 	cmd->fd_output = 1;
-//	ms_prompt("prompt", &cmd);
-	ft_var_to_env(cmd->env, "HEY=SHITHOLE");
-	ft_putenv(cmd->env);
+	ft_prompt("prompt $", cmd);
+//	ft_putenv(cmd->env);
+//	put_cmd(cmd);
+/*	ft_lstclear(&(cmd->args), free); */
+	ft_lstclear(&(cmd->env), free);
+	ft_lstclear(&(cmd->vars), free);
+	free(cmd);
 	return (0);
 }
