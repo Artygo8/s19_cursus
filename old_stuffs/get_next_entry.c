@@ -5,28 +5,6 @@ int		ft_putline(char const *s)
 	return (write(1, s, ft_strlen_endl(s)));
 }
 
-int		ft_strlen_endl(char const *s)
-{
-	int i;
-
-	i = 0;
-	while (s && s[i] && s[i] != '\n')
-		i++;
-	return (i);
-}
-
-int		ft_strchr_pos(const char *s, int c)
-{
-	int pos;
-
-	pos = 0;
-	while (s && s[pos] && (s[pos] != c))
-		pos++;
-	if (s && s[pos] != c)
-		pos = -1;
-	return (pos);
-}
-
 char	*ft_strjoin_amount(char *s1, char *buf, int size)
 {
 	char	*tab;
@@ -35,35 +13,15 @@ char	*ft_strjoin_amount(char *s1, char *buf, int size)
 
 	i = 0;
 	j = 0;
-	if (!(tab = malloc(ft_strlen(s1) + size + 2))) //size ne tiens pas encore compte de l'exception des '\' (92)
+	if (!(tab = malloc(ft_strlen(s1) + size + (s1 != 0) + 1)))
 		return (NULL);
 	while (s1 && s1[j])
 		tab[i++] = s1[j++];
-	j = (j > 0) ? j : 1;
-	if (s1 && *buf != '\n' && s1[j - 1] != '\n')
+	if (s1 && *buf)
 		tab[i++] = ' ';
 	j = 0;
-	while (buf && buf[j] && buf[j] != 92 && j < size)
+	while (buf && buf[j] && j < size)
 		tab[i++] = buf[j++];
-	tab[i] = 0;
-	free(s1);
-	return (tab);
-}
-
-char	*ft_strjoin_to_eol(char *s1, char *buf)
-{
-	char	*tab;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (!(tab = malloc(ft_strlen_endl(s1) + ft_strlen_endl(buf) + 1)))
-		return (NULL);
-	while (s1 && s1[j])
-		tab[i++] = s1[j++];
-	while (buf && *buf && *buf != '\n')
-		tab[i++] = *buf++;
 	tab[i] = 0;
 	free(s1);
 	return (tab);

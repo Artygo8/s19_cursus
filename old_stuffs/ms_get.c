@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+/*
 char	*ms_get_line_path(char *line)
 {
 	char	*path;
@@ -22,6 +23,7 @@ char	*ms_get_line_path(char *line)
 	}
 	return (ft_substr(line, start, end - start));
 }
+*/
 
 /*
 ** 3 fd_types possible : SAVE_OUT, APPEND_OUT, FILE_INPUT.
@@ -32,7 +34,7 @@ int		ms_get_fd(t_cmd *cmd, char *line, int fd_type)
 	char	*path;
 	int		i;
 
-	path = ms_get_line_path(line);
+//	path = ms_get_line_path(line);
 	if (fd_type == SAVE_OUT)
 		cmd->fd_output = open(path, O_CREAT | O_WRONLY | O_APPEND, 644);
 	else if (fd_type == APPEND_OUT)
@@ -47,46 +49,32 @@ int		ms_get_fd(t_cmd *cmd, char *line, int fd_type)
 	return (i);
 }
 
-
-int		ms_get_cmd(t_cmd *cmd, char *line)
-{
-	int i;
-
-	i = 0;
-	while (line[i] && !ft_isspace(line[i]))
-		i++;
-	if (!(ft_strncmp(line, "cd", 2)) && ft_isspace(line[2]))
-		cmd->cmd = CD;
-	if (!(ft_strncmp(line, "pwd", 3)) && ft_isspace(line[3]))
-		cmd->cmd = PWD;
-	if (!(ft_strncmp(line, "echo", 4)) && ft_isspace(line[4]))
-		cmd->cmd = ECHO;
-	return (i);
-}
-
 int		ms_get_str(t_cmd *cmd, char *line)
 {
 	int size;
 
-	size = 0; //first element was already approved
+	size = 1; //first element was already approved
 	if (cmd->string == 0)
 	{
-		while (line[size] && !ft_isspace(line[size]) && line[size] != 39 && line[size] != 34)
+		while (line[size] && line[size] != 39 && ((!ft_isspace(line[size])
+							&& line[size] != 34) || line[size - 1] == '\\'))
 			size++;
+		if (line[size] == '\\')
+			cmd->string = 3;
 	}
 	else if (cmd->string == 1)
-	{
-		while (line[size] && (line[size] != 39 || line[size - 1] == 92))
+		while (line[size] && line[size] != 39)
 			size++;
-	}
 	else if (cmd->string == 2)
-	{
 		while (line[size] && (line[size] != 34 || line[size - 1] == 92))
 			size++;
-	}
-	cmd->arg = ft_strjoin_amount(cmd->arg, line, size);
+	cmd->arg = ft_strjoin_argument(cmd->arg, line, cmd->string); // TODO
 	return (size);
 }
+
+/*
+ * cmd->arg is **char
+ */
 
 int		ms_get_arg(t_cmd *cmd, char *line)
 {
@@ -104,4 +92,25 @@ int		ms_get_arg(t_cmd *cmd, char *line)
 	else
 		size = ms_get_str(cmd, line);
 	return (size);
+}
+
+int		ms_get_cmd(t_cmd *cmd, char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i] && !ft_isspace(line[i]))
+		i++;
+	if (!(ft_strncmp(line, "cd", 2)) && ft_isspace(line[2]))
+		cmd->cmd = CD;
+	else if (!(ft_strncmp(line, "pwd", 3)) && ft_isspace(line[3]))
+		cmd->cmd = PWD;
+	else if (!(ft_strncmp(line, "echo", 4)) && ft_isspace(line[4]))
+		cmd->cmd = ECHO;
+	else
+	{
+		cmd->cmd = ERROR;
+		ms_get_str(cmd, line);
+	}
+	return (i);
 }
