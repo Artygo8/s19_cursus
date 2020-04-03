@@ -54,6 +54,7 @@ int		ms_parsing(t_cmd *cmd, char *line, int i) //this function should return the
 //	put_cmd(cmd);
 	while (ft_isspace(line[i]))
 		i++;
+//	printf("Now we have : %s\n", &line[i]);
 	if (cmd->cmd == -1)
 		return (0);
 	if (line[i] == '\0')
@@ -72,7 +73,7 @@ int		ms_parsing(t_cmd *cmd, char *line, int i) //this function should return the
 		return (i);
 	else
 		i += ms_get_arg(cmd, &line[i]);
-//	printf("i = %d\n", i);
+//	printf("just parsed %d char\n", i);
 	ms_parsing(cmd, line, i);
 }
 
@@ -96,7 +97,7 @@ int		ms_cmd_line(t_cmd *cmd, char *line)
 	if (cmd->cmd == -1)
 		return (0);
 	ms_reset_cmd(cmd);
-	ms_cmd_line(cmd, &line[i + 1]);
+	ms_cmd_line(cmd, &line[i]);
 }
 
 
@@ -114,7 +115,7 @@ int		ms_prompt(char *name)
 		return (ms_error(MALLOC, "malloc failed"));
 	ms_reset_cmd(cmd);
 	ft_printf("%s $ ", name);
-	while (get_next_entry(&line))
+	while (get_next_line(0, &line))
 	{
 		if (ms_cmd_line(cmd, line) == -1) // remonte d'erreur
 			return (-1);

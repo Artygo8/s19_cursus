@@ -9,7 +9,7 @@ SSYYNNOOPPSSIISS
 	    [utility [argument ...]]
 
 DDEESSCCRRIIPPTTIIOONN
-	The eennvv utility executes another utility after modifying the environment
+	The env utility executes another utility after modifying the environment
 	as specified on the command line.  Each name=value option specifies the
 	setting of an environment variable, name, with a value of value.  All
 	such environment variables are set before the utility is executed.

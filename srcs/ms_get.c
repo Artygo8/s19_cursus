@@ -34,7 +34,7 @@ int		ms_get_fd(t_cmd *cmd, char *line, int fd_type)
 	char	*path;
 	int		i;
 
-	path = ms_get_line_path(line);
+//	path = ms_get_line_path(line);
 	if (fd_type == SAVE_OUT)
 		cmd->fd_output = open(path, O_CREAT | O_WRONLY | O_APPEND, 644);
 	else if (fd_type == APPEND_OUT)
@@ -55,17 +55,26 @@ int		ms_get_str(t_cmd *cmd, char *line)
 
 	size = 1; //first element was already approved
 	if (cmd->string == 0)
-		while (line[size] && !ft_isspace(line[size]) && line[size] != 39 && line[size] != 34)
+	{
+		while (line[size] && line[size] != 39 && ((!ft_isspace(line[size])
+							&& line[size] != 34) || line[size - 1] == '\\'))
 			size++;
+		if (line[size] == '\\')
+			cmd->string = 3;
+	}
 	else if (cmd->string == 1)
-		while (line[size] && (line[size] != 39 || line[size - 1] == 92))
+		while (line[size] && line[size] != 39)
 			size++;
 	else if (cmd->string == 2)
 		while (line[size] && (line[size] != 34 || line[size - 1] == 92))
 			size++;
-	cmd->arg = ft_strjoin_amount(cmd->arg, line, size);
+	cmd->arg = ft_strjoin_argument(cmd->arg, line, cmd->string); // TODO
 	return (size);
 }
+
+/*
+ * cmd->arg is **char
+ */
 
 int		ms_get_arg(t_cmd *cmd, char *line)
 {
