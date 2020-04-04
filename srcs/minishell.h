@@ -48,7 +48,7 @@ typedef struct	s_cmd
 
 t_list	*ft_lstenv(char **envp);
 void	ft_putenv(t_list *env);
-int 	ft_var_to_env(t_list *env, const char *var);
+int 	ft_var_to_lst(t_list *lst, const char *var);
 
 /*
  * CMD

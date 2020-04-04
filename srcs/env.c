@@ -33,7 +33,7 @@ void	ft_putenv(t_list *env)
 	}
 }
 
-int 	ft_var_to_env(t_list *env, const char *var)
+int 	ft_var_to_lst(t_list *env, const char *var)
 {
 	t_list	*cpy_env;
 	int		size;

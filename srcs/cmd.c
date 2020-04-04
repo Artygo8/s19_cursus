@@ -28,6 +28,8 @@ void	put_cmd(t_cmd *cmd)
 
 void	ft_reset_cmd(t_cmd *cmd)
 {
+	char	*tmp;
+
 	free(cmd->line);
 	cmd->line = NULL;
 	cmd->pos = 0;
@@ -36,4 +38,8 @@ void	ft_reset_cmd(t_cmd *cmd)
 	cmd->fd_output = 1;
 	cmd->fd_append = 0;
 	cmd->fd_input = 0;
+	tmp = ft_itoa(cmd->exit_status);
+	ft_var_to_lst(cmd->vars, ft_strjoin("?=", tmp));
+	free(tmp);
+	cmd->exit_status = 0;
 }

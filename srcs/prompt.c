@@ -100,16 +100,38 @@
 // 	ms_cmd_line(cmd, &line[i]);
 // }
 
+int		ft_is_cmd(char *str, t_cmd *cmd)
+{
+
+}
+
+void	ft_get_weak(t_cmd *cmd)
+{
+	char	*weak;
+
+	weak = ft_weakdup(cmd); //cant forget to increment pos //and also to use $
+	if (cmd->fd_append == -2 || cmd->fd_output == -2 || cmd->fd_input == -2)
+		ft_get_fd(weak, cmd);
+	else if (ft_is_cmd(weak, cmd))
+		return ;
+}
+
 void	ft_parsing_cmd(t_cmd *cmd)
 {
 	while (ft_isspace(cmd->line[cmd->pos]))
-		pos++;
+		cmd->pos++;
 	if (cmd->line[cmd->pos] == ';' || cmd->line[cmd->pos] == '\0')
 		return ;
 	else if (cmd->line[cmd->pos] == '\"')
 		ft_get_weak(cmd);
 	else if (cmd->line[cmd->pos] == '\'')
 		ft_get_strong(cmd);
+	else if (cmd->line[cmd->pos] == '>' && cmd->line[cmd->pos] == '>')
+		cmd->fd_append = -2; //means it is waiting for an input
+	else if (cmd->line[cmd->pos] == '>')
+		cmd->fd_output = -2;
+	else if (cmd->line[cmd->pos] == '<')
+		cmd->fd_input = -2;
 	else
 		ft_get_basic(cmd);
 	ft_parsing_cmd(cmd);
@@ -140,3 +162,8 @@ int		ft_prompt(char *name, t_cmd *cmd)
 	ft_reset_cmd(cmd);
 	return (0);
 }
+
+// c'est au moment ou on set le cmd = ERROR qu'on doit spécifier l'erreur.
+// ainsi ça nous permet de continuer à lire tout en étant pas pollué.
+// quoiqu'on peut le mettre au exit status...? oui on va faire ça. donc on
+// ajoute le status précédent aux variables.
