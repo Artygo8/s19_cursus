@@ -109,10 +109,9 @@ void	ft_get_weak(t_cmd *cmd)
 {
 	char	*weak;
 
-	weak = ft_weakdup(cmd); //cant forget to increment pos //and also to use $
-	if (cmd->fd_append == -2 || cmd->fd_output == -2 || cmd->fd_input == -2)
-		ft_get_fd(weak, cmd);
-	else if (ft_is_cmd(weak, cmd))
+	weak = ft_weakdup(cmd);
+	if (cmd->cmd == 0);
+		ft_is_cmd(weak, cmd))
 		return ;
 }
 
@@ -126,12 +125,12 @@ void	ft_parsing_cmd(t_cmd *cmd)
 		ft_get_weak(cmd);
 	else if (cmd->line[cmd->pos] == '\'')
 		ft_get_strong(cmd);
-	else if (cmd->line[cmd->pos] == '>' && cmd->line[cmd->pos] == '>')
-		cmd->fd_append = -2; //means it is waiting for an input
-	else if (cmd->line[cmd->pos] == '>')
-		cmd->fd_output = -2;
-	else if (cmd->line[cmd->pos] == '<')
-		cmd->fd_input = -2;
+	// else if (cmd->line[cmd->pos] == '>' && cmd->line[cmd->pos] == '>')
+	// 	ft_get_append(cmd);
+	// else if (cmd->line[cmd->pos] == '>')
+	// 	ft_get_output(cmd);
+	// else if (cmd->line[cmd->pos] == '<')
+	// 	ft_get_intput(cmd);
 	else
 		ft_get_basic(cmd);
 	ft_parsing_cmd(cmd);
