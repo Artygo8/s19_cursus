@@ -1,5 +1,26 @@
 #include "minishell.h"
 
+void	ft_reset_cmd(t_cmd *cmd)
+{
+	char	*tmp;
+
+	free(cmd->line);
+	cmd->line = NULL;
+	cmd->i = 0;
+	cmd->cmd = 0;
+	ft_lstclear(&(cmd->args), free);
+	cmd->args = NULL;
+	cmd->fd_output = 1;
+	cmd->fd_append = 0;
+	cmd->fd_input = 0;
+	tmp = ft_itoa(cmd->exit_status);
+	ft_var_to_lst(cmd->vars, ft_strjoin("?=", tmp));
+	free(tmp);
+	cmd->exit_status = 0;
+	free(cmd->error);
+	cmd->error = NULL;
+}// + remove any TMPFILES caused by pipes
+
 void ft_puterror(int status)
 {
 	if (status == BAD_SUBSTITUTION)
@@ -68,7 +89,6 @@ int		ft_prompt(char *name, t_cmd *cmd)
 	ft_putstr_fd(name, 1);
 	while (get_next_line(0, &(cmd->line)))
 	{
-//		ms_cmd_line(cmd);
 //		put_cmd(cmd);
 		ft_parsing_cmd(cmd);
 		if (cmd->cmd == EXIT)

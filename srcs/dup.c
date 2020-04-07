@@ -26,8 +26,23 @@ int		ft_isvar_call(t_cmd *cmd)
 	return (1);
 }
 
+char	*ft_vardup(char *str, t_list *list, unsigned int size)
+{
+	char *dup;
+
+	dup = NULL;
+	while (list)
+	{
+		if (list->content && !ft_strncmp(list->content, str, size))
+			return (ft_strdup(&(((char*)list->content)[size + 1])));
+		list = list->next;
+	}
+	return (dup);
+}
+
 char	*ft_translate(t_cmd *cmd) // gets the current variable back
 {
+	char	*res;
 	t_list	*tmp;
 	int		size;
 
@@ -37,22 +52,11 @@ char	*ft_translate(t_cmd *cmd) // gets the current variable back
 		cmd->i++;
 	while (ft_isalnum(cmd->line[cmd->i + size]))
 		size++;
-	tmp = cmd->env;
-	while (tmp)
-	{
-		if (tmp->content && !ft_strncmp(tmp->content, &(cmd->line[cmd->i]), size) && (cmd->i += size))
-			return (ft_strdup(&(((char*)tmp->content)[size + 1])));
-		tmp = tmp->next;
-	}
-	tmp = cmd->vars;
-	while (tmp)
-	{
-		if (tmp->content && !ft_strncmp(tmp->content, &(cmd->line[cmd->i]), size) && (cmd->i += size))
-			return (ft_strdup(&(((char*)tmp->content)[size + 1])));
-		tmp = tmp->next;
-	}
-	cmd->i += size;
-	return (ft_strdup(""));
+	if (!(res = ft_vardup(&(cmd->line[cmd->i]), cmd->env, size)))
+	 	res = ft_vardup(&(cmd->line[cmd->i]), cmd->var, size);
+	if (res)
+		cmd->i += size;
+	return (res);
 }
 
 char*	ft_basicdup(t_cmd *cmd)
@@ -69,17 +73,14 @@ char*	ft_basicdup(t_cmd *cmd)
 		ft_strlcat(tmp, var, 1000);
 		free(var);
 	}
-	else
+	else if (!cmd->i)
 		tmp[j++] = cmd->line[cmd->i++]; //the first letter was already approved by the caller
 	while (cmd->line[cmd->i] && ((!ft_isspace(cmd->line[cmd->i])
-		&& !ft_isinset(cmd->line[cmd->i], "\\'\"|;<>")) || cmd->line[cmd->i - 1] == '\\'))
+		&& !ft_isinset(cmd->line[cmd->i], "'\"|;<>$"))
+		|| cmd->line[cmd->i - 1] == '\\'))
 	{
-		if (cmd->line[cmd->i] == '$' && ft_isvar_call(cmd))
-		{
-			var = ft_translate(cmd);
-			ft_strlcat(tmp, var, 1000);
-			free(var);
-		}
+		if (cmd->line[cmd->i] == '\\' && cmd->line[cmd->i + 1] == '\\')
+			tmp[j++] = cmd->line[cmd->i++];
 		else if (cmd->line[cmd->i] != '\\')
 			tmp[j++] = cmd->line[cmd->i];
 		cmd->i++;
@@ -103,7 +104,7 @@ char*	ft_minidup(t_cmd *cmd)
 
 	var = NULL;
 	while (cmd->line[cmd->i] && !ft_isspace(cmd->line[cmd->i])
-		&& !ft_isinset(cmd->line[cmd->i], "\\'\"|;<>"))
+		&& !ft_isinset(cmd->line[cmd->i], "'\"|;<>"))
 	{
 		tmp = var;
 		// if (cmd->line[cmd->i] == '\'')
