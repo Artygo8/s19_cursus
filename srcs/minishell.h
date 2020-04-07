@@ -24,13 +24,13 @@ enum			e_cmd
 	UNSET,			// like in bash
 	EXIT,			// like in bash
 	ASSIGN,			// assign a variable to the environment, like x=1
-	GET_ARG			// gets the value of an assigned variable
+	GET_VAR			// gets the value of an assigned variable
 };
 
 typedef struct	s_cmd
 {
 	char	*line;
-	int		pos;
+	int		i; // pos
 	int		cmd;
 //	int		option;			// the only option is -n for the echo, so 1
 	t_list	*args;

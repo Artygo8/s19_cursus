@@ -32,7 +32,7 @@ void	ft_reset_cmd(t_cmd *cmd)
 
 	free(cmd->line);
 	cmd->line = NULL;
-	cmd->pos = 0;
+	cmd->i = 0;
 	free(cmd->args);
 	cmd->args = NULL;
 	cmd->fd_output = 1;
@@ -42,4 +42,4 @@ void	ft_reset_cmd(t_cmd *cmd)
 	ft_var_to_lst(cmd->vars, ft_strjoin("?=", tmp));
 	free(tmp);
 	cmd->exit_status = 0;
-}
+}// + remove any TMPFILES caused by pipes

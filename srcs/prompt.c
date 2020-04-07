@@ -100,49 +100,31 @@
 // 	ms_cmd_line(cmd, &line[i]);
 // }
 
-int		ft_is_cmd(char *str, t_cmd *cmd)
-{
-
-}
-
-void	ft_get_weak(t_cmd *cmd)
-{
-	char	*weak;
-
-	weak = ft_weakdup(cmd);
-	if (cmd->cmd == 0);
-		ft_is_cmd(weak, cmd))
-		return ;
-}
-
 void	ft_parsing_cmd(t_cmd *cmd)
 {
-	while (ft_isspace(cmd->line[cmd->pos]))
-		cmd->pos++;
-	if (cmd->line[cmd->pos] == ';' || cmd->line[cmd->pos] == '\0')
-		return ;
-	else if (cmd->line[cmd->pos] == '\"')
-		ft_get_weak(cmd);
-	else if (cmd->line[cmd->pos] == '\'')
-		ft_get_strong(cmd);
-	// else if (cmd->line[cmd->pos] == '>' && cmd->line[cmd->pos] == '>')
-	// 	ft_get_append(cmd);
-	// else if (cmd->line[cmd->pos] == '>')
-	// 	ft_get_output(cmd);
-	// else if (cmd->line[cmd->pos] == '<')
-	// 	ft_get_intput(cmd);
-	else
-		ft_get_basic(cmd);
-	ft_parsing_cmd(cmd);
-}
-
-void	ft_interpret(t_cmd *cmd)
-{
-	while (ft_strlen(cmd->line) > cmd->pos)
+	while (ft_isspace(cmd->line[cmd->i]))
+		cmd->i++;
+	if (cmd->exit_status != 0 || cmd->line[cmd->i] == '\0')
+		return (apply_cmd(cmd));
+	else if (cmd->line[cmd->i] == ';')
+		apply_cmd(cmd);
+	else if (cmd->line[cmd->i] == '|')
 	{
-		ft_parsing(cmd);	//gets cmd and eventual < > ./ msh
-		ft_apply(cmd);
+		ft_get_topipe(cmd);
+		apply_cmd(cmd);
+		ft_get_frompipe(cmd);
 	}
+	else if (ft_ispath(&(cmd->line[cmd->i])))
+		ft_get_exe(cmd);
+	else if (ft_isvar(&(cmd->line[cmd->i])))
+		ft_get_var(cmd);
+	else if (cmd->line[cmd->i] == '<' || cmd->line[cmd->i] == '>')
+		ft_get_redir(cmd);
+	else if (cmd->cmd == 0)
+		ft_get_cmd(cmd);
+	else
+		ft_get_arg(cmd);
+	ft_parsing_cmd(cmd);
 }
 
 int		ft_prompt(char *name, t_cmd *cmd)
@@ -152,7 +134,7 @@ int		ft_prompt(char *name, t_cmd *cmd)
 	{
 //		ms_cmd_line(cmd);
 //		put_cmd(cmd);
-		ft_interpret(cmd);
+		ft_parsing_cmd(cmd);
 		ft_putstr_fd(name, 1);
 		if (cmd->cmd == EXIT)
 			break ;
