@@ -11,6 +11,12 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 
+enum			e_error
+{
+	BAD_SUBSTITUTION = 1,
+	COMMAND_NOT_FOUND = 127,
+};
+
 enum			e_cmd
 {
 	ERROR = -1,		// error with the given command
@@ -18,13 +24,12 @@ enum			e_cmd
 	MSH,			// "./executable" or msh "executable"
 	ECHO,
 	ECHON,			// with option -n
+	ENV,
 	CD,				// absolute or relative path
 	PWD,			// like in bash
 	EXPORT,			// like in bash
 	UNSET,			// like in bash
 	EXIT,			// like in bash
-	ASSIGN,			// assign a variable to the environment, like x=1
-	GET_VAR			// gets the value of an assigned variable
 };
 
 typedef struct	s_cmd
@@ -32,7 +37,6 @@ typedef struct	s_cmd
 	char	*line;
 	int		i; // pos
 	int		cmd;
-//	int		option;			// the only option is -n for the echo, so 1
 	t_list	*args;
 	t_list	*env;
 	t_list	*vars;
@@ -40,7 +44,30 @@ typedef struct	s_cmd
 	int		fd_append;
 	int		fd_input;
 	int		exit_status;
+	char	*error;
 }				t_cmd;
+
+/*
+ * CMD
+ */
+
+void	ft_echo(t_cmd *cmd);
+void	ft_pwd(t_cmd *cmd);
+void	ft_export(t_cmd *cmd);
+void	ft_unset(t_cmd *cmd);
+void	put_cmd(t_cmd *cmd);
+void	ft_reset_cmd(t_cmd *cmd);
+
+/*
+ * DUP
+ */
+
+int		ft_isvar_call(t_cmd *cmd);
+char	*ft_translate(t_cmd *cmd);
+char*	ft_minidup(t_cmd *cmd);
+// char*	ft_weakdup(t_cmd *cmd);
+// char*	ft_strongdup(t_cmd *cmd);
+char*	ft_basicdup(t_cmd *cmd);
 
 /*
  * ENV
@@ -51,17 +78,32 @@ void	ft_putenv(t_list *env);
 int 	ft_var_to_lst(t_list *lst, const char *var);
 
 /*
- * CMD
+ * GET
  */
 
-void	put_cmd(t_cmd *cmd);
-void	ft_reset_cmd(t_cmd *cmd);
+// ft_get_topipe(t_cmd *cmd);
+// ft_get_frompipe(t_cmd *cmd);
+void	ft_get_exe(t_cmd *cmd);
+void	ft_get_var(t_cmd *cmd);
+// ft_get_redir(t_cmd *cmd);
+void	ft_get_echo(t_cmd *cmd);
+void	ft_get_cmd(t_cmd *cmd);
+void	ft_get_arg(t_cmd *cmd);
+
+/*
+ * IS_TYPE
+ */
+
+int		ft_ispath(char *line);
+int		ft_isvar(char *line);
 
 /*
  * PROMPT
  */
 
+void	ft_puterror(int status);
+void	apply_cmd(t_cmd *cmd);
+void	ft_parsing_cmd(t_cmd *cmd);
 int		ft_prompt(char *name, t_cmd *cmd);
-
 
 #endif

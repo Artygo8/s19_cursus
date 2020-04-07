@@ -45,7 +45,7 @@ int 	ft_var_to_lst(t_list *env, const char *var)
 	size++;
 	while (env)
 	{
-		if (!ft_strncmp(env->content, var, size))
+		if (env->content && !ft_strncmp(env->content, var, size))
 		{
 			free(env->content);
 			env->content = ft_strdup(var);

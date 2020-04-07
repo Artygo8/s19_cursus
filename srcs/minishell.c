@@ -8,6 +8,7 @@ int main(int argc, char const *argv[], char **envp)
 		return (12);
 	ft_bzero(cmd, sizeof(t_cmd));
 	cmd->env = (t_list *)ft_lstenv(envp);
+	cmd->vars = ft_lstnew(NULL);
 	cmd->fd_output = 1;
 	ft_prompt("prompt $", cmd);
 //	ft_putenv(cmd->env);
