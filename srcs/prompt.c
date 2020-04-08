@@ -5,9 +5,6 @@ void	ft_reset_cmd(t_cmd *cmd)
 	char	*tmp;
 	char	s[100];
 
-	free(cmd->line);
-	cmd->line = NULL;
-	cmd->i = 0;
 	cmd->cmd = 0;
 	ft_lstclear(&(cmd->args), free);
 	cmd->args = NULL;
@@ -21,7 +18,6 @@ void	ft_reset_cmd(t_cmd *cmd)
 	free(cmd->error);
 	cmd->error = NULL;
 	getcwd(s, 100);
-	printf("get_cwd = %s\n", s);
 	tmp = ft_strjoin("PWD=", s);
 	ft_var_to_lst(cmd->env, tmp);
 	free(tmp);
@@ -41,6 +37,7 @@ void ft_puterror(t_cmd *cmd)
 
 void apply_cmd(t_cmd *cmd)
 {
+	cmd->i++;
 	if (!cmd->exit_status)
 	{
 		// else if (cmd->cmd == MSH)
@@ -104,7 +101,9 @@ int		ft_prompt(char *name, t_cmd *cmd)
 			break ;
 		ft_pwd(cmd);
 		ft_putstr_fd(name, 1);
-		ft_reset_cmd(cmd);
+		free(cmd->line);
+		cmd->line = NULL;
+		cmd->i = 0;
 	}
 	ft_reset_cmd(cmd);
 	return (0);
