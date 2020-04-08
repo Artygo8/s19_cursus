@@ -8,8 +8,14 @@ void	ft_reset_cmd(t_cmd *cmd)
 	cmd->cmd = 0;
 	ft_lstclear(&(cmd->args), free);
 	cmd->args = NULL;
+	if (cmd->fd_output != 0 && cmd->fd_output != 1)
+		close(cmd->fd_output);
 	cmd->fd_output = 1;
+	if (cmd->fd_append != 0 && cmd->fd_append != 1)
+		close(cmd->fd_append);
 	cmd->fd_append = 0;
+	if (cmd->fd_input != 0 && cmd->fd_input != 1)
+		close(cmd->fd_input);
 	cmd->fd_input = 0;
 	tmp = ft_itoa(cmd->exit_status);
 	ft_var_to_lst(cmd->vars, ft_strjoin("?=", tmp));
@@ -37,19 +43,21 @@ void ft_puterror(t_cmd *cmd)
 
 void apply_cmd(t_cmd *cmd)
 {
-	cmd->i++;
+	int		fd;
+
+	fd = (cmd->fd_output) ? cmd->fd_output : cmd->fd_append;
 	if (!cmd->exit_status)
 	{
 		// else if (cmd->cmd == MSH)
 		// 	ft_msh(cmd);
 		if (cmd->cmd == ECHO || cmd->cmd == ECHON)
-			ft_echo(cmd);
+			ft_echo(cmd, fd);
 		else if (cmd->cmd == CD)
 			ft_cd(cmd);
 		else if (cmd->cmd == ENV)
-			ft_putenv(cmd->env);
+			ft_putenv(cmd->env, fd);
 		else if (cmd->cmd == PWD)
-			ft_pwd(cmd);
+			ft_pwd(cmd, fd);
 		else if (cmd->cmd == EXPORT)
 			ft_export(cmd);
 		else if (cmd->cmd == UNSET)
@@ -68,7 +76,7 @@ void	ft_parsing_cmd(t_cmd *cmd)
 		cmd->i++;
 	if (cmd->line[cmd->i] == '\0' || cmd->cmd == EXIT)
 		return (apply_cmd(cmd));
-	else if (cmd->line[cmd->i] == ';')
+	else if (cmd->line[cmd->i] == ';' && cmd->i++)
 		apply_cmd(cmd);
 	// else if (cmd->line[cmd->i] == '|')
 	// {
@@ -80,8 +88,8 @@ void	ft_parsing_cmd(t_cmd *cmd)
 		ft_get_exe(cmd);
 	else if (cmd->cmd == 0 && ft_isvar(&(cmd->line[cmd->i])))
 		ft_get_var(cmd);
-	// else if (cmd->line[cmd->i] == '<' || cmd->line[cmd->i] == '>')
-	// 	ft_get_redir(cmd); // only ONE redir, so the other must be deleted
+	else if (cmd->line[cmd->i] == '<' || cmd->line[cmd->i] == '>')
+		ft_get_redir(cmd); // only ONE redir, so the other must be deleted
 	else if (cmd->cmd == 0)
 		ft_get_cmd(cmd);
 	else
@@ -91,7 +99,7 @@ void	ft_parsing_cmd(t_cmd *cmd)
 
 int		ft_prompt(char *name, t_cmd *cmd)
 {
-	ft_pwd(cmd);
+	ft_pwd(cmd, 1);
 	ft_putstr_fd(name, 1);
 	while (get_next_line(0, &(cmd->line)))
 	{
@@ -99,7 +107,7 @@ int		ft_prompt(char *name, t_cmd *cmd)
 		write(1, "\n", 1);
 		if (cmd->cmd == EXIT)
 			break ;
-		ft_pwd(cmd);
+		ft_pwd(cmd, 1);
 		ft_putstr_fd(name, 1);
 		free(cmd->line);
 		cmd->line = NULL;

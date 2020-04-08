@@ -52,9 +52,9 @@ typedef struct	s_cmd
  * CMD
  */
 
-void	ft_echo(t_cmd *cmd);
+void	ft_echo(t_cmd *cmd, int fd);
 void	ft_cd(t_cmd *cmd);
-void	ft_pwd(t_cmd *cmd);
+void	ft_pwd(t_cmd *cmd, int fd);
 void	ft_export(t_cmd *cmd);
 void	ft_unset(t_cmd *cmd);
 void	put_cmd(t_cmd *cmd);
@@ -76,7 +76,7 @@ char*	ft_basicdup(t_cmd *cmd);
  */
 
 t_list	*ft_lstenv(char **envp);
-void	ft_putenv(t_list *env);
+void	ft_putenv(t_list *env, int fd);
 int 	ft_var_to_lst(t_list *lst, const char *var);
 
 /*
@@ -109,5 +109,14 @@ void	ft_puterror(t_cmd *cmd);
 void	apply_cmd(t_cmd *cmd);
 void	ft_parsing_cmd(t_cmd *cmd);
 int		ft_prompt(char *name, t_cmd *cmd);
+
+/*
+ * REDIR
+ */
+
+void	ft_get_append(t_cmd *cmd);
+void	ft_get_output(t_cmd *cmd);
+void	ft_get_input(t_cmd *cmd);
+void	ft_get_redir(t_cmd *cmd);
 
 #endif

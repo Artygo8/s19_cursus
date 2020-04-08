@@ -112,6 +112,8 @@ char*	ft_minidup(t_cmd *cmd)
 	char *tmp2;
 
 	var = NULL;
+	while (ft_isspace(cmd->line[cmd->i]))
+		cmd->i++;
 	while (cmd->line[cmd->i] && !ft_isspace(cmd->line[cmd->i])
 		&& !ft_isinset(cmd->line[cmd->i], "|;<>"))
 	{

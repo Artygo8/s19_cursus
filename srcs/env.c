@@ -24,11 +24,11 @@ t_list	*ft_lstenv(char **envp)
 	return (env);
 }
 
-void	ft_putenv(t_list *env)
+void	ft_putenv(t_list *env, int fd)
 {
 	while (env)
 	{
-		ft_putendl_fd(env->content, 1);
+		ft_putendl_fd(env->content, fd);
 		env = env->next;
 	}
 }

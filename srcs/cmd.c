@@ -1,16 +1,12 @@
 #include "minishell.h"
 
-void		ft_echo(t_cmd *cmd)
+void		ft_echo(t_cmd *cmd, int fd)
 {
-	int		fd;
 	int		test;
 	t_list	*args_cpy;
 
 	test = 0;
 	args_cpy = cmd->args;
-	fd = cmd->fd_output;
-	if (cmd->fd_append)
-		fd = cmd->fd_append;
 	while (args_cpy)
 	{
 		if (test)
@@ -53,7 +49,7 @@ void		ft_cd(t_cmd *cmd)
 	free(pwd);
 }
 
-void		ft_pwd(t_cmd *cmd)
+void		ft_pwd(t_cmd *cmd, int fd)
 {
 	t_list	*tmpenv;
 
@@ -61,7 +57,7 @@ void		ft_pwd(t_cmd *cmd)
 	while (tmpenv)
 	{
 		if (tmpenv->content && !ft_strncmp(tmpenv->content, "PWD=", 4))
-			return ft_putendl_fd(&(((char*)tmpenv->content)[4]), 1);
+			return ft_putendl_fd(&(((char*)tmpenv->content)[4]), fd);
 		tmpenv = tmpenv->next;
 	}
 }
