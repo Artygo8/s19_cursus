@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <dirent.h>
+# include <errno.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -52,6 +53,7 @@ typedef struct	s_cmd
  */
 
 void	ft_echo(t_cmd *cmd);
+void	ft_cd(t_cmd *cmd);
 void	ft_pwd(t_cmd *cmd);
 void	ft_export(t_cmd *cmd);
 void	ft_unset(t_cmd *cmd);
@@ -62,7 +64,7 @@ void	ft_reset_cmd(t_cmd *cmd);
  * DUP
  */
 
-int		ft_isvar_call(t_cmd *cmd);
+char	*ft_vardup(char *str, t_list *list, unsigned int size);
 char	*ft_translate(t_cmd *cmd);
 char*	ft_minidup(t_cmd *cmd);
 // char*	ft_weakdup(t_cmd *cmd);
@@ -94,6 +96,7 @@ void	ft_get_arg(t_cmd *cmd);
  * IS_TYPE
  */
 
+int		ft_isvar_call(t_cmd *cmd);
 int		ft_ispath(char *line);
 int		ft_isvar(char *line);
 
@@ -101,7 +104,8 @@ int		ft_isvar(char *line);
  * PROMPT
  */
 
-void	ft_puterror(int status);
+void	ft_reset_cmd(t_cmd *cmd);
+void	ft_puterror(t_cmd *cmd);
 void	apply_cmd(t_cmd *cmd);
 void	ft_parsing_cmd(t_cmd *cmd);
 int		ft_prompt(char *name, t_cmd *cmd);

@@ -23,6 +23,34 @@ void		ft_echo(t_cmd *cmd)
 		write(fd, "\n", 1);
 }
 
+void		ft_cd(t_cmd *cmd)
+{
+	int		res;
+	char	*pwd;
+	char	*home;
+	char	s[100];
+
+	if (((char*)cmd->args->content)[0] == '~') // I DONT UNDERSTAND, THIS WORKS WHEN THERE IS NOTHING MORE THAN THE ~ BUT IF THERE IS MORE? IT DOESNT WORK
+	{
+		home = ft_vardup("HOME", cmd->env, 4);
+		pwd = cmd->args->content;
+		cmd->args->content = ft_strjoin(home, &(pwd[2]));
+		free(home);
+		free(pwd);
+	}
+	getcwd(s, 100);
+	pwd = ft_strjoin("OLDPWD=", s);
+	if(chdir(cmd->args->content) != 0)
+	{
+		cmd->error = ft_strjoin("cd :",cmd->args->content);
+		cmd->exit_status = errno;
+	}
+	getcwd(s, 100);
+	pwd = ft_strjoin("PWD=", s);
+	ft_var_to_lst(cmd->env, pwd);
+	free(pwd);
+}
+
 void		ft_pwd(t_cmd *cmd)
 {
 	t_list	*tmpenv;
@@ -45,6 +73,8 @@ void		ft_export(t_cmd *cmd)
 	tmpargs = cmd->args;
 	while (tmpargs)
 	{
+		if (ft_isvar(tmpargs->content)) //ads to the env if necessary
+			ft_get_var(cmd);
 		size = ft_strlen((char*)tmpargs->content);
 		tmpvars = cmd->vars;
 		while (tmpvars)
