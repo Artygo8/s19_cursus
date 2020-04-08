@@ -21,6 +21,7 @@ void	ft_reset_cmd(t_cmd *cmd)
 	free(cmd->error);
 	cmd->error = NULL;
 	getcwd(s, 100);
+	printf("get_cwd = %s\n", s);
 	tmp = ft_strjoin("PWD=", s);
 	ft_var_to_lst(cmd->env, tmp);
 	free(tmp);
@@ -93,11 +94,7 @@ void	ft_parsing_cmd(t_cmd *cmd)
 
 int		ft_prompt(char *name, t_cmd *cmd)
 {
-	char *pwd;
-
-	pwd = ft_vardup("PWD", cmd->env, 3);
-	ft_putendl_fd(pwd, 1);
-	free(pwd);
+	ft_pwd(cmd);
 	ft_putstr_fd(name, 1);
 	while (get_next_line(0, &(cmd->line)))
 	{
@@ -105,9 +102,7 @@ int		ft_prompt(char *name, t_cmd *cmd)
 		write(1, "\n", 1);
 		if (cmd->cmd == EXIT)
 			break ;
-		pwd = ft_vardup("PWD", cmd->env, 3);
-		ft_putendl_fd(pwd, 1);
-		free(pwd);
+		ft_pwd(cmd);
 		ft_putstr_fd(name, 1);
 		ft_reset_cmd(cmd);
 	}
