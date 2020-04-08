@@ -9,7 +9,7 @@ void banner(void)
 
 	i = 0;
 	len = 1;
-	sign = "by pmaldagu && agossuin";
+	sign = "by pmaldagu agossuin";
 	banner = "\n                                                                       ____                         \n      .'. .`.       | |..          | |             ..'''' |         | |            |        |       \n    .'   `   `.     | |  ``..      | |          .''       |_________| |______      |        |       \n  .'           `.   | |      ``..  | |       ..'          |         | |            |        |       \n.'               `. | |          ``| | ....''             |         | |___________ |_______ |_______\n";
 	while (banner[len] != '\n')
 		len++;

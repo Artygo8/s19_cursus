@@ -23,16 +23,16 @@ void		ft_cd(t_cmd *cmd, int res) // res is used to save 2 lines
 {
 	char	*pwd;
 	char	*home;
-	char	s[100];
+	char	s[600];
 
-	getcwd(s, 100);
+	getcwd(s, 600);
 	pwd = ft_strjoin("OLDPWD=", s);
 	if (!(cmd->args) || (cmd->args && ((char*)cmd->args->content)[0] == '~'))
 	{
 		home = ft_vardup("HOME", cmd->env, 4);
 		chdir(home);
 		free(home);
-		if (cmd->args && chdir(&((char*)cmd->args->content)[2]) != 0)
+		if (cmd ->args && chdir(&((char*)cmd->args->content)[2]) != 0)
 			res = 1;
 	}
 	else if(chdir(cmd->args->content) != 0)

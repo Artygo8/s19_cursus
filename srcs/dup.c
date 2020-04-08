@@ -74,7 +74,8 @@ char*	ft_weakdup(t_cmd *cmd)
 	while (cmd->line[cmd->i] && (cmd->line[cmd->i - 1] == '\\' ||
 		cmd->line[cmd->i] != '"'))
 	{
-		if (cmd->line[cmd->i] == '\\' && ft_isinset(cmd->line[cmd->i + 1], "$\\\""))
+		if (cmd->line[cmd->i] == '\\'
+			&& ft_isinset(cmd->line[cmd->i + 1], "$\\\""))
 			tmp[j++] = cmd->line[cmd->i++];
 		else if (cmd->line[cmd->i] == '$' && ft_isvar_call(cmd))
 		{

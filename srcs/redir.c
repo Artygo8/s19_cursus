@@ -5,8 +5,7 @@ void	ft_get_append(t_cmd *cmd)
 	int		tmp;
 	char	*path;
 
-	cmd->i += 1;
-	printf("SHOULD APPEND\n");
+	cmd->i += 2;
 	path = ft_minidup(cmd);
 	if (!(tmp = open(path, O_CREAT | O_WRONLY | O_APPEND, 0b0110100100)))
 	{
