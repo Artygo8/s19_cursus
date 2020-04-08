@@ -19,22 +19,20 @@ void		ft_echo(t_cmd *cmd, int fd)
 		write(fd, "\n", 1);
 }
 
-void		ft_cd(t_cmd *cmd)
+void		ft_cd(t_cmd *cmd, int res) // res is used to save 2 lines
 {
-	int		res;
 	char	*pwd;
 	char	*home;
 	char	s[100];
 
-	res = 0;
 	getcwd(s, 100);
 	pwd = ft_strjoin("OLDPWD=", s);
-	if (((char*)cmd->args->content)[0] == '~') // I DONT UNDERSTAND, THIS WORKS WHEN THERE IS NOTHING MORE THAN THE ~ BUT IF THERE IS MORE? IT DOESNT WORK
+	if (!(cmd->args) || (cmd->args && ((char*)cmd->args->content)[0] == '~'))
 	{
 		home = ft_vardup("HOME", cmd->env, 4);
 		chdir(home);
 		free(home);
-		if (chdir(&((char*)cmd->args->content)[2]) != 0)
+		if (cmd->args && chdir(&((char*)cmd->args->content)[2]) != 0)
 			res = 1;
 	}
 	else if(chdir(cmd->args->content) != 0)
@@ -42,7 +40,7 @@ void		ft_cd(t_cmd *cmd)
 	if (res == 1)
 	{
 		chdir(s);
-		cmd->error = ft_strjoin("cd :",cmd->args->content);
+		cmd->error = ft_strjoin("cd: ",cmd->args->content);
 		cmd->exit_status = errno;
 		ft_var_to_lst(cmd->env, pwd);
 	}

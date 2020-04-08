@@ -53,7 +53,7 @@ void apply_cmd(t_cmd *cmd)
 		if (cmd->cmd == ECHO || cmd->cmd == ECHON)
 			ft_echo(cmd, fd);
 		else if (cmd->cmd == CD)
-			ft_cd(cmd);
+			ft_cd(cmd, 0);
 		else if (cmd->cmd == ENV)
 			ft_putenv(cmd->env, fd);
 		else if (cmd->cmd == PWD)

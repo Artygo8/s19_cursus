@@ -53,7 +53,7 @@ typedef struct	s_cmd
  */
 
 void	ft_echo(t_cmd *cmd, int fd);
-void	ft_cd(t_cmd *cmd);
+void	ft_cd(t_cmd *cmd, int res);
 void	ft_pwd(t_cmd *cmd, int fd);
 void	ft_export(t_cmd *cmd);
 void	ft_unset(t_cmd *cmd);
