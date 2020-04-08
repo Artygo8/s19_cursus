@@ -4,7 +4,7 @@ SRC_NAMES	=	cmd.c \
 				get.c \
 				istype.c \
 				minishell.c \
-				prompt.c
+				prompt.c debug.c
 
 SRC			=	$(addprefix srcs/, $(SRC_NAMES))
 OBJ			=	$(SRC:%.c=%.o)

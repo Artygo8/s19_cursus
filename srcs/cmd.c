@@ -30,24 +30,26 @@ void		ft_cd(t_cmd *cmd)
 	char	*home;
 	char	s[100];
 
+	res = 0;
+	getcwd(s, 100);
+	pwd = ft_strjoin("OLDPWD=", s);
 	if (((char*)cmd->args->content)[0] == '~') // I DONT UNDERSTAND, THIS WORKS WHEN THERE IS NOTHING MORE THAN THE ~ BUT IF THERE IS MORE? IT DOESNT WORK
 	{
 		home = ft_vardup("HOME", cmd->env, 4);
-		pwd = cmd->args->content;
-		cmd->args->content = ft_strjoin(home, &(pwd[2]));
+		chdir(home);
 		free(home);
-		free(pwd);
+		if (chdir(&((char*)cmd->args->content)[2]) != 0)
+			res = 1;
 	}
-	getcwd(s, 100);
-	pwd = ft_strjoin("OLDPWD=", s);
-	if(chdir(cmd->args->content) != 0)
+	else if(chdir(cmd->args->content) != 0)
+		res = 1;
+	if (res == 1)
 	{
+		chdir(s);
 		cmd->error = ft_strjoin("cd :",cmd->args->content);
 		cmd->exit_status = errno;
+		ft_var_to_lst(cmd->env, pwd);
 	}
-	getcwd(s, 100);
-	pwd = ft_strjoin("PWD=", s);
-	ft_var_to_lst(cmd->env, pwd);
 	free(pwd);
 }
 

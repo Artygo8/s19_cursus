@@ -1,3 +1,5 @@
+#include "minishell.h"
+
 void	put_cmd(t_cmd *cmd)
 {
 	t_list *args_cpy = cmd->args;

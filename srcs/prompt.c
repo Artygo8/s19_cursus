@@ -3,6 +3,7 @@
 void	ft_reset_cmd(t_cmd *cmd)
 {
 	char	*tmp;
+	char	s[100];
 
 	free(cmd->line);
 	cmd->line = NULL;
@@ -19,6 +20,10 @@ void	ft_reset_cmd(t_cmd *cmd)
 	cmd->exit_status = 0;
 	free(cmd->error);
 	cmd->error = NULL;
+	getcwd(s, 100);
+	tmp = ft_strjoin("PWD=", s);
+	ft_var_to_lst(cmd->env, tmp);
+	free(tmp);
 }// + remove any TMPFILES caused by pipes
 
 void ft_puterror(t_cmd *cmd)
@@ -73,7 +78,7 @@ void	ft_parsing_cmd(t_cmd *cmd)
 	// 	apply_cmd(cmd);
 	// 	ft_get_frompipe(cmd);
 	// }
-	else if (ft_ispath(&(cmd->line[cmd->i])))
+	else if (cmd->cmd == 0 && ft_ispath(&(cmd->line[cmd->i])))
 		ft_get_exe(cmd);
 	else if (cmd->cmd == 0 && ft_isvar(&(cmd->line[cmd->i])))
 		ft_get_var(cmd);
