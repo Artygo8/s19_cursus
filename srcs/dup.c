@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dup.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 16:29:44 by agossuin          #+#    #+#             */
+/*   Updated: 2020/04/09 16:38:23 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*ft_vardup(char *str, t_list *list, unsigned int size)
@@ -14,26 +26,26 @@ char	*ft_vardup(char *str, t_list *list, unsigned int size)
 	return (dup);
 }
 
-char	*ft_translate(t_cmd *cmd) // gets the current variable back
+char	*ft_translate(t_cmd *cmd)
 {
 	char	*res;
 	t_list	*tmp;
 	int		size;
 
 	size = 0;
-	cmd->i++; //for the $
+	cmd->i++;
 	if (cmd->line[cmd->i] == '{')
 		cmd->i++;
 	while (ft_isalnum(cmd->line[cmd->i + size]))
 		size++;
 	if (!(res = ft_vardup(&(cmd->line[cmd->i]), cmd->env, size)))
-	 	res = ft_vardup(&(cmd->line[cmd->i]), cmd->vars, size);
+		res = ft_vardup(&(cmd->line[cmd->i]), cmd->vars, size);
 	if (res)
 		cmd->i += size;
 	return (res);
 }
 
-char*	ft_basicdup(t_cmd *cmd)
+char	*ft_basicdup(t_cmd *cmd)
 {
 	char	tmp[1000];
 	char	*var;
@@ -44,12 +56,12 @@ char*	ft_basicdup(t_cmd *cmd)
 	if (cmd->line[cmd->i] == '$' && ft_isvar_call(cmd))
 	{
 		var = ft_translate(cmd);
-		j+=ft_strlen(var);
+		j += ft_strlen(var);
 		ft_strlcat(tmp, var, 1000);
 		free(var);
 	}
 	else if (!cmd->i)
-		tmp[j++] = cmd->line[cmd->i++]; //the first letter was already approved by the caller
+		tmp[j++] = cmd->line[cmd->i++];
 	while (cmd->line[cmd->i] && (cmd->line[cmd->i - 1] == '\\' ||
 		!ft_isinset(cmd->line[cmd->i], " \f\n\r\t\v\'\"|;<>$")))
 	{
@@ -62,7 +74,7 @@ char*	ft_basicdup(t_cmd *cmd)
 	return (ft_strdup(tmp));
 }
 
-char*	ft_weakdup(t_cmd *cmd)
+char	*ft_weakdup(t_cmd *cmd)
 {
 	char	tmp[1000];
 	char	*var;
@@ -80,7 +92,7 @@ char*	ft_weakdup(t_cmd *cmd)
 		else if (cmd->line[cmd->i] == '$' && ft_isvar_call(cmd))
 		{
 			var = ft_translate(cmd);
-			j+=ft_strlen(var);
+			j += ft_strlen(var);
 			ft_strlcat(tmp, var, 1000);
 			free(var);
 		}
@@ -91,7 +103,7 @@ char*	ft_weakdup(t_cmd *cmd)
 	return (ft_strdup(tmp));
 }
 
-char*	ft_strongdup(t_cmd *cmd)
+char	*ft_strongdup(t_cmd *cmd)
 {
 	int		start;
 	char	*dup;
@@ -106,7 +118,11 @@ char*	ft_strongdup(t_cmd *cmd)
 	return (dup);
 }
 
-char*	ft_minidup(t_cmd *cmd)
+/*
+** Notice the exit status if no error
+*/
+
+char	*ft_minidup(t_cmd *cmd)
 {
 	char *var;
 	char *tmp;
@@ -125,7 +141,7 @@ char*	ft_minidup(t_cmd *cmd)
 			tmp2 = ft_weakdup(cmd);
 		else
 			tmp2 = ft_basicdup(cmd);
-		if (cmd->exit_status != 0 && !cmd->error) // THIS IS VERY IMPORTANT I NEED TO DO LIKE THAT EVERY TIME
+		if (cmd->exit_status != 0 && !cmd->error)
 			cmd->error = ft_strdup(tmp2);
 		var = ft_strjoin(tmp, tmp2);
 		free(tmp);

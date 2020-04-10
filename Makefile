@@ -1,10 +1,23 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/04/09 17:27:22 by agossuin          #+#    #+#              #
+#    Updated: 2020/04/09 17:35:49 by agossuin         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRC_NAMES	=	cmd.c \
 				dup.c \
 				env.c \
 				get.c \
 				istype.c \
 				minishell.c \
-				prompt.c debug.c redir.c
+				prompt.c \
+				get_redir.c
 
 SRC			=	$(addprefix srcs/, $(SRC_NAMES))
 OBJ			=	$(SRC:%.c=%.o)

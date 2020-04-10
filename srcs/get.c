@@ -1,26 +1,28 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 16:29:25 by agossuin          #+#    #+#             */
+/*   Updated: 2020/04/09 16:45:35 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// ft_get_topipe(t_cmd *cmd)
-// {
-//
-// }
-//
-// ft_get_frompipe(t_cmd *cmd)
-// {
-//
-// }
+#include "minishell.h"
 
 void	ft_get_exe(t_cmd *cmd)
 {
 	cmd->cmd = MSH;
 }
 
-void	ft_get_var(t_cmd *cmd) //lets directly add it care about: john3=hello'yes'"${}ha"
+void	ft_get_var(t_cmd *cmd)
 {
 	int		i;
-	char*	var;
-	char*	tmp;
-	char*	tmp2;
+	char	*var;
+	char	*tmp;
+	char	*tmp2;
 
 	while (cmd->line[i] && cmd->line[i] != '=')
 		i++;
@@ -34,17 +36,13 @@ void	ft_get_var(t_cmd *cmd) //lets directly add it care about: john3=hello'yes'"
 	free(var);
 }
 
-// ft_get_redir(t_cmd *cmd)
-// {
-//
-// }
-
 void	ft_get_echo(t_cmd *cmd)
 {
 	cmd->cmd = ECHO;
 	while (cmd->line[cmd->i] && ft_isspace(cmd->line[cmd->i]))
 		cmd->i++;
-	if (!ft_strncmp(&(cmd->line[cmd->i]), "-n", 2) && ft_isspace(cmd->line[cmd->i + 2]))
+	if (!ft_strncmp(&(cmd->line[cmd->i]), "-n", 2)
+		&& ft_isspace(cmd->line[cmd->i + 2]))
 	{
 		cmd->cmd = ECHON;
 		cmd->i += 2;
@@ -58,7 +56,7 @@ void	ft_get_cmd(t_cmd *cmd)
 	command = ft_minidup(cmd);
 	if (!ft_strncmp(command, "msh", 4))
 		cmd->cmd = MSH;
-	else if (!ft_strncmp(command, "echo", 5)) //dont forget -n
+	else if (!ft_strncmp(command, "echo", 5))
 		ft_get_echo(cmd);
 	else if (!ft_strncmp(command, "cd", 3))
 		cmd->cmd = CD;
@@ -72,9 +70,8 @@ void	ft_get_cmd(t_cmd *cmd)
 		cmd->cmd = UNSET;
 	else if (!ft_strncmp(command, "exit", 5))
 		cmd->cmd = EXIT;
-	else if (!cmd->exit_status)
+	else if (!cmd->exit_status && (cmd->cmd = ERROR))
 	{
-		cmd->cmd = ERROR;
 		cmd->exit_status = COMMAND_NOT_FOUND;
 		cmd->error = ft_strdup(command);
 	}

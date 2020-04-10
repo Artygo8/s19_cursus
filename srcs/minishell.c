@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 16:30:02 by agossuin          #+#    #+#             */
+/*   Updated: 2020/04/09 16:56:42 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void banner(void)
+void	banner(void)
 {
-	size_t i;
-	size_t len;
-	char *banner;
-	char *sign;
+	size_t	i;
+	size_t	len;
+	char	*banner;
+	char	*sign;
 
 	i = 0;
 	len = 1;
@@ -24,7 +36,7 @@ void banner(void)
 	write(1, "\n\n\n", 3);
 }
 
-int main(int argc, char const *argv[], char **envp)
+int		main(int argc, char const *argv[], char **envp)
 {
 	t_cmd	*cmd;
 
@@ -36,9 +48,6 @@ int main(int argc, char const *argv[], char **envp)
 	cmd->fd_output = 1;
 	banner();
 	ft_prompt("minishell $", cmd);
-//	ft_putenv(cmd->env);
-//	put_cmd(cmd);
-/*	ft_lstclear(&(cmd->args), free); */
 	ft_lstclear(&(cmd->env), free);
 	ft_lstclear(&(cmd->vars), free);
 	free(cmd);

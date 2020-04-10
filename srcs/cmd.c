@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 16:29:37 by agossuin          #+#    #+#             */
+/*   Updated: 2020/04/09 16:51:13 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void		ft_echo(t_cmd *cmd, int fd)
@@ -19,7 +31,11 @@ void		ft_echo(t_cmd *cmd, int fd)
 		write(fd, "\n", 1);
 }
 
-void		ft_cd(t_cmd *cmd, int res) // res is used to save 2 lines
+/*
+** "int res" is used to save 2 lines
+*/
+
+void		ft_cd(t_cmd *cmd, int res)
 {
 	char	*pwd;
 	char	*home;
@@ -32,15 +48,15 @@ void		ft_cd(t_cmd *cmd, int res) // res is used to save 2 lines
 		home = ft_vardup("HOME", cmd->env, 4);
 		chdir(home);
 		free(home);
-		if (cmd ->args && chdir(&((char*)cmd->args->content)[2]) != 0)
+		if (cmd->args && chdir(&((char*)cmd->args->content)[2]) != 0)
 			res = 1;
 	}
-	else if(chdir(cmd->args->content) != 0)
+	else if (chdir(cmd->args->content) != 0)
 		res = 1;
 	if (res == 1)
 	{
 		chdir(s);
-		cmd->error = ft_strjoin("cd: ",cmd->args->content);
+		cmd->error = ft_strjoin("cd: ", cmd->args->content);
 		cmd->exit_status = errno;
 		ft_var_to_lst(cmd->env, pwd);
 	}
@@ -55,7 +71,7 @@ void		ft_pwd(t_cmd *cmd, int fd)
 	while (tmpenv)
 	{
 		if (tmpenv->content && !ft_strncmp(tmpenv->content, "PWD=", 4))
-			return ft_putendl_fd(&(((char*)tmpenv->content)[4]), fd);
+			return (ft_putendl_fd(&(((char*)tmpenv->content)[4]), fd));
 		tmpenv = tmpenv->next;
 	}
 }
@@ -69,7 +85,7 @@ void		ft_export(t_cmd *cmd)
 	tmpargs = cmd->args;
 	while (tmpargs)
 	{
-		if (ft_isvar(tmpargs->content)) //ads to the env if necessary
+		if (ft_isvar(tmpargs->content))
 			ft_get_var(cmd);
 		size = ft_strlen((char*)tmpargs->content);
 		tmpvars = cmd->vars;

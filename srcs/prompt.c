@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 16:30:14 by agossuin          #+#    #+#             */
+/*   Updated: 2020/04/09 17:09:42 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_reset_cmd(t_cmd *cmd)
@@ -27,9 +39,9 @@ void	ft_reset_cmd(t_cmd *cmd)
 	tmp = ft_strjoin("PWD=", s);
 	ft_var_to_lst(cmd->env, tmp);
 	free(tmp);
-}// + remove any TMPFILES caused by pipes
+}
 
-void ft_puterror(t_cmd *cmd)
+void	ft_puterror(t_cmd *cmd)
 {
 	ft_putstr_fd(cmd->error, 2);
 	ft_putstr_fd(": ", 2);
@@ -41,16 +53,16 @@ void ft_puterror(t_cmd *cmd)
 		ft_putendl_fd(strerror(cmd->exit_status), 2);
 }
 
-void apply_cmd(t_cmd *cmd)
+void	apply_cmd(t_cmd *cmd)
 {
 	int		fd;
 
 	fd = (cmd->fd_output) ? cmd->fd_output : cmd->fd_append;
 	if (!cmd->exit_status)
 	{
-		// else if (cmd->cmd == MSH)
-		// 	ft_msh(cmd);
-		if (cmd->cmd == ECHO || cmd->cmd == ECHON)
+		if (cmd->cmd == MSH)
+			ft_msh(cmd);
+		else if (cmd->cmd == ECHO || cmd->cmd == ECHON)
 			ft_echo(cmd, fd);
 		else if (cmd->cmd == CD)
 			ft_cd(cmd, 0);
@@ -89,7 +101,7 @@ void	ft_parsing_cmd(t_cmd *cmd)
 	else if (cmd->cmd == 0 && ft_isvar(&(cmd->line[cmd->i])))
 		ft_get_var(cmd);
 	else if (cmd->line[cmd->i] == '<' || cmd->line[cmd->i] == '>')
-		ft_get_redir(cmd); // only ONE redir, so the other must be deleted
+		ft_get_redir(cmd);
 	else if (cmd->cmd == 0)
 		ft_get_cmd(cmd);
 	else

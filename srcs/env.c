@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pmaldagu <pmaldagu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 13:39:09 by pmaldagu          #+#    #+#             */
-/*   Updated: 2020/03/25 13:45:14 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2020/04/09 16:41:27 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_putenv(t_list *env, int fd)
 	}
 }
 
-int 	ft_var_to_lst(t_list *env, const char *var)
+int		ft_var_to_lst(t_list *env, const char *var)
 {
 	t_list	*cpy_env;
 	int		size;
