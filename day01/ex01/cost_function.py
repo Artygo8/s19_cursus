@@ -2,19 +2,46 @@ import numpy as np
 
 
 def cost_elem_(theta, X, Y):
-    solution = []
-    X_b = np.c_[np.ones((len(X), 1)), X]
-    theta_x = np.dot(X_b, theta)
-    for i, j in zip(theta_x, Y):
-        solution.append((j - i) ** 2)
-    solution = np.array(solution)
-    return (0.5 / len(Y) * solution)
+    """
+    Description:
+        Calculates all the elements 0.5*M*(y_pred - y)^2 of the cost
+   function.
+    Args:
+        theta: has to be a numpy.ndarray, a vector of dimension (number of
+   features + 1, 1).
+        X: has to be a numpy.ndarray, a matrix of dimension (number of
+   training examples, number of features).
+    Returns:
+        J_elem: numpy.ndarray, a vector of dimension (number of the training
+   examples,1).
+        None if there is a dimension matching problem between X, Y or theta.
+    Raises:
+        This function should not raise any Exception.
+    """
+    m, nb_feat = X.shape
+    if theta.shape != (nb_feat + 1, 1):
+        return None
+    theta_x = np.dot(np.c_[np.ones((m, 1)), X], theta)
+    return ((1 / (2 * m)) * (theta_x - Y) ** 2)
 
 
 def cost_(theta, X, Y):
-    solution = 0
-    X_b = np.c_[np.ones((len(X), 1)), X]
-    theta_x = np.dot(X_b, theta)
-    for i, j in zip(theta_x, Y):
-        solution += (j - i) ** 2
-    return float(0.5 / len(Y) * solution)
+    """
+    Description:
+        Calculates the value of cost function.
+    Args:
+        theta: has to be a numpy.ndarray, a vector of dimension (number of
+   features + 1, 1).
+        X: has to be a numpy.ndarray, a vector of dimension (number of
+   training examples, number of features).
+    Returns:
+        J_value : has to be a float.
+        None if X does not match the dimension of theta.
+    Raises:
+        This function should not raise any Exception.
+    """
+    m, nb_feat = X.shape
+    if theta.shape != (nb_feat + 1, 1):
+        return None
+    theta_x = np.dot(np.c_[np.ones((m, 1)), X], theta)
+    return ((1 / (2 * m)) * (theta_x - Y) ** 2).sum()

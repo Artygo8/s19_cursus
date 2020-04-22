@@ -1,14 +1,14 @@
 import numpy as np
 
 
-def mat_mat_prod(x, y):
+def mat_vec_prod(x, y):
     """Computes the product of two non-empty numpy.ndarray, using a
    for-loop. The two arrays must have compatible dimensions.
     Args:
         x: has to be an numpy.ndarray, a matrix of dimension m * n.
-        y: has to be an numpy.ndarray, a vector of dimension n * p.
+        y: has to be an numpy.ndarray, a vector of dimension n * 1.
     Returns:
-        The product of the matrices as a matrix of dimension m * p.
+        The product of the matrix and the vector as a vector of dimension m * 1.
         None if x or y are empty numpy.ndarray.
         None if x and y does not share compatibles dimensions.
     Raises:
@@ -19,10 +19,8 @@ def mat_mat_prod(x, y):
     m, n = x.shape
     if n != len(y):
         return None
-    n, p = y.shape
-    res = np.zeros((m, p))
+    res = np.zeros((m, 1))
     for mi in range(m):
         for ni in range(n):
-            for pi in range(p):
-                res[mi][pi] += x[mi][ni] * y[ni][pi]
+            res[mi] += x[mi][ni] * y[ni]
     return res.astype(int)

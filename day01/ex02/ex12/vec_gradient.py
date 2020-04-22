@@ -19,6 +19,6 @@ def vec_gradient(x, y, theta):
     if len(x) == 0:
         return None
     m, n = x.shape
-    if y.shape != (m,) or theta.shape != (n,):
+    if y.shape[0] != m or theta.shape[0] != n:
         return None
     return np.dot(np.transpose(x), (np.dot(x, theta) - y)) / m

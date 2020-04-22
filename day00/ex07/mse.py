@@ -2,15 +2,18 @@ import numpy as np
 
 
 def mse(y, y_hat):
-    solution = 0
-    for i, j in zip(y, y_hat):
-        solution += (j - i) ** 2
-    return 1 / len(y) * solution
-
-
-X = np.array([0, 15, -9, 7, 12, 3, -21])
-Y = np.array([2, 14, -13, 5, 12, 4, -19])
-print(mse(X, Y))
-4.285714285714286
-print(mse(X, X))
-0.0
+    """Computes the mean squared error of two non-empty numpy.ndarray, using
+   a for-loop. The two arrays must have the same dimensions.
+    Args:
+        y: has to be an numpy.ndarray, a vector.
+        y_hat: has to be an numpy.ndarray, a vector.
+    Returns:
+        The mean squared error of the two vectors as a float.
+        None if y or y_hat are empty numpy.ndarray.
+        None if y and y_hat does not share the same dimensions.
+    Raises:
+        This function should not raise any Exception.
+    """
+    if len(y) == 0 or y.shape != y_hat.shape:
+        return None
+    return sum([(y_hati - yi) ** 2 for yi, y_hati in zip(y, y_hat)]) / len(y)

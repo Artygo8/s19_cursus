@@ -1,12 +1,5 @@
 import numpy as np
-
-
-def linear_mse(x, y, theta):
-    tot = 0
-    for xi, yi in zip(x, y):
-        theta_xi = float(np.dot(theta, xi))
-        tot += (theta_xi - yi) ** 2
-    return tot / len(x)
+from vec_gradient import vec_gradient
 
 
 X = np.array([
@@ -19,8 +12,12 @@ X = np.array([
     [9, -11, 8]])
 Y = np.array([2, 14, -13, 5, 12, 4, -19])
 Z = np.array([3, 0.5, -6])
-print(linear_mse(X, Y, Z))
-2641.0
+print(vec_gradient(X, Y, Z))
+# array([-37.35714286, 183.14285714, -393.])
+
 W = np.array([0, 0, 0])
-print(linear_mse(X, Y, W))
-130.71428571
+print(vec_gradient(X, Y, W))
+# array([0.85714286, 23.28571429, -26.42857143])
+
+print(vec_gradient(X, X.dot(Z), Z))
+# array([0., 0., 0.])

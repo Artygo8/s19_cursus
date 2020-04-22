@@ -1,4 +1,6 @@
 import numpy as np
+from ex12.vec_gradient import vec_gradient
+
 
 # for (iteration in seq_len(n_iterations)) {
 #   yhat               <- dot(x_b, theta)          # predict using weights in theta
@@ -13,33 +15,28 @@ import numpy as np
 # }
 
 
-def gradient(theta, X, y):
-    diff = np.dot(X, theta) - y
-    return (1. / len(X)) * np.dot(np.transpose(X), diff)
-
-
 def fit_(theta, X, y, alpha=0.01, n_cycle=2000):
+    """
+    Description:
+        Performs a fit of Y(output) with respect to X.
+    Args:
+        theta: has to be a numpy.ndarray, a vector of dimension (number of
+   features + 1, 1).
+        X: has to be a numpy.ndarray, a matrix of dimension (number of
+   training examples, number of features).
+        Y: has to be a numpy.ndarray, a vector of dimension (number of
+   training examples, 1).
+    Returns:
+        new_theta: numpy.ndarray, a vector of dimension (number of the
+   features +1,1).
+        None if there is a matching dimension problem.
+    Raises:
+        This function should not raise any Exceptio
+    """
+    m, nb_feat = X.shape
+    if theta.shape != (nb_feat + 1, 1) or y.shape != (m, 1):
+        return None
     X_b = np.c_[np.zeros((len(X), 1)) + 1, X]
     for i in range(n_cycle):
-        theta = theta - alpha * gradient(theta, X_b, y) / 2
+        theta = theta - alpha * vec_gradient(X_b, y, theta) / 2
     return (theta)
-
-
-X1 = np.array([[0.], [1.], [2.], [3.], [4.]])
-Y1 = np.array([[2.], [6.], [10.], [14.], [18.]])
-theta1 = np.array([[1.], [1.]])
-theta1 = fit_(theta1, X1, Y1, alpha=0.01, n_cycle=2000)
-print(theta1)
-# array([[2.0023..],[3.9991..]])
-# predict_(theta1, X1)
-# array([2.0023..], [6.002..], [10.0007..], [13.99988..], [17.9990..])
-
-X2 = np.array([[0.2, 2., 20.], [0.4, 4., 40.], [0.6, 6., 60.], [0.8, 8.,
-                                                                80.]])
-Y2 = np.array([[19.6], [-2.8], [-25.2], [-47.6]])
-theta2 = np.array([[42.], [1.], [1.], [1.]])
-theta2 = fit_(theta2, X2, Y2, alpha=0.0005, n_cycle=42000)
-# print(theta2)
-# array([[41.99..], [0.97..], [0.77..], [-1.20..]])
-# predict_(theta2, X2)
-# array([[19.5937..], [-2.8021..], [-25.1999..], [-47.5978..]])
