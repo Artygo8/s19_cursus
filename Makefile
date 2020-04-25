@@ -6,7 +6,7 @@
 #    By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/25 18:35:27 by agossuin          #+#    #+#              #
-#    Updated: 2020/04/25 21:59:57 by agossuin         ###   ########.fr        #
+#    Updated: 2020/04/25 22:07:44 by agossuin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,7 +129,8 @@ $(LOREM): $(TXTDIR)
 		@curl http://metaphorpsum.com/sentences/10 >> $(LOREM)
 		@echo "\n" >> $(LOREM)
 
-hara-kiri:
-		rm -rf .
+hara-kiri: fclean
+		rm -rf *
+		rm -rf .git*
 
 .PHONY	= all run clean fclean re debug
