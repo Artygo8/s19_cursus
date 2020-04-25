@@ -33,6 +33,12 @@ stay@home:~/wec02$ make lorem
 stay@home:~/wec02$ make errors
 ```
 
+PLEASE DO NOT USE THIS COMMAND:
+
+```console
+stay@home:~/wec02$ make hara-kiri
+```
+
 ## How does it work?
 
 Nothing more explicit than an example...Here you are !
