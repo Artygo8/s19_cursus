@@ -6,50 +6,29 @@
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/25 18:35:16 by agossuin          #+#    #+#             */
-/*   Updated: 2020/04/25 18:41:05 by agossuin         ###   ########.fr       */
+/*   Updated: 2020/04/26 19:02:52 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "color.h"
 
-int			fact(int n)
+size_t		ft_add_color(size_t color_1, size_t color_2)
 {
-	if (n == 0)
-		return (1);
-	return (n * fact(n - 1));
-}
+	size_t res;
+	size_t add;
 
-/*
-** after comparing to the math.h sin, max = 6 is the best approximation.
-*/
-
-float		sin_aprox(float rad)
-{
-	int		i;
-	float	x;
-	int		max;
-	float	res;
-
-	i = 0;
-	x = rad;
-	max = 6;
-	res = 0;
-	while (i < max)
-	{
-		res += ((i % 2) ? -1 : 1) * x / fact((2 * i) + 1);
-		x *= rad * rad;
-		i++;
-	}
-	if (res > 1)
-		return (1);
-	if (res < -1)
-		return (-1);
+	res = (color_1 & B) + (color_2 & B);
+	if (res > B)
+		res = B;
+	add = (color_1 & G) + (color_2 & G);
+	if (add > G)
+		add = G;
+	res += add;
+	add = (color_1 & R) + (color_2 & R);
+	if (add > R)
+		add = R;
+	res += add;
 	return (res);
-}
-
-float		cos_aprox(float rad)
-{
-	return (-sin_aprox(rad - PI / 2));
 }
 
 size_t		ft_mult_color(size_t color, float m)
@@ -71,22 +50,56 @@ size_t		ft_mult_color(size_t color, float m)
 	return (res);
 }
 
-size_t		ft_rainbow(float ratio)
+/*
+** Rotate takes an index 0, 1, 2 for R, G, B where R is the initial form.
+*/
+
+int			rot_color(int start, int index)
+{
+	int new;
+
+	new = 0;
+	if (index == 0)
+		return start;
+	if (index == 1)
+	{
+		new = (start & R) >> 16;
+		new += (start & G) << 8;
+		new += (start & B) << 8;
+	}
+	if (index == 2)
+	{
+		new = (start & R) >> 8;
+		new += (start & G) >> 8;
+		new += (start & B) << 16;
+	}
+	return (new);
+}
+
+size_t		ft_rainbow(float ratio, int s)
 {
 	int col;
 
+	while (ratio > 1)
+		ratio -= 1;
 	ratio = ratio * 6;
 	if (ratio < 1)
-		col = R + ft_mult_color(G, sin_aprox(ratio * PI / 2));
+		col = ft_add_color(s, ft_mult_color(rot_color(s, 1),
+				sin_aprox(ratio * PI / 2)));
 	else if (ratio < 2)
-		col = G + ft_mult_color(R, cos_aprox((ratio - 1) * PI / 2));
+		col = ft_add_color(rot_color(s, 1), ft_mult_color(s,
+				cos_aprox((ratio - 1) * PI / 2)));
 	else if (ratio < 3)
-		col = G + ft_mult_color(B, sin_aprox((ratio - 2) * PI / 2));
+		col = ft_add_color(rot_color(s, 1), ft_mult_color(rot_color(s, 2),
+				sin_aprox((ratio - 2) * PI / 2)));
 	else if (ratio < 4)
-		col = B + ft_mult_color(G, cos_aprox((ratio - 3) * PI / 2));
+		col = ft_add_color(rot_color(s, 2), ft_mult_color(rot_color(s, 1),
+				cos_aprox((ratio - 3) * PI / 2)));
 	else if (ratio < 5)
-		col = B + ft_mult_color(R, sin_aprox((ratio - 4) * PI / 2));
+		col = ft_add_color(rot_color(s, 2), ft_mult_color(s,
+				sin_aprox((ratio - 4) * PI / 2)));
 	else
-		col = R + ft_mult_color(B, cos_aprox((ratio - 5) * PI / 2));
+		col = ft_add_color(s, ft_mult_color(rot_color(s, 2),
+				cos_aprox((ratio - 5) * PI / 2)));
 	return (col);
 }
