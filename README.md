@@ -29,7 +29,7 @@ Do not hesitate to contact me.
 
 ## Screenshot
 
-! [screenshot example] (screenshot/cpp_builder.png)
+![screenshot example](screenshot/cpp_builder.png)
 
 ## Special Thanks
 
