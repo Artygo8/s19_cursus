@@ -33,7 +33,7 @@ Do not hesitate to contact me.
 
 ## Special Thanks
 
-I have to mention [Lorenuar](https://github.com/lorenuars19) for his beautiful Makefile template that inspired me quite alot...
+I have to mention [Lorenuar](https://github.com/lorenuars19) for his beautiful [Makefile](https://github.com/lorenuars19/makefile-template.git) template that inspired me quite alot...
 
 ## Contact
 
