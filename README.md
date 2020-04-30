@@ -37,4 +37,4 @@ I have to mention [Lorenuar](https://github.com/lorenuars19) for his beautiful [
 
 ## Contact
 
-Do not hesitate to contact me through the 42 network or using my email address `agossuinATstudent.s19.be`
+Do not hesitate to contact me through the 42 network or using my email address `agossuin AT student DOT s19 DOT be`
