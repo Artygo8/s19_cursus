@@ -39,8 +39,10 @@ def header(name):
 /*{" ":52}+:+ +:+         +:+     */
 /*   By: {OWNER} <{OWNER}@student.{SCHOOL}>{" " * (25 - (2 * len(OWNER)))}+{"#"}+  +:+       +{"#"}+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: {date} by {OWNER}{" " * (18 - len(OWNER))}#+#    #+#             */
-/*   Updated: {date} by {OWNER}{" " * (17 - len(OWNER))}###   ########.fr       */
+# +#    #+#             */
+/*   Created: {date} by {OWNER}{" " * (18 - len(OWNER))}
+# .fr       */
+/*   Updated: {date} by {OWNER}{" " * (17 - len(OWNER))}
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,46 +77,49 @@ class {name}
 
 
 def generate_hpp(name):
-    fhpp = open(f"{name}.hpp", "x")  # security
-    fhpp = open(f"{name}.hpp", "w")
-    fhpp.write(header(f"{name}.hpp"))
-    fhpp.write(f"#ifndef {name.upper()}_HPP\n")
-    fhpp.write(f"# define {name.upper()}_HPP\n")
-    fhpp.write(INCLUDES)
-    fhpp.write(hpp_class(name))
-    fhpp.close()
+    try:
+        fhpp = open(f"{name}.hpp", "x")  # security
+        fhpp = open(f"{name}.hpp", "w")
+        fhpp.write(header(f"{name}.hpp"))
+        fhpp.write(f"#ifndef {name.upper()}_HPP\n")
+        fhpp.write(f"# define {name.upper()}_HPP\n")
+        fhpp.write(INCLUDES)
+        fhpp.write(hpp_class(name))
+        fhpp.close()
+    except:
+        print(f"{name}.hpp already in your directory!")
 
 
 def cpp_template(name):
     return f"""#include \"{name}.hpp\"
 
-// Contructors ////////////////////////////////////////////////////////////////
+// Contructors /////////////////////////////////////////////////////////////////
 
 {name}::{name}()
 {'{'}
-	std::cout << "Default constructor for {str(name)} called" << '\\n';
+	std::cout << "Default constructor for {str(name)} called" << std::endl;
 {'}'}
 
 {name}::{name}(const {name} &source)
 {'{'}
-	std::cout << "Copy constructor for {str(name)} called" << '\\n';
+	std::cout << "Copy constructor for {str(name)} called" << std::endl;
 {'}'}
 
 {name}::~{name}()
 {'{'}
-	std::cout << "Destructor for {str(name)} called" << '\\n';
+	std::cout << "Destructor for {str(name)} called" << std::endl;
 {'}'}
 
-// Operators //////////////////////////////////////////////////////////////////
+// Operators ///////////////////////////////////////////////////////////////////
 
 {name}& {name}::operator = (const {name}::{name} &source)
 {'{'}
-	std::cout << "Assignations operator for {str(name)} called" << '\\n';
+	std::cout << "Assignations operator for {str(name)} called" << std::endl;
 	return *this;
 {'}'}
 
 
-// Utils //////////////////////////////////////////////////////////////////////
+// Utils ///////////////////////////////////////////////////////////////////////
 
 void		{name}::setName(std::string name) //generic function
 {'{'}
@@ -202,11 +207,14 @@ debug :
 
 
 def generate_cpp(name):
-    fhpp = open(f"{name}.cpp", "x")  # security
-    fhpp = open(f"{name}.cpp", "w")
-    fhpp.write(header(f"{name}.cpp"))
-    fhpp.write(cpp_template(name))
-    fhpp.close()
+    try:
+        fhpp = open(f"{name}.cpp", "x")  # security
+        fhpp = open(f"{name}.cpp", "w")
+        fhpp.write(header(f"{name}.cpp"))
+        fhpp.write(cpp_template(name))
+        fhpp.close()
+    except:
+        print(f"{name}.cpp already in your directory!")
 
 
 def generate_makefile():
@@ -215,17 +223,25 @@ def generate_makefile():
     fmakef.close()
 
 
+def generate_main():
+    try:
+        fmain = open("main.cpp", "x")  # security for not erasing files
+        fmain = open("main.cpp", "w")
+        fmain.write(header("main.cpp"))
+        for i in sys.argv[1:]:
+            fmain.write(f"#include \"{i}.hpp\"\n")
+        fmain.write(CMAIN)
+        fmain.close()
+    except:
+        print("main.cpp already in your directory!")
+
+
 def main():
-    fmain = open("main.cpp", "x")  # security for not erasing files
+    generate_main()
     generate_makefile()
-    fmain = open("main.cpp", "w")
-    fmain.write(header("main.cpp"))
     for i in sys.argv[1:]:
-        fmain.write(f"#include \"{i}.hpp\"\n")
         generate_cpp(i)
         generate_hpp(i)
-    fmain.write(CMAIN)
-    fmain.close()
 
 
 main()
