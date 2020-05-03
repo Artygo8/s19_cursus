@@ -38,11 +38,9 @@ def header(name):
 /*   {name:50} :+:      :+:    :+:   */
 /*{" ":52}+:+ +:+         +:+     */
 /*   By: {OWNER} <{OWNER}@student.{SCHOOL}>{" " * (25 - (2 * len(OWNER)))}+{"#"}+  +:+       +{"#"}+        */
-/*                                                +#+#+#+#+#+   +#+           */
-# +#    #+#             */
-/*   Created: {date} by {OWNER}{" " * (18 - len(OWNER))}
-# .fr       */
-/*   Updated: {date} by {OWNER}{" " * (17 - len(OWNER))}
+/*{" ":48}+#+#+#+#+#+   +#+           */
+/*   Created: {date} by {OWNER}{" " * (18 - len(OWNER))}#+#    #+#             */
+/*   Updated: {date} by {OWNER}{" " * (17 - len(OWNER))}###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +115,6 @@ def cpp_template(name):
 	std::cout << "Assignations operator for {str(name)} called" << std::endl;
 	return *this;
 {'}'}
-
 
 // Utils ///////////////////////////////////////////////////////////////////////
 
