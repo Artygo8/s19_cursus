@@ -50,8 +50,6 @@ def header(name):
 def hpp_class(name):
     return f"""\
 
-std::ostream &operator<<(std::ostream &out, {name} const &obj);
-
 class {name}
 {'{'}
 
@@ -68,10 +66,12 @@ class {name}
 		{name} &operator=(const {name} &source);
 
 		// Utils
-		std::string		getName();
+		std::string		getName() const;
 		void			setName(std::string name);
 
 {'};'}
+
+std::ostream &operator<<(std::ostream &out, {name} const &obj);
 
 # endif
 """
@@ -126,7 +126,7 @@ void		{name}::setName(std::string name) //generic function
 	name = name;
 {'}'}
 
-std::string	{name}::getName() //generic function
+std::string	{name}::getName() const//generic function
 {'{'}
 	return name;
 {'}'}
