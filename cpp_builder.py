@@ -103,17 +103,12 @@ std::string	{name}::getName() //generic function
 """
 
 
-GIGA_MAKEFILE_TEMPLATE = f"""
+FIRST_PART_MAKEFILE = """
 # ================================ VARIABLES ================================= #
 
 NAME	= exec
-
 CXX	= g++
 CFLAGS	= -Wall -Werror -Wextra
-
-ifeq ($(DEBUG),1)
-CFLAGS	+= -g3 -fsanitize=address
-endif
 
 SRCDIR	= ./
 INCDIR	= include/
@@ -121,9 +116,13 @@ OBJDIR	= objs/
 
 CXXFLAGS	+= -I $(INCDIR)
 
-SRCS	:= $(wildcard $(SRCDIR)*.cpp) #			Full path
-SRC	:= $(notdir $(SRCS)) # 				Files only
-OBJ	:= $(SRC:.cpp=.o)	#				Files only
+SRCS	= """
+
+LAST_PART_MAKEFILE =
+"""		main.cpp
+
+SRC		:= $(notdir $(SRCS)) # 					Files only
+OBJ		:= $(SRC:.cpp=.o)	#					Files only
 OBJS	:= $(addprefix $(OBJDIR), $(OBJ)) #		Full path
 CSRCS	:= $(addprefix ../, $(SRCS)) #			Compiler
 
@@ -186,7 +185,7 @@ def generate_cpp(name):
 
 def generate_makefile():
     fmakef = open("Makefile", "w")  # no security for the Makefile
-    fmakef.write(GIGA_MAKEFILE_TEMPLATE)
+    fmakef.write(FIRST_PART_MAKEFILE)
     fmakef.close()
 
 
