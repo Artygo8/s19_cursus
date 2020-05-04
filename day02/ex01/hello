@@ -1,0 +1,16 @@
+[32;1m +++ Compiling main.cpp Fixed.cpp  to main.o Fixed.o	[0m [33;1m &&& Linking main.o Fixed.o	 to exec[0m g++ -I include/ -o exec objs/main.o objs/Fixed.o 
+[36;1m >>> Running exec[0m 
+./exec
+Default constructor for Fixed called
+From int constructor for Fixed called
+Copy constructor for Fixed called
+Copy constructor for Fixed called
+Copy constructor for Fixed called
+Assignation operator for Fixed called
+Destructor for Fixed called
+a is 0
+b is 10
+Destructor for Fixed called
+Destructor for Fixed called
+Destructor for Fixed called
+Destructor for Fixed called
