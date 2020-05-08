@@ -57,13 +57,11 @@ class {name}
 		std::string		name;
 
 	public:
-		// Constructors
+		// Colpien's form
 		{name} ();
 		{name} (const {name} &source);
-		virtual ~{name} ();
-
-		// Operators
 		{name} &operator=(const {name} &source);
+		virtual ~{name} ();
 
 		// Utils
 		std::string		getName() const;
@@ -94,7 +92,7 @@ def generate_hpp(name):
 def cpp_template(name):
     return f"""#include \"{name}.hpp\"
 
-// Contructors /////////////////////////////////////////////////////////////////
+// Coplien's form //////////////////////////////////////////////////////////////
 
 {name}::{name}()
 {'{'}
@@ -103,7 +101,15 @@ def cpp_template(name):
 
 {name}::{name}(const {name} &source)
 {'{'}
+	this->name = source.name;
 	std::cout << "Copy constructor for {str(name)} called" << std::endl;
+{'}'}
+
+{name}& {name}::operator = (const {name} &source)
+{'{'}
+	this->name = source.name;
+	std::cout << "Assignations operator for {str(name)} called" << std::endl;
+	return *this;
 {'}'}
 
 {name}::~{name}()
@@ -111,19 +117,11 @@ def cpp_template(name):
 	std::cout << "Destructor for {str(name)} called" << std::endl;
 {'}'}
 
-// Operators ///////////////////////////////////////////////////////////////////
-
-{name}& {name}::operator = (const {name} &source)
-{'{'}
-	std::cout << "Assignations operator for {str(name)} called" << std::endl;
-	return *this;
-{'}'}
-
 // set-get ///////////////////////////////////////////////////////////////////////
 
 void		{name}::setName(std::string name) //generic function
 {'{'}
-	name = name;
+	this->name = name;
 {'}'}
 
 std::string	{name}::getName() const//generic function
@@ -138,6 +136,8 @@ std::ostream &operator<<(std::ostream &out, {name} const &obj)
 	out << obj.getName();
 	return out;
 {'}'}
+
+// others //////////////////////////////////////////////////////////////////////
 
 """
 
