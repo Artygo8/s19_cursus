@@ -1,10 +1,16 @@
-//
-// str 2 wordtab & co
-// by ol
+/*
+** mlx_int_str_to_wordtab.c for MinilibX in 
+** 
+** Made by Charlie Root
+** Login   <ol@epitech.net>
+** 
+** Started on  Wed Sep 13 11:36:09 2000 Charlie Root
+** Last update Fri Dec 14 11:02:09 2001 Charlie Root
+*/
 
 
-#include <stdlib.h>
-#include <string.h>
+#include	"mlx_int.h"
+
 
 int	mlx_int_str_str(char *str,char *find,int len)
 {
@@ -66,7 +72,7 @@ int	mlx_int_str_str_cote(char *str,char *find,int len)
 
 char	**mlx_int_str_to_wordtab(char *str)
 {
-  char	*tab;
+  char	**tab;
   int	pos;
   int	nb_word;
   int	len;
