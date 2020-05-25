@@ -1,5 +1,4 @@
-#MiniRT
-
+# MiniRT
 MiniRayTracer working on linux and MacOS.
 
 example:
