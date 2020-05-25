@@ -1,9 +1,8 @@
 # minilibx linux
-minilibx tested on ubuntu (mint) and manjaro
+minilibx tested on mint (ubuntu), deepin (debian based) and manjaro (arch).
 
 ## Why?
 Some people having difficulties to install the minilibx from the school 42, I modified a version found on [Achedeuzot](https://achedeuzot.me/2014/12/20/installer-la-minilibx/) adding simply by adding a strlcpy.
-Now the 
 By the way Thank you to Achedeuzot for those files and explanations !
 
 ## How to?
@@ -43,4 +42,4 @@ $(CC) $(OBJS) libmlx.a -lm -lX11 -lXext -o $(NAME)
 ```
 ## Good luck !
 If this is useful to you do not hesitate to let me know with a little star !
-You can also contact me by email to agossuin@student.s19.be
+You can also contact me on the 42 slack @agossuin
