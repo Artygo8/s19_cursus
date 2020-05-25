@@ -1,13 +1,11 @@
 # libasm
 
-Small asm library made for mamcho-64.
+Small asm library made for mamcho-64. These functions are supposed to work like their relatives from the libc.
 
-- ft_putstr.s
-- ft_read.s
-- ft_strcmp.s
-- ft_strcpy.s
-- ft_strdup.s
-- ft_strlen.s
-- ft_write.s
-
-These functions are supposed to act like their relatives from the libc.
+- [x] ft_putstr.s
+- [x] ft_read.s
+- [x] ft_strcmp.s
+- [x] ft_strcpy.s
+- [x] ft_strdup.s
+- [x] ft_strlen.s
+- [x] ft_write.s
