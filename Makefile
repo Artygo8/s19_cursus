@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agossuin <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 15:08:48 by agossuin          #+#    #+#              #
-#    Updated: 2020/01/29 12:50:58 by agossuin         ###   ########.fr        #
+#    Updated: 2020/05/25 13:22:51 by agossuin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,6 @@ DIRH		= ./src
 SRCSH		= minirt.h
 
 #	Libraries
-MINILIBDIR	= ./includes/minilibx
 MINILIB		= libmlx.a
 LIBFTDIR	= ./includes/libft
 LIBFT		= libft.a
@@ -71,9 +70,10 @@ OS		:=	$(shell uname -s)
 $(foreach S, $(SRCSC), $(eval VPATH += $(SRCDIR)/$(S)))
 
 ifeq (${OS},Linux)
-	PATHLIB		= -I /usr/include -g -lmlx -L /usr/lib
+	MINILIBDIR	= ./includes/minilibx_linux
 	CFLAGS		= -lXext -lX11 -lm
 else
+	MINILIBDIR	= ./includes/minilibx
 	CFLAGS		= -framework OpenGL -framework AppKit -Wall -Wextra -Werror
 endif
 
@@ -87,7 +87,7 @@ $(LIBFT):	${LIBFTDIR}
 			@cd ${LIBFTDIR} && make bonus
 
 $(MINILIB):	${MINILIBDIR}
-			@cd ${MINILIBDIR} && make $@
+			@cd ${MINILIBDIR} && make
 
 $(BMPS):
 			@mkdir -p bmps

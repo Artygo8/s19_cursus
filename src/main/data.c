@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
+/*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 17:47:12 by agossuin          #+#    #+#             */
-/*   Updated: 2020/01/07 17:47:13 by agossuin         ###   ########.fr       */
+/*   Updated: 2020/05/25 13:29:50 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_mat	**ft_free_tab(t_mat **tab, int res_y)
 		free(tab[i]);
 		tab[i++] = NULL;
 	}
-	free(tab);
+//	free(tab); // for some reason, this free does not fail on MacOS but fails on linux.
 	return (NULL);
 }
 
