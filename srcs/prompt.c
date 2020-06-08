@@ -60,9 +60,9 @@ void	apply_cmd(t_cmd *cmd)
 	fd = (cmd->fd_output) ? cmd->fd_output : cmd->fd_append;
 	if (!cmd->exit_status)
 	{
-		if (cmd->cmd == MSH)
-			ft_msh(cmd);
-		else if (cmd->cmd == ECHO || cmd->cmd == ECHON)
+		// if (cmd->cmd == MSH)
+		// 	ft_msh(cmd);
+		if (cmd->cmd == ECHO || cmd->cmd == ECHON)
 			ft_echo(cmd, fd);
 		else if (cmd->cmd == CD)
 			ft_cd(cmd, 0);
@@ -116,7 +116,7 @@ int		ft_prompt(char *name, t_cmd *cmd)
 	while (get_next_line(0, &(cmd->line)))
 	{
 		ft_parsing_cmd(cmd);
-		write(1, "\n", 1);
+		// write(1, "\n", 1);
 		if (cmd->cmd == EXIT)
 			break ;
 		ft_pwd(cmd, 1);

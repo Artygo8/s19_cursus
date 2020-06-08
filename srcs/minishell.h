@@ -34,7 +34,7 @@ enum			e_cmd
 {
 	ERROR = -1,
 	NOCMD,
-	MSH,
+	EXEC,
 	ECHO,
 	ECHON,
 	ENV,

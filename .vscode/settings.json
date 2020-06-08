@@ -1,0 +1,18 @@
+{
+    "workbench.colorCustomizations": {
+        "debugToolBar.background": "#ffffff",
+        "debugToolBar.border":"#ffffff",
+        "editor.stackFrameHighlightBackground":"#ffffff",
+        "debugView.exceptionLabelBackground": "#ffffff",
+        "debugView.stateLabelForeground": "#ffffff",
+        "debugView.stateLabelBackground": "#ffffff",
+        "debugView.valueChangedHighlight": "#ffffff",
+        "debugTokenExpression.name": "#ffffff",
+        "debugTokenExpression.value": "#ffffff",
+        "debugTokenExpression.string": "#ffffff",
+        "debugTokenExpression.boolean": "#ffffff",
+        "debugTokenExpression.number": "#ffffff",
+        "debugTokenExpression.error": "#ffffff"
+    },
+    "workbench.colorTheme": "Atom One Dark"
+}

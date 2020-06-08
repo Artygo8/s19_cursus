@@ -14,7 +14,7 @@
 
 void	ft_get_exe(t_cmd *cmd)
 {
-	cmd->cmd = MSH;
+	cmd->cmd = EXEC;
 }
 
 void	ft_get_var(t_cmd *cmd)
@@ -54,8 +54,8 @@ void	ft_get_cmd(t_cmd *cmd)
 	char	*command;
 
 	command = ft_minidup(cmd);
-	if (!ft_strncmp(command, "msh", 4))
-		cmd->cmd = MSH;
+	if (!ft_strncmp(command, "exec", 4))
+		cmd->cmd = EXEC;
 	else if (!ft_strncmp(command, "echo", 5))
 		ft_get_echo(cmd);
 	else if (!ft_strncmp(command, "cd", 3))

@@ -46,8 +46,8 @@ int		main(int argc, char const *argv[], char **envp)
 	cmd->env = (t_list *)ft_lstenv(envp);
 	cmd->vars = ft_lstnew(NULL);
 	cmd->fd_output = 1;
-	banner();
-	ft_prompt("minishell $", cmd);
+	// banner();
+	ft_prompt("minishell $ ", cmd);
 	ft_lstclear(&(cmd->env), free);
 	ft_lstclear(&(cmd->vars), free);
 	free(cmd);
