@@ -27,6 +27,7 @@
 enum			e_error
 {
 	BAD_SUBSTITUTION = 1,
+	MALLOC_FAIL = 12,
 	COMMAND_NOT_FOUND = 127,
 };
 
@@ -44,6 +45,20 @@ enum			e_cmd
 	UNSET,
 	EXIT,
 };
+
+/*
+** line			-> entire line of command.
+** i			-> current position in the line.
+** cmd			-> index of the current command from 'enum e_cmd'.
+** args			-> current arguments.
+** env			-> t_list with entire env.
+** vars			-> variables not exported to the env. (we can use them)
+** fd_output	-> default is 1.
+** fd_append	-> only used when writing in a file.
+** fd_input		-> default is 0.
+** exit_status	-> well... this is what it is.
+** error		-> string of explanation in case of error.
+*/
 
 typedef struct	s_cmd
 {

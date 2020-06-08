@@ -12,6 +12,10 @@
 
 #include "minishell.h"
 
+/*
+** Generates the 't_list *cmd->env' containing the env.
+*/
+
 t_list	*ft_lstenv(char **envp)
 {
 	int		i;
@@ -24,6 +28,10 @@ t_list	*ft_lstenv(char **envp)
 	return (env);
 }
 
+/*
+** Prints the env to the fd.
+*/
+
 void	ft_putenv(t_list *env, int fd)
 {
 	while (env)
@@ -32,6 +40,11 @@ void	ft_putenv(t_list *env, int fd)
 		env = env->next;
 	}
 }
+
+/*
+** Adds a var of the form 'hello=john' to a t_list*.
+** The t_list* are 'cmd->vars' and 'cmd->env'
+*/
 
 int		ft_var_to_lst(t_list *env, const char *var)
 {

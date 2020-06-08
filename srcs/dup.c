@@ -12,6 +12,10 @@
 
 #include "minishell.h"
 
+/*
+** Gets a dupped value of of the variable 'str' we need.
+*/
+
 char	*ft_vardup(char *str, t_list *list, unsigned int size)
 {
 	char *dup;
@@ -25,6 +29,10 @@ char	*ft_vardup(char *str, t_list *list, unsigned int size)
 	}
 	return (dup);
 }
+
+/*
+** Ft_translate is used for this formatting: '${var}'.
+*/
 
 char	*ft_translate(t_cmd *cmd)
 {
@@ -44,6 +52,13 @@ char	*ft_translate(t_cmd *cmd)
 		cmd->i += size;
 	return (res);
 }
+
+/*
+** Basicdup is when we have no quotes.
+** Translates '$' variables.
+** Considers the '\' escape sequence.
+** If no '\', stops when meeting any of : " \f\n\r\t\v\'\"|;<>$"
+*/
 
 char	*ft_basicdup(t_cmd *cmd)
 {
@@ -74,6 +89,12 @@ char	*ft_basicdup(t_cmd *cmd)
 	return (ft_strdup(tmp));
 }
 
+/*
+** Weakdup is used when we have double quotes.
+** Translates '$' variables.
+** Considers the '\' escape sequence.
+*/
+
 char	*ft_weakdup(t_cmd *cmd)
 {
 	char	tmp[1000];
@@ -103,6 +124,11 @@ char	*ft_weakdup(t_cmd *cmd)
 	return (ft_strdup(tmp));
 }
 
+/*
+** Strongdup is used when we have single quotes.
+** Simply write back what is written between the single quotes.
+*/
+
 char	*ft_strongdup(t_cmd *cmd)
 {
 	int		start;
@@ -119,7 +145,8 @@ char	*ft_strongdup(t_cmd *cmd)
 }
 
 /*
-** Notice the exit status if no error
+** Calls the upper functions.
+** Notice the exit status if no error. (i can't remember why...)
 */
 
 char	*ft_minidup(t_cmd *cmd)

@@ -12,10 +12,22 @@
 
 #include "minishell.h"
 
+/*
+** We get to this with exec or ./ .
+*/
+
 void	ft_get_exe(t_cmd *cmd)
 {
 	cmd->cmd = EXEC;
 }
+
+/*
+** Our line is something like "hello=john".
+** We add this variable to the 'cmd->vars'.
+**
+** OKAY I THINK I FUCKED UP. THIS FUNCTION IS PROBABLY ONLY WORKING WHEN THE
+** VARIABLE IS AT THE BEGINNING OF THE LINE. OTHERWISE IT SHOULD WORK FINE.
+*/
 
 void	ft_get_var(t_cmd *cmd)
 {
@@ -24,6 +36,7 @@ void	ft_get_var(t_cmd *cmd)
 	char	*tmp;
 	char	*tmp2;
 
+	i = 0;
 	while (cmd->line[i] && cmd->line[i] != '=')
 		i++;
 	tmp = ft_substr(&(cmd->line[cmd->i]), 0, i + 1);
@@ -35,6 +48,10 @@ void	ft_get_var(t_cmd *cmd)
 	ft_var_to_lst(cmd->vars, var);
 	free(var);
 }
+
+/*
+** Gets ECHO or ECHON.
+*/
 
 void	ft_get_echo(t_cmd *cmd)
 {
@@ -49,12 +66,17 @@ void	ft_get_echo(t_cmd *cmd)
 	}
 }
 
+/*
+** Gets the command index from the line we dupped.
+** If we found nothing, sets the error to command not found.
+*/
+
 void	ft_get_cmd(t_cmd *cmd)
 {
 	char	*command;
 
 	command = ft_minidup(cmd);
-	if (!ft_strncmp(command, "exec", 4))
+	if (!ft_strncmp(command, "exec", 5))
 		cmd->cmd = EXEC;
 	else if (!ft_strncmp(command, "echo", 5))
 		ft_get_echo(cmd);
@@ -77,6 +99,10 @@ void	ft_get_cmd(t_cmd *cmd)
 	}
 	free(command);
 }
+
+/*
+** Stocks the arguments we met.
+*/
 
 void	ft_get_arg(t_cmd *cmd)
 {

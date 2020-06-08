@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+/*
+** Free the args and reset all to the default values.
+** Also sets the value of '$?' and 'PWD' (this is where i use the get_cwd).
+*/
+
 void	ft_reset_cmd(t_cmd *cmd)
 {
 	char	*tmp;
@@ -41,6 +46,11 @@ void	ft_reset_cmd(t_cmd *cmd)
 	free(tmp);
 }
 
+/*
+** Errors are in the errors fd : 2.
+** 2 "manual errors", the other are automatics with `strerror(errno)`.
+*/
+
 void	ft_puterror(t_cmd *cmd)
 {
 	ft_putstr_fd(cmd->error, 2);
@@ -53,6 +63,12 @@ void	ft_puterror(t_cmd *cmd)
 		ft_putendl_fd(strerror(cmd->exit_status), 2);
 }
 
+/*
+** If fd_output is set to 0: we use fd_append.
+** If exit status -> something went wrong -> ft_puterror.
+** Ft_reset_cmd obviously resets the commands and free the arguments.
+*/
+
 void	apply_cmd(t_cmd *cmd)
 {
 	int		fd;
@@ -60,8 +76,8 @@ void	apply_cmd(t_cmd *cmd)
 	fd = (cmd->fd_output) ? cmd->fd_output : cmd->fd_append;
 	if (!cmd->exit_status)
 	{
-		// if (cmd->cmd == MSH)
-		// 	ft_msh(cmd);
+		// if (cmd->cmd == EXEC)
+		// 	ft_exec(cmd);
 		if (cmd->cmd == ECHO || cmd->cmd == ECHON)
 			ft_echo(cmd, fd);
 		else if (cmd->cmd == CD)
@@ -81,6 +97,19 @@ void	apply_cmd(t_cmd *cmd)
 		ft_puterror(cmd);
 	ft_reset_cmd(cmd);
 }
+
+/*
+** Ft_parsing_cmd is recursive.
+**
+** Skips spaces.
+** Check if it is the endl or if we should EXIT. -> return and apply command.
+** Check if we have a ';' -> only apply command.
+** Check if we don't stock a command yet and ispath. -> EXEC.
+** Check if we don't stock a command yet and isvar. -> get_variables.
+** Check if we don't stock a command yet and redir. -> get_redirection.
+** Check if we don't stock a command yet. -> get_command.
+** Else -> get_arguments.
+*/
 
 void	ft_parsing_cmd(t_cmd *cmd)
 {
@@ -108,6 +137,14 @@ void	ft_parsing_cmd(t_cmd *cmd)
 		ft_get_arg(cmd);
 	ft_parsing_cmd(cmd);
 }
+
+/*
+** The prompt is 'name'. For example, it can be 'bash$'. (better in macro?)
+** We are in a -pseudo infinite- loop with get_next_line.
+** We leave the loop when the command is EXIT.
+** Ft_pwd is actually a `ft_putendl_pwd`.
+**
+*/
 
 int		ft_prompt(char *name, t_cmd *cmd)
 {

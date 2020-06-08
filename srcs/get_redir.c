@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+/*
+** i+=2 for the ">>".
+** Gets path to the file from minidup.
+** Open a file in append mode.
+** If a file was previously opened, close this file.
+*/
+
 void	ft_get_append(t_cmd *cmd)
 {
 	int		tmp;
@@ -34,6 +41,13 @@ void	ft_get_append(t_cmd *cmd)
 		cmd->fd_append = tmp;
 	}
 }
+
+/*
+** i+=1 for the ">".
+** Gets path to the file from minidup.
+** Open a file in truncate mode.
+** If a file was previously opened, close this file.
+*/
 
 void	ft_get_output(t_cmd *cmd)
 {
@@ -60,6 +74,11 @@ void	ft_get_output(t_cmd *cmd)
 	}
 }
 
+/*
+** i+=1 for the "<".
+** Opens a file in reading mode.
+*/
+
 void	ft_get_input(t_cmd *cmd)
 {
 	char	*path;
@@ -72,6 +91,10 @@ void	ft_get_input(t_cmd *cmd)
 		cmd->exit_status = errno;
 	}
 }
+
+/*
+** Gets the type of redir.
+*/
 
 void	ft_get_redir(t_cmd *cmd)
 {

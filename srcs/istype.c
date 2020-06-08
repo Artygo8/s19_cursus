@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+/*
+** Complete verifictaion to see if what we have is an actual and acceptable
+** variable call.
+** BAD_SUBSTITUTION examples : '${ hello   }', '${}', '${{}', '${$}'
+*/
+
 int		ft_isvar_call(t_cmd *cmd)
 {
 	int i;
@@ -39,6 +45,10 @@ int		ft_isvar_call(t_cmd *cmd)
 	return (1);
 }
 
+/*
+** If we find a '/', then it is considered as a path.
+*/
+
 int		ft_ispath(char *line)
 {
 	while (*line && !ft_isspace(*line))
@@ -48,6 +58,10 @@ int		ft_ispath(char *line)
 	}
 	return (0);
 }
+
+/*
+** If we find a '=', then it must be a var.
+*/
 
 int		ft_isvar(char *line)
 {

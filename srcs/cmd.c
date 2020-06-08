@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+/*
+** Echo the arguments.
+** 'test' is used to place spaces between the arguments.
+** If "ECHO", write endl. Else is "ECHON".
+*/
+
 void		ft_echo(t_cmd *cmd, int fd)
 {
 	int		test;
@@ -32,17 +38,20 @@ void		ft_echo(t_cmd *cmd, int fd)
 }
 
 /*
-** "int res" is used to save 2 lines
+** Change directory.
+** If we have '~' or no arguments, we first go to 'home' dirsctory.
+** If failed chdir -> errno.
+** Sets the 'OLDPWD' env variable.
 */
 
 void		ft_cd(t_cmd *cmd, int res)
 {
-	char	*pwd;
+	char	*oldpwd;
 	char	*home;
-	char	s[600];
+	char	tmp[600];
 
-	getcwd(s, 600);
-	pwd = ft_strjoin("OLDPWD=", s);
+	getcwd(tmp, 600);
+	oldpwd = ft_strjoin("OLDPWD=", tmp);
 	if (!(cmd->args) || (cmd->args && ((char*)cmd->args->content)[0] == '~'))
 	{
 		home = ft_vardup("HOME", cmd->env, 4);
@@ -55,13 +64,18 @@ void		ft_cd(t_cmd *cmd, int res)
 		res = 1;
 	if (res == 1)
 	{
-		chdir(s);
+		chdir(tmp);
 		cmd->error = ft_strjoin("cd: ", cmd->args->content);
 		cmd->exit_status = errno;
-		ft_var_to_lst(cmd->env, pwd);
+		ft_var_to_lst(cmd->env, oldpwd);
 	}
-	free(pwd);
+	free(oldpwd);
 }
+
+/*
+** Gets the 'pwd'. I can't remember why I didnt use the 'getcwd', but I think
+** there is a reason.
+*/
 
 void		ft_pwd(t_cmd *cmd, int fd)
 {
@@ -75,6 +89,16 @@ void		ft_pwd(t_cmd *cmd, int fd)
 		tmpenv = tmpenv->next;
 	}
 }
+
+/*
+** 3 possible cases:
+**     1) export hello=john. -> to var, then to env.
+**     2) export hello (hello i already in vars). -> from var to env.
+**     2) export hello (hello is nowhere). -> nothing is done.
+**
+** The arguments for export were set in 'cmd->args'.
+** 'cmd->vars' are the variables that are not in the general env.
+*/
 
 void		ft_export(t_cmd *cmd)
 {
@@ -101,6 +125,10 @@ void		ft_export(t_cmd *cmd)
 	}
 }
 
+/*
+** Takes the arguments away from a 't_list'.
+*/
+
 void		ft_unset_from(t_list *list, t_cmd *cmd)
 {
 	t_list			*args;
@@ -123,6 +151,10 @@ void		ft_unset_from(t_list *list, t_cmd *cmd)
 		args = args->next;
 	}
 }
+
+/*
+** Takes the arguments away from the 'cmd->env' and from the 'cmd->vars'.
+*/
 
 void		ft_unset(t_cmd *cmd)
 {

@@ -2,9 +2,9 @@
 
 # echo, cd, pwd, export, unset, env, exit
 
-#           _          _        _  __  
-#\  /  /\  |__) |  /\  |__) |    |__  /__` 
-# \/  /~~\ |  \ | /~~\ |__) |___ |___ .__/ 
+#           _          _        _  __
+#\  /  /\  |__) |  /\  |__) |    |__  /__`
+# \/  /~~\ |  \ | /~~\ |__) |___ |___ .__/
 #
 
 # Note that spaces cannot be used around the = assignment operator
@@ -14,13 +14,13 @@ echo
 echo =================
 echo testing variables
 echo =================
-echo 
+echo
 
 echo WEAK :
 # Use printf to safely output the data
 echo "Hello, $whom_variable"
 #> Hello, World
-echo 
+echo
 
 #Execute/Run via: ./hello.sh World
 #echo "Hello, $1"
@@ -30,18 +30,18 @@ echo STRONG :
 #vs
 echo 'Hello, $whom_variable'
 #> Hello, $whom_variable
-echo 
+echo
 
-# _  _        _  
-#|__  /  ` |__| /  \ 
-#|___ \__, |  | \__/ 
+# _  _        _
+#|__  /  ` |__| /  \
+#|___ \__, |  | \__/
 #
 
 echo
 echo ====================
 echo unexisting variables
 echo ====================
-echo 
+echo
 
 name="myself"
 echo "Hello, $name."
@@ -65,15 +65,15 @@ echo hello \"
 echo 'hello \" '
 echo "hello \" "
 echo
-# _   _  
-#/  ` |  \ 
-#\__, |__/ 
+#  _   _
+#/  ` |  \
+#\__, |__/
 #
 echo
 echo ===========
 echo testing pwd
 echo ===========
-echo 
+echo
 
 pwd;
 cd ..;pwd;
