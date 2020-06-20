@@ -3,7 +3,7 @@ minishell is a fun C project.
 The objective is to create a simple shell.
 
 ## Authors
-[Pierre Maldague](https://github.com/pmaldagu)
+[Pierre Maldague](https://github.com/pmaldagu)\n
 [Arthur Gossuin](https://github.com/Artygo8)
 
 ## Development
