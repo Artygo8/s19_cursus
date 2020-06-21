@@ -8,6 +8,7 @@ MiniRayTracer working on linux and MacOS.
 name@name-PC:~$ make
 name@name-PC:~$ ./miniRT scenes/nine_spheres.rt
 ```
+For more informations about how to setup the minilibx: go to [minilibx_linux](https://github.com/Artygo8/s19_minilibx_linux).
 ## Scenes
 The '.rt' files are describing a scene as such:
 ```
