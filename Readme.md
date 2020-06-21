@@ -8,7 +8,7 @@ MiniRayTracer working on linux and MacOS.
 name@name-PC:~$ make
 name@name-PC:~$ ./miniRT scenes/nine_spheres.rt
 ```
-
+## Scenes
 The '.rt' files are describing a scene as such:
 ```
 R		800 800
@@ -38,7 +38,7 @@ pl		0,-200,0			0,1,0					255,255,255
 pl		200,0,0				1,0,0					255,255,255
 pl		-200,0,0			1,0,0					255,255,255
 ```
-With:
+### With
 ```
 R - resolution
 A - ambient light
@@ -53,5 +53,5 @@ sq - plane square
 tr - plane triangle
 ```
 
-## Picture
+### Result
 ![Nine spheres](screen/nine_spheres.png)
