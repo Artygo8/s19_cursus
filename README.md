@@ -15,7 +15,10 @@ When the EOF is reached, the function returns 0.
 In case of invalid file_descriptor or memory allocation failure, the function returns -1.
 
 ## Example Usage
-```C
+```cpp
+#include <stdio.h>
+#include "get_next_line.h"
+
 int main()
 {
     int     fd;
@@ -34,6 +37,4 @@ int main()
 
     return 0;
 }
-
-get_next_line(int file_descriptor, char **line_to_fill)
 ```
