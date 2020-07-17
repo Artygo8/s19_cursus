@@ -1,2 +1,1 @@
-# s19_philosophers
-Threads learning
+https://www.youtube.com/watch?v=7U3Eo0ynmHo
