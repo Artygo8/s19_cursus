@@ -1,10 +1,23 @@
-SRCS	= srcs/philosophers.c srcs/utils.c
+PHILO_ONE = srcs/philo_one
+PHILO_TWO = srcs/philo_two
+PHILO_THREE = srcs/philo_three
 
-NAME	= philo
+CASES := $(PHILO_ONE)
+SUBMAKE = make $@ -C $(case)
 
+all:
+	$(foreach case, $(CASES), $(SUBMAKE))
 
-FLAGS	= -Wall -Wextra -Werror
+one:
+	make -C $(PHILO_ONE)
 
-all:	
-	$(CC) $(SRCS) -o $(NAME)
-	./$(NAME)
+two:
+	make -C $(PHILO_TWO)
+
+three:
+	make -C $(PHILO_THREE)
+
+re:	clean all
+
+clean:
+	$(foreach case, $(CASES), $(SUBMAKE))
