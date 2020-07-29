@@ -6,7 +6,7 @@ SRCS	= srcs/main.c \
 
 OBJ		= $(SRCS:.c=.o)
 
-NAME	= philo_one
+NAME	= philo_two
 
 CC		= gcc
 FLAGS	= -Wall -Wextra -Werror

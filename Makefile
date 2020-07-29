@@ -10,14 +10,20 @@ all:
 
 one:
 	make -C $(PHILO_ONE)
+	$(PHILO_ONE)/philo_one
 
 two:
 	make -C $(PHILO_TWO)
+	$(PHILO_TWO)/philo_two
 
 three:
 	make -C $(PHILO_THREE)
+	$(PHILO_TWO)/philo_three
 
 re:	clean all
 
 clean:
+	$(foreach case, $(CASES), $(SUBMAKE))
+
+fclean:
 	$(foreach case, $(CASES), $(SUBMAKE))
