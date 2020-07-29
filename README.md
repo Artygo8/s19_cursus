@@ -17,7 +17,7 @@ int pthread_mutex_lock(pthread_mutex_t *mutex);
 int pthread_mutex_unlock(pthread_mutex_t *mutex);
 ```
 
-[https://www.youtube.com/watch?v=7U3Eo0ynmHo](Interesting Resource)
+[Interesting Resource](https://www.youtube.com/watch?v=7U3Eo0ynmHo)
 
 ## ___Philo_two___
 
