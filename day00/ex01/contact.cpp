@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "phonebook.hpp"
+#include "contact.hpp"
 
 string	limit(string str, int l)
 {
-	if (str.length() > l)
+	if ((int)str.length() > l)
 	{
 		str.resize(l - 1);
 		str.push_back('.');
@@ -40,7 +40,8 @@ void	Contact::infos(void)
 void	Contact::add(int total)
 {
 	index = total;
-	std::cout << "\n\e[4;32mAdding a contact:\e[m\n\n> Enter First Name: ";
+	std::cout << GRN << "Adding a contact" << CLEAN << std::endl;
+	std::cout << "> Enter First Name: ";
 	std::getline(std::cin, first_name);
 	std::cout << "> Enter Last Name: ";
 	std::getline(std::cin, last_name);
@@ -66,7 +67,7 @@ void	Contact::add(int total)
 
 void	Contact::show(void)
 {
-	std::cout << "\e[m|" << std::setw(10) << index + 1 << "|" << std::setw(10)
+	std::cout << "|" << std::setw(10) << index + 1 << "|" << std::setw(10)
 		<< limit(first_name, 10) << "|" << std::setw(10) << limit(last_name, 10)
-		<< "|" << std::setw(10) << limit(login, 10) << "|\e[m\n";
+		<< "|" << std::setw(10) << limit(login, 10) << "|\e[m" << std::endl;
 }

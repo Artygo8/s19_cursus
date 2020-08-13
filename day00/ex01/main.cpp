@@ -10,52 +10,55 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "phonebook.hpp"
+#include "contact.hpp"
 
 void search(Contact phonebook[8], int total)
 {
+	string		str;
 	int			count;
 
-	std::cout << "\n\e[4;32mSearching through the phonebook\e[m\n";
-	std::cout << "\n\e[m|     index|first name| last name|  nickname|\e[m\n";
+	std::cout << TITLE << "Searching through the phonebook" << CLEAN << std::endl;
+	std::cout << "|     index|first name| last name|  nickname|" << std::endl;
 	for (int i = 0; i < total; ++i)
 		phonebook[i].show();
-	std::cout << "\n\e[96mTo which index would you like to access ?\e[m ";
-	std::cin >> count;
-	std::cout << std::endl;
+	std::cout << BLU << "Which index would you like to access ?" << CLEAN << std::endl;
+	std::getline(std::cin, str);
+	std::stringstream(str) >> count;
 	if (count <= total && count > 0)
 		phonebook[count - 1].infos();
 	else
-		std::cout << "\nThis is not a valid input !\n";
+		std::cout << RED << "This is not a valid search !" << CLEAN << std::endl;
 }
 
 
-int		main(int argc, char const *argv[])
+int		main()
 {
 	Contact		phonebook[8];
 	static int	total = 0;
 	string		action;
 
-	while (1)
+	while (true)
 	{
-		std::cout << "\n\e[1;4mEnter a command (ADD, SEARCH, EXIT):\e[m ";
+		std::cout << TITLE << "Enter a command (ADD, SEARCH, EXIT):" << CLEAN << std::endl;
 		while (action.empty())
 			std::getline(std::cin, action);
-		if (action == "SEARCH")
-			search(phonebook, total);
-		else if (action == "EXIT")
+		if (action == "EXIT")
 			return (0);
 		else if (action == "ADD")
 		{
 			if (total >= 8)
-				std::cout << "\n\e[31mYou reached the maximum of contacts !\e[m\n";
+				std::cout << RED << "You reached the maximum of contacts !" << CLEAN << std::endl;
 			else
+			{
 				phonebook[total].add(total);
 				total++;
+			}
 		}
+		else if (action == "SEARCH")
+			search(phonebook, total);
 		else
-			std::cout << "\n\e[31mThis is not a valid input !\e[m\n";
-		action = "";
+			std::cout << RED << "This is not a valid input !" << CLEAN;
+		action.clear();
 	}
 	return 0;
 }

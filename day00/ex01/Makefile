@@ -5,32 +5,26 @@
 #                                                     +:+ +:+         +:+      #
 #    By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/04/27 12:17:18 by agossuin          #+#    #+#              #
-#    Updated: 2020/04/27 12:17:18 by agossuin         ###   ########.fr        #
+#    Created: 2020/04/27 12:17:04 by agossuin          #+#    #+#              #
+#    Updated: 2020/04/27 12:17:05 by agossuin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ================================ VARIABLES ================================= #
 
+SRCS	= contact.cpp main.cpp
+
 NAME	= phonebook
 
-CXX	= g++
+CC		= g++
 CFLAGS	= -Wall -Werror -Wextra
 
-ifeq ($(DEBUG),1)
-CFLAGS	+= -g3 -fsanitize=address
-endif
-
 SRCDIR	= ./
-INCDIR	= include/
 OBJDIR	= objs/
 
-CXXFLAGS	+= -I $(INCDIR)
-
-SRCS	:= $(wildcard $(SRCDIR)*.cpp) #			Full path
-SRC	:= $(notdir $(SRCS)) # 				Files only
-OBJ	:= $(SRC:.cpp=.o)	#				Files only
+OBJ		:= $(SRCS:.cpp=.o)	#				Files only
 OBJS	:= $(addprefix $(OBJDIR), $(OBJ)) #		Full path
+SRCS	:= $(addprefix $(SRCDIR), $(SRCS)) #			Full path
 CSRCS	:= $(addprefix ../, $(SRCS)) #			Compiler
 
 GR	= \033[32;1m #	Green
@@ -43,30 +37,26 @@ RC	= \033[0m #	Reset Colors
 
 all : $(NAME)
 
-#	linking
 $(NAME)	: $(OBJS)
 	@printf "$(YE)&&& Linking $(OBJ) to $(NAME)$(RC)"
-	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
-#	compiling
 $(OBJS) : $(SRCS)
 	@printf "$(GR)+++ Compiling $(SRC) to $(OBJ)$(RC)"
-	@mkdir -p $(OBJDIR)
-	@cd $(OBJDIR) && $(CXX) $(CXXFLAGS) -I ../$(INCDIR) -c $(CSRCS)
-
-#	runnng
+	mkdir -p $(OBJDIR)
+	cd $(OBJDIR) && $(CC) $(CFLAGS) -I ../$(INCDIR) -c $(CSRCS)
 
 run : $(NAME)
 	@echo "$(CY)>>> Running $(NAME)$(RC)"
 	./$(NAME)
-#	cleaning
+
 clean :
-	@echo "$(RE)--- Removing $(OBJ)$(RC)"
-	@rm -fd $(OBJS) $(OBJDIR)
+	@echo "$(RE)--- Removing $(OBJS)$(RC)"
+	rm -rf $(OBJS) $(OBJDIR)
 
 fclean : clean
 	@echo "$(RE)--- Removing $(NAME)$(RC)"
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re : fclean all
 

@@ -10,16 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHONEBOOK_HPP
-# define PHONEBOOK_HPP
+#ifndef CONTACT_HPP
+# define CONTACT_HPP
 # include <iostream>
 # include <string>
 # include <iomanip>
+# include <sstream>
+
+# define TITLE "\e[1;4m"
+# define CLEAN "\e[m"
+# define BLU "\e[96m"
+# define GRN "\e[33m"
+# define RED "\e[31m"
 
 typedef std::string	string;
-
-string				format(string str);
-
 
 class Contact {
 

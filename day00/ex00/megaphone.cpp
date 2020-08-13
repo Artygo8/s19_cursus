@@ -15,17 +15,12 @@
 
 int main(int argc, char const *argv[])
 {
-	std::string longstr;
-
 	if (argc == 1)
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
-	else
-		longstr = argv[1];
-	for (int i = 2; i < argc; ++i)
-		longstr += (std::string)" " + argv[i];
-	for (int i = 0; longstr[i]; ++i)
-		if (longstr[i] <= 'z' && longstr[i] >= 'a')
-			longstr[i] = longstr[i] - 32;
-	std::cout << longstr << "\n";
+	for (int i = 1; i < argc; ++i)
+		for (int j = 0; argv[i][j]; ++j)
+			std::cout << ((argv[i][j] <= 'z' && argv[i][j] >= 'a') ?
+				(char)(argv[i][j] - 32) : argv[i][j]);
+	std::cout << "\n";
 	return 0;
 }
