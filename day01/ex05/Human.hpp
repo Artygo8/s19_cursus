@@ -23,7 +23,7 @@ public:
 	Human();
 	~Human();
 	Brain	getBrain();
-	Brain	*identify();
+	void	*identify();
 
 };
 

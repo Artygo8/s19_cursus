@@ -15,7 +15,7 @@
 ZombieEvent::ZombieEvent()
 {
 	std::cout << "*** The appocalypse is starting ***" << '\n';
-	srand(ctime(NULL));
+	srand(time(NULL));
 }
 
 ZombieEvent::~ZombieEvent()
@@ -23,7 +23,7 @@ ZombieEvent::~ZombieEvent()
 	std::cout << "*** The appocalypse is ending ***" << '\n';
 }
 
-std::string		random_name()
+const std::string	random_name()
 {
 	char			c;
 	int				max;
@@ -38,10 +38,8 @@ std::string		random_name()
 
 void	ZombieEvent::randomChump()
 {
-	Zombie		z;
+	Zombie		z(random_name(), "big one");
 
-	z.name = random_name();
-	z.type = type;
 	z.announce();
 }
 
@@ -52,9 +50,7 @@ void	ZombieEvent::setZombieType(std::string given_type)
 
 Zombie* ZombieEvent::newZombie(std::string name)
 {
-	Zombie		*z = new Zombie;
+	Zombie		*z = new Zombie(name, "big one");
 
-	z->name = name;
-	z->type = type;
 	return (z);
 }

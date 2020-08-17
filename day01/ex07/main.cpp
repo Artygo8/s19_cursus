@@ -14,6 +14,13 @@
 
 int main(int argc, char const *argv[])
 {
+	if (argc == 4)
+	{
+		
+	}
+	else
+	{
 
+	}
 	return 0;
 }

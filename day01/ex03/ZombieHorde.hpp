@@ -20,7 +20,7 @@ public:
 
 	int			n;
 	Zombie		*zombieHorde;
-	std::string	type = "big one";
+	std::string	type;
 
 	ZombieHorde(int N);
 	~ZombieHorde();

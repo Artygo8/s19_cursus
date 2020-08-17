@@ -1,25 +1,9 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/04/27 12:17:18 by agossuin          #+#    #+#              #
-#    Updated: 2020/04/28 15:36:05 by agossuin         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 # ================================ VARIABLES ================================= #
 
 NAME	= ex04
-
 CXX	= g++
 CFLAGS	= -Wall -Werror -Wextra
-
-ifeq ($(DEBUG),1)
-CFLAGS	+= -g3 -fsanitize=address
-endif
 
 SRCDIR	= ./
 INCDIR	= include/
@@ -27,9 +11,10 @@ OBJDIR	= objs/
 
 CXXFLAGS	+= -I $(INCDIR)
 
-SRCS	:= $(wildcard $(SRCDIR)*.cpp) #			Full path
-SRC	:= $(notdir $(SRCS)) # 				Files only
-OBJ	:= $(SRC:.cpp=.o)	#				Files only
+SRCS	= 	ex04.cpp
+
+SRC		:= $(notdir $(SRCS)) # 					Files only
+OBJ		:= $(SRC:.cpp=.o)	#					Files only
 OBJS	:= $(addprefix $(OBJDIR), $(OBJ)) #		Full path
 CSRCS	:= $(addprefix ../, $(SRCS)) #			Compiler
 
@@ -62,7 +47,7 @@ run : $(NAME)
 #	cleaning
 clean :
 	@echo "$(RE)--- Removing $(OBJ)$(RC)"
-	@rm -fd $(OBJS) $(OBJDIR)
+	@rm -fdr $(OBJS) $(OBJDIR)
 
 fclean : clean
 	@echo "$(RE)--- Removing $(NAME)$(RC)"

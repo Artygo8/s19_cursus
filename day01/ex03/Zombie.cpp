@@ -6,13 +6,13 @@
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 11:33:35 by agossuin          #+#    #+#             */
-/*   Updated: 2020/04/28 15:23:54 by agossuin         ###   ########.fr       */
+/*   Updated: 2020/04/28 13:38:20 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
 
-std::string		random_name()
+const std::string	random_name()
 {
 	char			c;
 	int				max;
@@ -27,13 +27,29 @@ std::string		random_name()
 
 void Zombie::announce()
 {
-	std::cout << '<' << name << " (" << type << ")> Braiiiiiiinnnssss...\n";
+	std::cout << '<' << getName() << " (" << getType() << ")> Braiiiiiiinnnssss...\n";
+}
+
+std::string Zombie::getName() const
+{
+	return name;
+}
+
+std::string Zombie::getType() const
+{
+	return type;
 }
 
 Zombie::Zombie()
 {
-	type = type;
+	type = "big one";
 	name = random_name();
+	std::cout << "+" << '\n';
+}
+
+Zombie::Zombie(std::string const ztype, std::string const zname)
+	: type(ztype), name(zname)
+{
 	std::cout << "+" << '\n';
 }
 

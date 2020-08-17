@@ -6,7 +6,7 @@
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 11:23:39 by agossuin          #+#    #+#             */
-/*   Updated: 2020/04/28 15:32:00 by agossuin         ###   ########.fr       */
+/*   Updated: 2020/04/28 13:22:49 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,21 @@
 # include <iomanip>
 # include <string>
 
+const std::string	random_name();
+
 class Zombie {
 
-public:
-	std::string	type = "pyro";
-	std::string	name;
-	Zombie();
-	~Zombie();
-	void	announce();
-
 private:
+	std::string	type;
+	std::string	name;
+
+public:
+	Zombie();
+	Zombie(std::string const type, std::string const name);
+	~Zombie();
+	void		announce();
+	std::string	getName() const;
+	std::string	getType() const;
 
 };
 

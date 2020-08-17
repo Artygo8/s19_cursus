@@ -20,14 +20,17 @@
 
 class Zombie {
 
-public:
+private:
 	std::string	type;
 	std::string	name;
-	Zombie();
-	~Zombie();
-	void	announce();
 
-private:
+public:
+	Zombie();
+	Zombie(std::string const type, std::string const name);
+	~Zombie();
+	void		announce();
+	std::string	getName() const;
+	std::string	getType() const;
 
 };
 

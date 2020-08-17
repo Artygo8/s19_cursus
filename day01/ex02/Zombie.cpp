@@ -14,13 +14,27 @@
 
 void Zombie::announce()
 {
-	std::cout << '<' << name << " (" << type << ")> Braiiiiiiinnnssss...\n";
+	std::cout << '<' << getName() << " (" << getType() << ")> Braiiiiiiinnnssss...\n";
+}
+
+std::string Zombie::getName() const
+{
+	return name;
+}
+
+std::string Zombie::getType() const
+{
+	return type;
 }
 
 Zombie::Zombie()
 {
-	type = type;
-	name = name;
+	std::cout << "+" << '\n';
+}
+
+Zombie::Zombie(std::string const ztype, std::string const zname)
+	: type(ztype), name(zname)
+{
 	std::cout << "+" << '\n';
 }
 

@@ -14,13 +14,15 @@
 # define ZOMBIEEVENT_HPP
 # include "Zombie.hpp"
 
-std::string		random_name();
+const std::string		random_name();
 
 class ZombieEvent {
 
-public:
+private:
 
-	std::string	type = "big one";
+	std::string type;
+
+public:
 
 	ZombieEvent();
 	~ZombieEvent();
@@ -28,8 +30,6 @@ public:
 	void	setZombieType(std::string type);
 	Zombie* newZombie(std::string name);
 	void	randomChump();
-
-private:
 
 };
 

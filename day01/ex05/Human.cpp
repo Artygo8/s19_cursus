@@ -12,9 +12,9 @@
 
 #include "Human.hpp"
 
-Brain *Human::identify()
+void *Human::identify()
 {
-	brain.identify();
+	return getBrain().identify();
 }
 
 Brain Human::getBrain()
