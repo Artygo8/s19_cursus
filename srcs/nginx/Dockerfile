@@ -1,22 +1,56 @@
 FROM alpine:3.11
 
-RUN apk update
-RUN apk add nginx openssl
+# default arguments can be passed with `--build-arg <varname>=<value>`
+ARG pass=SSH_PASSWORD
+ARG user=SSH_USERNAME
 
-COPY srcs/nginx.conf    /etc/nginx/nginx.conf
-COPY srcs/index.html    /www/localnginx/index.html
-COPY srcs/conf.d        /etc/nginx/conf.d
+# install what we need
+RUN apk update && apk add nginx openssl openssh openrc
 
-RUN mkdir /var/run/nginx/ && touch /var/run/nginx/nginx.pid
+# create a new user
+RUN adduser -D -g '' $user
+RUN echo "$user:$pass" | chpasswd
 
-RUN openssl genrsa 2048 > /etc/ssl/host.key
-RUN chmod 400 /etc/ssl/host.key
-RUN openssl req -new -x509 -nodes -sha256 -days 365 -key /etc/ssl/host.key -out /etc/ssl/host.cert -subj '/CN=BE/O=agossuin'
+# copy
+COPY srcs/default.conf /etc/nginx/conf.d/default.conf
+COPY srcs/localhost/ /var/www/localhost/
 
-RUN nginx -t
+# generate key and cert for ssl
+RUN openssl req -new -x509 -nodes -sha256 -days 365 -keyout /etc/ssl/host.key -out /etc/ssl/host.cert -subj '/CN=BE/O=agossuin'
 
-ENV host 'www/localnginx/'
+# nginx test config
+RUN mkdir /var/run/nginx/                                                       # To avoid "pid not found"
+RUN nginx -t                                                                    # Test the config
 
-EXPOSE 80 443
+# openrc for sshd
+RUN openrc
+RUN touch /run/openrc/softlevel
+RUN rc-update add sshd && rc-status
 
-CMD nginx -g 'daemon off;'
+EXPOSE 22 80 443
+
+ENTRYPOINT openrc; nginx -g "daemon off;"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#RUN openssl genrsa 2048 > /etc/ssl/host.key
+#RUN chmod 400 /etc/ssl/host.key
+#RUN openssl req -new -x509 -nodes -sha256 -days 365 -key /etc/ssl/host.key -out /etc/ssl/host.cert -subj '/CN=BE/O=agossuin'

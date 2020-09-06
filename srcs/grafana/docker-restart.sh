@@ -1,22 +1,18 @@
 #!/bin/sh
 name="grafana"
-echo -e "\033[31mdocker stop $name \033[0m"
-docker kill $name
 
-echo -e "\033[31mdocker rm $name \033[0m"
-docker rm $name
+echo "\033[31mdocker stop/rm/rmi $name \033[0m"
+docker kill $name 1> /dev/null
+docker rm $name 1> /dev/null
+docker rmi $name:$name -f 1> /dev/null
 
-echo -e "\033[31mdocker rmi test:$name \033[0m"
-docker rmi test:$name -f
+echo "\033[31mdocker build $name:$name \033[0m"
+(docker build -t $name:$name . 1> /dev/null) || exit
 
-echo -e "\033[31mdocker system prune \033[0m"
-docker system prune -f
+echo "\033[31mdocker run \033[0m"
+docker run --name $name -d -i -p 80:80 $name:$name || exit
 
-echo -e "\033[31mdocker build test:$name \033[0m"
-docker build -t test:$name .
-
-echo -e "\033[31mdocker run \033[0m"
-# docker run --name $name -d -p 443:443 -i test:$name
-docker run --name $name -d -i -p 80:80 -p 443:443 test:$name
-docker run -it test:$name sh
-# docker run -d -p 80:80 test:$name
+# docker run --name $name -d -p 443:443 -i $name:$name
+# docker run -it $name:$name sh
+# docker run -d -p 80:80 $name:$name
+# docker system prune -f

@@ -1,100 +1,51 @@
-# linux installation
+#!/bin/bash
+STARTTIME=$(date +%s)
+MAINTAINER="agossuin"
 
-# install kubectl
-curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-chmod +x ./kubectl
-sudo mv ./kubectl /usr/local/bin/kubectl
-kubectl version --client
+function _timestamp {
+    ENDTIME=$(date +%s)
+    tput setaf 3
+    echo "[$(($ENDTIME - $STARTTIME))s] $@"
+    tput sgr0
+}
 
-# install virtualization
-sudo apt install kvm -y
+function _docker_build {
+    _timestamp Building $@:$MAINTAINER
+    docker build -t $@:$MAINTAINER ./srcs/$@/ > /dev/null || exit
+}
 
-# install minikube
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
-sudo mkdir -p /usr/local/bin/
-sudo install minikube /usr/local/bin/
+#figlet "Ft Services"
+tput setaf 6
+echo  " _____ _     ____                  _
+|  ___| |_  / ___|  ___ _ ____   _(_) ___ ___  ___
+| |_  | __| \___ \ / _ \ '__\ \ / / |/ __/ _ \/ __|
+|  _| | |_   ___) |  __/ |   \ V /| | (_|  __/\__ \\
+|_|    \__| |____/ \___|_|    \_/ |_|\___\___||___/"
+tput sgr0
 
-#If you have previously installed Minikube, and run:
+# Docker Machine Restart
 
-# minikube start
-# and minikube start returned an error:
+# Minikube Restart
+_timestamp Minikube Delete
+minikube delete --all
 
-# machine does not exist
-# then you need to clear minikube’s local state:
+_timestamp Minikube Start
+minikube start --cpus=2 \
+        --disk-size 6000 \
+        --addons dashboard \
+        --addons metallb
 
-# minikube delete
+# Variables
+MINIKUBE_IP=`minikube ip`
+echo https://$MINIKUBE_IP/
 
-# All process
-minikube start \
-    --network-plugin=cni \
-    --enable-default-cni \
-    --container-runtime=docker \
-    --bootstrapper=kubeadm
+eval $(minikube docker-env)
 
-minikube status
+# kubectl create -f ./srcs/yaml/pv.yaml
+# kubectl create -f ./srcs/yaml/pvc.yaml
 
-## start stuffs
-kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10
-# kubectl create deployment nginx --image=nginx
-kubectl expose deployment hello-minikube --type=NodePort --port=8080
-# kubectl expose deployment nginx --type=NodePort --port=8080
-kubectl get pod
-minikube service hello-minikube --url
+_docker_build mysql
+_docker_build nginx
+_docker_build wordpress
 
-## remove stuffs
-kubectl delete services hello-minikube
-kubectl delete deployment hello-minikube
-
-minikube stop
-minikube delete
-
-# use the docker daemon
-minikube docker-env
-
-# extra settings example
---extra-config=kubelet.MaxPods=5
-
-# DASHBOARD
-minikube dashboard
-
-# SERVICES
-minikube service [-n NAMESPACE] [--url] NAME
-
-# networking
-minikube ip
-kubectl get service $SERVICE --output='jsonpath="{.spec.ports[0].nodePort}"'
-
-# persistent volumes https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: pv0001
-spec:
-  accessModes:
-    - ReadWriteOnce
-  capacity:
-    storage: 5Gi
-  hostPath:
-    path: /data/pv0001/
-
-# addons
-minikube addons enable ingress
-minikube addons enable ingress-dns
-minikube start --addons ingress
-minikube start --addons ingress-dns
-minikube addons open ingress
-minikube addons open ingress-dns
-minikube addons disable
-
-# Minikube tunnel for loadbalancer
-minikube tunnel
-minikube tunnel --cleanup
-
-
-# private container registeries
-https://kubernetes.io/docs/concepts/containers/images/
-
-# http proxy
-minikube start --docker-env http_proxy=http://$YOURPROXY:PORT \
-                 --docker-env https_proxy=https://$YOURPROXY:PORT
-export no_proxy=$no_proxy,$(minikube ip)
+kubectl apply -k ./srcs/yaml/
