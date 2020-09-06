@@ -41,6 +41,7 @@ echo
 # kubectl get secrets
 # kubectl get pvc
 kubectl get pods
+kubectl get svc
 # kubectl get services wordpress
 _timestamp Starting service
 minikube service wordpress
