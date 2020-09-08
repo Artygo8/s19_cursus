@@ -1,0 +1,12 @@
+secretGenerator:
+- name: mysql
+  literals:
+  - mysql-password=pass
+
+resources:
+  - metallb-configmap.yaml
+  # - mysql-deployment.yaml
+  # - wordpress-deployment.yaml
+  # - phpmyadmin-deployment.yaml
+  # - ftps-deployment.yaml
+  - nginx-deployment.yaml
