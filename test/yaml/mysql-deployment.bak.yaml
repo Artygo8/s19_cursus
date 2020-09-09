@@ -2,37 +2,31 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-service
-  labels:
-    app: wordpress
 spec:
   ports:
     - port: 3306
   selector:
     app: wordpress
     tier: mysql
-  clusterIP: None
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: mysql-pv-volume
-  labels:
-    type: local
 spec:
-  storageClassName: manual
-  capacity:
-    storage: 2Gi
   accessModes:
     - ReadWriteOnce
+  capacity:
+    storage: 2Gi
   hostPath:
-    path: "/data/mysql"
+    path: /data/mysql
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
 spec:
-  storageClassName: ""
   volumeName: mysql-pv-volume
   accessModes:
     - ReadWriteOnce
@@ -44,14 +38,14 @@ apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
   name: mysql
-  # labels:
-  #   app: wordpress
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: wordpress
       tier: mysql
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -72,3 +66,9 @@ spec:
       - name: mysql-pv-volume
         persistentVolumeClaim:
           claimName: mysql-pv-claim
+
+
+
+
+
+#https://martincarstenbach.wordpress.com/2019/06/07/learning-kubernetes-persistent-storage-with-minikube/

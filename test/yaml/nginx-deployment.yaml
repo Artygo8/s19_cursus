@@ -11,8 +11,9 @@ spec:
     name: https
   - port: 80
     name: http
-  - name: ssh
-    port: 22
+  - port: 22
+    name: ssh
+  loadBalancerIP: 192.168.64.232
 ---
 apiVersion: apps/v1
 kind: Deployment

@@ -1,21 +1,23 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-service
-  labels:
-    app: wordpress
+  name: wordpress
 spec:
   ports:
-    - port: 3306
+    - port: 5050
+      targetPort: 80
+      protocol: TCP
+      name: http
   selector:
     app: wordpress
-    tier: mysql
-  clusterIP: None
+    tier: frontend
+  type: LoadBalancer
+  loadBalancerIP: 192.168.64.233
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv-volume
+  name: wp-pv-volume
   labels:
     type: local
 spec:
@@ -25,15 +27,16 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/data/mysql"
+    path: "/data/wp"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-pv-claim
+  name: wp-pv-claim
+  labels:
+    app: wordpress
 spec:
   storageClassName: ""
-  volumeName: mysql-pv-volume
   accessModes:
     - ReadWriteOnce
   resources:
@@ -43,32 +46,32 @@ spec:
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: mysql
-  # labels:
-  #   app: wordpress
+  name: wordpress
+  labels:
+    app: wordpress
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: wordpress
-      tier: mysql
+      tier: frontend
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: wordpress
-        tier: mysql
+        tier: frontend
     spec:
-      restartPolicy: Always
       containers:
-      - image: mysql:agossuin
+      - image: wordpress:agossuin
         imagePullPolicy: Never
-        name: mysql
+        name: wordpress
         ports:
-        - containerPort: 3306
+        - containerPort: 5050
         volumeMounts:
-        - mountPath: "/var/lib/mysql"
-          name: mysql-pv-volume
+        - mountPath: "/var/www/localhost"
+          name: wp-pv-volume
       volumes:
-      - name: mysql-pv-volume
+      - name: wp-pv-volume
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: wp-pv-claim

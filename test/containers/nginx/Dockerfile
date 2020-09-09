@@ -7,8 +7,8 @@ ARG SSH_PASSWORD
 RUN apk update && apk add nginx openssl openssh openrc
 
 # create a new user
-RUN adduser -D -g '' $SSH_USER
-RUN echo "$SSH_USER:$SSH_PASSWORD" | chpasswd
+RUN adduser -D -g '' $SSH_USER;\
+    echo "$SSH_USER:$SSH_PASSWORD" | chpasswd
 
 # copy
 COPY srcs/default.conf /etc/nginx/conf.d/default.conf
@@ -18,13 +18,13 @@ COPY srcs/localhost/ /var/www/localhost/
 RUN openssl req -new -x509 -nodes -sha256 -days 365 -keyout /etc/ssl/host.key -out /etc/ssl/host.cert -subj '/CN=BE/O=agossuin'
 
 # nginx test config
-RUN mkdir /var/run/nginx/                                                       # To avoid "pid not found"
-RUN nginx -t                                                                    # Test the config
+RUN mkdir /var/run/nginx/;\
+    nginx -t
 
 # openrc for sshd
-RUN openrc
-RUN touch /run/openrc/softlevel
-RUN rc-update add sshd && rc-status
+RUN openrc;\
+    touch /run/openrc/softlevel;\
+    rc-update add sshd && rc-status
 
 EXPOSE 22 80 443
 
