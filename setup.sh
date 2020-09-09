@@ -1,7 +1,7 @@
 #!/bin/bash
 STARTTIME=$(date +%s)
 MAINTAINER="agossuin"
-#
+
 function _timestamp {
     ENDTIME=$(date +%s)
     tput setaf 3
