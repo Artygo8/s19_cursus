@@ -13,3 +13,5 @@
 
 —— huh? ——
 • Un WordPress ouvert sur le port 5050, fonctionnant avec une base de données MySQL. Les deux devront être dans deux containers distincts. Le wordpress devra comporter plusieurs utilisateurs et un administrateur.
+
+# what else?
