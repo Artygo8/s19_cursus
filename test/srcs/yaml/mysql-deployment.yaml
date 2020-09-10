@@ -1,74 +1,73 @@
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
   name: mysql-service
+  labels:
+    app: wordpress
 spec:
   ports:
     - port: 3306
   selector:
     app: wordpress
     tier: mysql
-  type: ClusterIP
+  clusterIP: None
 ---
-apiVersion: v1
 kind: PersistentVolume
+apiVersion: v1
 metadata:
-  name: mysql-pv-volume
+  name: mysql-vol
+  labels:
+    type: local
 spec:
-  accessModes:
-    - ReadWriteOnce
   capacity:
     storage: 2Gi
-  hostPath:
-    path: /data/mysql
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pv-claim
-spec:
-  volumeName: mysql-pv-volume
   accessModes:
     - ReadWriteOnce
+  hostPath:
+    path: "/data/mysql-vol"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: mysql-vol
   resources:
     requests:
       storage: 1Gi
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app: mysql
   name: mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wordpress
-      tier: mysql
-  strategy:
-    type: Recreate
+      app: mysql
   template:
     metadata:
       labels:
-        app: wordpress
-        tier: mysql
+        app: mysql
     spec:
-      restartPolicy: Always
       containers:
       - image: mysql:agossuin
         imagePullPolicy: Never
         name: mysql
-        ports:
-        - containerPort: 3306
         volumeMounts:
         - mountPath: "/var/lib/mysql"
-          name: mysql-pv-volume
+          name: mysql-vol
+        ports:
+        - containerPort: 3306
+        # command: ["/bin/sh"]
+        # args: ["-c", "mysql_install_db; /usr/bin/mysqld --bootstrap --verbose=0 < /tmp/query.sql"]
       volumes:
-      - name: mysql-pv-volume
+      - name: mysql-vol
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
-
-
-
-
-
-#https://martincarstenbach.wordpress.com/2019/06/07/learning-kubernetes-persistent-storage-with-minikube/
+          claimName: mysql-pvc
+      restartPolicy: Always
