@@ -10,6 +10,8 @@
 containers=("nginx" "mysql" "wordpress" "phpmyadmin" "ftps")
 minikube_config="--cpus=2 --disk-size 9000 --addons dashboard --addons metallb"
 
+minikube=${minikube:-minikube}
+
 MYSQL_ROOT_PASSWORD="password"
 WP_USER="john"
 WP_PASSWORD="snow"
@@ -50,14 +52,18 @@ function _docker_build_containers {
     done
 }
 
+function _clean_up {
+    rm -rf minikube/
+}
+
 function _main {
 
     _TIMESTAMP "Minikube restart"
-    minikube delete --all
-    _SAFE minikube start $minikube_config
+    $minikube delete --all
+    _SAFE $minikube start $minikube_config
 
     _TIMESTAMP "Docker containers"
-    eval $(minikube docker-env)
+    eval $($minikube docker-env)
     _docker_build_containers
 
     _TIMESTAMP "Kubectl apply"
@@ -66,6 +72,8 @@ function _main {
     _TIMESTAMP "Waiting 15s for the pods and services..."
     sleep 10
     kubectl get all
+
+    _clean_up
 }
 
 #      _             _
@@ -76,4 +84,4 @@ function _main {
 #
 
 _main
-# minikube service wordpress
+# $minikube service wordpress
