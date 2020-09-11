@@ -59,9 +59,9 @@ spec:
       - image: mysql:agossuin
         imagePullPolicy: Never
         name: mysql
-        volumeMounts:
-        - mountPath: "/var/lib/mysql"
-          name: mysql-vol
+        # volumeMounts:
+        # - mountPath: "/var/lib/mysql"
+        #   name: mysql-vol
         ports:
         - containerPort: 3306
         # command: ["/bin/sh"]

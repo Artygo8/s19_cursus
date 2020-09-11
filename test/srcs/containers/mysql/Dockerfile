@@ -10,7 +10,6 @@ RUN mkdir -p /run/mysqld && touch /run/mysqld/mysqld.sock;\
     chown -R root:root /var/lib/mysql;\
     chown -R root:root /var/lib/mysql;
 
-
 COPY srcs/query.sql /tmp/query.sql
 COPY srcs/my.cnf /etc/mysql/my.cnf
 COPY srcs/entrypoint.sh /entrypoint.sh
@@ -22,8 +21,10 @@ RUN sed -i -e "s/MYSQL_ROOT_PASSWORD/$MYSQL_ROOT_PASSWORD/" /tmp/query.sql;\
     sed -i -e "s/WP_PASSWORD/$WP_PASSWORD/" /tmp/query.sql;\
     sed -i -e "s/WP_USER/$WP_USER/" /tmp/query.sql
 
+RUN cat /tmp/query.sql 1>&2
+
 EXPOSE 3306
 
 ENTRYPOINT [ "sh" , "/entrypoint.sh" ]
 
-CMD ["/usr/bin/mysqld"]
+CMD [ "mysqld" ]

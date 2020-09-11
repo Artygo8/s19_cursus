@@ -9,5 +9,6 @@ data:
     - name: default
       protocol: layer2
       addresses:
-      - 192.168.64.232-192.168.64.255
+        - 192.168.99.100-192.168.99.118
+# - 192.168.64.232-192.168.64.255 MACOS
 # for the adresses, take around `kubectl get nodes -o wide`
