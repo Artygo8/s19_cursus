@@ -2,13 +2,19 @@
 
 int test_write(void)
 {
+	ssize_t res;
+
 	printf("\n--- test write VS ft_write ---\n\n");
 	printf("write :\n");
-	printf("\nvalue = %zd\n", write(1, "Hello World!", 12));
-	printf("\nvalue = %zd\n", write(1, "Hello World!", 5));
+	res = write(1, "Hello World!", 12);
+	printf("\nvalue = %zd\n", res);
+	write(1, "Hello World!", 5);
+	printf("\nvalue = %zd\n", res);
 	printf("ft_write :\n");
-	printf("\nvalue = %zd\n", ft_write(1, "Hello World!", 12));
-	printf("\nvalue = %zd\n", ft_write(1, "Hello World!", 5));
+	res = ft_write(1, "Hello World!", 12);
+	printf("\nvalue = %zd\n", res);
+	res = ft_write(1, "Hello World!", 5);
+	printf("\nvalue = %zd\n", res);
 	return (1);
 }
 

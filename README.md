@@ -9,3 +9,7 @@ Small asm library made for nasm macho64. These functions are supposed to work li
 - [x] ft_strcmp.s
 - [x] ft_strdup.s
 - [x] ft_putstr.s
+
+## Useful links
+
+[https://filippo.io/linux-syscall-table/](https://filippo.io/linux-syscall-table/)
