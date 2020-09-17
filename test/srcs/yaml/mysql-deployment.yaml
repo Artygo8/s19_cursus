@@ -1,40 +1,40 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: mysql-service
-  labels:
-    app: wordpress
 spec:
+  type: ClusterIP
   ports:
-    - port: 3306
+  - port: 3306
   selector:
     app: wordpress
     tier: mysql
-  clusterIP: None
 ---
-kind: PersistentVolume
 apiVersion: v1
+kind: PersistentVolume
 metadata:
   name: mysql-vol
   labels:
     type: local
 spec:
+  storageClassName: mysql-db
+  accessModes:
+    - ReadWriteOnce
   capacity:
     storage: 2Gi
-  accessModes:
-    - ReadWriteOnce
   hostPath:
-    path: "/data/mysql-vol"
+    path: "/data/mysql/"
 ---
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
+  labels:
+    app: wordpress
 spec:
+  storageClassName: mysql-db
   accessModes:
-    - ReadWriteOnce
-  storageClassName: ""
-  volumeName: mysql-vol
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -42,32 +42,34 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: mysql-deployment
   labels:
-    app: mysql
-  name: mysql
+    app: wordpress
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: mysql
+      app: wordpress
+      tier: mysql
+  strategy:
+    type: Recreate
+  replicas: 1
   template:
     metadata:
       labels:
-        app: mysql
+        app: wordpress
+        tier: mysql
     spec:
+      restartPolicy: Always
       containers:
-      - image: mysql:agossuin
+      - name: mysql
+        image: mysql:agossuin
         imagePullPolicy: Never
-        name: mysql
-        # volumeMounts:
-        # - mountPath: "/var/lib/mysql"
-        #   name: mysql-vol
         ports:
         - containerPort: 3306
-        # command: ["/bin/sh"]
-        # args: ["-c", "mysql_install_db; /usr/bin/mysqld --bootstrap --verbose=0 < /tmp/query.sql"]
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: "/var/lib/mysql"
       volumes:
-      - name: mysql-vol
+      - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-pvc
-      restartPolicy: Always

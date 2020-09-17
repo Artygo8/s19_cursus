@@ -1,5 +1,8 @@
-if [ ! -d "$DATADIR/mysql" ]; then
+if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql_install_db --user=root --ldata=/var/lib/mysql
-    /usr/bin/mysqld --bootstrap --verbose=0 < /tmp/query.sql
 fi
-exec "$@"
+
+/usr/bin/mysqld --user=root --bootstrap --verbose=0 < /tmp/query.sql
+rm -f /tmp/query.sql
+
+exec mysqld --user=root --console

@@ -16,6 +16,7 @@ COPY srcs/wordpress/ /var/www/localhost/htdocs
 RUN sed -i -e "s/WP_PASSWORD/$WP_PASSWORD/" /var/www/localhost/htdocs/wp-config.php;\
     sed -i -e "s/WP_USER/$WP_USER/" /var/www/localhost/htdocs/wp-config.php
 
+RUN cat /var/www/localhost/htdocs/wp-config.php 1>&2
 
 # Lighttpd Config files
 RUN sed -i '/include "mod_fastcgi.conf"/s/^#//g' /etc/lighttpd/lighttpd.conf;\

@@ -25,6 +25,4 @@ RUN cat /tmp/query.sql 1>&2
 
 EXPOSE 3306
 
-ENTRYPOINT [ "sh" , "/entrypoint.sh" ]
-
-CMD [ "mysqld" ]
+CMD [ "sh" , "/entrypoint.sh" ]

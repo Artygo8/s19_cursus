@@ -1,0 +1,25 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "plugin": "gel",
+  "version": "0.6.0",
+  "files": {
+    "README.md": "84ddf7143f83dec00d70cb19f64df9dd34ddbadedf05b8c243ef0f512ca46de5",
+    "gel_linux_amd64": "02b7014394c07b3499f5ed3871cf1817a4bf9bbfcfa24bdb86332d8c22994d27",
+    "plugin.json": "54a02ebed34d2e8f20f6588cef2b810d01aefa04be8fae74998021ca89216286"
+  },
+  "time": 1598345285321,
+  "keyId": "7e4d0c6a708866e7"
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.1
+Comment: https://openpgpjs.org
+
+wqEEARMKAAYFAl9E0EUACgkQfk0ManCIZudthAIJARKEx1CRq8FFdBrK9N9k
+/68vJaXqCqt0PSrafJFlonwAkaEl0mAui4O/1nKrv546IJleFv+BPDlpA/jD
+Kf0sgl8jAgQNlbKfwUEe1V9O5TUR6rsoLc7C17DxW/hn8EMGjL1sgNTRouQM
+wwTCS+NBl3hYHTWhrYRpovKBUtHL3PFWFdjNOw==
+=dFys
+-----END PGP SIGNATURE-----
