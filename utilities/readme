@@ -1,0 +1,49 @@
+Kubernetes web dashboard
+
+Ingress Controller which manages the external access of your services. The
+Ingress Controller will redirect to your Nginx container.
+
+Nginx server listening on ports 80 and 443.
+FTPS server listening on port 21.
+
+WordPress website listening on port 5050, which will work with a MySQL
+database. Both services have to run in separate containers. The WordPress website
+will have several users and an administrator.
+
+Phpmyadmin, listening on port 5000 and linked with the MySQL database.
+
+Grafana platform, listening on port 3000, linked with an influxDB database.
+Grafana will be monitoring all your containers. You must create one dashboard
+per service. InfluxDB and grafana will be in two distinct containers.
+
+In case of a crash or stop of one of the two database containers, you will have to
+make sure the data persist.
+
+You must be able to access the Nginx container by logging into SSH.
+
+All your containers must restart in case of a crash or stop.
+
+
+The project consists of setting up an infrastructure of different services. To do this, you
+must use Kubernetes. You will need to set up a multi-service cluster.
+Each service will have to run in a dedicated container.
+Each container must bear the same name as the service concerned and the containers
+have to be build using Alpine Linux.
+
+# commands
+
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=192.168.0.128
+(ifconfig to get my adress --> 192.168.0.128)
+
+sudo apt-get update && sudo apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+
+
+
+docker system prune -a

@@ -1,6 +1,0 @@
-USE mysql;
-FLUSH PRIVILEGES;
-GRANT ALL PRIVILEGES ON . TO 'root'@'%' IDENTIFIED BY 'password';
-CREATE DATABASE wordpress;
-GRANT ALL PRIVILEGES ON wordpress.* TO 'wp-user'@'%' IDENTIFIED BY 'wp-password';
-FLUSH PRIVILEGES;

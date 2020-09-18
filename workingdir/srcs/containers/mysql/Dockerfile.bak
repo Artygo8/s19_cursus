@@ -1,0 +1,23 @@
+FROM alpine:3.12
+
+ARG MYSQL_ROOT_PASSWORD="default"
+ARG WP_USER="default"
+ARG WP_PASSWORD="default"
+
+RUN apk update && apk upgrade && apk add --update mysql mysql-client
+
+RUN mkdir -p /run/mysqld && touch /run/mysqld/mysqld.sock;\
+    chown mysql /var/lib/mysql
+
+COPY srcs/query.sql /tmp/query.sql
+COPY srcs/my.cnf /etc/mysql/my.cnf
+
+RUN sed -i -e "s/MYSQL_ROOT_PASSWORD/$MYSQL_ROOT_PASSWORD/" /tmp/query.sql;\
+    sed -i -e "s/WP_PASSWORD/$WP_PASSWORD/" /tmp/query.sql;\
+    sed -i -e "s/WP_USER/$WP_USER/" /tmp/query.sql
+
+VOLUME ["/var/lib/mysql"]
+
+EXPOSE 3306
+
+ENTRYPOINT exec /usr/bin/mysqld

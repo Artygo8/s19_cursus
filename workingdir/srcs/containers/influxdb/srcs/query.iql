@@ -1,0 +1,7 @@
+USE _internal;
+CREATE USER admin WITH PASSWORD 'admin' WITH ALL PRIVILEGES;
+CREATE DATABASE grafana;
+CREATE USER "grafana" WITH PASSWORD 'grafana_password';
+GRANT ALL ON "grafana" TO "grafana_user";
+
+influx -execute 'USE _internal'

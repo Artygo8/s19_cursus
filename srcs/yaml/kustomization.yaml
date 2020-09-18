@@ -1,5 +1,0 @@
-resources:
-  - metallb-configmap.yaml
-  - nginx-deployment.yaml
-  - mysql-deployment.yaml
-  - wordpress-deployment.yaml
