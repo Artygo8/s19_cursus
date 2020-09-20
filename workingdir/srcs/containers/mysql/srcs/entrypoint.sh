@@ -3,6 +3,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 fi
 
 /usr/bin/mysqld --user=root --bootstrap --verbose=0 < /tmp/query.sql
+
 rm -f /tmp/query.sql
 
 exec mysqld --user=root --console

@@ -7,7 +7,9 @@
 #    \_/ \__,_|_|  |_|\__,_|_.__/|_|\___||___/
 #
 
-containers=("nginx" "mysql" "wordpress" "phpmyadmin" "ftps" "grafana" "influxdb")
+# take 3 first numbers around `kubectl get nodes -o wide` ex:(192.168.64.1 for mac)
+loadBalancerBaseIP=192.168.64.1
+containers=("nginx" "wordpress" "phpmyadmin" "ftps" "grafana" "mysql" "influxdb")
 minikube_config="--cpus=2 --disk-size 10000 --addons dashboard --addons metallb"
 binaries="binaries"
 
@@ -22,13 +24,13 @@ SSH_PASSWORD="ssh-password"
 STARTTIME=$(date +%s)
 MAINTAINER="agossuin"
 
-#  _           _        _ _ 
+#  _           _        _ _
 # (_)_ __  ___| |_ __ _| | |
 # | | '_ \/ __| __/ _` | | |
 # | | | | \__ \ || (_| | | |
 # |_|_| |_|___/\__\__,_|_|_|
 #
-function _install_script {
+function _installScript {
     export PATH="$PWD/$binaries:$PATH"
 
     if [[ -z `which minikube` ]]; then
@@ -85,7 +87,17 @@ function _TIMESTAMP {
     tput sgr0
 }
 
-function _docker_build_containers {
+function _changeYamlHtmlIP {
+    sed -i '' -e "s/        -.*/        - ${loadBalancerBaseIP}0-${loadBalancerBaseIP}9/g" srcs/yaml/metallb-configmap.yaml
+    rm -rf srcs/containers/nginx/srcs/localhost/index.html
+    cp srcs/containers/nginx/srcs/localhost/index-template.html srcs/containers/nginx/srcs/localhost/index.html
+    for i in {0..4}; do
+        sed -i '' -e "s/  loadBalancerIP:.*/  loadBalancerIP: $loadBalancerBaseIP$i/g" srcs/yaml/${containers[$i]}-deployment.yaml
+        sed -i '' -e "s/\$${containers[$i]}/$loadBalancerBaseIP$i/g" srcs/containers/nginx/srcs/localhost/index.html
+    done
+}
+
+function _dockerBuildContainers {
     for container in "${containers[@]}"; do
         _TIMESTAMP Building $container:$MAINTAINER
         _SAFE docker build -t $container:$MAINTAINER ./srcs/containers/$container/ \
@@ -93,19 +105,22 @@ function _docker_build_containers {
             --build-arg SSH_USER=$SSH_USER \
             --build-arg MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD \
             --build-arg WP_USER=$WP_USER \
-            --build-arg WP_PASSWORD=$WP_PASSWORD 1>&2
+            --build-arg WP_PASSWORD=$WP_PASSWORD
     done
 }
 
-function _clean_up {
-    echo no clean
+function _cleanUp {
+    _TIMESTAMP no clean
     # rm -rf $binaries/
 }
 
 function _main {
 
+    _TIMESTAMP "Preparing the .yaml files"
+    _changeYamlHtmlIP
+
     _TIMESTAMP "install dependencies"
-    _install_script
+    _installScript
 
     _TIMESTAMP "Minikube restart"
     _SAFE minikube delete --all
@@ -113,7 +128,7 @@ function _main {
 
     _TIMESTAMP "Docker containers"
     eval $(minikube docker-env)
-    _docker_build_containers
+    _dockerBuildContainers
 
     _TIMESTAMP "Kubectl apply"
     _SAFE kubectl apply -k ./srcs/
@@ -122,9 +137,7 @@ function _main {
     sleep 25
     kubectl get all
 
-    docker run --rm influxdb influxd config > influxdb.conf
-
-    _clean_up
+    _cleanUp
 }
 
 #      _             _

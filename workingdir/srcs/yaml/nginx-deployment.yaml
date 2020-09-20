@@ -13,7 +13,7 @@ spec:
     name: http
   - port: 22
     name: ssh
-  loadBalancerIP: 192.168.99.100
+  loadBalancerIP: 192.168.64.10
 ---
 apiVersion: apps/v1
 kind: Deployment
