@@ -7,22 +7,29 @@
 #    \_/ \__,_|_|  |_|\__,_|_.__/|_|\___||___/
 #
 
-# take 3 first numbers around `kubectl get nodes -o wide` ex:(192.168.64.1 for mac)
-loadBalancerBaseIP=192.168.64.1
 containers=("nginx" "wordpress" "phpmyadmin" "ftps" "grafana" "mysql" "influxdb")
+# containers=("grafana" "influxdb")
 minikube_config="--cpus=2 --disk-size 10000 --addons dashboard --addons metallb"
 binaries="binaries"
 
-VERBOSE=1
+VERBOSE=0
 
 MYSQL_ROOT_PASSWORD="password"
 WP_USER="john"
 WP_PASSWORD="snow"
-SSH_USER="ssh-user"
-SSH_PASSWORD="ssh-password"
+SSH_USER="james"
+SSH_PASSWORD="bond"
 
 STARTTIME=$(date +%s)
 MAINTAINER="agossuin"
+
+if [[ `uname` == "Linux" ]]; then
+    loadBalancerBaseIP=192.168.99.13
+    SED_CMD="sed -i -e"
+else
+    loadBalancerBaseIP=192.168.64.1
+    SED_CMD="sed -i '' -e"
+fi
 
 #  _           _        _ _
 # (_)_ __  ___| |_ __ _| | |
@@ -88,12 +95,12 @@ function _TIMESTAMP {
 }
 
 function _changeYamlHtmlIP {
-    sed -i '' -e "s/        -.*/        - ${loadBalancerBaseIP}0-${loadBalancerBaseIP}9/g" srcs/yaml/metallb-configmap.yaml
+    $SED_CMD "s/        -.*/        - ${loadBalancerBaseIP}0-${loadBalancerBaseIP}9/g" srcs/yaml/metallb-configmap.yaml
     rm -rf srcs/containers/nginx/srcs/localhost/index.html
     cp srcs/containers/nginx/srcs/localhost/index-template.html srcs/containers/nginx/srcs/localhost/index.html
     for i in {0..4}; do
-        sed -i '' -e "s/  loadBalancerIP:.*/  loadBalancerIP: $loadBalancerBaseIP$i/g" srcs/yaml/${containers[$i]}-deployment.yaml
-        sed -i '' -e "s/\$${containers[$i]}/$loadBalancerBaseIP$i/g" srcs/containers/nginx/srcs/localhost/index.html
+        $SED_CMD "s/  loadBalancerIP:.*/  loadBalancerIP: $loadBalancerBaseIP$i/g" srcs/yaml/${containers[$i]}-deployment.yaml
+        $SED_CMD "s/\$${containers[$i]}/$loadBalancerBaseIP$i/g" srcs/containers/nginx/srcs/localhost/index.html
     done
 }
 
@@ -134,7 +141,7 @@ function _main {
     _SAFE kubectl apply -k ./srcs/
 
     _TIMESTAMP "Waiting 15s for the pods and services..."
-    sleep 25
+    sleep 10
     kubectl get all
 
     _cleanUp

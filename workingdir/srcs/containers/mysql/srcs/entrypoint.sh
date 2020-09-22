@@ -6,4 +6,6 @@ fi
 
 rm -f /tmp/query.sql
 
+telegraf &
+
 exec mysqld --user=root --console

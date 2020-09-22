@@ -8,10 +8,8 @@ spec:
     app: grafana
   ports:
   - port: 3000
-  loadBalancerIP: 192.168.64.14
-
+  loadBalancerIP: 192.168.99.134
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,12 +33,3 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 3000
-        env:
-        - name: GF_SERVER_HTTP_PORT
-          value: "3000"
-        - name: GF_AUTH_BASIC_ENABLED
-          value: "false"
-        - name: GF_AUTH_ANONYMOUS_ENABLED
-          value: "true"
-        - name: GF_AUTH_ANONYMOUS_ORG_ROLE
-          value: Admin

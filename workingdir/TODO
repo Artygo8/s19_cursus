@@ -29,7 +29,9 @@ https://www.youtube.com/watch?v=xYiYIjlAgHY
 Install minikube and https://metallb.universe.tf/installation/
 
 --- TODO ---
-grafana
+grafana - influxdb
 FTPS NOT WORKING FINE
 
 https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-apiversion-definition-guide.html
+
+https://opensource.com/article/19/2/deploy-influxdb-grafana-kubernetes

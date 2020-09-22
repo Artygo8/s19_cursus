@@ -1,9 +1,5 @@
-secretGenerator:
-- name: mysql
-  literals:
-  - mysql-password=pass
-
 resources:
+  - ./yaml/secrets.yaml
   - ./yaml/metallb-configmap.yaml
   - ./yaml/mysql-deployment.yaml
   - ./yaml/wordpress-deployment.yaml

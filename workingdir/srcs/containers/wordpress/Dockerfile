@@ -3,13 +3,17 @@ FROM alpine:3.11
 ARG WP_USER
 ARG WP_PASSWORD
 
+RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+
 # Packages Lighttpd, php
 RUN apk update && \
     apk upgrade && \
     apk add lighttpd php7-common php7-iconv php7-json php7-gd php7-curl \
     php7-xml php7-mysqli php7-imap php7-cgi fcgi php7-pdo php7-pdo_mysql \
     php7-soap php7-xmlrpc php7-posix php7-mcrypt php7-gettext php7-ldap \
-    php7-ctype php7
+    php7-ctype php7 telegraf@testing
+
+COPY srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
 # WordPress
 COPY srcs/wordpress/ /var/www/localhost/htdocs
@@ -32,4 +36,4 @@ RUN mkdir -p /var/www/localhost/htdocs/stats /var/log/lighttpd /var/lib/lighttpd
 
 EXPOSE 5050
 
-CMD ["lighttpd", "-D", "-f", "/etc/lighttpd/lighttpd.conf"]
+CMD nohup sh -c "telegraf &";lighttpd -D -f /etc/lighttpd/lighttpd.conf
