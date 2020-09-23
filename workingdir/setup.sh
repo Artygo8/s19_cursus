@@ -8,10 +8,11 @@
 #
 
 containers=("nginx" "wordpress" "phpmyadmin" "ftps" "grafana" "mysql" "influxdb")
-minikube_config="--cpus=2 --disk-size 10000 --addons dashboard --addons metallb"
+minikube_config="--cpus 2 --disk-size 10000 --addons dashboard --addons metallb"
 binaries="binaries"
 
-VERBOSE=0
+VERBOSE=1
+REMOVE_BINARIES=0
 
 MYSQL_ROOT_PASSWORD="password"
 WP_USER="john"
@@ -39,6 +40,9 @@ fi
 function _installScript {
     export PATH="$PWD/$binaries:$PATH"
 
+    if ([ -z `which minikube` ] || [ -z `which docker` ] || [ -z `which kubectl` ]) && [ `uname` != "Linux" ]; then
+        echo "please install minikube, docker and linux with brew"
+    fi
     if [[ -z `which minikube` ]]; then
         mkdir -p ./$binaries
         curl -sLO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -89,7 +93,7 @@ function _TIMESTAMP {
     tput setaf 3
     echo
     ENDTIME=$(date +%s)
-    echo "[$(($ENDTIME - $STARTTIME))s] $@"
+    echo "[$(( (($ENDTIME - $STARTTIME)) / 60 ))m$(( (($ENDTIME - $STARTTIME)) %60 ))s] $@"
     tput sgr0
 }
 
@@ -116,8 +120,12 @@ function _dockerBuildContainers {
 }
 
 function _cleanUp {
-    _TIMESTAMP no clean
-    # rm -rf $binaries/
+    if [[ $REMOVE_BINARIES -eq 0 ]]; then
+        _TIMESTAMP "no clean"
+    else
+        _TIMESTAMP "clean"
+        rm -rf $binaries/
+    fi
 }
 
 function _main {
@@ -137,7 +145,7 @@ function _main {
     _dockerBuildContainers
 
     _TIMESTAMP "Kubectl apply"
-    _SAFE kubectl apply -k ./srcs/kustomization.yaml
+    _SAFE kubectl apply -k ./srcs/
 
     _TIMESTAMP "Waiting 15s for the pods and services..."
     sleep 10
