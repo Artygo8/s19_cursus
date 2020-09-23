@@ -8,7 +8,6 @@
 #
 
 containers=("nginx" "wordpress" "phpmyadmin" "ftps" "grafana" "mysql" "influxdb")
-# containers=("grafana" "influxdb")
 minikube_config="--cpus=2 --disk-size 10000 --addons dashboard --addons metallb"
 binaries="binaries"
 
@@ -138,7 +137,7 @@ function _main {
     _dockerBuildContainers
 
     _TIMESTAMP "Kubectl apply"
-    _SAFE kubectl apply -k ./srcs/
+    _SAFE kubectl apply -k ./srcs/kustomization.yaml
 
     _TIMESTAMP "Waiting 15s for the pods and services..."
     sleep 10
@@ -155,4 +154,3 @@ function _main {
 #
 
 _main
-# $minikube service wordpress
