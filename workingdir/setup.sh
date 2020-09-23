@@ -21,13 +21,13 @@ SSH_USER="james"
 SSH_PASS="bond"
 FTP_USER="john"
 FTP_PASS="rambo"
-# for grafana, change in secrets
+# for grafana, change in secrets.yaml
 
 STARTTIME=$(date +%s)
 MAINTAINER="agossuin"
 
 if [[ `uname` == "Linux" ]]; then
-    if [[ `uname` | grep "VirtualBox" ]]; then
+    if [[ `uname -a | grep "VirtualBox"` ]]; then
         loadBalancerBaseIP=172.17.0.1
     else
         loadBalancerBaseIP=192.168.99.13
@@ -187,7 +187,7 @@ function _main {
     
     _TIMESTAMP "Waiting for the services to be ready..."
     _waitServicesReady
-    kubectl get services
+    _SAFE kubectl get services
 
     _TIMESTAMP "Sending wordpress datas to mysql"
     _SAFE kubectl exec -i `kubectl get pods | grep -o "\S*mysql\S*"` -- mysql wordpress -u root < ./srcs/containers/mysql/srcs/wordpress.sql

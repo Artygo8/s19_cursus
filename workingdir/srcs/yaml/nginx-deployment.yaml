@@ -36,6 +36,3 @@ spec:
         - containerPort: 22
         - containerPort: 80
         - containerPort: 443
-        envFrom:
-          - secretRef:
-              name: nginx-secrets
