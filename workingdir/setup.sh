@@ -11,20 +11,27 @@ containers=("nginx" "wordpress" "phpmyadmin" "ftps" "grafana" "mysql" "influxdb"
 minikube_config="--cpus 2 --disk-size 10000 --addons dashboard --addons metallb"
 binaries="binaries"
 
-VERBOSE=1
+LOGS_UPDATES=10
+LOGS_INTERVAL=5
+VERBOSE=0
 REMOVE_BINARIES=0
 
 MYSQL_ROOT_PASSWORD="password"
-WP_USER="john"
-WP_PASSWORD="snow"
 SSH_USER="james"
-SSH_PASSWORD="bond"
+SSH_PASS="bond"
+FTP_USER="john"
+FTP_PASS="rambo"
+# for grafana, change in secrets
 
 STARTTIME=$(date +%s)
 MAINTAINER="agossuin"
 
 if [[ `uname` == "Linux" ]]; then
-    loadBalancerBaseIP=192.168.99.13
+    if [[ `uname` | grep "VirtualBox" ]]; then
+        loadBalancerBaseIP=172.17.0.1
+    else
+        loadBalancerBaseIP=192.168.99.13
+    fi
     SED_CMD="sed -i -e"
 else
     loadBalancerBaseIP=192.168.64.1
@@ -42,6 +49,9 @@ function _installScript {
 
     if ([ -z `which minikube` ] || [ -z `which docker` ] || [ -z `which kubectl` ]) && [ `uname` != "Linux" ]; then
         echo "please install minikube, docker and linux with brew"
+    fi
+    if [ `uname` != "Linux" ]; then
+        return
     fi
     if [[ -z `which minikube` ]]; then
         mkdir -p ./$binaries
@@ -97,13 +107,16 @@ function _TIMESTAMP {
     tput sgr0
 }
 
-function _changeYamlHtmlIP {
+function _changeFilesIP {
     $SED_CMD "s/        -.*/        - ${loadBalancerBaseIP}0-${loadBalancerBaseIP}9/g" srcs/yaml/metallb-configmap.yaml
     rm -rf srcs/containers/nginx/srcs/localhost/index.html
     cp srcs/containers/nginx/srcs/localhost/index-template.html srcs/containers/nginx/srcs/localhost/index.html
+    rm -rf srcs/containers/mysql/srcs/wordpress.sql
+    cp srcs/containers/mysql/srcs/wordpress-template.sql srcs/containers/mysql/srcs/wordpress.sql
     for i in {0..4}; do
         $SED_CMD "s/  loadBalancerIP:.*/  loadBalancerIP: $loadBalancerBaseIP$i/g" srcs/yaml/${containers[$i]}-deployment.yaml
         $SED_CMD "s/\$${containers[$i]}/$loadBalancerBaseIP$i/g" srcs/containers/nginx/srcs/localhost/index.html
+        $SED_CMD "s/\$${containers[$i]}/$loadBalancerBaseIP$i/g" srcs/containers/mysql/srcs/wordpress.sql
     done
 }
 
@@ -113,10 +126,35 @@ function _dockerBuildContainers {
         _SAFE docker build -t $container:$MAINTAINER ./srcs/containers/$container/ \
             --build-arg SSH_PASSWORD=$SSH_PASSWORD \
             --build-arg SSH_USER=$SSH_USER \
-            --build-arg MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD \
-            --build-arg WP_USER=$WP_USER \
-            --build-arg WP_PASSWORD=$WP_PASSWORD
+            --build-arg MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
     done
+}
+
+function _waitServicesReady {
+        for container in "${containers[@]}"; do
+        while true; do
+            kubectl get pods | grep "$container.*1/1" > /dev/null && break
+            sleep 1
+        done
+    done
+    while true; do
+        kubectl logs `kubectl get pods | grep -o "\S*mysql\S*"` | grep "3306" > /dev/null && break
+        sleep 1
+    done
+}
+
+function _getLogs {
+    echo
+    echo -n "updating $LOGS_UPDATES logs every ${LOGS_INTERVAL}s"
+    for ((i = 0 ; i < $LOGS_UPDATES ; i++)); do
+        echo -n "."
+        mkdir -p ./logs
+        for container in "${containers[@]}"; do
+            kubectl logs `kubectl get pods | grep -o "\S*$container\S*"` > ./logs/$container.log
+        done
+        sleep $LOGS_INTERVAL;
+    done
+    echo
 }
 
 function _cleanUp {
@@ -130,10 +168,10 @@ function _cleanUp {
 
 function _main {
 
-    _TIMESTAMP "Preparing the .yaml files"
-    _changeYamlHtmlIP
+    _TIMESTAMP "Preparing the .yaml files + index.html + wordpress.sql"
+    _changeFilesIP
 
-    _TIMESTAMP "install dependencies"
+    _TIMESTAMP "install dependencies if necessary"
     _installScript
 
     _TIMESTAMP "Minikube restart"
@@ -146,11 +184,15 @@ function _main {
 
     _TIMESTAMP "Kubectl apply"
     _SAFE kubectl apply -k ./srcs/
+    
+    _TIMESTAMP "Waiting for the services to be ready..."
+    _waitServicesReady
+    kubectl get services
 
-    _TIMESTAMP "Waiting 15s for the pods and services..."
-    sleep 10
-    kubectl get all
+    _TIMESTAMP "Sending wordpress datas to mysql"
+    _SAFE kubectl exec -i `kubectl get pods | grep -o "\S*mysql\S*"` -- mysql wordpress -u root < ./srcs/containers/mysql/srcs/wordpress.sql
 
+    _getLogs
     _cleanUp
 }
 

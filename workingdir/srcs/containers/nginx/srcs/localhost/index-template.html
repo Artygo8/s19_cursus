@@ -30,7 +30,10 @@
                                 <a href='http://$nginx:80'>http://$nginx:80</a>
                             </p>
                             <p>
-                                <code>ssh ssh-user@$nginx -p 22</code>
+                                <code>ssh ssh-user@$nginx -p 22</code><br>
+                            </p>
+                            <p>
+                                    <em>default is james:bond</em>
                             </p>
                         </li>
                         <hr>
@@ -40,7 +43,10 @@
                                 <strong>WordPress</strong>
                             </p>
                             <p>
-                                <a href='http://$wordpress:5050'>http://$wordpress:5050</a>
+                                <a href='http://$wordpress:5050'>http://$wordpress:5050</a><br>
+                            </p>
+                            <p>
+                                <em>admin:admin, bdmin:bdmin, ... , edmin:edmin</em>
                             </p>
                         </li>
                         <hr>
@@ -50,7 +56,10 @@
                                 <strong>PhpMyAdmin</strong>
                             </p>
                             <p>
-                                <a href='http://$phpmyadmin:5000'>http://$phpmyadmin:5000</a>
+                                <a href='http://$phpmyadmin:5000'>http://$phpmyadmin:5000</a><br>
+                            </p>
+                            <p>
+                                <em>default is root:password</em>
                             </p>
                         </li>
                         <hr>
@@ -60,7 +69,13 @@
                                 <strong>FTPS</strong>
                             </p>
                             <p>
-                                <a href='ftp://$ftps:21'>ftp://$ftps:21</a>
+                                <a href='ftp://$ftps:21'>ftp://$ftps:21</a><br>
+                            </p>
+                            <p>
+                                <code>nc -zv $ftps 21</code><br>
+                            </p>
+                            <p>
+                                <code>ftp $ftps 21</code>
                             </p>
                         </li>
                         <hr>
@@ -72,8 +87,10 @@
                             <p>
                                 <a href='http://$grafana:3000'>http://$grafana:3000</a>
                             </p>
+                            <p>
+                                <em>default is admin:kraken</em>
+                            </p>
                         </li>
-                        <hr>
 
                     </ul>
                 </div>

@@ -1,8 +1,6 @@
 FROM alpine:3.12
 
 ARG MYSQL_ROOT_PASSWORD="default"
-ARG WP_USER="default"
-ARG WP_PASSWORD="default"
 
 RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 

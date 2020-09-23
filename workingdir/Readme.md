@@ -17,3 +17,6 @@ https://octoperf.com/blog/2019/09/19/kraken-kubernetes-influxdb-grafana-telegraf
 
 ../../../binaries/kubectl create configmap influxdb-config --from-file=influxdb-datasource.yml
 ../../../binaries/kubectl get configmap influxdb-config --export -o yaml >> influxdb-datasource.yaml
+
+
+https://www.opensourceforu.com/2015/03/set-up-an-ftps-server-in-linux/

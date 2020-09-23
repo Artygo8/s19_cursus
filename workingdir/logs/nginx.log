@@ -1,0 +1,25 @@
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/blkio/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/cpu/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/cpu,cpuacct/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/cpuacct/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/cpuset/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/devices/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/freezer/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/hugetlb/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/memory/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/net_cls/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/net_cls,net_prio/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/net_prio/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/perf_event/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/pids/tasks: Read-only file system
+/lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/systemd/tasks: Read-only file system
+ssh-keygen: generating new host keys: RSA DSA ECDSA ED25519 
+ * Starting sshd ... [ ok ]
+2020-09-23T22:40:20Z I! Starting Telegraf 1.15.3
+2020-09-23T22:40:20Z I! Using config file: /etc/telegraf/telegraf.conf
+2020-09-23T22:40:20Z I! Loaded inputs: cpu disk diskio swap system kernel mem processes netstat net
+2020-09-23T22:40:20Z I! Loaded aggregators: 
+2020-09-23T22:40:20Z I! Loaded processors: 
+2020-09-23T22:40:20Z I! Loaded outputs: influxdb
+2020-09-23T22:40:20Z I! Tags enabled: 
+2020-09-23T22:40:20Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s

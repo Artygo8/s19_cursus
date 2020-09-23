@@ -1,7 +1,6 @@
 FROM alpine:3.11
 
-ARG WP_USER
-ARG WP_PASSWORD
+ARG MYSQL_ROOT_PASSWORD
 
 RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
@@ -17,8 +16,7 @@ COPY srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
 # WordPress
 COPY srcs/wordpress/ /var/www/localhost/htdocs
-RUN sed -i -e "s/WP_PASSWORD/$WP_PASSWORD/" /var/www/localhost/htdocs/wp-config.php;\
-    sed -i -e "s/WP_USER/$WP_USER/" /var/www/localhost/htdocs/wp-config.php
+RUN sed -i -e "s/MYSQL_ROOT_PASSWORD/$MYSQL_ROOT_PASSWORD/" /var/www/localhost/htdocs/wp-config.php
 
 RUN cat /var/www/localhost/htdocs/wp-config.php 1>&2
 
