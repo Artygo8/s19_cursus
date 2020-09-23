@@ -18,9 +18,9 @@ REMOVE_BINARIES=0
 
 MYSQL_ROOT_PASSWORD="password"
 SSH_USER="james"
-SSH_PASS="bond"
+SSH_PASSWORD="bond"
 FTP_USER="john"
-FTP_PASS="rambo"
+FTP_PASSWORD="rambo"
 # for grafana, change in secrets.yaml
 
 STARTTIME=$(date +%s)
@@ -187,7 +187,7 @@ function _main {
     
     _TIMESTAMP "Waiting for the services to be ready..."
     _waitServicesReady
-    _SAFE kubectl get services
+    kubectl get services
 
     _TIMESTAMP "Sending wordpress datas to mysql"
     _SAFE kubectl exec -i `kubectl get pods | grep -o "\S*mysql\S*"` -- mysql wordpress -u root < ./srcs/containers/mysql/srcs/wordpress.sql
