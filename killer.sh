@@ -1,10 +1,15 @@
 #!/bin/bash
 
+#
+# this script requires 1 arg, the service that you want to kill
+# modify FUNCTION in the "function apply" according to your needs
+#
+
 DEPLOY=$1
 APP=$1
-FUNCTION="kubectl exec deploy/${DEPLOY}-deployment -- pkill $APP"
 
 function apply {
+	FUNCTION="kubectl exec deploy/${DEPLOY}-deployment -- pkill $APP"
 	echo $FUNCTION
 	$FUNCTION
 }
@@ -26,3 +31,7 @@ if [ $APP == "ftps" ]; then
 fi
 
 apply
+
+if [ -e ./nc_test.sh ]; then
+	./nc_test.sh
+fi
