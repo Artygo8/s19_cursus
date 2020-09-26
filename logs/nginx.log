@@ -16,5 +16,11 @@
 /lib/rc/sh/openrc-run.sh: line 100: can't create /sys/fs/cgroup/systemd/tasks: Read-only file system
 ssh-keygen: generating new host keys: RSA DSA ECDSA ED25519 
  * Starting sshd ... [ ok ]
-sh: missing ]
-Terminated
+2020-09-26T15:51:05Z I! Starting Telegraf 1.15.3
+2020-09-26T15:51:05Z I! Using config file: /etc/telegraf/telegraf.conf
+2020-09-26T15:51:05Z I! Loaded inputs: disk diskio kernel mem netstat cpu processes swap system net
+2020-09-26T15:51:05Z I! Loaded aggregators: 
+2020-09-26T15:51:05Z I! Loaded processors: 
+2020-09-26T15:51:05Z I! Loaded outputs: influxdb
+2020-09-26T15:51:05Z I! Tags enabled: 
+2020-09-26T15:51:05Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
