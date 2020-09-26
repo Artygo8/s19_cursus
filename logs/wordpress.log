@@ -1,8 +1,11 @@
-2020-09-26T14:39:22Z I! Starting Telegraf 1.15.3
-2020-09-26T14:39:22Z I! Using config file: /etc/telegraf/telegraf.conf
-2020-09-26T14:39:22Z I! Loaded inputs: disk diskio kernel mem cpu processes swap system netstat net
-2020-09-26T14:39:22Z I! Loaded aggregators: 
-2020-09-26T14:39:22Z I! Loaded processors: 
-2020-09-26T14:39:22Z I! Loaded outputs: influxdb
-2020-09-26T14:39:22Z I! Tags enabled: 
-2020-09-26T14:39:22Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
+2020-09-26T15:39:10Z I! Starting Telegraf 1.15.3
+2020-09-26T15:39:11Z I! Using config file: /etc/telegraf/telegraf.conf
+2020-09-26T15:39:11Z I! Loaded inputs: cpu diskio processes net disk kernel mem swap system netstat
+2020-09-26T15:39:11Z I! Loaded aggregators: 
+2020-09-26T15:39:11Z I! Loaded processors: 
+2020-09-26T15:39:11Z I! Loaded outputs: influxdb
+2020-09-26T15:39:11Z I! Tags enabled: 
+2020-09-26T15:39:11Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
+2020-09-26T15:39:12Z W! [outputs.influxdb] When writing to [http://influxdb:8086]: database "wp" creation failed: Post "http://influxdb:8086/query": dial tcp 10.103.140.137:8086: connect: connection refused
+2020-09-26T15:39:22Z E! [outputs.influxdb] When writing to [http://influxdb:8086]: 404 Not Found: database not found: "wp"
+2020-09-26T15:39:22Z E! [agent] Error writing to outputs.influxdb: could not write any address
