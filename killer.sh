@@ -54,6 +54,9 @@ elif [ $APP == "wp" ] || [ $APP == "wordpress" ]; then
 elif [ $APP == "pma" ] || [ $APP == "phpmyadmin" ]; then
 	APP=$pma_app
 	DEPLOY="phpmyadmin"
+elif [ $APP == "mysql" ] || [ $APP == "mysqld" ]; then
+	APP="mysqld"
+	DEPLOY="mysql"
 fi
 
 if [ -e ./nc_test.sh ]; then
