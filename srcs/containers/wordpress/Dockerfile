@@ -34,4 +34,4 @@ RUN mkdir -p /var/www/localhost/htdocs/stats /var/log/lighttpd /var/lib/lighttpd
 
 EXPOSE 5050
 
-CMD nohup sh -c "telegraf &";lighttpd -D -f /etc/lighttpd/lighttpd.conf
+CMD nohup sh -c "(telegraf; pkill lighttpd) &";lighttpd -D -f /etc/lighttpd/lighttpd.conf

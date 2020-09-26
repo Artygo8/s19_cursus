@@ -14,10 +14,10 @@ COPY srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
 RUN mkdir -p /ftps/$FTP_USER
 
-RUN openssl req -x509 -nodes -days 7300 -newkey rsa:2048 -subj "/CN=BE/O=agossuin" -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
+RUN openssl req -x509 -nodes -days 7300 -newkey rsa:2048 -subj "/CN=BE/O=$FTP_USER" -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
 
 RUN chmod 600 /etc/ssl/private/pure-ftpd.pem
 
 EXPOSE 21 21000
 
-CMD nohup sh -c "telegraf &"; /usr/sbin/pure-ftpd -j -Y 2 -p 21000:21000 -P "$ftps"
+CMD nohup sh -c "(telegraf;pkill pure-ftpd)&"; /usr/sbin/pure-ftpd -j -Y 2 -p 21000:21000 -P "$ftps"

@@ -41,13 +41,11 @@ fi
 
 if [ $APP == "sshd" ]; then
 	DEPLOY="nginx"
-
-elif [ $APP == "influxdb" ]; then
+elif [ ${APP:0:6} == "influx" ]; then
 	APP="influxd"
-
+	DEPLOY="influxdb"
 elif [ $APP == "ftps" ]; then
 	APP=$ftps_app
-
 elif [ $APP == "wp" ] || [ $APP == "wordpress" ]; then
 	APP=$wp_app
 	DEPLOY="wordpress"

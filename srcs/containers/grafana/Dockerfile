@@ -17,7 +17,7 @@ COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
 EXPOSE 3000
 
-CMD nohup sh -c "telegraf &";\
+CMD nohup sh -c "(telegraf;pkill grafana)&";\
   exec grafana-server \
   --homepath="/usr/share/grafana" \
   --config="/etc/grafana.ini" \

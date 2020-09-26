@@ -11,4 +11,6 @@ influx -execute "CREATE USER IF NOT EXISTS \"$INFLUXDB_ADMIN_USER\" WITH PASSWOR
 
 kill "$pid"
 
-exec influxd
+influxd
+
+sleep 60 ; exit 1

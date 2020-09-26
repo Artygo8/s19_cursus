@@ -1,11 +1,8 @@
-2020-09-26T15:51:04Z I! Starting Telegraf 1.15.3
-2020-09-26T15:51:04Z I! Using config file: /etc/telegraf/telegraf.conf
-2020-09-26T15:51:04Z I! Loaded inputs: system net cpu diskio mem processes disk kernel swap netstat
-2020-09-26T15:51:04Z I! Loaded aggregators: 
-2020-09-26T15:51:04Z I! Loaded processors: 
-2020-09-26T15:51:04Z I! Loaded outputs: influxdb
-2020-09-26T15:51:04Z I! Tags enabled: 
-2020-09-26T15:51:04Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
-2020-09-26T15:51:05Z W! [outputs.influxdb] When writing to [http://influxdb:8086]: database "ftps" creation failed: Post "http://influxdb:8086/query": dial tcp 10.105.138.1:8086: connect: connection refused
-2020-09-26T15:51:15Z E! [outputs.influxdb] When writing to [http://influxdb:8086]: 404 Not Found: database not found: "ftps"
-2020-09-26T15:51:15Z E! [agent] Error writing to outputs.influxdb: could not write any address
+2020-09-26T17:07:33Z I! Starting Telegraf 1.15.3
+2020-09-26T17:07:33Z I! Using config file: /etc/telegraf/telegraf.conf
+2020-09-26T17:07:33Z I! Loaded inputs: disk diskio kernel mem swap system net cpu processes netstat
+2020-09-26T17:07:33Z I! Loaded aggregators: 
+2020-09-26T17:07:33Z I! Loaded processors: 
+2020-09-26T17:07:33Z I! Loaded outputs: influxdb
+2020-09-26T17:07:33Z I! Tags enabled: 
+2020-09-26T17:07:33Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
