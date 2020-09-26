@@ -1,11 +1,8 @@
-2020-09-26T17:07:33Z I! Starting Telegraf 1.15.3
-2020-09-26T17:07:33Z I! Using config file: /etc/telegraf/telegraf.conf
-2020-09-26T17:07:33Z I! Loaded inputs: kernel processes swap system cpu diskio mem netstat net disk
-2020-09-26T17:07:33Z I! Loaded aggregators: 
-2020-09-26T17:07:33Z I! Loaded processors: 
-2020-09-26T17:07:33Z I! Loaded outputs: influxdb
-2020-09-26T17:07:33Z I! Tags enabled: 
-2020-09-26T17:07:33Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
-2020-09-26T17:07:38Z W! [outputs.influxdb] When writing to [http://influxdb:8086]: database "wp" creation failed: Post "http://influxdb:8086/query": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
-2020-09-26T17:07:48Z E! [outputs.influxdb] When writing to [http://influxdb:8086]: 404 Not Found: database not found: "wp"
-2020-09-26T17:07:48Z E! [agent] Error writing to outputs.influxdb: could not write any address
+2020-09-26T19:37:20Z I! Starting Telegraf 1.15.3
+2020-09-26T19:37:20Z I! Using config file: /etc/telegraf/telegraf.conf
+2020-09-26T19:37:21Z I! Loaded inputs: diskio swap cpu disk kernel mem processes system netstat net
+2020-09-26T19:37:21Z I! Loaded aggregators: 
+2020-09-26T19:37:21Z I! Loaded processors: 
+2020-09-26T19:37:21Z I! Loaded outputs: influxdb
+2020-09-26T19:37:21Z I! Tags enabled: 
+2020-09-26T19:37:21Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s

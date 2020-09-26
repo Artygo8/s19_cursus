@@ -9,4 +9,6 @@ EXPOSE 8086
 
 VOLUME /var/lib/influxdb
 
-CMD [ "sh", "/init-influxdb.sh" ]
+RUN /init-influxdb.sh
+
+CMD influxd

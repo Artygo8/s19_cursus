@@ -3,14 +3,12 @@
 influxd > logs &
 pid="$!"
 
-while [ -z `cat logs | grep "listening for signals"` ]; do
-	sleep 1
-done
+#while [ -z `cat logs | grep "listening for signals"` ]; do
+#	sleep 1
+#done
 
-influx -execute "CREATE USER IF NOT EXISTS \"$INFLUXDB_ADMIN_USER\" WITH PASSWORD '$INFLUXDB_ADMIN_PASSWORD' WITH ALL PRIVILEGES" &> /dev/null
+sleep 15
 
-kill "$pid"
+influx -execute "CREATE USER \"$INFLUXDB_ADMIN_USER\" IF NOT EXISTS WITH PASSWORD '$INFLUXDB_ADMIN_PASSWORD' WITH ALL PRIVILEGES"
 
-influxd
-
-sleep 60 ; exit 1
+kill $pid

@@ -16,7 +16,7 @@ binaries="binaries"
 
 LOGS_UPDATES=10
 LOGS_INTERVAL=5
-VERBOSE=0
+VERBOSE=1
 REMOVE_BINARIES=0
 
 MYSQL_ROOT_PASSWORD="password"
@@ -91,7 +91,7 @@ function _installScript {
 #   __                  _   _
 #  / _|_   _ _ __   ___| |_(_) ___  _ __  ___
 # | |_| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
-# |  _| |_| | | | | (__| |_| | (_) | | | \__ \
+#|  _| |_| | | | | (__| |_| | (_) | | | \__ \
 # |_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
 #
 
