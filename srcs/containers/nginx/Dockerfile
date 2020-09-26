@@ -16,6 +16,7 @@ RUN adduser -D -g '' $SSH_USER;\
 COPY srcs/default.conf /etc/nginx/conf.d/default.conf
 COPY srcs/localhost/ /var/www/localhost/
 COPY srcs/telegraf.conf /etc/telegraf/telegraf.conf
+COPY srcs/entrypoint.sh /entrypoint.sh
 
 # generate key and cert for ssl
 RUN openssl req -new -x509 -nodes -sha256 -days 365 -keyout /etc/ssl/host.key -out /etc/ssl/host.cert -subj '/CN=BE/O=agossuin'
@@ -24,11 +25,10 @@ RUN openssl req -new -x509 -nodes -sha256 -days 365 -keyout /etc/ssl/host.key -o
 RUN mkdir /var/run/nginx/;\
     nginx -t
 
-# openrc for sshd
 RUN openrc;\
     touch /run/openrc/softlevel;\
-    rc-update add sshd default && rc-status
+    rc-update add sshd && rc-status
 
 EXPOSE 22 80 443
 
-ENTRYPOINT openrc; nohup sh -c "telegraf &"; nginx -g "daemon off;"
+ENTRYPOINT [ "sh", "/entrypoint.sh" ]

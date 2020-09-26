@@ -201,6 +201,7 @@ function _main {
     _TIMESTAMP "Sending wordpress datas to mysql"
     _SAFE kubectl exec -i `kubectl get pods | grep -o "\S*mysql\S*"` -- mysql wordpress -u root < ./srcs/containers/mysql/srcs/wordpress.sql
 
+    _SAFE minikube dashboard 2> /dev/null &
     _getLogs
     _cleanUp
 }
