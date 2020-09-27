@@ -13,56 +13,56 @@ ftps_app="pure-ftpd"
 wp_app="lighttpd"
 pma_app="lighttpd"
 
-HELP="USAGE : ./killer.sh   ftps | grafana | influxdb | mysql | wordpress (wp) | phpmyadmin (pma) | nginx | telegraf | sshd"
+usage="USAGE : ./killer.sh   ftps | grafana | influxdb | mysql | wordpress (wp) | phpmyadmin (pma) | nginx | telegraf | sshd
+
+remove 1 at the time then verify that the pod restarts with kubectl get pods
+
+`kubectl get pods`"
 
 function apply {
-	if [ $APP == "telegraf" ];then	
-		for i in "nginx" "ftps" "grafana" "mysql" "phpmyadmin" "wordpress"; do
-			DEPLOY=$i
-			FUNCTION="kubectl exec deploy/${DEPLOY}-deployment -- pkill $APP"
-			echo $FUNCTION
-			$FUNCTION
-		done
-	else
-		FUNCTION="kubectl exec deploy/${DEPLOY}-deployment -- pkill $APP"
+	tput setaf 3
+	for deployment in ${DEPLOY[@]}; do
+		FUNCTION="kubectl exec deploy/${deployment}-deployment -- pkill $APP"
 		echo $FUNCTION
 		$FUNCTION
-	fi
+	done
+	tput sgr0
 }
 
-if [ $# == 0 ]; then
-	echo $HELP
-	echo
-	echo "remove 1 at the time then verify that the pod restarts with kubectl get pods"
-	echo
-	kubectl get pods
-	exit
-fi
+case $APP in
+	telegraf)
+		DEPLOY=("nginx" "ftps" "wordpress" "phpmyadmin" "mysql" "grafana")
+		;;
+	sshd | nginx)
+		DEPLOY="nginx"
+		;;
+	influx | influxd | influxdb)
+		APP="influxd"
+		DEPLOY="influxdb"
+		;;
+	ftps | ftp | pure-ftpd)
+		APP=$ftps_app
+		DEPLOY="ftps"
+		;;
+	wp | wordpress)
+		APP=$wp_app
+		DEPLOY="wordpress"
+		;;
+	pma | phpmyadmin)
+		APP=$pma_app
+		DEPLOY="phpmyadmin"
+		;;
+	mysql | mysqld)
+		APP="mysqld"
+		DEPLOY="mysql"
+		;;
+	*)
+		echo "Invalid option !"
+		echo "$usage"
+		exit
+		;;	
+esac
 
-if [ $APP == "sshd" ]; then
-	DEPLOY="nginx"
-elif [ ${APP:0:6} == "influx" ]; then
-	APP="influxd"
-	DEPLOY="influxdb"
-elif [ $APP == "ftps" ]; then
-	APP=$ftps_app
-elif [ $APP == "wp" ] || [ $APP == "wordpress" ]; then
-	APP=$wp_app
-	DEPLOY="wordpress"
-elif [ $APP == "pma" ] || [ $APP == "phpmyadmin" ]; then
-	APP=$pma_app
-	DEPLOY="phpmyadmin"
-elif [ $APP == "mysql" ] || [ $APP == "mysqld" ]; then
-	APP="mysqld"
-	DEPLOY="mysql"
-fi
-
-if [ -e ./nc_test.sh ]; then
-	./nc_test.sh
-	tput setaf 3
-	apply
-	tput sgr0
-	./nc_test.sh
-else
-	apply
-fi
+[ -x ./nc_test.sh ] && ./nc_test.sh
+apply
+[ -x ./nc_test.sh ] && ./nc_test.sh

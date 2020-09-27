@@ -1,8 +1,20 @@
 #!/bin/bash
-echo -n nginx 80: && (nc -zv 172.17.0.10 80 2> /dev/null && echo ok!) || echo not connected...
-echo -n nginx 443: && (nc -zv 172.17.0.10 443 2> /dev/null && echo ok!) || echo not connected...
-echo -n nginx 22: && (nc -zv 172.17.0.10 22 2> /dev/null && echo ok!) || echo not connected...
-echo -n wp: && (nc -zv 172.17.0.11 5050 2> /dev/null && echo ok!) || echo not connected...
-echo -n pma: && (nc -zv 172.17.0.12 5000 2> /dev/null && echo ok!) || echo not connected...
-echo -n ftps: && (nc -zv 172.17.0.13 21 2> /dev/null && echo ok!) || echo not connected...
-echo -n grafana: && (nc -zv 172.17.0.14 3000 2> /dev/null && echo ok!) || echo not connected...
+
+baseIP=172.17.0.1
+
+services=("nginx" "wp" "pma" "ftps" "grafana")
+declare -A endIP=( [nginx]=0 [wp]=1 [pma]=2 [ftps]=3 [grafana]=4 )
+declare -A ports=( [nginx]="80 443 22" [wp]=5050 [pma]=5000 [ftps]=21 [grafana]=3000 )
+
+function try_connect {
+	service=$1
+	service_ports=${ports[$service]}
+	for port in $service_ports; do
+		echo -n $service $port: && \
+		(nc -zv ${baseIP}${endIP[$service]} $port 2> /dev/null && echo ok!) || echo not connected...
+	done
+}
+
+for svc in ${services[@]}; do
+	try_connect $svc
+done
