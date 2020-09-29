@@ -1,8 +1,8 @@
-2020-09-28T17:20:11Z I! Starting Telegraf 1.15.3
-2020-09-28T17:20:11Z I! Using config file: /etc/telegraf/telegraf.conf
-2020-09-28T17:20:11Z I! Loaded inputs: mem swap netstat net cpu disk processes system diskio kernel
-2020-09-28T17:20:11Z I! Loaded aggregators: 
-2020-09-28T17:20:11Z I! Loaded processors: 
-2020-09-28T17:20:11Z I! Loaded outputs: influxdb
-2020-09-28T17:20:11Z I! Tags enabled: 
-2020-09-28T17:20:11Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
+2020-09-29T08:30:51Z I! Starting Telegraf 1.15.3
+2020-09-29T08:30:51Z I! Using config file: /etc/telegraf/telegraf.conf
+2020-09-29T08:30:51Z I! Loaded inputs: disk mem swap netstat net cpu diskio kernel processes system
+2020-09-29T08:30:51Z I! Loaded aggregators: 
+2020-09-29T08:30:51Z I! Loaded processors: 
+2020-09-29T08:30:51Z I! Loaded outputs: influxdb
+2020-09-29T08:30:51Z I! Tags enabled: 
+2020-09-29T08:30:51Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s

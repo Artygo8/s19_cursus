@@ -1,64 +1,92 @@
-ts=2020-09-28T17:20:08.917927Z lvl=info msg="InfluxDB starting" log_id=0PXRVtqG000 version=1.8.0 branch=1.8 commit=781490de48
-ts=2020-09-28T17:20:08.917991Z lvl=info msg="Go runtime" log_id=0PXRVtqG000 version=go1.13.10 maxprocs=3
-ts=2020-09-28T17:20:09.089091Z lvl=info msg="Using data dir" log_id=0PXRVtqG000 service=store path=/var/lib/influxdb/data
-ts=2020-09-28T17:20:09.089989Z lvl=info msg="Compaction settings" log_id=0PXRVtqG000 service=store max_concurrent_compactions=1 throughput_bytes_per_second=50331648 throughput_bytes_per_second_burst=50331648
-ts=2020-09-28T17:20:09.090033Z lvl=info msg="Open store (start)" log_id=0PXRVtqG000 service=store trace_id=0PXRVuWW000 op_name=tsdb_open op_event=start
-ts=2020-09-28T17:20:09.090127Z lvl=info msg="Open store (end)" log_id=0PXRVtqG000 service=store trace_id=0PXRVuWW000 op_name=tsdb_open op_event=end op_elapsed=0.094ms
-ts=2020-09-28T17:20:09.090180Z lvl=info msg="Opened service" log_id=0PXRVtqG000 service=subscriber
-ts=2020-09-28T17:20:09.090192Z lvl=info msg="Starting monitor service" log_id=0PXRVtqG000 service=monitor
-ts=2020-09-28T17:20:09.090201Z lvl=info msg="Registered diagnostics client" log_id=0PXRVtqG000 service=monitor name=build
-ts=2020-09-28T17:20:09.090207Z lvl=info msg="Registered diagnostics client" log_id=0PXRVtqG000 service=monitor name=runtime
-ts=2020-09-28T17:20:09.090213Z lvl=info msg="Registered diagnostics client" log_id=0PXRVtqG000 service=monitor name=network
-ts=2020-09-28T17:20:09.090224Z lvl=info msg="Registered diagnostics client" log_id=0PXRVtqG000 service=monitor name=system
-ts=2020-09-28T17:20:09.090248Z lvl=info msg="Starting precreation service" log_id=0PXRVtqG000 service=shard-precreation check_interval=10m advance_period=30m
-ts=2020-09-28T17:20:09.090258Z lvl=info msg="Starting snapshot service" log_id=0PXRVtqG000 service=snapshot
-ts=2020-09-28T17:20:09.090268Z lvl=info msg="Starting continuous query service" log_id=0PXRVtqG000 service=continuous_querier
-ts=2020-09-28T17:20:09.090277Z lvl=info msg="Starting HTTP service" log_id=0PXRVtqG000 service=httpd authentication=false
-ts=2020-09-28T17:20:09.090285Z lvl=info msg="opened HTTP access log" log_id=0PXRVtqG000 service=httpd path=stderr
-ts=2020-09-28T17:20:09.092691Z lvl=info msg="Storing statistics" log_id=0PXRVtqG000 service=monitor db_instance=_internal db_rp=monitor interval=10s
-ts=2020-09-28T17:20:09.171281Z lvl=info msg="Listening on HTTP" log_id=0PXRVtqG000 service=httpd addr=[::]:8086 https=false
-ts=2020-09-28T17:20:09.171844Z lvl=info msg="Starting retention policy enforcement service" log_id=0PXRVtqG000 service=retention check_interval=30m
-ts=2020-09-28T17:20:09.197806Z lvl=info msg="Sending usage statistics to usage.influxdata.com" log_id=0PXRVtqG000
-ts=2020-09-28T17:20:09.216386Z lvl=info msg="Listening for signals" log_id=0PXRVtqG000
-2020-09-28T17:20:09Z I! Starting Telegraf 1.15.3
-2020-09-28T17:20:09Z I! Using config file: /etc/telegraf/telegraf.conf
-2020-09-28T17:20:09Z I! Loaded inputs: netstat cpu disk kernel mem processes diskio swap system net
-2020-09-28T17:20:09Z I! Loaded aggregators: 
-2020-09-28T17:20:09Z I! Loaded processors: 
-2020-09-28T17:20:09Z I! Loaded outputs: influxdb
-2020-09-28T17:20:09Z I! Tags enabled: 
-2020-09-28T17:20:09Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
-ts=2020-09-28T17:20:09.845698Z lvl=info msg="Executing query" log_id=0PXRVtqG000 service=query query="CREATE DATABASE influxdb"
-[httpd] 127.0.0.1 - admin [28/Sep/2020:17:20:09 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" dc648dc5-01ae-11eb-8001-0242ac12000c 23249
-ts=2020-09-28T17:20:11.157290Z lvl=info msg="Executing query" log_id=0PXRVtqG000 service=query query="CREATE DATABASE grafana"
-[httpd] 172.18.0.6 - grafana [28/Sep/2020:17:20:11 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" dd2cc30b-01ae-11eb-8002-0242ac12000c 23772
-ts=2020-09-28T17:20:11.317353Z lvl=info msg="Executing query" log_id=0PXRVtqG000 service=query query="CREATE DATABASE ftps"
-[httpd] 172.18.0.7 - admin [28/Sep/2020:17:20:11 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" dd453576-01ae-11eb-8003-0242ac12000c 17976
-ts=2020-09-28T17:20:11.336507Z lvl=info msg="Executing query" log_id=0PXRVtqG000 service=query query="CREATE DATABASE pma"
-[httpd] 172.18.0.8 - admin [28/Sep/2020:17:20:11 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" dd47c30f-01ae-11eb-8004-0242ac12000c 24888
-ts=2020-09-28T17:20:11.386312Z lvl=info msg="Executing query" log_id=0PXRVtqG000 service=query query="CREATE DATABASE wp"
-[httpd] 172.18.0.10 - admin [28/Sep/2020:17:20:11 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" dd4fb5f8-01ae-11eb-8005-0242ac12000c 17661
-ts=2020-09-28T17:20:11.544351Z lvl=info msg="Executing query" log_id=0PXRVtqG000 service=query query="CREATE DATABASE nginx"
-[httpd] 172.18.0.9 - nginx [28/Sep/2020:17:20:11 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" dd67dd2f-01ae-11eb-8006-0242ac12000c 4074
-ts=2020-09-28T17:20:19.719844Z lvl=info msg="Executing query" log_id=0PXRVtqG000 service=query query="CREATE DATABASE mysql"
-[httpd] 172.18.0.11 - admin [28/Sep/2020:17:20:19 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" e24756b5-01ae-11eb-8007-0242ac12000c 103802
-[httpd] 127.0.0.1 - admin [28/Sep/2020:17:20:19 +0000] "POST /write?db=influxdb HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e25e9dfc-01ae-11eb-8008-0242ac12000c 2099830
-[httpd] 172.18.0.6 - grafana [28/Sep/2020:17:20:21 +0000] "POST /write?db=grafana HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e3284e7f-01ae-11eb-8009-0242ac12000c 937159
-[httpd] 172.18.0.7 - admin [28/Sep/2020:17:20:21 +0000] "POST /write?db=ftps HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e33f9e3e-01ae-11eb-800a-0242ac12000c 827509
-[httpd] 172.18.0.9 - nginx [28/Sep/2020:17:20:21 +0000] "POST /write?db=nginx HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e368aa7a-01ae-11eb-800d-0242ac12000c 612561
-[httpd] 172.18.0.10 - admin [28/Sep/2020:17:20:21 +0000] "POST /write?db=wp HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e348b6d0-01ae-11eb-800c-0242ac12000c 900914
-[httpd] 172.18.0.8 - admin [28/Sep/2020:17:20:21 +0000] "POST /write?db=pma HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e342a78e-01ae-11eb-800b-0242ac12000c 984942
-[httpd] 172.18.0.7 - admin [28/Sep/2020:17:20:31 +0000] "POST /write?db=ftps HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e9359eb7-01ae-11eb-8011-0242ac12000c 1182595
-[httpd] 172.18.0.9 - nginx [28/Sep/2020:17:20:31 +0000] "POST /write?db=nginx HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e954f58c-01ae-11eb-8014-0242ac12000c 1044014
-[httpd] 172.18.0.8 - admin [28/Sep/2020:17:20:31 +0000] "POST /write?db=pma HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e9384c70-01ae-11eb-8012-0242ac12000c 1231953
-[httpd] 172.18.0.10 - admin [28/Sep/2020:17:20:31 +0000] "POST /write?db=wp HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e93ee4d0-01ae-11eb-8013-0242ac12000c 1189015
-[httpd] 172.18.0.6 - grafana [28/Sep/2020:17:20:31 +0000] "POST /write?db=grafana HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e91cba6f-01ae-11eb-8010-0242ac12000c 1412530
-[httpd] 127.0.0.1 - admin [28/Sep/2020:17:20:29 +0000] "POST /write?db=influxdb HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e85481fa-01ae-11eb-800f-0242ac12000c 2725726
-[httpd] 172.18.0.11 - admin [28/Sep/2020:17:20:29 +0000] "POST /write?db=mysql HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" e84d9102-01ae-11eb-800e-0242ac12000c 2771482
-[httpd] 127.0.0.1 - admin [28/Sep/2020:17:20:39 +0000] "POST /write?db=influxdb HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" ee4a7238-01ae-11eb-8016-0242ac12000c 1861132
-[httpd] 172.18.0.6 - grafana [28/Sep/2020:17:20:41 +0000] "POST /write?db=grafana HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" ef12ccbc-01ae-11eb-8017-0242ac12000c 740997
-[httpd] 172.18.0.7 - admin [28/Sep/2020:17:20:41 +0000] "POST /write?db=ftps HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" ef2b683e-01ae-11eb-8018-0242ac12000c 581310
-[httpd] 172.18.0.10 - admin [28/Sep/2020:17:20:41 +0000] "POST /write?db=wp HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" ef34e0cd-01ae-11eb-801a-0242ac12000c 529885
-[httpd] 172.18.0.8 - admin [28/Sep/2020:17:20:41 +0000] "POST /write?db=pma HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" ef2e1d19-01ae-11eb-8019-0242ac12000c 574607
-[httpd] 172.18.0.9 - nginx [28/Sep/2020:17:20:41 +0000] "POST /write?db=nginx HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" ef4aeb17-01ae-11eb-801b-0242ac12000c 387073
-[httpd] 172.18.0.11 - admin [28/Sep/2020:17:20:39 +0000] "POST /write?db=mysql HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" ee44945e-01ae-11eb-8015-0242ac12000c 2536902
+ts=2020-09-29T08:30:49.215306Z lvl=info msg="InfluxDB starting" log_id=0PYFbsVl000 version=1.8.0 branch=1.8 commit=781490de48
+ts=2020-09-29T08:30:49.215390Z lvl=info msg="Go runtime" log_id=0PYFbsVl000 version=go1.13.10 maxprocs=3
+ts=2020-09-29T08:30:49.333203Z lvl=info msg="Using data dir" log_id=0PYFbsVl000 service=store path=/var/lib/influxdb/data
+ts=2020-09-29T08:30:49.334274Z lvl=info msg="Compaction settings" log_id=0PYFbsVl000 service=store max_concurrent_compactions=1 throughput_bytes_per_second=50331648 throughput_bytes_per_second_burst=50331648
+ts=2020-09-29T08:30:49.334309Z lvl=info msg="Open store (start)" log_id=0PYFbsVl000 service=store trace_id=0PYFbsyW000 op_name=tsdb_open op_event=start
+ts=2020-09-29T08:30:49.334456Z lvl=info msg="Open store (end)" log_id=0PYFbsVl000 service=store trace_id=0PYFbsyW000 op_name=tsdb_open op_event=end op_elapsed=0.149ms
+ts=2020-09-29T08:30:49.334513Z lvl=info msg="Opened service" log_id=0PYFbsVl000 service=subscriber
+ts=2020-09-29T08:30:49.334526Z lvl=info msg="Starting monitor service" log_id=0PYFbsVl000 service=monitor
+ts=2020-09-29T08:30:49.334537Z lvl=info msg="Registered diagnostics client" log_id=0PYFbsVl000 service=monitor name=build
+ts=2020-09-29T08:30:49.334546Z lvl=info msg="Registered diagnostics client" log_id=0PYFbsVl000 service=monitor name=runtime
+ts=2020-09-29T08:30:49.334554Z lvl=info msg="Registered diagnostics client" log_id=0PYFbsVl000 service=monitor name=network
+ts=2020-09-29T08:30:49.334572Z lvl=info msg="Registered diagnostics client" log_id=0PYFbsVl000 service=monitor name=system
+ts=2020-09-29T08:30:49.334594Z lvl=info msg="Starting precreation service" log_id=0PYFbsVl000 service=shard-precreation check_interval=10m advance_period=30m
+ts=2020-09-29T08:30:49.338338Z lvl=info msg="Starting snapshot service" log_id=0PYFbsVl000 service=snapshot
+ts=2020-09-29T08:30:49.338395Z lvl=info msg="Starting continuous query service" log_id=0PYFbsVl000 service=continuous_querier
+ts=2020-09-29T08:30:49.338411Z lvl=info msg="Starting HTTP service" log_id=0PYFbsVl000 service=httpd authentication=false
+ts=2020-09-29T08:30:49.338422Z lvl=info msg="opened HTTP access log" log_id=0PYFbsVl000 service=httpd path=stderr
+ts=2020-09-29T08:30:49.339293Z lvl=info msg="Listening on HTTP" log_id=0PYFbsVl000 service=httpd addr=[::]:8086 https=false
+ts=2020-09-29T08:30:49.339399Z lvl=info msg="Starting retention policy enforcement service" log_id=0PYFbsVl000 service=retention check_interval=30m
+ts=2020-09-29T08:30:49.340341Z lvl=info msg="Storing statistics" log_id=0PYFbsVl000 service=monitor db_instance=_internal db_rp=monitor interval=10s
+ts=2020-09-29T08:30:49.340438Z lvl=info msg="Listening for signals" log_id=0PYFbsVl000
+ts=2020-09-29T08:30:49.345123Z lvl=info msg="Sending usage statistics to usage.influxdata.com" log_id=0PYFbsVl000
+2020-09-29T08:30:49Z I! Starting Telegraf 1.15.3
+2020-09-29T08:30:49Z I! Using config file: /etc/telegraf/telegraf.conf
+2020-09-29T08:30:49Z I! Loaded inputs: kernel mem processes swap system netstat net cpu diskio disk
+2020-09-29T08:30:49Z I! Loaded aggregators: 
+2020-09-29T08:30:49Z I! Loaded processors: 
+2020-09-29T08:30:49Z I! Loaded outputs: influxdb
+2020-09-29T08:30:49Z I! Tags enabled: 
+2020-09-29T08:30:49Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
+ts=2020-09-29T08:30:49.800956Z lvl=info msg="Executing query" log_id=0PYFbsVl000 service=query query="CREATE DATABASE influxdb"
+[httpd] 127.0.0.1 - admin [29/Sep/2020:08:30:49 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" 1457585d-022e-11eb-8001-0242ac12000c 39624
+ts=2020-09-29T08:30:50.920607Z lvl=info msg="Executing query" log_id=0PYFbsVl000 service=query query="CREATE DATABASE ftps"
+[httpd] 172.18.0.6 - admin [29/Sep/2020:08:30:50 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" 1503072c-022e-11eb-8002-0242ac12000c 18935
+ts=2020-09-29T08:30:51.145791Z lvl=info msg="Executing query" log_id=0PYFbsVl000 service=query query="CREATE DATABASE pma"
+[httpd] 172.18.0.9 - admin [29/Sep/2020:08:30:51 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" 152561e5-022e-11eb-8003-0242ac12000c 15360
+ts=2020-09-29T08:30:51.224599Z lvl=info msg="Executing query" log_id=0PYFbsVl000 service=query query="CREATE DATABASE wp"
+[httpd] 172.18.0.10 - admin [29/Sep/2020:08:30:51 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" 153107d6-022e-11eb-8004-0242ac12000c 11232
+ts=2020-09-29T08:30:53.126578Z lvl=info msg="Executing query" log_id=0PYFbsVl000 service=query query="CREATE DATABASE nginx"
+[httpd] 172.18.0.8 - nginx [29/Sep/2020:08:30:53 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" 16539d64-022e-11eb-8005-0242ac12000c 11003
+ts=2020-09-29T08:30:55.749355Z lvl=info msg="Executing query" log_id=0PYFbsVl000 service=query query="CREATE DATABASE mysql"
+[httpd] 172.18.0.11 - admin [29/Sep/2020:08:30:55 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" 17e3cfa8-022e-11eb-8006-0242ac12000c 4659
+[httpd] 172.18.0.7 - grafana [29/Sep/2020:08:30:58 +0000] "POST /write?db=grafana HTTP/1.1" 404 44 "-" "Telegraf/1.15.3 Go/1.15.2" 19ae05a6-022e-11eb-8007-0242ac12000c 82
+ts=2020-09-29T08:30:58.755379Z lvl=info msg="Executing query" log_id=0PYFbsVl000 service=query query="CREATE DATABASE grafana"
+[httpd] 172.18.0.7 - grafana [29/Sep/2020:08:30:58 +0000] "POST /query HTTP/1.1" 200 57 "-" "Telegraf/1.15.3 Go/1.15.2" 19ae844d-022e-11eb-8008-0242ac12000c 5181
+[httpd] 127.0.0.1 - admin [29/Sep/2020:08:30:59 +0000] "POST /write?db=influxdb HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 1a57774c-022e-11eb-8009-0242ac12000c 4187382
+[httpd] 172.18.0.6 - admin [29/Sep/2020:08:31:00 +0000] "POST /write?db=ftps HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 1b011e52-022e-11eb-800a-0242ac12000c 4565637
+[httpd] 172.18.0.8 - nginx [29/Sep/2020:08:31:03 +0000] "POST /write?db=nginx HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 1c4ba598-022e-11eb-800d-0242ac12000c 2486988
+[httpd] 172.18.0.9 - admin [29/Sep/2020:08:31:01 +0000] "POST /write?db=pma HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 1b30dd1d-022e-11eb-800b-0242ac12000c 4374115
+[httpd] 172.18.0.10 - admin [29/Sep/2020:08:31:01 +0000] "POST /write?db=wp HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 1b30dec9-022e-11eb-800c-0242ac12000c 4406985
+[httpd] 172.18.0.11 - admin [29/Sep/2020:08:31:05 +0000] "POST /write?db=mysql HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 1ddab82a-022e-11eb-800e-0242ac12000c 51473
+[httpd] 172.18.0.7 - grafana [29/Sep/2020:08:31:08 +0000] "POST /write?db=grafana HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 1fa3d6da-022e-11eb-800f-0242ac12000c 1918304
+[httpd] 127.0.0.1 - admin [29/Sep/2020:08:31:09 +0000] "POST /write?db=influxdb HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 204d5ec0-022e-11eb-8010-0242ac12000c 900964
+[httpd] 172.18.0.6 - admin [29/Sep/2020:08:31:10 +0000] "POST /write?db=ftps HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 20f38406-022e-11eb-8011-0242ac12000c 1191895
+[httpd] 172.18.0.9 - admin [29/Sep/2020:08:31:11 +0000] "POST /write?db=pma HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2115d351-022e-11eb-8012-0242ac12000c 1228399
+[httpd] 172.18.0.10 - admin [29/Sep/2020:08:31:11 +0000] "POST /write?db=wp HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 211f08dd-022e-11eb-8013-0242ac12000c 1290426
+[httpd] 172.18.0.8 - nginx [29/Sep/2020:08:31:13 +0000] "POST /write?db=nginx HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 22419681-022e-11eb-8014-0242ac12000c 14891
+[httpd] 172.18.0.11 - admin [29/Sep/2020:08:31:15 +0000] "POST /write?db=mysql HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 23d0e399-022e-11eb-8015-0242ac12000c 355869
+[httpd] 172.18.0.7 - grafana [29/Sep/2020:08:31:18 +0000] "POST /write?db=grafana HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2599fcf7-022e-11eb-8016-0242ac12000c 77008
+[httpd] 127.0.0.1 - admin [29/Sep/2020:08:31:19 +0000] "POST /write?db=influxdb HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2643538b-022e-11eb-8017-0242ac12000c 421769
+[httpd] 172.18.0.6 - admin [29/Sep/2020:08:31:20 +0000] "POST /write?db=ftps HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 26e9645a-022e-11eb-8018-0242ac12000c 174465
+[httpd] 172.18.0.9 - admin [29/Sep/2020:08:31:21 +0000] "POST /write?db=pma HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 270bcd84-022e-11eb-8019-0242ac12000c 141982
+[httpd] 172.18.0.10 - admin [29/Sep/2020:08:31:21 +0000] "POST /write?db=wp HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2715553a-022e-11eb-801a-0242ac12000c 172253
+[httpd] 172.18.0.8 - nginx [29/Sep/2020:08:31:23 +0000] "POST /write?db=nginx HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2837a8d7-022e-11eb-801b-0242ac12000c 100015
+[httpd] 172.18.0.11 - admin [29/Sep/2020:08:31:25 +0000] "POST /write?db=mysql HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 29c6f289-022e-11eb-801c-0242ac12000c 105496
+[httpd] 172.18.0.7 - grafana [29/Sep/2020:08:31:28 +0000] "POST /write?db=grafana HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2b8fe6c2-022e-11eb-801d-0242ac12000c 95934
+[httpd] 127.0.0.1 - admin [29/Sep/2020:08:31:29 +0000] "POST /write?db=influxdb HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2c3938c1-022e-11eb-801e-0242ac12000c 540594
+[httpd] 172.18.0.6 - admin [29/Sep/2020:08:31:30 +0000] "POST /write?db=ftps HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2ce16f0a-022e-11eb-801f-0242ac12000c 16498
+[httpd] 172.18.0.9 - admin [29/Sep/2020:08:31:31 +0000] "POST /write?db=pma HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2d02cba1-022e-11eb-8020-0242ac12000c 118208
+[httpd] 172.18.0.10 - admin [29/Sep/2020:08:31:31 +0000] "POST /write?db=wp HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2d0c59be-022e-11eb-8021-0242ac12000c 124099
+[httpd] 172.18.0.8 - nginx [29/Sep/2020:08:31:33 +0000] "POST /write?db=nginx HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2e2dd676-022e-11eb-8022-0242ac12000c 113295
+[httpd] 172.18.0.11 - admin [29/Sep/2020:08:31:35 +0000] "POST /write?db=mysql HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 2fbccb93-022e-11eb-8023-0242ac12000c 106941
+[httpd] 172.18.0.7 - grafana [29/Sep/2020:08:31:38 +0000] "POST /write?db=grafana HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 3185d552-022e-11eb-8024-0242ac12000c 102285
+[httpd] 127.0.0.1 - admin [29/Sep/2020:08:31:39 +0000] "POST /write?db=influxdb HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 322f4c16-022e-11eb-8025-0242ac12000c 74275
+[httpd] 172.18.0.6 - admin [29/Sep/2020:08:31:40 +0000] "POST /write?db=ftps HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 32d63723-022e-11eb-8026-0242ac12000c 69108
+[httpd] 172.18.0.9 - admin [29/Sep/2020:08:31:41 +0000] "POST /write?db=pma HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 32f7bc9d-022e-11eb-8027-0242ac12000c 71621
+[httpd] 172.18.0.10 - admin [29/Sep/2020:08:31:41 +0000] "POST /write?db=wp HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 33021213-022e-11eb-8028-0242ac12000c 78059
+[httpd] 172.18.0.8 - nginx [29/Sep/2020:08:31:43 +0000] "POST /write?db=nginx HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 3423a3b1-022e-11eb-8029-0242ac12000c 74649
+[httpd] 172.18.0.11 - admin [29/Sep/2020:08:31:45 +0000] "POST /write?db=mysql HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 35b2c9c5-022e-11eb-802a-0242ac12000c 7743
+[httpd] 172.18.0.7 - grafana [29/Sep/2020:08:31:48 +0000] "POST /write?db=grafana HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 377bdddf-022e-11eb-802b-0242ac12000c 3630
+[httpd] 127.0.0.1 - admin [29/Sep/2020:08:31:49 +0000] "POST /write?db=influxdb HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 38257c1b-022e-11eb-802c-0242ac12000c 11160
+[httpd] 172.18.0.6 - admin [29/Sep/2020:08:31:50 +0000] "POST /write?db=ftps HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 38cc32d3-022e-11eb-802d-0242ac12000c 4477
+[httpd] 172.18.0.9 - admin [29/Sep/2020:08:31:51 +0000] "POST /write?db=pma HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 38ed90d0-022e-11eb-802e-0242ac12000c 4210
+[httpd] 172.18.0.10 - admin [29/Sep/2020:08:31:51 +0000] "POST /write?db=wp HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 38f89130-022e-11eb-802f-0242ac12000c 6509
+[httpd] 172.18.0.8 - nginx [29/Sep/2020:08:31:53 +0000] "POST /write?db=nginx HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 3a196eb5-022e-11eb-8030-0242ac12000c 6985
+[httpd] 172.18.0.11 - admin [29/Sep/2020:08:31:55 +0000] "POST /write?db=mysql HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 3ba8c094-022e-11eb-8031-0242ac12000c 6031
+[httpd] 172.18.0.7 - grafana [29/Sep/2020:08:31:58 +0000] "POST /write?db=grafana HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 3d71e78e-022e-11eb-8032-0242ac12000c 6145
+[httpd] 127.0.0.1 - admin [29/Sep/2020:08:31:59 +0000] "POST /write?db=influxdb HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 3e1b5d6e-022e-11eb-8033-0242ac12000c 6329
+[httpd] 172.18.0.6 - admin [29/Sep/2020:08:32:00 +0000] "POST /write?db=ftps HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 3ec219d4-022e-11eb-8034-0242ac12000c 6518
+[httpd] 172.18.0.9 - admin [29/Sep/2020:08:32:01 +0000] "POST /write?db=pma HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 3ee3848e-022e-11eb-8035-0242ac12000c 7809
+[httpd] 172.18.0.10 - admin [29/Sep/2020:08:32:01 +0000] "POST /write?db=wp HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 3eee5094-022e-11eb-8036-0242ac12000c 5969
+[httpd] 172.18.0.8 - nginx [29/Sep/2020:08:32:03 +0000] "POST /write?db=nginx HTTP/1.1" 204 0 "-" "Telegraf/1.15.3 Go/1.15.2" 400f592b-022e-11eb-8037-0242ac12000c 7981
