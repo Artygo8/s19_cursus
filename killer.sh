@@ -22,7 +22,7 @@ remove 1 at the time then verify that the pod restarts with kubectl get pods
 function apply {
 	tput setaf 3
 	for deployment in ${DEPLOY[@]}; do
-		FUNCTION="kubectl exec deploy/${deployment}-deployment -- pkill $APP"
+		FUNCTION="kubectl exec deploy/${deployment} -- pkill $APP"
 		echo $FUNCTION
 		$FUNCTION
 	done
@@ -30,8 +30,10 @@ function apply {
 }
 
 case $APP in
+	grafana)
+		;;
 	telegraf)
-		DEPLOY=("nginx" "ftps" "wordpress" "phpmyadmin" "mysql" "grafana")
+		DEPLOY=("influxdb" "nginx" "ftps" "wordpress" "phpmyadmin" "mysql" "grafana")
 		;;
 	sshd | nginx)
 		DEPLOY="nginx"

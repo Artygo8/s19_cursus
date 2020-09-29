@@ -27,4 +27,4 @@ RUN cat /tmp/query.sql 1>&2
 
 EXPOSE 3306
 
-CMD [ "sh" , "/entrypoint.sh" ]
+CMD [ "/entrypoint.sh" ]

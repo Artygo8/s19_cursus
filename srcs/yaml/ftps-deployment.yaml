@@ -7,9 +7,18 @@ spec:
   - port: 21
     protocol: TCP
     name: ftps
-  - port: 21000
+  - port: 30020
     protocol: TCP
-    name: ftps-data
+    name: ftps-data0
+  - port: 30021
+    protocol: TCP
+    name: ftps-data1
+  - port: 30022
+    protocol: TCP
+    name: ftps-data2
+  - port: 30023
+    protocol: TCP
+    name: ftps-data3
   selector:
     app: ftps-app
   type: LoadBalancer
@@ -18,7 +27,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ftps-deployment
+  name: ftps
 spec:
   selector:
     matchLabels:
@@ -37,5 +46,11 @@ spec:
         ports:
         - containerPort: 21
           hostPort: 21
-        - containerPort: 21000
-          hostPort: 21000
+        - containerPort: 30020
+          hostPort: 30020
+        - containerPort: 30021
+          hostPort: 30021
+        - containerPort: 30022
+          hostPort: 30022
+        - containerPort: 30023
+          hostPort: 30023

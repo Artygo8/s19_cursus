@@ -73,3 +73,16 @@ datasources:
   basicAuth: true
   basicAuthUser: admin
   basicAuthPassword: kraken
+- name: InfluxDB 
+  orgId: 1
+  type: influxdb
+  access: proxy
+  url: http://influxdb:8086
+  database: influxdb 
+  isDefault: false
+  version: 1
+  editable: false
+  basicAuth: true
+  basicAuthUser: admin
+  basicAuthPassword: kraken
+

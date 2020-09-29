@@ -1,5 +1,5 @@
 Installing MariaDB/MySQL system tables in '/var/lib/mysql' ...
-2020-09-26 19:37:22 6 [Warning] Failed to load slave replication state from table mysql.gtid_slave_pos: 1017: Can't find file: './mysql/' (errno: 2 "No such file or directory")
+2020-09-28 17:20:07 6 [Warning] Failed to load slave replication state from table mysql.gtid_slave_pos: 1017: Can't find file: './mysql/' (errno: 2 "No such file or directory")
 OK
 
 To start mysqld at boot time you have to copy
@@ -31,55 +31,56 @@ http://dev.mysql.com
 Consider joining MariaDB's strong and vibrant community:
 https://mariadb.org/get-involved/
 
-2020-09-26 19:37:26 0 [Note] /usr/bin/mysqld (mysqld 10.4.13-MariaDB-log) starting as process 71 ...
-2020-09-26 19:37:26 0 [Note] InnoDB: Using Linux native AIO
-2020-09-26 19:37:26 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
-2020-09-26 19:37:26 0 [Note] InnoDB: Uses event mutexes
-2020-09-26 19:37:26 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
-2020-09-26 19:37:26 0 [Note] InnoDB: Number of pools: 1
-2020-09-26 19:37:26 0 [Note] InnoDB: Using SSE2 crc32 instructions
-2020-09-26 19:37:26 0 [Note] mysqld: O_TMPFILE is not supported on /var/tmp (disabling future attempts)
-2020-09-26 19:37:27 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
-2020-09-26 19:37:27 0 [Note] InnoDB: Completed initialization of buffer pool
-2020-09-26 19:37:27 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
-2020-09-26 19:37:27 0 [Note] InnoDB: 128 out of 128 rollback segments are active.
-2020-09-26 19:37:27 0 [Note] InnoDB: Creating shared tablespace for temporary tables
-2020-09-26 19:37:27 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
-2020-09-26 19:37:27 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
-2020-09-26 19:37:27 0 [Note] InnoDB: 10.4.13 started; log sequence number 60972; transaction id 21
-2020-09-26 19:37:27 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
-2020-09-26 19:37:27 0 [Note] InnoDB: Buffer pool(s) load completed at 200926 19:37:27
-2020-09-26 19:37:27 0 [Note] Plugin 'FEEDBACK' is disabled.
-2020-09-26 19:37:30 0 [Note] mysqld (mysqld 10.4.13-MariaDB-log) starting as process 1 ...
-2020-09-26T19:37:30Z I! Starting Telegraf 1.15.3
-2020-09-26T19:37:30Z I! Using config file: /etc/telegraf/telegraf.conf
-2020-09-26T19:37:30Z I! Loaded inputs: diskio swap system net cpu disk processes netstat kernel mem
-2020-09-26T19:37:30Z I! Loaded aggregators: 
-2020-09-26T19:37:30Z I! Loaded processors: 
-2020-09-26T19:37:30Z I! Loaded outputs: influxdb
-2020-09-26T19:37:30Z I! Tags enabled: 
-2020-09-26T19:37:30Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
-2020-09-26 19:37:31 0 [Note] InnoDB: Using Linux native AIO
-2020-09-26 19:37:31 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
-2020-09-26 19:37:31 0 [Note] InnoDB: Uses event mutexes
-2020-09-26 19:37:31 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
-2020-09-26 19:37:31 0 [Note] InnoDB: Number of pools: 1
-2020-09-26 19:37:31 0 [Note] InnoDB: Using SSE2 crc32 instructions
-2020-09-26 19:37:31 0 [Note] mysqld: O_TMPFILE is not supported on /var/tmp (disabling future attempts)
-2020-09-26 19:37:31 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
-2020-09-26 19:37:31 0 [Note] InnoDB: Completed initialization of buffer pool
-2020-09-26 19:37:31 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
-2020-09-26 19:37:31 0 [Note] InnoDB: 128 out of 128 rollback segments are active.
-2020-09-26 19:37:31 0 [Note] InnoDB: Creating shared tablespace for temporary tables
-2020-09-26 19:37:31 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
-2020-09-26 19:37:31 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
-2020-09-26 19:37:31 0 [Note] InnoDB: Waiting for purge to start
-2020-09-26 19:37:31 0 [Note] InnoDB: 10.4.13 started; log sequence number 60981; transaction id 21
-2020-09-26 19:37:31 0 [Note] Plugin 'FEEDBACK' is disabled.
-2020-09-26 19:37:31 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
-2020-09-26 19:37:31 0 [Note] InnoDB: Buffer pool(s) load completed at 200926 19:37:31
-2020-09-26 19:37:31 0 [Note] Server socket created on IP: '0.0.0.0'.
-2020-09-26 19:37:32 0 [Note] Reading of all Master_info entries succeeded
-2020-09-26 19:37:32 0 [Note] Added new Master_info '' to hash table
-2020-09-26 19:37:32 0 [Note] mysqld: ready for connections.
+2020-09-28 17:20:13 0 [Note] /usr/bin/mysqld (mysqld 10.4.13-MariaDB-log) starting as process 72 ...
+2020-09-28 17:20:13 0 [Note] InnoDB: Using Linux native AIO
+2020-09-28 17:20:13 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2020-09-28 17:20:13 0 [Note] InnoDB: Uses event mutexes
+2020-09-28 17:20:13 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2020-09-28 17:20:13 0 [Note] InnoDB: Number of pools: 1
+2020-09-28 17:20:13 0 [Note] InnoDB: Using SSE2 crc32 instructions
+2020-09-28 17:20:13 0 [Note] mysqld: O_TMPFILE is not supported on /var/tmp (disabling future attempts)
+2020-09-28 17:20:13 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2020-09-28 17:20:13 0 [Note] InnoDB: Completed initialization of buffer pool
+2020-09-28 17:20:13 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+2020-09-28 17:20:13 0 [Note] InnoDB: 128 out of 128 rollback segments are active.
+2020-09-28 17:20:13 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2020-09-28 17:20:13 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2020-09-28 17:20:13 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2020-09-28 17:20:13 0 [Note] InnoDB: Waiting for purge to start
+2020-09-28 17:20:13 0 [Note] InnoDB: 10.4.13 started; log sequence number 60981; transaction id 21
+2020-09-28 17:20:13 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+2020-09-28 17:20:13 0 [Note] Plugin 'FEEDBACK' is disabled.
+2020-09-28 17:20:13 0 [Note] InnoDB: Buffer pool(s) load completed at 200928 17:20:13
+2020-09-28 17:20:16 0 [Note] mysqld (mysqld 10.4.13-MariaDB-log) starting as process 1 ...
+2020-09-28 17:20:16 0 [Note] InnoDB: Using Linux native AIO
+2020-09-28 17:20:16 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2020-09-28 17:20:16 0 [Note] InnoDB: Uses event mutexes
+2020-09-28 17:20:16 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2020-09-28 17:20:16 0 [Note] InnoDB: Number of pools: 1
+2020-09-28 17:20:16 0 [Note] InnoDB: Using SSE2 crc32 instructions
+2020-09-28 17:20:16 0 [Note] mysqld: O_TMPFILE is not supported on /var/tmp (disabling future attempts)
+2020-09-28 17:20:16 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2020-09-28 17:20:16 0 [Note] InnoDB: Completed initialization of buffer pool
+2020-09-28 17:20:16 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+2020-09-28 17:20:17 0 [Note] InnoDB: 128 out of 128 rollback segments are active.
+2020-09-28 17:20:17 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2020-09-28 17:20:17 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2020-09-28 17:20:17 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2020-09-28 17:20:17 0 [Note] InnoDB: Waiting for purge to start
+2020-09-28 17:20:17 0 [Note] InnoDB: 10.4.13 started; log sequence number 60990; transaction id 21
+2020-09-28 17:20:17 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+2020-09-28 17:20:17 0 [Note] Plugin 'FEEDBACK' is disabled.
+2020-09-28 17:20:17 0 [Note] InnoDB: Buffer pool(s) load completed at 200928 17:20:17
+2020-09-28 17:20:18 0 [Note] Server socket created on IP: '0.0.0.0'.
+2020-09-28 17:20:18 0 [Note] Reading of all Master_info entries succeeded
+2020-09-28 17:20:18 0 [Note] Added new Master_info '' to hash table
+2020-09-28 17:20:18 0 [Note] mysqld: ready for connections.
 Version: '10.4.13-MariaDB-log'  socket: '/run/mysqld/mysqld.sock'  port: 3306  MariaDB Server
+2020-09-28T17:20:19Z I! Starting Telegraf 1.15.3
+2020-09-28T17:20:19Z I! Using config file: /etc/telegraf/telegraf.conf
+2020-09-28T17:20:19Z I! Loaded inputs: cpu disk diskio system netstat net kernel mem processes swap
+2020-09-28T17:20:19Z I! Loaded aggregators: 
+2020-09-28T17:20:19Z I! Loaded processors: 
+2020-09-28T17:20:19Z I! Loaded outputs: influxdb
+2020-09-28T17:20:19Z I! Tags enabled: 
+2020-09-28T17:20:19Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"", Flush Interval:10s
