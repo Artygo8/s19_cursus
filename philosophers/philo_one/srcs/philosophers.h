@@ -27,6 +27,8 @@ pthread_mutex_t g_binary_lock[2];
 pthread_mutex_t g_forks[NUMBER_OF_PHILOSOPHERS];
 pthread_t g_philosopher[NUMBER_OF_PHILOSOPHERS];
 
+typedef struct timeval t_tv;
+
 // init-end.c
 int     *ids_initializer(void);
 void    time_initializer(void);

@@ -1,6 +1,6 @@
-PHILO_ONE = srcs/philo_one
-PHILO_TWO = srcs/philo_two
-PHILO_THREE = srcs/philo_three
+PHILO_ONE = philo_one
+PHILO_TWO = philo_two
+PHILO_THREE = philo_three
 
 CASES := $(PHILO_ONE)
 SUBMAKE = make $@ -C $(case)
