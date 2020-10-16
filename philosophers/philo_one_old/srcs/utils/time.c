@@ -15,15 +15,6 @@ int     ft_time_elapsed_ms(struct timeval *origin_tv)
         return (time_elapsed_ms);
 }
 
-t_tv	*ft_timedup(void)
-{
-	t_tv	*new_tv;
-
-	new_tv = (struct timeval *)malloc(sizeof g_start_tv);
-	gettimeofday(new_tv, DST_NONE);
-	return (new_tv);
-}
-
 void msleep(int time)
 {
         usleep(time * 1000);

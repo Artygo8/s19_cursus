@@ -1,15 +1,17 @@
 SRCS	= srcs/main.c \
+		srcs/monitoring.c \
 		srcs/utils/format.c \
 		srcs/utils/time.c \
-		srcs/monitoring.c \
-		srcs/init-end.c
+		srcs/data/data.c \
+		srcs/data/input.c \
+		srcs/data/philo.c
 
 OBJ		= $(SRCS:.c=.o)
 
 NAME	= philo_one
 
 CC		= gcc
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -pthread -Wall -Wextra -Werror
 
 all:$(NAME)
 

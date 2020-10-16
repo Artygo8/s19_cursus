@@ -19,37 +19,19 @@
 # define SLEEPING " is sleeping"
 # define THINKING " is thinking"
 # define DYING " died"
-# define ERROR_ARGUMENTS "Error: wrong number of arguments\n"
 
-typedef struct	timeval t_tv;
-typedef struct	s_philosophers t_philo;
+struct timeval  *g_start_tv;
+pthread_mutex_t g_no_dead_lock;
+pthread_mutex_t g_write_lock;
+pthread_mutex_t g_binary_lock[2];
+pthread_mutex_t g_forks[NUMBER_OF_PHILOSOPHERS];
+pthread_t g_philosopher[NUMBER_OF_PHILOSOPHERS];
 
-typedef struct	s_all_variables
-{
-	size_t			nb_philo;
-	size_t			time_die;
-	size_t			time_eat;
-	size_t			time_sleep;
-	size_t			nb_must_eat;
-	t_tv			*start_tv;
-	pthread_mutex_t	no_dead_lock;
-	pthread_mutex_t	write_lock;
-	pthread_mutex_t	binary_lock[2];
-	t_philo			**table;
-}				t_vars;
-
-struct	s_philosophers
-{
-	int				id;
-	size_t			eat_count;
-	pthread_t		live;
-	pthread_mutex_t	fork;
-	t_tv			*last_meal;
-};
+typedef struct timeval t_tv;
 
 // init-end.c
 int     *ids_initializer(void);
-t_tv	*ft_timedup(void);
+void    time_initializer(void);
 void    mutex_initializer(void);
 void    mutex_destroyer(void);
 

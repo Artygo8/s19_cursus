@@ -3,7 +3,7 @@
 #define INT_MIN -2147483648
 #define MINIMUM_FIELD_WIDTH 12
 
-int		ft_strlen(const char *str)
+int   ft_strlen(const char *str)
 {
         int i;
 
@@ -13,7 +13,7 @@ int		ft_strlen(const char *str)
         return (i);
 }
 
-int		ft_int_width(int n)
+int     ft_int_width(int n)
 {
         int count;
 
@@ -26,7 +26,7 @@ int		ft_int_width(int n)
         return count;
 }
 
-void	ft_putnbr(int n)
+void     ft_putnbr(int n)
 {
         if (n < 0 && (n = -n))
                 write(1, "-", 1);
@@ -38,7 +38,7 @@ void	ft_putnbr(int n)
         write(1, &n, 1);
 }
 
-void	put_action(int id, const char *action)
+void put_action(int id, const char *action)
 {
         int mfw;
         int time;
