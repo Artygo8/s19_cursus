@@ -18,12 +18,12 @@ void	get_forks(t_philo *cur_phi, t_philo *next_phi)
 
 	data = cur_phi->data;
 	pthread_mutex_lock(&((data->binary_lock)
-		[((cur_phi->id + cur_phi->eat_count) / 2) % 2]));
+		[cur_phi->id % 2]));
 	pthread_mutex_lock(&(cur_phi->fork));
 	ft_put_action(cur_phi, FORKING);
 	pthread_mutex_lock(&(next_phi->fork));
 	pthread_mutex_unlock(&((data->binary_lock)
-		[((cur_phi->id + cur_phi->eat_count) / 2) % 2]));
+		[cur_phi->id % 2]));
 	ft_put_action(cur_phi, FORKING);
 }
 
@@ -37,6 +37,7 @@ void	*living(void *philo)
 	cur_phi = philo;
 	data = cur_phi->data;
 	next_phi = data->table[cur_phi->id % data->input->nb_philo];
+	gettimeofday(cur_phi->last_meal, NULL);
 	pthread_create(&countdown, NULL, ft_countdown, cur_phi);
 	while (cur_phi->eat_count < data->input->nb_must_eat
 		|| !data->input->finite)
@@ -45,10 +46,10 @@ void	*living(void *philo)
 		get_forks(cur_phi, next_phi);
 		ft_put_action(cur_phi, EATING);
 		msleep(data->input->time_eat);
-		gettimeofday(cur_phi->last_meal, NULL);
-		ft_put_action(cur_phi, SLEEPING);
 		pthread_mutex_unlock(&(cur_phi->fork));
 		pthread_mutex_unlock(&(next_phi->fork));
+		gettimeofday(cur_phi->last_meal, NULL);
+		ft_put_action(cur_phi, SLEEPING);
 		msleep(data->input->time_eat);
 		cur_phi->eat_count++;
 	}
@@ -75,7 +76,7 @@ void	ft_philosophing(t_input *input)
 	pthread_join(all_alive, NULL);
 	i = -1;
 	while ((data->table)[++i])
-		pthread_detach(((data->table)[i])->live);
+		pthread_detach(&(((data->table)[i])->live));
 	pthread_detach(all_alive);
 	pthread_detach(all_done_eating);
 	ft_delete_data(data);
@@ -88,7 +89,7 @@ int		main(int argc, char const *argv[])
 
 	if (argc == 5 || argc == 6)
 	{
-		if (input = ft_input_dup(argc, argv))
+		if (!(input = ft_input_dup(argc, argv)))
 			return (1);
 		ft_philosophing(input);
 		free(input);

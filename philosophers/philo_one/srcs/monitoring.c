@@ -21,6 +21,7 @@ void	*ft_all_done_eating(void *data_ptr)
 	data = data_ptr;
 	while ((data->table)[i])
 		pthread_join((((data->table)[i++])->live), NULL);
+	pthread_mutex_lock(&(data->write_lock));
 	pthread_mutex_unlock(&(data->no_dead_lock));
 	return (NULL);
 }
@@ -47,7 +48,6 @@ void	*ft_countdown(void *philo_ptr)
 							cur_phi->data->input->time_die)
 		msleep(1);
 	ft_put_action(cur_phi, DYING);
-	pthread_mutex_lock(&(cur_phi->data->write_lock));
 	pthread_mutex_unlock(&(cur_phi->data->no_dead_lock));
 	return (NULL);
 }
