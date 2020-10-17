@@ -13,7 +13,7 @@ int main()
 	char **test;
 	char *yo;
 
-	printf("\e[2;37m__SUBSTR__\n");
+	printf("\e[1;37m__SUBSTR__\n");
 	free(ft_substr(s1, start, len));
 	free(ft_substr(NULL, start, len));
 	free(ft_substr(0, start, len));
@@ -22,14 +22,14 @@ int main()
 	free(ft_substr(s1, 5, -1));
 	free(ft_substr(s1, 5, 5));
 	free(ft_substr(s1, 6, 6));
-	printf("\e[32mAll good !\n\n\e[2;37m");
+	printf("\e[32mAll good !\n\n\e[1;37m");
 
 	printf("__STRJOIN__\n");
 	free(ft_strjoin(s1, s2));
 	free(ft_strjoin(NULL, s2));
 	free(ft_strjoin(s1, NULL));
 	free(ft_strjoin(NULL, NULL));
-	printf("\e[32mAll good !\n\n\e[2;37m");
+	printf("\e[32mAll good !\n\n\e[1;37m");
 
 	printf("__STRTRIM__\n");
 	free(ft_strtrim(s1, "abc"));
@@ -38,7 +38,7 @@ int main()
 	free(ft_strtrim("", ""));
 	free(ft_strtrim("", "abc"));
 	free(ft_strtrim(s1, NULL));
-	printf("\e[32mAll good !\n\n\e[2;37m");
+	printf("\e[32mAll good !\n\n\e[1;37m");
 
 	printf("__SPLIT__\n");
 	test = ft_split(s1, c);
@@ -57,18 +57,18 @@ int main()
 	while (test && test[n])
 		free(test[n++]);
 	free(test);
-	printf("\e[32mAll good !\n\n\e[2;37m");
+	printf("\e[32mAll good !\n\n\e[1;37m");
 
 	printf("__ITOA__\n");
 	free(ft_itoa(n));
 	free(ft_itoa(12121211));
 	free(ft_itoa(0));
-	printf("\e[32mAll good !\n\n\e[2;37m");
+	printf("\e[32mAll good !\n\n\e[1;37m");
 
 	printf("__MAPI__\n");
 	free(ft_strmapi(s1, NULL));
 	free(ft_strmapi(NULL, NULL));
-	printf("\e[32mAll good !\n\n\e[2;37m");
+	printf("\e[32mAll good !\n\n\e[1;37m");
 
 	return 0;
 }

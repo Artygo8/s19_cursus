@@ -19,7 +19,7 @@ CFLAGS=-Werror -Wall -Wextra -g3 -fsanitize=address
 
 RED="\033[1;31m"
 COLOR="\033[3;37m"
-NOCOLOR="\e[2;36m"
+NOCOLOR="\033[3;36m"
 
 ######################
 ### TITLES ###########
@@ -44,5 +44,5 @@ cd ${LIBFT}\
 && cd ${ORIGIN}\
 && echo -e ${T_TEST1}; gcc test_part2.c ${LIBFT}/libft.a ${CFLAGS}; ./a.out\
 && echo -e ${T_TEST2}; gcc test_bonus.c ${LIBFT}/libft.a ${CFLAGS}; ./a.out
-echo -e "\e[m"
+echo -e "\033[m"
 rm a.out
