@@ -2,4 +2,4 @@
 minishell
 *.o
 *.a
-.vscode
+.vscode.vscode
