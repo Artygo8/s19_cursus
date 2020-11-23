@@ -16,7 +16,7 @@ SRCS	= megaphone.cpp
 
 NAME	= megaphone
 
-CC		= g++
+CC		= clang++
 CFLAGS	= -Wall -Werror -Wextra
 
 SRCDIR	= ./
@@ -60,6 +60,11 @@ fclean : clean
 
 re : fclean all
 
+test : $(NAME)
+	./$(NAME) "shhhhh... I think the students are asleep..."
+	./$(NAME) Damnit " ! " "Sorry students, I thought this thing was off."
+	./$(NAME)
+
 debug :
 	@echo "SRCS $(SRCS)"
 	@echo "SRC $(SRC)"
@@ -68,4 +73,4 @@ debug :
 	@echo "CSRCS $(CSRCS)"
 	@echo "CFLAGS $(CFLAGS)"
 
-.PHONY	= all run clean fclean re debug
+.PHONY	= all run clean fclean re debug test
