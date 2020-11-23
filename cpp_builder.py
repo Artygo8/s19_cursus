@@ -107,7 +107,7 @@ FIRST_PART_MAKEFILE = """
 # ================================ VARIABLES ================================= #
 
 NAME	= exec
-CXX	= g++
+CXX	= clang++
 CFLAGS	= -Wall -Werror -Wextra
 
 SRCDIR	= ./
@@ -118,8 +118,7 @@ CXXFLAGS	+= -I $(INCDIR)
 
 SRCS	= """
 
-LAST_PART_MAKEFILE =
-"""		main.cpp
+LAST_PART_MAKEFILE = """		main.cpp
 
 SRC		:= $(notdir $(SRCS)) # 					Files only
 OBJ		:= $(SRC:.cpp=.o)	#					Files only

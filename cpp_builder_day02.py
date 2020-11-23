@@ -146,7 +146,7 @@ FIRST_PART_MAKEFILE = """
 # ================================ VARIABLES ================================= #
 
 NAME	= exec
-CXX	= g++
+CXX	= clang++
 CFLAGS	= -Wall -Werror -Wextra
 
 SRCDIR	= ./
