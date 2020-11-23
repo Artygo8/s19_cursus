@@ -50,7 +50,7 @@ def header(name):
 def hpp_class(name):
     return f"""\
 class {name}
-{'{'}
+{{
 
 	private:
 		std::string		name;
@@ -83,23 +83,23 @@ def cpp_template(name):
     return f"""#include \"{name}.hpp\"
 
 {name}::{name}()
-{'{'}
+{{
 	std::cout << "-{str(name)} was created" << '\\n';
-{'}'}
+}}
 
 {name}::~{name}()
-{'{'}
+{{
 	std::cout << "-{str(name)} is being deleted" << '\\n';
-{'}'}
+}}
 
 void		{name}::setName(std::string name) //generic function
-{'{'}
-{'}'}
+{{
+}}
 
 std::string	{name}::getName() //generic function
-{'{'}
+{{
 	return name;
-{'}'}
+}}
 """
 
 

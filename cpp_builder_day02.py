@@ -51,7 +51,7 @@ def hpp_class(name):
     return f"""\
 
 class {name}
-{'{'}
+{{
 
 	private:
 		std::string		name;
@@ -95,47 +95,47 @@ def cpp_template(name):
 // Coplien's form //////////////////////////////////////////////////////////////
 
 {name}::{name}()
-{'{'}
+{{
 	std::cout << "Default constructor for {str(name)} called" << std::endl;
-{'}'}
+}}
 
 {name}::{name}(const {name} &source)
-{'{'}
+{{
 	this->name = source.name;
 	std::cout << "Copy constructor for {str(name)} called" << std::endl;
-{'}'}
+}}
 
 {name}& {name}::operator = (const {name} &source)
-{'{'}
+{{
 	this->name = source.name;
 	std::cout << "Assignations operator for {str(name)} called" << std::endl;
 	return *this;
-{'}'}
+}}
 
 {name}::~{name}()
-{'{'}
+{{
 	std::cout << "Destructor for {str(name)} called" << std::endl;
-{'}'}
+}}
 
 // set-get ///////////////////////////////////////////////////////////////////////
 
 void		{name}::setName(std::string name) //generic function
-{'{'}
+{{
 	this->name = name;
-{'}'}
+}}
 
 std::string	{name}::getName() const//generic function
-{'{'}
+{{
 	return name;
-{'}'}
+}}
 
 // stream //////////////////////////////////////////////////////////////////////
 
 std::ostream &operator<<(std::ostream &out, {name} const &obj)
-{'{'}
+{{
 	out << obj.getName();
 	return out;
-{'}'}
+}}
 
 // others //////////////////////////////////////////////////////////////////////
 
