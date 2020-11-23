@@ -168,6 +168,7 @@ GR	= \\033[32;1m #	Green
 RE	= \\033[31;1m #	Red
 YE	= \\033[33;1m #	Yellow
 CY	= \\033[36;1m #	Cyan
+SCY	= \\033[36m #	SmallCyan
 RC	= \\033[0m #	Reset Colors
 
 # ================================== RULES =================================== #
@@ -185,11 +186,17 @@ $(OBJS) : $(SRCS)
 	@mkdir -p $(OBJDIR)
 	@cd $(OBJDIR) && $(CXX) $(CXXFLAGS) -I ../$(INCDIR) -c $(CSRCS)
 
-#	runnng
+#	running
 
 run : $(NAME)
 	@printf "$(CY)>>> Running $(NAME)$(RC)"
 	./$(NAME)
+
+test :$(NAME)
+    @printf "$(SCY)
+    # put your custom tests here
+    @printf "$(RC)
+
 #	cleaning
 clean :
 	@printf "$(RE)--- Removing $(OBJ)$(RC)"
@@ -209,7 +216,7 @@ debug :
 	@printf "CSRCS $(CSRCS)"
 	@printf "CFLAGS $(CFLAGS)"
 
-.PHONY	= all run clean fclean re debug
+.PHONY	= all run clean fclean re debug test
 """
 
 

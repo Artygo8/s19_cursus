@@ -129,6 +129,7 @@ GR	= \\033[32;1m #	Green
 RE	= \\033[31;1m #	Red
 YE	= \\033[33;1m #	Yellow
 CY	= \\033[36;1m #	Cyan
+SCY	= \\033[36m #	Small Cyan
 RC	= \\033[0m #	Reset Colors
 
 # ================================== RULES =================================== #
@@ -149,28 +150,34 @@ $(OBJS) : $(SRCS)
 #	runnng
 
 run : $(NAME)
-	@echo "$(CY)>>> Running $(NAME)$(RC)"
+	@printf "$(CY)>>> Running $(NAME)$(RC)"
 	./$(NAME)
+
+test :$(NAME)
+    @printf "$(SCY)
+    # put your custom tests here
+    @printf "$(RC)
+
 #	cleaning
 clean :
-	@echo "$(RE)--- Removing $(OBJ)$(RC)"
+	@printf "$(RE)--- Removing $(OBJ)$(RC)"
 	@rm -fd $(OBJS) $(OBJDIR)
 
 fclean : clean
-	@echo "$(RE)--- Removing $(NAME)$(RC)"
+	@printf "$(RE)--- Removing $(NAME)$(RC)"
 	@rm -f $(NAME)
 
 re : fclean all
 
 debug :
-	@echo "SRCS $(SRCS)"
-	@echo "SRC $(SRC)"
-	@echo "OBJS $(OBJS)"
-	@echo "OBJ $(OBJ)"
-	@echo "CSRCS $(CSRCS)"
-	@echo "CFLAGS $(CFLAGS)"
+	@printf "SRCS $(SRCS)"
+	@printf "SRC $(SRC)"
+	@printf "OBJS $(OBJS)"
+	@printf "OBJ $(OBJ)"
+	@printf "CSRCS $(CSRCS)"
+	@printf "CFLAGS $(CFLAGS)"
 
-.PHONY	= all run clean fclean re debug
+.PHONY	= all run clean fclean re debug test
 """
 
 
