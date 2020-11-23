@@ -29,6 +29,38 @@ class Contact {
 
 public:
 
+	void			add(int total);
+	void			show(void);
+	void			infos(void);
+
+	// setters and getters
+	void            setIndex( int new_value );
+	int             getIndex( void ) const;
+	void            setFirstName( string new_value );
+	string          getFirstName( void ) const;
+	void            setLastName( string new_value );
+	string          getLastName( void ) const;
+	void            setNickname( string new_value );
+	string          getNickname( void ) const;
+	void            setLogin( string new_value );
+	string          getLogin( void ) const;
+	void            setPostalAddress( string new_value );
+	string          getPostalAddress( void ) const;
+	void            setEmailAddress( string new_value );
+	string          getEmailAddress( void ) const;
+	void            setPhoneNumber( string new_value );
+	string          getPhoneNumber( void ) const;
+	void            setBirthdayDate( string new_value );
+	string          getBirthdayDate( void ) const;
+	void            setFavoriteMeal( string new_value );
+	string          getFavoriteMeal( void ) const;
+	void            setUnderwearColor( string new_value );
+	string          getUnderwearColor( void ) const;
+	void            setDarkestSecret( string new_value );
+	string          getDarkestSecret( void ) const;
+
+private:
+
 	int				index;
 	string			first_name;
 	string			last_name;
@@ -39,13 +71,6 @@ public:
 	string			phone_number;
 	string			birthday_date;
 	string			favorite_meal;
-
-	void			add(int total);
-	void			show(void);
-	void			infos(void);
-
-private:
-
 	string			underwear_color;
 	string			darkest_secret;
 

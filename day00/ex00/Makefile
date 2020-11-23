@@ -31,6 +31,7 @@ GR	= \033[32;1m #	Green
 RE	= \033[31;1m #	Red
 YE	= \033[33;1m #	Yellow
 CY	= \033[36;1m #	Cyan
+SCY	= \033[36m #	Small Cyan
 RC	= \033[0m #	Reset Colors
 
 # ================================== RULES =================================== #
@@ -47,30 +48,32 @@ $(OBJS) : $(SRCS)
 	cd $(OBJDIR) && $(CC) $(CFLAGS) -I ../$(INCDIR) -c $(CSRCS)
 
 run : $(NAME)
-	@echo "$(CY)>>> Running $(NAME)$(RC)"
+	@printf "$(CY)>>> Running $(NAME)$(RC)"
 	./$(NAME)
 
 clean :
-	@echo "$(RE)--- Removing $(OBJS)$(RC)"
+	@printf "$(RE)--- Removing $(OBJS)$(RC)"
 	rm -rf $(OBJS) $(OBJDIR)
 
 fclean : clean
-	@echo "$(RE)--- Removing $(NAME)$(RC)"
+	@printf "$(RE)--- Removing $(NAME)$(RC)"
 	rm -f $(NAME)
 
 re : fclean all
 
 test : $(NAME)
+	@printf "$(SCY)"
 	./$(NAME) "shhhhh... I think the students are asleep..."
 	./$(NAME) Damnit " ! " "Sorry students, I thought this thing was off."
 	./$(NAME)
+	@printf "$(RC)"
 
 debug :
-	@echo "SRCS $(SRCS)"
-	@echo "SRC $(SRC)"
-	@echo "OBJS $(OBJS)"
-	@echo "OBJ $(OBJ)"
-	@echo "CSRCS $(CSRCS)"
-	@echo "CFLAGS $(CFLAGS)"
+	@printf "SRCS $(SRCS)"
+	@printf "SRC $(SRC)"
+	@printf "OBJS $(OBJS)"
+	@printf "OBJ $(OBJ)"
+	@printf "CSRCS $(CSRCS)"
+	@printf "CFLAGS $(CFLAGS)"
 
 .PHONY	= all run clean fclean re debug test

@@ -16,7 +16,7 @@ SRCS	= contact.cpp main.cpp
 
 NAME	= phonebook
 
-CC		= g++
+CC		= clang++
 CFLAGS	= -Wall -Werror -Wextra
 
 SRCDIR	= ./
@@ -47,25 +47,25 @@ $(OBJS) : $(SRCS)
 	cd $(OBJDIR) && $(CC) $(CFLAGS) -I ../$(INCDIR) -c $(CSRCS)
 
 run : $(NAME)
-	@echo "$(CY)>>> Running $(NAME)$(RC)"
+	@printf "$(CY)>>> Running $(NAME)$(RC)"
 	./$(NAME)
 
 clean :
-	@echo "$(RE)--- Removing $(OBJS)$(RC)"
+	@printf "$(RE)--- Removing $(OBJS)$(RC)"
 	rm -rf $(OBJS) $(OBJDIR)
 
 fclean : clean
-	@echo "$(RE)--- Removing $(NAME)$(RC)"
+	@printf "$(RE)--- Removing $(NAME)$(RC)"
 	rm -f $(NAME)
 
 re : fclean all
 
 debug :
-	@echo "SRCS $(SRCS)"
-	@echo "SRC $(SRC)"
-	@echo "OBJS $(OBJS)"
-	@echo "OBJ $(OBJ)"
-	@echo "CSRCS $(CSRCS)"
-	@echo "CFLAGS $(CFLAGS)"
+	@printf "SRCS $(SRCS)"
+	@printf "SRC $(SRC)"
+	@printf "OBJS $(OBJS)"
+	@printf "OBJ $(OBJ)"
+	@printf "CSRCS $(CSRCS)"
+	@printf "CFLAGS $(CFLAGS)"
 
 .PHONY	= all run clean fclean re debug

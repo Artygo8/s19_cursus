@@ -24,45 +24,57 @@ string	limit(string str, int l)
 
 void	Contact::infos(void)
 {
-	std::cout << std::left << std::setw(20) << "First Name: " << first_name << std::endl;
-	std::cout << std::left << std::setw(20) << "Last Name: " << last_name << std::endl;
-	std::cout << std::left << std::setw(20) << "Nickname: " << nickname << std::endl;
-	std::cout << std::left << std::setw(20) << "Login: " << login << std::endl;
-	std::cout << std::left << std::setw(20) << "Postal Adress: " << postal_address << std::endl;
-	std::cout << std::left << std::setw(20) << "Email Adress: " << email_address << std::endl;
-	std::cout << std::left << std::setw(20) << "Phone Number: " << phone_number << std::endl;
-	std::cout << std::left << std::setw(20) << "Birthday Date: " << birthday_date << std::endl;
-	std::cout << std::left << std::setw(20) << "Favorite Meal: " << favorite_meal << std::endl;
-	std::cout << std::left << std::setw(20) << "Underwear Color: " << underwear_color << std::endl;
-	std::cout << std::left << std::setw(20) << "Darkest Secret: " << darkest_secret << std::endl;
+	std::cout << std::left << std::setw(20) << "First Name: " << getFirstName() << std::endl;
+	std::cout << std::left << std::setw(20) << "Last Name: " << getLastName() << std::endl;
+	std::cout << std::left << std::setw(20) << "Nickname: " << getNickname() << std::endl;
+	std::cout << std::left << std::setw(20) << "Login: " << getLogin() << std::endl;
+	std::cout << std::left << std::setw(20) << "Postal Adress: " << getPostalAddress() << std::endl;
+	std::cout << std::left << std::setw(20) << "Email Adress: " << getEmailAddress() << std::endl;
+	std::cout << std::left << std::setw(20) << "Phone Number: " << getPhoneNumber() << std::endl;
+	std::cout << std::left << std::setw(20) << "Birthday Date: " << getBirthdayDate() << std::endl;
+	std::cout << std::left << std::setw(20) << "Favorite Meal: " << getFavoriteMeal() << std::endl;
+	std::cout << std::left << std::setw(20) << "Underwear Color: " << getUnderwearColor() << std::endl;
+	std::cout << std::left << std::setw(20) << "Darkest Secret: " << getDarkestSecret() << std::endl;
 }
 
 void	Contact::add(int total)
 {
 	index = total;
+	std::string name;
 	std::cout << GRN << "Adding a contact" << CLEAN << std::endl;
 	std::cout << "> Enter First Name: ";
-	std::getline(std::cin, first_name);
+	std::getline(std::cin, name);
+	setFirstName(name);
 	std::cout << "> Enter Last Name: ";
-	std::getline(std::cin, last_name);
+	std::getline(std::cin, name);
+	setLastName(name);
 	std::cout << "> Enter Nickname: ";
-	std::getline(std::cin, nickname);
+	std::getline(std::cin, name);
+	setNickname(name);
 	std::cout << "> Enter Login: ";
-	std::getline(std::cin, login);
+	std::getline(std::cin, name);
+	setLogin(name);
 	std::cout << "> Enter Postal Adress: ";
-	std::getline(std::cin, postal_address);
+	std::getline(std::cin, name);
+	setPostalAddress(name);
 	std::cout << "> Enter Email Adress: ";
-	std::getline(std::cin, email_address);
+	std::getline(std::cin, name);
+	setEmailAddress(name);
 	std::cout << "> Enter Phone Number: ";
-	std::getline(std::cin, phone_number);
+	std::getline(std::cin, name);
+	setPhoneNumber(name);
 	std::cout << "> Enter Birthday Date: ";
-	std::getline(std::cin, birthday_date);
+	std::getline(std::cin, name);
+	setBirthdayDate(name);
 	std::cout << "> Enter Favorite Meal: ";
-	std::getline(std::cin, favorite_meal);
+	std::getline(std::cin, name);
+	setFavoriteMeal(name);
 	std::cout << "> Enter Underwear Color: ";
-	std::getline(std::cin, underwear_color);
+	std::getline(std::cin, name);
+	setUnderwearColor(name);
 	std::cout << "> Enter Darkest Secret: ";
-	std::getline(std::cin, darkest_secret);
+	std::getline(std::cin, name);
+	setDarkestSecret(name);
 }
 
 void	Contact::show(void)
@@ -71,3 +83,87 @@ void	Contact::show(void)
 		<< limit(first_name, 10) << "|" << std::setw(10) << limit(last_name, 10)
 		<< "|" << std::setw(10) << limit(login, 10) << "|\e[m" << std::endl;
 }
+
+
+// get and set for INDEX
+
+void        Contact::setIndex( int new_value ) { this->index = new_value; }
+
+int         Contact::getIndex( void ) const { return this->index; }
+
+
+// get and set for FIRST_NAME
+
+void        Contact::setFirstName( string new_value ) { this->first_name = new_value; }
+
+string      Contact::getFirstName( void ) const { return this->first_name; }
+
+
+// get and set for LAST_NAME
+
+void        Contact::setLastName( string new_value ) { this->last_name = new_value; }
+
+string      Contact::getLastName( void ) const { return this->last_name; }
+
+
+// get and set for NICKNAME
+
+void        Contact::setNickname( string new_value ) { this->nickname = new_value; }
+
+string      Contact::getNickname( void ) const { return this->nickname; }
+
+
+// get and set for LOGIN
+
+void        Contact::setLogin( string new_value ) { this->login = new_value; }
+
+string      Contact::getLogin( void ) const { return this->login; }
+
+
+// get and set for POSTAL_ADDRESS
+
+void        Contact::setPostalAddress( string new_value ) { this->postal_address = new_value; }
+
+string      Contact::getPostalAddress( void ) const { return this->postal_address; }
+
+
+// get and set for EMAIL_ADDRESS
+
+void        Contact::setEmailAddress( string new_value ) { this->email_address = new_value; }
+
+string      Contact::getEmailAddress( void ) const { return this->email_address; }
+
+
+// get and set for PHONE_NUMBER
+
+void        Contact::setPhoneNumber( string new_value ) { this->phone_number = new_value; }
+
+string      Contact::getPhoneNumber( void ) const { return this->phone_number; }
+
+
+// get and set for BIRTHDAY_DATE
+
+void        Contact::setBirthdayDate( string new_value ) { this->birthday_date = new_value; }
+
+string      Contact::getBirthdayDate( void ) const { return this->birthday_date; }
+
+
+// get and set for FAVORITE_MEAL
+
+void        Contact::setFavoriteMeal( string new_value ) { this->favorite_meal = new_value; }
+
+string      Contact::getFavoriteMeal( void ) const { return this->favorite_meal; }
+
+
+// get and set for UNDERWEAR_COLOR
+
+void        Contact::setUnderwearColor( string new_value ) { this->underwear_color = new_value; }
+
+string      Contact::getUnderwearColor( void ) const { return this->underwear_color; }
+
+
+// get and set for DARKEST_SECRET
+
+void        Contact::setDarkestSecret( string new_value ) { this->darkest_secret = new_value; }
+
+string      Contact::getDarkestSecret( void ) const { return this->darkest_secret; }
