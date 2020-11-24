@@ -12,12 +12,12 @@
 
 #include "Human.hpp"
 
-void *Human::identify()
+std::string Human::identify()
 {
 	return getBrain().identify();
 }
 
-Brain Human::getBrain()
+Brain &Human::getBrain()
 {
 	return (brain);
 }

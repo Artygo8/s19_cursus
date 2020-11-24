@@ -19,13 +19,16 @@
 class HumanA {
 
 private:
-	Weapon 			*wp;
+
+	Weapon 			&wp;
 	std::string		name;
 
 public:
-	HumanA(std::string n, Weapon weapon);
+
+	HumanA(std::string n, Weapon &weapon);
 	~HumanA();
 	void attack();
+
 };
 
 #endif

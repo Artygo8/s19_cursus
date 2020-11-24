@@ -21,15 +21,15 @@
 
 class Brain {
 
-private:
-
-	void	*adress;
-
 public:
 
 	Brain();
 	~Brain();
-	void *identify();
+	std::string identify();
+
+private:
+
+	std::string	address;
 
 };
 

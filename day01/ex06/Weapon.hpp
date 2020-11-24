@@ -24,6 +24,7 @@ private:
 	std::string	info;
 
 public:
+
 	Weapon (std::string info);
 	~Weapon ();
 

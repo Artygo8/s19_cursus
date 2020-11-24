@@ -16,12 +16,31 @@
 # include <string>
 # include <iomanip>
 
+# define YE "\033[33m"
+# define RC "\033[0m"
+
+
+typedef std::string string;
+
 class Pony {
 
 public:
-	Pony();
+
+	Pony(std::string name, std::string color);
 	~Pony();
 	void		doSomeStuff();
+
+	// setters and getters
+	void            setName( std::string new_value );
+	std::string     getName( void ) const;
+	void            setColor( std::string new_value );
+	std::string     getColor( void ) const;
+
+private:
+
+	std::string name;
+	std::string color;
+
 };
 
 #endif

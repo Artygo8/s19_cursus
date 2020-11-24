@@ -12,9 +12,8 @@
 
 #include "HumanB.hpp"
 
-HumanB::HumanB(std::string n)
+HumanB::HumanB(std::string n) : name(n)
 {
-	name = n;
 	std::cout << name << " was created" << '\n';
 }
 

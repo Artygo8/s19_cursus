@@ -12,14 +12,17 @@
 
 #include "Brain.hpp"
 
-void *Brain::identify()
+std::string Brain::identify()
 {
-	return (adress);
+	return (address);
 }
+
 
 Brain::Brain()
 {
-	adress = this;
+	std::ostringstream oss;
+	oss << (void const *)this;
+	this->address = oss.str();;
 	std::cout << "B+" << '\n';
 }
 

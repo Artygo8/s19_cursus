@@ -13,12 +13,14 @@
 #include <iostream>
 #include <string>
 
-int main() {
+int main()
+{	
 	std::string str = "HI THIS IS BRAIN";
-	std::string ref = str;
+	std::string &ref = str;
 	std::string *pointer = &str;
 
-	std::cout << ref << '\n';
-	std::cout << *pointer << '\n';
+	std::cout << "Reference : " << ref << std::endl;
+	std::cout << "Pointer   : " << *pointer << std::endl;
+
 	return 0;
 }

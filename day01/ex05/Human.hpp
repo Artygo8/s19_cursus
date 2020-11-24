@@ -19,11 +19,14 @@ class Human {
 
 public:
 
-	Brain	brain;
 	Human();
 	~Human();
-	Brain	getBrain();
-	void	*identify();
+	Brain	&getBrain();
+	std::string identify();
+
+private:
+
+	Brain	brain;
 
 };
 

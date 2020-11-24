@@ -14,7 +14,7 @@
 
 void ponyOnTheHeap()
 {
-    Pony *AlbertLePoney = new Pony;
+    Pony *AlbertLePoney = new Pony("Albert", "blue");
 
     AlbertLePoney->doSomeStuff();
     delete AlbertLePoney;
@@ -22,13 +22,17 @@ void ponyOnTheHeap()
 
 void ponyOnTheStack()
 {
-	Pony JeromeLePoney;
+	Pony JeromeLePoney("Jerome", "purple");
 
 	JeromeLePoney.doSomeStuff();
 }
 
 int main()
 {
+    std::cout << "We are in the main" << std::endl;
+    std::cout << "Calling ponyOnTheHeap" << std::endl;
 	ponyOnTheHeap();
+    std::cout << "Calling ponyOnTheStack" << std::endl;
     ponyOnTheStack();
+    std::cout << "End of the main" << std::endl;
 }
