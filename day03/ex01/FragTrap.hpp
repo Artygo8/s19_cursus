@@ -22,15 +22,15 @@ using std::cout;
 class FragTrap
 {
 	private:
-		int hp = 100;
-		int max_hp = 100;
-		int energy = 100;
-		int max_energy = 100;
-		int lvl = 1;
+		int hp;
+		int max_hp;
+		int energy;
+		int max_energy;
+		int lvl;
 		std::string name;
-		int melee = 30;
-		int ranged = 20;
-		int armor = 5;
+		int melee;
+		int ranged;
+		int armor;
 
 
 	public :

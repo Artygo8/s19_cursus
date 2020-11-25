@@ -14,15 +14,23 @@
 
 // Contructors /////////////////////////////////////////////////////////////////
 
-FragTrap::FragTrap(std::string name)
+FragTrap::FragTrap(std::string name) :
+hp(100),
+max_hp(100),
+energy(100),
+max_energy(100),
+lvl(1),
+melee(30),
+ranged(20),
+armor(5)
 {
-	std::cout << "I'm Trap, Claptrap. Double oh... Trap. (constructor)" << std::endl;
+	std::cout << "\e[45m    I'm Trap, Claptrap. Double oh... Trap. (constructor)\e[m" << std::endl;
 	this->name = name;
 }
 
 FragTrap::FragTrap(const FragTrap &source)
 {
-	std::cout << "Let's get this party started! (copy called)" << std::endl;
+	std::cout << "Let's get this party started! (copy)" << std::endl;
 }
 
 FragTrap::~FragTrap()

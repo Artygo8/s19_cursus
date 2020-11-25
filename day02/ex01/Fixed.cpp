@@ -37,7 +37,7 @@ Fixed::Fixed(int val)
 Fixed::Fixed(float val)
 {
 	this->value = roundf(pow(2, this->f_nb) * val);
-	std::cout << "Copy constructor for Fixed called" << '\n';
+	std::cout << "From float constructor for Fixed called" << '\n';
 }
 
 Fixed::~Fixed()
@@ -56,7 +56,7 @@ Fixed& Fixed::operator = (const Fixed &source)
 	return *this;
 }
 
-std::ostream &operator<<(std::ostream &out, Fixed const &fi)
+std::ostream &operator << (std::ostream &out, Fixed const &fi)
 {
     out << fi.toFloat();
     return (out);
