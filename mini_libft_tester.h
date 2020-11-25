@@ -2,7 +2,7 @@
 # define MINI_LIBFT_TESTER_H
 
 # include <stdio.h>
-# include "../libft/libft.h"
+# include "libft.h"
 
 # define TITLE "\e[1;4m"
 # define CLEAN "\e[m"

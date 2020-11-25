@@ -7,7 +7,11 @@
 # if you change the directory, you need to change it in 
 # the "mini_libft_tester.h" too.
 
-LIBFT=../libft
+if [ $# -eq 1 ]; then
+    LIBFT=$1
+else
+    LIBFT=../libft
+fi
 
 ######################
 ### COMPILER #########
@@ -40,14 +44,14 @@ function testing() {
 
 function part2_testing() {
     title ft_$*
-    gcc tests/part2/test_$*.c $LIBFT/libft.a $CFLAGS
+    gcc tests/part2/test_$*.c $LIBFT/libft.a $CFLAGS -I $LIBFT
     ./a.out > /dev/null && printf "${GRN}Success$NC\n" || printf "${RED}Failure !$NC\n"
     rm -f a.out
 }
 
 function bonus_testing() {
     title ft_lst$*
-    gcc tests/bonus/test_$*.c $LIBFT/libft.a $CFLAGS
+    gcc tests/bonus/test_$*.c $LIBFT/libft.a $CFLAGS -I $LIBFT
     ./a.out > /dev/null && printf "${GRN}Success$NC\n" || printf "${RED}Failure !$NC\n"
     rm -f a.out
 }
