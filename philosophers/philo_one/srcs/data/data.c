@@ -16,8 +16,13 @@ t_data	*ft_data_dup(t_input *input)
 {
 	t_data	*data;
 
-	data = (t_data *)malloc(sizeof(t_data));
-	data->start_tv = ft_timedup();
+	if (!(data = (t_data *)malloc(sizeof(t_data))))
+		return (NULL);
+	if (!(data->start_tv = ft_timedup()))
+	{
+		free(data);
+		return (NULL);
+	}
 	data->input = input;
 	pthread_mutex_init(&(data->no_dead_lock), NULL);
 	pthread_mutex_init(&(data->write_lock), NULL);

@@ -28,6 +28,12 @@
 # define ERROR_ARGUMENTS "Error: wrong number of arguments\n"
 # define ERROR_FORMAT "Error: argument not unsigned longs\n"
 
+# define RD "\e[31m"
+# define GN "\e[32m"
+# define YW "\e[33m"
+# define BE "\e[34m"
+# define NC "\e[0m"
+
 # define MAX_ULONG "4294967295"
 # define INT_MIN -2147483648
 
