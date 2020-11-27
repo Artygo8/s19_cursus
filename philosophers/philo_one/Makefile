@@ -2,6 +2,8 @@ SRCS	= srcs/main.c \
 		srcs/monitoring.c \
 		srcs/utils/format.c \
 		srcs/utils/time.c \
+		srcs/utils/numbers.c \
+		srcs/utils/errors.c \
 		srcs/data/data.c \
 		srcs/data/input.c \
 		srcs/data/philo.c

@@ -25,8 +25,6 @@
 # define SLEEPING " is sleeping"
 # define THINKING " is thinking"
 # define DYING " died"
-# define ERROR_ARGUMENTS "Error: wrong number of arguments\n"
-# define ERROR_FORMAT "Error: argument not unsigned longs\n"
 
 # define RD "\e[31m"
 # define GN "\e[32m"
@@ -44,20 +42,29 @@ typedef struct timeval			t_tv;
 typedef struct s_philosophers	t_philo;
 typedef int						t_bool;
 
-typedef struct		s_input
-{
-	size_t			nb_philo;
-	size_t			time_die;
-	size_t			time_eat;
-	size_t			time_sleep;
-	t_bool			finite;
-	size_t			nb_must_eat;
-}					t_input;
+/*
+** To use the function get_input(int e_input).
+*/
+
+# define SIZE_INPUTS 6
+
+enum e_input{
+	NB_PHILO,
+	TIME_TO_DIE,
+	TIME_TO_EAT,
+	TIME_TO_SLEEP,
+	IS_FINITE,
+	NB_MUST_EAT,
+};
+
+enum e_error{
+	ERROR_NB_ARG = 1,
+	ERROR_NOT_ULONG,
+};
 
 typedef struct		s_data
 {
 	t_tv			*start_tv;
-	t_input			*input;
 	pthread_mutex_t	no_dead_lock;
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	binary_lock[2];

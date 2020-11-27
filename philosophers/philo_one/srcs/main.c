@@ -63,7 +63,7 @@ void	*living(void *philo)
 	return (NULL);
 }
 
-void	ft_philosophing(t_input *input)
+void	ft_philosophing()
 {
 	int			i;
 	t_data		*data;
@@ -90,17 +90,13 @@ void	ft_philosophing(t_input *input)
 
 int		main(int argc, char const *argv[])
 {
-	int		ret;
 	t_input	*input;
+	int		ret;
 
-	if (argc == 5 || argc == 6)
-	{
-		if (!(input = ft_input_dup(argc, argv)))
-			return (1);
-		ft_philosophing(input);
-		free(input);
-		return (0);
-	}
-	write(2, ERROR_ARGUMENTS, ft_strlen(ERROR_ARGUMENTS));
-	return (1);
+	if (argc != 5 && argc != 6)
+        return (ft_error(ERROR_NB_ARG));		
+	if ((ret = set_input(argc, argv)))
+		return (ret);
+	ft_philosophing();
+	return (0);
 }
