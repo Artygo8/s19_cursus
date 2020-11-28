@@ -16,10 +16,10 @@ N_LONG_TESTS = 3
 LONG_TEST_LENGTH = 40
 
 # The test that will be used for an even number of philosophers
-EVEN_NUMBER_TEST = "4 311 150 150"
+EVEN_NUMBER_TEST = "4 320 150 150"
 
 # The test that will be used for and odd number of philosophers
-ODD_NUMBER_TEST = "5 600 150 150"
+ODD_NUMBER_TEST = "5 620 150 150"
 
 # The test that will be used for the death timing tests
 DEATH_TIMING_TEST = "3 310 200 100"

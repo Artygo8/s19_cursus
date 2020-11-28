@@ -45,7 +45,7 @@ void	*living(void *philo)
 		ft_put_action(cur_phi, SLEEPING);
 		sem_post(data->forks);
 		sem_post(data->forks);
-		msleep(data->input->time_eat);
+		msleep(data->input->time_sleep);
 	}
 	pthread_detach(countdown);
 	return (NULL);

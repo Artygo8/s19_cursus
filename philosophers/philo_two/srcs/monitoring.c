@@ -45,7 +45,7 @@ void	*ft_countdown(void *philo_ptr)
 	data = cur_phi->data;
 	gettimeofday(cur_phi->last_meal, NULL);
 	while (ft_time_elapsed_ms(cur_phi->last_meal) <
-							cur_phi->data->input->time_die)
+												cur_phi->data->input->time_die)
 		msleep(1);
 	ft_put_action(cur_phi, DYING);
 	sem_post(data->deads);

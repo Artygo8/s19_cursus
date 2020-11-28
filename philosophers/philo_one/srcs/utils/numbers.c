@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosophers.h"
+#include "philosophers.h"
 
 size_t	ft_atoi(const char *str)
 {
@@ -26,7 +26,7 @@ size_t	ft_atoi(const char *str)
 
 int		ft_gt_max_ulong(const char *str)
 {
-	int i;
+	size_t i;
 
 	i = 0;
 	while (str[i] >= '0' && str[i] <= '9')
@@ -64,4 +64,12 @@ int		ft_is_ulong(const char *str)
 	if (str[i] == '\0')
 		return (TRUE);
 	return (FALSE);
+}
+
+void	ft_putunbr(size_t n)
+{
+	if (n / 10)
+		ft_putunbr(n / 10);
+	n = n % 10 + '0';
+	write(1, &n, 1);
 }

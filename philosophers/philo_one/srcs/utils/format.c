@@ -10,49 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosophers.h"
+#include "philosophers.h"
 
-int		ft_strlen(const char *str)
+void	ft_put_action(int id, int e_action)
 {
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-int		ft_int_width(int n)
-{
-	int count;
-
-	count = 1;
-	while (n / 10)
-	{
-		n /= 10;
-		count += 1;
-	}
-	return (count);
-}
-
-void	ft_putnbr(size_t n)
-{
-	if (n / 10)
-		ft_putnbr(n / 10);
-	n = n % 10 + '0';
-	write(1, &n, 1);
-}
-
-void	ft_put_action(t_philo *philo, const char *action)
-{
-	int time;
-
-	pthread_mutex_lock(&(philo->data->write_lock));
-	ft_put_abs_time(philo->data->start_tv);
+	pthread_mutex_lock(ft_get_mutex(WRITE));
+	ft_put_abs_time();
 	write(1, " ", 1);
-	ft_putnbr(philo->id);
-	write(1, action, ft_strlen(action));
-	write(1, "\n", 1);
-	if (ft_strlen(action) != ft_strlen(DYING))
-		pthread_mutex_unlock(&(philo->data->write_lock));
+	ft_putunbr(id);
+	if (e_action == FORKING)
+		ft_putstr_fd(" has taken fork\n", STDOUT_FILENO);
+	if (e_action == EATING)
+		ft_putstr_fd(" is eating\n", STDOUT_FILENO);
+	if (e_action == SLEEPING)
+		ft_putstr_fd(" is sleeping\n", STDOUT_FILENO);
+	if (e_action == THINKING)
+		ft_putstr_fd(" is thinking\n", STDOUT_FILENO);
+	if (e_action == DYING)
+	{
+		ft_putstr_fd(" died\n", STDOUT_FILENO);
+		return ;
+	}
+	pthread_mutex_unlock(ft_get_mutex(WRITE));
 }

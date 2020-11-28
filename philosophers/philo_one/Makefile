@@ -2,18 +2,19 @@ SRCS	= srcs/main.c \
 		srcs/monitoring.c \
 		srcs/utils/format.c \
 		srcs/utils/time.c \
+		srcs/utils/strings.c \
 		srcs/utils/numbers.c \
 		srcs/utils/errors.c \
-		srcs/data/data.c \
+		srcs/data/mutex.c \
 		srcs/data/input.c \
 		srcs/data/philo.c
 
-OBJ		= $(SRCS:.c=.o)
+OBJ		= $(SRCS:%c=%o)
 
 NAME	= philo_one
 
 CC		= gcc
-FLAGS	= -pthread -Wall -Wextra -Werror
+CFLAGS	= -pthread -Wall -Wextra -Werror -I srcs/.
 
 all:$(NAME)
 

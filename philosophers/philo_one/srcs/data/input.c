@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosophers.h"
+#include "philosophers.h"
 
 int		*get_input(int e_input)
 {
-	static	int input[SIZE_INPUTS];
+	static int	input[SIZE_INPUTS];
 
 	return &(input[e_input]);
 }

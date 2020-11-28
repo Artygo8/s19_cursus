@@ -3,6 +3,7 @@ PHILO_TWO = philo_two
 PHILO_THREE = philo_three
 
 CASES := $(PHILO_ONE)
+	$(PHILO_TWO)
 SUBMAKE = make $@ -C $(case)
 
 all:

@@ -10,34 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosophers.h"
+#include "philosophers.h"
 
-t_data	*ft_data_dup(t_input *input)
+pthread_mutex_t	*ft_get_mutex(int e_mutex)
 {
-	t_data	*data;
+	static pthread_mutex_t	datas[SIZE_MUTEX];
 
-	if (!(data = (t_data *)malloc(sizeof(t_data))))
-		return (NULL);
-	if (!(data->start_tv = ft_timedup()))
-	{
-		free(data);
-		return (NULL);
-	}
-	data->input = input;
-	pthread_mutex_init(&(data->no_dead_lock), NULL);
-	pthread_mutex_init(&(data->write_lock), NULL);
-	pthread_mutex_init(&(data->binary_lock[0]), NULL);
-	pthread_mutex_init(&(data->binary_lock[1]), NULL);
-	data->table = ft_table_dup(input->nb_philo);
-	return (data);
+	return (&(datas[e_mutex]));
 }
 
-void	ft_delete_data(t_data *data)
+void			ft_init_mutex(void)
 {
-	free(data->start_tv);
-	pthread_mutex_destroy(&(data->no_dead_lock));
-	pthread_mutex_destroy(&(data->write_lock));
-	pthread_mutex_destroy(&(data->binary_lock[0]));
-	pthread_mutex_destroy(&(data->binary_lock[1]));
-	ft_delete_table(data->table);
+	pthread_mutex_init(ft_get_mutex(NO_DEADS), NULL);
+	pthread_mutex_init(ft_get_mutex(WRITE), NULL);
+	pthread_mutex_init(ft_get_mutex(BINARY1), NULL);
+	pthread_mutex_init(ft_get_mutex(BINARY2), NULL);
 }

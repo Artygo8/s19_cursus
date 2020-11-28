@@ -10,44 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosophers.h"
+#include "philosophers.h"
 
-int		ft_time_elapsed_ms(struct timeval *origin_tv)
+int		ft_time_elapsed_ms(size_t origin_ms)
 {
-	struct timeval	*current_tv;
-	int				time_elapsed_ms;
+	size_t		time_elapsed_ms;
 
-	current_tv = (struct timeval *)malloc(sizeof(*current_tv));
-	gettimeofday(current_tv, NULL);
-	time_elapsed_ms = (current_tv->tv_sec - origin_tv->tv_sec) * 1000
-		+ (current_tv->tv_usec - origin_tv->tv_usec) / 1000;
-	free(current_tv);
+	time_elapsed_ms = ft_get_ms() - origin_ms;
 	return (time_elapsed_ms);
 }
 
-void	ft_put_abs_time(struct timeval *origin_tv)
+void	ft_put_abs_time(void)
 {
-	struct timeval	*current_tv;
-	int				time_elapsed_ms;
-
-	current_tv = (struct timeval *)malloc(sizeof(*current_tv));
-	gettimeofday(current_tv, NULL);
-	ft_putnbr(current_tv->tv_sec);
-	if (current_tv->tv_usec / 1000 < 100)
-		ft_putnbr(0);
-	if (current_tv->tv_usec / 1000 < 10)
-		ft_putnbr(0);
-	ft_putnbr(current_tv->tv_usec / 1000);
-	free(current_tv);
+	ft_putunbr(ft_get_ms());
 }
 
-t_tv	*ft_timedup(void)
+size_t	ft_get_ms(void)
 {
-	t_tv	*new_tv;
+	t_tv	tv_time;
+	size_t	ms_time;
 
-	new_tv = (struct timeval *)malloc(sizeof(t_tv));
-	gettimeofday(new_tv, NULL);
-	return (new_tv);
+	gettimeofday(&tv_time, NULL);
+	ms_time = tv_time.tv_sec * 1000 + tv_time.tv_usec / 1000;
+	return (ms_time);
 }
 
 void	msleep(int time)

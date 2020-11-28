@@ -29,7 +29,10 @@ t_data	*ft_data_dup(t_input *input)
 	data->input = input;
 	data->deads = sem_open(SEM_FNAME_DEADS, O_CREAT, 0660, 0);
 	data->write = sem_open(SEM_FNAME_WRITE, O_CREAT, 0660, 1);
-	data->tickets = sem_open(SEM_FNAME_TICKETS, O_CREAT, 0660, input->nb_philo - 1);
+	if (input->nb_philo > 2)
+		data->tickets = sem_open(SEM_FNAME_TICKETS, O_CREAT, 0660, input->nb_philo / 2 + (input->nb_philo % 2));
+	else
+		data->tickets = sem_open(SEM_FNAME_TICKETS, O_CREAT, 0660, 1);
 	data->forks = sem_open(SEM_FNAME_FORKS, O_CREAT, 0660, input->nb_philo);
 	if (data->deads == SEM_FAILED || data->write == SEM_FAILED
 	|| data->forks == SEM_FAILED || data->tickets == SEM_FAILED)
