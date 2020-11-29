@@ -4,9 +4,6 @@
 ### PATHS ############
 ######################
 
-# if you change the directory, you need to change it in 
-# the "mini_libft_tester.h" too.
-
 if [ $# -eq 1 ]; then
     LIBFT=$1
 else
