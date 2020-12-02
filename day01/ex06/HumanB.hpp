@@ -16,6 +16,8 @@
 # include <iostream>
 # include "Weapon.hpp"
 
+typedef std::string string;
+
 class HumanB {
 
 private:
@@ -28,7 +30,7 @@ public:
 	HumanB(std::string n);
 	~HumanB();
 	void attack();
-	void setWeapon(Weapon wp);
+	void setWeapon(Weapon &wp);
 
 };
 

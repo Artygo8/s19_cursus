@@ -15,6 +15,8 @@
 # define HUMAN_HPP
 # include "Brain.hpp"
 
+typedef std::string string;
+
 class Human {
 
 public:

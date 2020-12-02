@@ -19,6 +19,8 @@
 # include <iomanip>
 # include <string>
 
+typedef std::string string;
+
 class Brain {
 
 public:

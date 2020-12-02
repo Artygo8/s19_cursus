@@ -14,6 +14,8 @@
 # define ZOMBIEEVENT_HPP
 # include "Zombie.hpp"
 
+typedef std::string string;
+
 const std::string		random_name();
 
 class ZombieEvent {

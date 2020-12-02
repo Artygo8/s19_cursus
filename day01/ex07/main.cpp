@@ -22,13 +22,13 @@ int main(int argc, char const *argv[])
 	if (argc == 4)
 	{
 		std::string to_replace = argv[2];
-		std::string line;
 		std::string text;
 		std::ifstream input_file(argv[1]);
+		std::stringstream buffer;
 		std::ofstream output_file((std::string)argv[1] + (std::string)".replace");
 
-		while(getline(input_file, line))
-			text += line + "\n";
+		buffer << input_file.rdbuf();
+		text = buffer.str();
 		for (int i=0; i < text.size(); i++)
 		{
 			if (!(text.substr(i)).find(to_replace))

@@ -22,9 +22,9 @@ HumanB::~HumanB()
 	std::cout << name << " is being deleted" << '\n';
 }
 
-void		HumanB::setWeapon(Weapon weap)
+void		HumanB::setWeapon(Weapon &weap)
 {
-	wp = &weap;
+	this->wp = &weap;
 }
 
 void		HumanB::attack()

@@ -12,21 +12,19 @@
 
 #include "Weapon.hpp"
 
-Weapon::Weapon(std::string i)
+Weapon::Weapon(std::string type)
 {
-	info = i;
-	ad_info = &info;
+	this->type = type;
 }
 
 Weapon::~Weapon(){}
 
-void			Weapon::setType(std::string i)
+void			Weapon::setType(std::string type)
 {
-	info = i;
-	ad_info = &info;
+	this->type = type;
 }
 
-std::string		Weapon::getType()
+std::string	Weapon::getType()
 {
-	return *ad_info;
+	return (this->type);
 }

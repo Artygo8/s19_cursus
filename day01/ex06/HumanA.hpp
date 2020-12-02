@@ -16,6 +16,8 @@
 # include <iostream>
 # include "Weapon.hpp"
 
+typedef std::string string;
+
 class HumanA {
 
 private:

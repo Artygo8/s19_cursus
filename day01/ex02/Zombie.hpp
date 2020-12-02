@@ -18,6 +18,8 @@
 # include <iomanip>
 # include <string>
 
+typedef std::string string;
+
 class Zombie {
 
 private:

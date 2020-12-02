@@ -14,13 +14,11 @@
 # define ZOMBIEHORDE_HPP
 # include "Zombie.hpp"
 
+typedef std::string string;
+
 class ZombieHorde {
 
 public:
-
-	int			n;
-	Zombie		*zombieHorde;
-	std::string	type;
 
 	ZombieHorde(int N);
 	~ZombieHorde();
@@ -29,6 +27,9 @@ public:
 
 private:
 
+	int			n;
+	Zombie		*zombieHorde;
+	std::string	type;
 };
 
 #endif

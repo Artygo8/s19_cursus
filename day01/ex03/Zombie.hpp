@@ -18,15 +18,19 @@
 # include <iomanip>
 # include <string>
 
+typedef std::string string;
+
 const std::string	random_name();
 
 class Zombie {
 
 private:
+
 	std::string	type;
 	std::string	name;
 
 public:
+
 	Zombie();
 	Zombie(std::string const type, std::string const name);
 	~Zombie();

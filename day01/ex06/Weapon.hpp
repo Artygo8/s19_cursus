@@ -15,21 +15,21 @@
 # include <string>
 # include <iostream>
 
+typedef std::string string;
 
 class Weapon {
 
 private:
 
-	std::string	*ad_info;
-	std::string	info;
+	std::string	type;
 
 public:
 
-	Weapon (std::string info);
+	Weapon (std::string type);
 	~Weapon ();
 
 	std::string	getType();
-	void setType(std::string);
+	void setType(std::string type);
 };
 
 #endif
