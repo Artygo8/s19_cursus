@@ -12,40 +12,39 @@
 
 #include "philosophers.h"
 
-t_philo		**ft_get_table(void)
+t_philo	*ft_philo_dup(int id)
 {
-	static t_philo	*table;
+	t_philo	*new;
 
-	return (&table);
+	new = (t_philo*)malloc(sizeof(t_philo));
+	memset(new, 0, sizeof(t_philo));
+	new->id = id;
+	new->eat_count = 0;
+	pthread_mutex_init(&(new->fork), NULL);
+	new->last_meal = ft_get_ms();
+	return (new);
 }
 
-t_philo		ft_new_philo(int id)
+t_philo	**ft_table_dup()
 {
-	t_philo	philo;
-
-	philo.id = id;
-	philo.eat_count = 0;
-	philo.live = 0;
-	pthread_mutex_init(&(philo.fork), NULL);
-	philo.last_meal_ms = ft_get_ms();
-	return (philo);
-}
-
-int			ft_init_table(void)
-{
-	int			id;
-	int			nb_philo;
+	ssize_t		id;
+	t_philo		**table;
 
 	id = 0;
-	nb_philo = *get_input(NB_PHILO);
-	if (!(*ft_get_table() = (t_philo *)malloc((nb_philo) * sizeof(t_philo))))
-		return (ft_error(ERROR_MALLOC_FAIL));
-	while (id++ < nb_philo)
-		(*ft_get_table())[id - 1] = ft_new_philo(id);
-	return (0);
+	table = (t_philo **)malloc((*get_input(NB_PHILO) + 1) * sizeof(t_philo *));
+	memset(table, 0, (*get_input(NB_PHILO) + 1) * sizeof(t_philo *));
+	while (id++ < *get_input(NB_PHILO))
+		table[id - 1] = ft_philo_dup(id);
+	table[id - 1] = NULL;
+	return (table);
 }
 
-void		ft_delete_table(void)
+void	ft_delete_table(t_philo **table)
 {
-	free(*ft_get_table());
+	int id;
+
+	id = 0;
+	while (table[id])
+		free(table[id++]);
+	free(table);
 }

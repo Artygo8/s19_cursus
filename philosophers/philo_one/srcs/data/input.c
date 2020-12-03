@@ -12,9 +12,9 @@
 
 #include "philosophers.h"
 
-int		*get_input(int e_input)
+ssize_t		*get_input(int e_input)
 {
-	static int	input[SIZE_INPUTS];
+	static ssize_t	input[SIZE_INPUTS];
 
 	return &(input[e_input]);
 }
@@ -38,5 +38,7 @@ int		set_input(int argc, char const *argv[])
 		*get_input(IS_FINITE) = TRUE;
 		*get_input(NB_MUST_EAT) = ft_atoi(argv[5]);
 	}
+	if ((*get_input(START) = ft_get_ms()) == -1)
+		return (1);
 	return (0);
 }

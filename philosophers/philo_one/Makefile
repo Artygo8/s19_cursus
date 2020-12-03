@@ -1,11 +1,12 @@
 SRCS	= srcs/main.c \
 		srcs/monitoring.c \
+		srcs/philosophing.c \
 		srcs/utils/format.c \
 		srcs/utils/time.c \
 		srcs/utils/strings.c \
 		srcs/utils/numbers.c \
 		srcs/utils/errors.c \
-		srcs/data/mutex.c \
+		srcs/data/data.c \
 		srcs/data/input.c \
 		srcs/data/philo.c
 
@@ -14,12 +15,12 @@ OBJ		= $(SRCS:%c=%o)
 NAME	= philo_one
 
 CC		= gcc
-CFLAGS	= -pthread -Wall -Wextra -Werror -I srcs/.
+CFLAGS	= -lpthread -Wall -Wextra -Werror -I srcs/.
 
 all:$(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 test:$(NAME)
 	./$(NAME)

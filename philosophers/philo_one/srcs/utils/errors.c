@@ -1,9 +1,5 @@
 #include "philosophers.h"
 
-/*
-** This function prints an error message and returns NULL.
-*/
-
 int     ft_error(int e_error)
 {
     if (e_error == ERROR_NB_ARG)

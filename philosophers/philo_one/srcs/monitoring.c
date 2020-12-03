@@ -12,22 +12,27 @@
 
 #include "philosophers.h"
 
-void	*ft_all_done_eating(void)
+void	*ft_all_done_eating(void *data_ptr)
 {
 	int		i;
+	t_data	*data;
 
 	i = 0;
-	while (i < *get_input(NB_PHILO))
-		pthread_join((((*ft_get_table())[i++]).live), NULL);
-	pthread_mutex_lock(ft_get_mutex(WRITE));
-	pthread_mutex_unlock(ft_get_mutex(NO_DEADS));
+	data = data_ptr;
+	while ((data->table)[i])
+		pthread_join((((data->table)[i++])->live), NULL);
+	pthread_mutex_lock(&(data->write_lock));
+	pthread_mutex_unlock(&(data->no_dead_lock));
 	return (NULL);
 }
 
-void	*ft_all_alive(void)
+void	*ft_all_alive(void *data_ptr)
 {
-	pthread_mutex_lock(ft_get_mutex(NO_DEADS));
-	pthread_mutex_unlock(ft_get_mutex(NO_DEADS));
+	t_data	*data;
+
+	data = data_ptr;
+	pthread_mutex_lock(&(data->no_dead_lock));
+	pthread_mutex_unlock(&(data->no_dead_lock));
 	return (NULL);
 }
 
@@ -36,10 +41,10 @@ void	*ft_countdown(void *philo_ptr)
 	t_philo	*cur_phi;
 
 	cur_phi = philo_ptr;
-	cur_phi->last_meal_ms = ft_get_ms();
-	while (ft_time_elapsed_ms(cur_phi->last_meal_ms) < *get_input(TIME_TO_DIE))
+	cur_phi->last_meal = ft_get_ms();
+	while (ft_time_elapsed_ms(cur_phi->last_meal) < *get_input(TIME_TO_DIE))
 		msleep(1);
 	ft_put_action(cur_phi->id, DYING);
-	pthread_mutex_unlock(ft_get_mutex(NO_DEADS));
+	pthread_mutex_unlock(&((*get_data())->no_dead_lock));
 	return (NULL);
 }

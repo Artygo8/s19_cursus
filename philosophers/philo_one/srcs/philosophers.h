@@ -26,6 +26,7 @@
 # define BE "\e[34m"
 # define NC "\e[0m"
 
+# define MAX_USEC 999999
 # define MAX_ULONG "4294967295"
 # define INT_MIN -2147483648
 
@@ -35,6 +36,25 @@
 typedef struct timeval			t_tv;
 typedef struct s_philosophers	t_philo;
 typedef int						t_bool;
+
+typedef struct		s_data
+{
+	pthread_t		all_alive;
+	pthread_t		all_done_eating;
+	pthread_mutex_t	no_dead_lock;
+	pthread_mutex_t	write_lock;
+	pthread_mutex_t	binary_lock[2];
+	t_philo			**table;
+}					t_data;
+
+struct				s_philosophers
+{
+	int				id;
+	ssize_t			eat_count;
+	pthread_t		live;
+	pthread_mutex_t	fork;
+	ssize_t			last_meal;
+};
 
 /*
 ** INPUT.C
@@ -49,53 +69,30 @@ enum e_input{
 	TIME_TO_SLEEP,
 	IS_FINITE,
 	NB_MUST_EAT,
+	START,
 };
 
-int					*get_input(int e_input);
+ssize_t				*get_input(int e_input);
 int					set_input(int argc, char const *argv[]);
-
-/*
-** MUTEX.C
-*/
-
-# define SIZE_MUTEX 4
-
-enum e_mutex {
-	NO_DEADS,
-	WRITE,
-	BINARY1,
-	BINARY2,
-};
-
-pthread_mutex_t		*ft_get_mutex(int e_mutex);
-void				ft_init_mutex(void);
-
-/*
-** PHILO.C
-*/
-
-struct				s_philosophers
-{
-	int				id;
-	size_t			eat_count;
-	pthread_t		live;
-	pthread_mutex_t	fork;
-	size_t			last_meal_ms;
-};
-
-t_philo				**ft_get_table(void);
-t_philo				ft_new_philo(int id);
-int					ft_init_table(void);
-void				ft_delete_table(void);
 
 /*
 ** ERRORS.C
 */
 
 enum e_error {
-	ERROR_NB_ARG = 1,
+	ERROR = 1,
+	ERROR_NB_ARG,
 	ERROR_NOT_ULONG,
 	ERROR_MALLOC_FAIL,
+	ERROR_PTHREAD_JOIN,
+	ERROR_PTHREAD_DETACH,
+	ERROR_PTHREAD_CREATE,
+	ERROR_MUTEX_LOCK,
+	ERROR_MUTEX_UNLOCK,
+	ERROR_MUTEX_INIT,
+	ERROR_MUTEX_DESTROY,
+	ERROR_GTOD,
+	ERROR_USLEEP,
 };
 
 int     			ft_error(int e_error);
@@ -109,10 +106,10 @@ enum e_action {
 	EATING,
 	SLEEPING,
 	THINKING,
-	DYING
+	DYING,
 };
 
-void				ft_put_action(int id, int e_action);
+int					ft_put_action(size_t id, int e_action);
 
 /*
 ** NUMBERS.C
@@ -134,17 +131,34 @@ void				ft_putstr_fd(char *str, int fd);
 ** TIME.C
 */
 
-int					ft_time_elapsed_ms(size_t origin_ms);
-void				ft_put_abs_time(void);
-size_t				ft_get_ms(void);
-void				msleep(int time);
+ssize_t				ft_time_elapsed_ms(ssize_t origin_ms);
+ssize_t				ft_put_abs_time(void);
+ssize_t				ft_get_ms(void);
+void				msleep(ssize_t time);
 
-/*
-** MONITORING.C
-*/
-
-void				*ft_all_done_eating(void);
-void				*ft_all_alive(void);
+void				*ft_all_done_eating(void *data_ptr);
+void				*ft_all_alive(void *data_ptr);
 void				*ft_countdown(void *philo_ptr);
+
+int					ft_int_width(int n);
+void				ft_debug(t_data *data, const char *str);
+
+t_data				**get_data();
+int					ft_set_data();
+int					ft_delete_data();
+
+size_t				ft_atoi(const char *str);
+int					ft_gt_max_ulong(const char *str);
+int					ft_is_ulong(const char *str);
+
+t_philo				*ft_philo_dup(int id);
+t_philo				**ft_table_dup();
+void				ft_data_to_philo(t_data *data);
+void				ft_delete_table(t_philo **table);
+
+
+void	*living(void *philo);
+int		ft_philo_thread_create();
+int		ft_philosophing();
 
 #endif

@@ -12,9 +12,10 @@
 
 #include "philosophers.h"
 
-void	ft_put_action(int id, int e_action)
+int	ft_put_action(size_t id, int e_action)
 {
-	pthread_mutex_lock(ft_get_mutex(WRITE));
+	if (pthread_mutex_lock(&((*get_data())->write_lock)))
+		return (ft_error(ERROR_MUTEX_LOCK));
 	ft_put_abs_time();
 	write(1, " ", 1);
 	ft_putunbr(id);
@@ -29,7 +30,9 @@ void	ft_put_action(int id, int e_action)
 	if (e_action == DYING)
 	{
 		ft_putstr_fd(" died\n", STDOUT_FILENO);
-		return ;
+		return (0);
 	}
-	pthread_mutex_unlock(ft_get_mutex(WRITE));
+	if (pthread_mutex_unlock(&((*get_data())->write_lock)))
+		return (ft_error(ERROR_MUTEX_UNLOCK));
+	return (0);
 }
