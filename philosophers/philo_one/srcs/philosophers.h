@@ -14,6 +14,7 @@
 # define PHILOSOPHERS_H
 
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
 # include <sys/types.h>
@@ -43,7 +44,6 @@ typedef struct		s_data
 	pthread_t		all_done_eating;
 	pthread_mutex_t	no_dead_lock;
 	pthread_mutex_t	write_lock;
-	pthread_mutex_t	binary_lock[2];
 	t_philo			**table;
 }					t_data;
 

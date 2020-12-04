@@ -25,8 +25,6 @@ int		ft_set_data()
 		return (ft_error(ERROR_MALLOC_FAIL));
 	if (pthread_mutex_init(&((*get_data())->no_dead_lock), NULL)
 	|| pthread_mutex_init(&((*get_data())->write_lock), NULL)
-	|| pthread_mutex_init(&((*get_data())->binary_lock[0]), NULL)
-	|| pthread_mutex_init(&((*get_data())->binary_lock[1]), NULL)
 	|| !((*get_data())->table = ft_table_dup()))
 	{
 		free(*get_data());
@@ -38,14 +36,11 @@ int		ft_set_data()
 int		ft_delete_data()
 {
 	ft_delete_table((*get_data())->table);
-	if (pthread_mutex_destroy(&((*get_data())->no_dead_lock))
-	|| pthread_mutex_destroy(&((*get_data())->write_lock))
-	|| pthread_mutex_destroy(&((*get_data())->binary_lock[0]))
-	|| pthread_mutex_destroy(&((*get_data())->binary_lock[1])))
-	{
-		free(*get_data());
-		return (ft_error(ERROR_MUTEX_DESTROY));
-	}
+	pthread_mutex_lock(&((*get_data())->no_dead_lock));
+	pthread_mutex_unlock(&((*get_data())->no_dead_lock));
+	pthread_mutex_destroy(&((*get_data())->no_dead_lock));
+	pthread_mutex_unlock(&((*get_data())->write_lock));
+	pthread_mutex_destroy(&((*get_data())->write_lock));
 	free(*get_data());
 	return (0);
 }

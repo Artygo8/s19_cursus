@@ -30,7 +30,7 @@ int	ft_put_action(size_t id, int e_action)
 	if (e_action == DYING)
 	{
 		ft_putstr_fd(" died\n", STDOUT_FILENO);
-		return (0);
+		// return (0);
 	}
 	if (pthread_mutex_unlock(&((*get_data())->write_lock)))
 		return (ft_error(ERROR_MUTEX_UNLOCK));

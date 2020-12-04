@@ -45,6 +45,11 @@ void	ft_delete_table(t_philo **table)
 
 	id = 0;
 	while (table[id])
+	{
+		// pthread_mutex_lock(&(table[id]->fork));
+		pthread_mutex_unlock(&(table[id]->fork));
+		pthread_mutex_destroy(&(table[id]->fork));
 		free(table[id++]);
+	}
 	free(table);
 }

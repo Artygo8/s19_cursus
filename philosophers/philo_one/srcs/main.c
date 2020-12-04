@@ -25,7 +25,9 @@ int		main(int argc, char const *argv[])
 	if ((ret = ft_philosophing()))
 	{
 		ft_delete_data();
+		sleep(4);
 		return (ret);
 	}
+	sleep(4);
 	return (ft_delete_data());
 }
