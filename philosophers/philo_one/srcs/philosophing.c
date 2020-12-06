@@ -2,7 +2,7 @@
 
 void	get_forks(t_philo *cur_phi, t_philo *next_phi)
 {
-	if (ft_time_elapsed_ms(*get_input(START)) < 5 && cur_phi->id % 2)
+	if (ft_time_elapsed_ms(*get_input(START)) < 2 && cur_phi->id % 2)
 		msleep(1);
 	if ((cur_phi->id + next_phi->id) % 2)
 	{
@@ -26,6 +26,8 @@ void	*living(void *philo)
 	t_philo		*cur_phi;
 	t_philo		*next_phi;
 
+	pthread_mutex_lock(&((*get_data())->block));
+	pthread_mutex_unlock(&((*get_data())->block));
 	cur_phi = philo;
 	next_phi = (*get_data())->table[cur_phi->id % *get_input(NB_PHILO)];
 	cur_phi->last_meal = ft_get_ms();
@@ -87,22 +89,11 @@ int		ft_detach_phi_threads()
 
 int		ft_philosophing()
 {
-	int			ret;
 	t_data		*data;
 
 	data = *get_data();
-	if (pthread_mutex_lock(&(data->no_dead_lock)))
-		return (ft_error(ERROR_MUTEX_LOCK));
-	if ((ret = ft_create_phi_threads()))
-	{
-		ft_detach_phi_threads();
-		return (ret);
-	}
-	if (pthread_join(data->all_done_eating, NULL))
-	{
-		ft_detach_phi_threads();
-		return (ft_error(ERROR_PTHREAD_JOIN));
-	}
+	pthread_join(data->all_done_eating, NULL);
+	write(1, "hello\n", 6);
     ft_detach_phi_threads();
 	return (0);
 }

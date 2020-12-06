@@ -40,20 +40,21 @@ typedef int						t_bool;
 
 typedef struct		s_data
 {
-	pthread_t		all_alive;
-	pthread_t		all_done_eating;
+	t_bool			finish;
 	pthread_mutex_t	no_dead_lock;
-	pthread_mutex_t	write_lock;
+	pthread_mutex_t	block;
 	t_philo			**table;
+	pthread_t		all_done_eating;
+	pthread_t		all_alive;
 }					t_data;
 
 struct				s_philosophers
 {
 	int				id;
 	ssize_t			eat_count;
-	pthread_t		live;
-	pthread_mutex_t	fork;
 	ssize_t			last_meal;
+	pthread_mutex_t	fork;
+	pthread_t		live;
 };
 
 /*
@@ -151,7 +152,7 @@ size_t				ft_atoi(const char *str);
 int					ft_gt_max_ulong(const char *str);
 int					ft_is_ulong(const char *str);
 
-t_philo				*ft_philo_dup(int id);
+t_philo				*ft_philo_create(int id);
 t_philo				**ft_table_dup();
 void				ft_data_to_philo(t_data *data);
 void				ft_delete_table(t_philo **table);

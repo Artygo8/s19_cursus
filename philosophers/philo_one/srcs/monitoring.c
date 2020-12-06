@@ -22,7 +22,7 @@ void	*ft_all_done_eating(void *data_ptr)
 	while ((data->table)[i])
 		pthread_join((((data->table)[i++])->live), NULL);
 	// pthread_mutex_unlock(&(data->no_dead_lock));
-	pthread_mutex_lock(&(data->write_lock));
+	pthread_mutex_lock(&(data->block));
 	return (NULL);
 }
 
