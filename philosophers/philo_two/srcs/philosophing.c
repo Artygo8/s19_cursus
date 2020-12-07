@@ -39,45 +39,40 @@ void	*ft_countdown(void *philo_ptr)
 	return (NULL);
 }
 
-void	get_forks(t_philo *cur_phi, t_philo *next_phi)
+void	get_forks(t_philo *philo)
 {
-	if (ft_time_elapsed_ms(*get_input(START)) < 2 && cur_phi->id % 2)
-		msleep(1);
-	if ((cur_phi->id + next_phi->id) % 2)
-	{
-		pthread_mutex_lock(&(cur_phi->fork));
-		ft_put_action(cur_phi->id, FORKING);
-		pthread_mutex_lock(&(next_phi->fork));
-		ft_put_action(cur_phi->id, FORKING);
-	}
-	else
-	{
-		pthread_mutex_lock(&(next_phi->fork));
-		ft_put_action(cur_phi->id, FORKING);
-		pthread_mutex_lock(&(cur_phi->fork));
-		ft_put_action(cur_phi->id, FORKING);
-	}
+	t_data	*data;
+
+	data = *get_data();
+	while (philo->eat_count > data->total_eat / *get_input(NB_PHILO) && !data->one_dead)
+		usleep(5);
+	sem_wait(data->tickets);
+	sem_wait(data->forks);
+	ft_put_action(philo->id, FORKING);
+	sem_wait(data->forks);
+	sem_post(data->tickets);
+	ft_put_action(philo->id, FORKING);
 }
 
 void	*living(void *philo)
 {
 	t_philo		*cur_phi;
-	t_philo		*next_phi;
+	t_data		*data;
 
-	pthread_mutex_lock(&((*get_data())->block));
-	pthread_mutex_unlock(&((*get_data())->block));
+	while ((*get_data())->one_dead == -1)
+		usleep(10);
 	cur_phi = philo;
-	next_phi = (*get_data())->table[cur_phi->id % *get_input(NB_PHILO)];
+	data = *get_data();
 	while ((cur_phi->eat_count < *get_input(NB_MUST_EAT)
 	|| !*get_input(IS_FINITE)) && !(*get_data())->one_dead)
 	{
 		ft_put_action(cur_phi->id, THINKING);
-		get_forks(cur_phi, next_phi);
+		get_forks(cur_phi);
 		cur_phi->last_meal = ft_get_ms();
 		ft_put_action(cur_phi->id, EATING);
 		msleep(*get_input(TIME_TO_EAT));
-		pthread_mutex_unlock(&(cur_phi->fork));
-		pthread_mutex_unlock(&(next_phi->fork));
+		sem_post(data->forks);
+		sem_post(data->forks);
 		if ((++(cur_phi->eat_count) >= *get_input(NB_MUST_EAT)
 			&& *get_input(IS_FINITE)))
 			break ;

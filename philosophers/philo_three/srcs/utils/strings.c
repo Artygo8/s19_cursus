@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   strings.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/16 16:42:36 by agossuin          #+#    #+#             */
-/*   Updated: 2020/10/16 16:42:36 by agossuin         ###   ########.fr       */
+/*   Created: 2020/12/07 15:37:12 by agossuin          #+#    #+#             */
+/*   Updated: 2020/12/07 15:37:12 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int		main(int argc, char const *argv[])
+size_t	ft_strlen(const char *str)
 {
-	int		ret;
+	size_t i;
 
-	if (argc != 5 && argc != 6)
-		return (ft_error(ERROR_NB_ARG));
-	if ((ret = set_input(argc, argv)))
-		return (ret);
-	if ((ret = ft_set_data()))
-		return (ret);
-	pthread_join((*get_data())->all_done_eating, NULL);
-	ft_delete_data();
-	return (0);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
+void	ft_putstr_fd(char *str, int fd)
+{
+	write(fd, str, ft_strlen(str));
 }

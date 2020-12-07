@@ -27,8 +27,7 @@ int		ft_set_data(void)
 		return (ft_error(ERROR_MALLOC_FAIL));
 	data = *get_data();
 	data->one_dead = FALSE;
-	if (pthread_mutex_init(&(data->no_dead_lock), NULL)
-	|| pthread_mutex_init(&(data->block), NULL))
+	if (pthread_mutex_init(&(data->block), NULL))
 	{
 		free(data);
 		return (ERROR);
@@ -36,7 +35,6 @@ int		ft_set_data(void)
 	pthread_mutex_lock(&(data->block));
 	data->table = ft_table_dup();
 	pthread_mutex_unlock(&(data->block));
-	pthread_mutex_lock(&(data->no_dead_lock));
 	if (pthread_create(&(data->all_done_eating),
 									NULL, ft_all_done_eating, data))
 	{
