@@ -1,5 +1,4 @@
 SRCS	= srcs/main.c \
-		srcs/monitoring.c \
 		srcs/philosophing.c \
 		srcs/utils/format.c \
 		srcs/utils/time.c \

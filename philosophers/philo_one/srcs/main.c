@@ -17,17 +17,12 @@ int		main(int argc, char const *argv[])
 	int		ret;
 
 	if (argc != 5 && argc != 6)
-        return (ft_error(ERROR_NB_ARG));		
+		return (ft_error(ERROR_NB_ARG));
 	if ((ret = set_input(argc, argv)))
 		return (ret);
 	if ((ret = ft_set_data()))
 		return (ret);
-	if ((ret = ft_philosophing()))
-	{
-		ft_delete_data();
-		sleep(4);
-		return (ret);
-	}
-	sleep(4);
-	return (ft_delete_data());
+	pthread_join((*get_data())->all_done_eating, NULL);
+	ft_delete_data();
+	return (0);
 }

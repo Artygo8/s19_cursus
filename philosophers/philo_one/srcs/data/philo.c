@@ -14,19 +14,23 @@
 
 t_philo	*ft_philo_create(int id)
 {
-	t_philo	*new;
+	pthread_t	countdown;
+	t_philo		*new;
 
-	new = (t_philo*)malloc(sizeof(t_philo));
+	if (!(new = (t_philo*)malloc(sizeof(t_philo))))
+		return (NULL);
 	memset(new, 0, sizeof(t_philo));
 	new->id = id;
 	new->eat_count = 0;
 	new->last_meal = ft_get_ms();
 	pthread_mutex_init(&(new->fork), NULL);
 	pthread_create(&(new->live), NULL, living, (void*)(new));
+	pthread_create(&countdown, NULL, ft_countdown, new);
+	pthread_detach(countdown);
 	return (new);
 }
 
-t_philo	**ft_table_dup()
+t_philo	**ft_table_dup(void)
 {
 	ssize_t		id;
 	ssize_t		tot;
@@ -34,8 +38,8 @@ t_philo	**ft_table_dup()
 
 	id = 0;
 	tot = *get_input(NB_PHILO);
-	printf("--%ld--\n", tot);
-	table = (t_philo **)malloc((tot + 1) * sizeof(t_philo *));
+	if (!(table = (t_philo **)malloc((tot + 1) * sizeof(t_philo *))))
+		return (NULL);
 	memset(table, 0, (tot + 1) * sizeof(t_philo *));
 	while (id++ < tot)
 		table[id - 1] = ft_philo_create(id);

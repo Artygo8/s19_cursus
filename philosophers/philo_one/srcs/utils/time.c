@@ -24,6 +24,7 @@ ssize_t		ft_time_elapsed_ms(ssize_t origin_ms)
 ssize_t		ft_put_abs_time(void)
 {
 	ssize_t		current_ms;
+
 	if ((current_ms = ft_time_elapsed_ms(*get_input(START))) == -1)
 		return (-1);
 	ft_putunbr(current_ms);
@@ -44,7 +45,7 @@ ssize_t		ft_get_ms(void)
 	return (ms_time);
 }
 
-void	msleep(ssize_t time)
+void		msleep(ssize_t time)
 {
 	size_t count;
 

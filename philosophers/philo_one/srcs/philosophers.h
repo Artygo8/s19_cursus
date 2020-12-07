@@ -40,12 +40,11 @@ typedef int						t_bool;
 
 typedef struct		s_data
 {
-	t_bool			finish;
+	t_bool			one_dead;
 	pthread_mutex_t	no_dead_lock;
 	pthread_mutex_t	block;
 	t_philo			**table;
 	pthread_t		all_done_eating;
-	pthread_t		all_alive;
 }					t_data;
 
 struct				s_philosophers
@@ -58,12 +57,20 @@ struct				s_philosophers
 };
 
 /*
+** DATA.C
+*/
+
+t_data				**get_data();
+int					ft_set_data();
+int					ft_delete_data();
+
+/*
 ** INPUT.C
 */
 
 # define SIZE_INPUTS 6
 
-enum e_input{
+enum				e_input{
 	NB_PHILO,
 	TIME_TO_DIE,
 	TIME_TO_EAT,
@@ -77,10 +84,18 @@ ssize_t				*get_input(int e_input);
 int					set_input(int argc, char const *argv[]);
 
 /*
+** PHILO.C
+*/
+
+t_philo				*ft_philo_create(int id);
+t_philo				**ft_table_dup();
+void				ft_delete_table(t_philo **table);
+
+/*
 ** ERRORS.C
 */
 
-enum e_error {
+enum				e_error {
 	ERROR = 1,
 	ERROR_NB_ARG,
 	ERROR_NOT_ULONG,
@@ -96,13 +111,13 @@ enum e_error {
 	ERROR_USLEEP,
 };
 
-int     			ft_error(int e_error);
+int					ft_error(int e_error);
 
 /*
 ** FORMAT.C
 */
 
-enum e_action {
+enum				e_action {
 	FORKING,
 	EATING,
 	SLEEPING,
@@ -137,29 +152,13 @@ ssize_t				ft_put_abs_time(void);
 ssize_t				ft_get_ms(void);
 void				msleep(ssize_t time);
 
+/*
+** PHILOSOPHING.C
+*/
+
 void				*ft_all_done_eating(void *data_ptr);
-void				*ft_all_alive(void *data_ptr);
 void				*ft_countdown(void *philo_ptr);
-
-int					ft_int_width(int n);
-void				ft_debug(t_data *data, const char *str);
-
-t_data				**get_data();
-int					ft_set_data();
-int					ft_delete_data();
-
-size_t				ft_atoi(const char *str);
-int					ft_gt_max_ulong(const char *str);
-int					ft_is_ulong(const char *str);
-
-t_philo				*ft_philo_create(int id);
-t_philo				**ft_table_dup();
-void				ft_data_to_philo(t_data *data);
-void				ft_delete_table(t_philo **table);
-
-
-void	*living(void *philo);
-int		ft_philo_thread_create();
-int		ft_philosophing();
+void				get_forks(t_philo *cur_phi, t_philo *next_phi);
+void				*living(void *philo);
 
 #endif

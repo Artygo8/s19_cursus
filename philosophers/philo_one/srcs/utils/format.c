@@ -14,8 +14,12 @@
 
 int	ft_put_action(size_t id, int e_action)
 {
-	if (pthread_mutex_lock(&((*get_data())->block)))
-		return (ft_error(ERROR_MUTEX_LOCK));
+	pthread_mutex_lock(&((*get_data())->block));
+	if ((*get_data())->one_dead)
+	{
+		pthread_mutex_unlock(&((*get_data())->block));
+		return (0);
+	}
 	ft_put_abs_time();
 	write(1, " ", 1);
 	ft_putunbr(id);
@@ -30,9 +34,8 @@ int	ft_put_action(size_t id, int e_action)
 	if (e_action == DYING)
 	{
 		ft_putstr_fd(" died\n", STDOUT_FILENO);
-		(*get_data())->finish = 1;
+		(*get_data())->one_dead = TRUE;
 	}
-	if (pthread_mutex_unlock(&((*get_data())->block)))
-		return (ft_error(ERROR_MUTEX_UNLOCK));
+	pthread_mutex_unlock(&((*get_data())->block));
 	return (0);
 }
