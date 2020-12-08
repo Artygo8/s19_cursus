@@ -12,16 +12,15 @@
 
 #include "philosophers.h"
 
-void	*ft_all_done_eating(void *data_ptr)
+void	*ft_check_for_dead(void *nothing)
 {
-	ssize_t		i;
-	t_data		*data;
+	t_data	*data;
 
-	i = 0;
-	data = data_ptr;
-	while (i < *get_input(NB_PHILO))
-		pthread_join((((data->table)[i++])->live), NULL);
-	return (NULL);
+	data = *get_data();
+	sem_wait(data->dead);
+	data->one_dead = TRUE;
+	sem_post(data->dead);
+	return (nothing);
 }
 
 void	*ft_countdown(void *philo_ptr)
@@ -39,35 +38,34 @@ void	*ft_countdown(void *philo_ptr)
 	return (NULL);
 }
 
-void	get_forks(t_philo *philo)
+void	get_forks(int id)
 {
 	t_data	*data;
 
 	data = *get_data();
-	while (philo->eat_count > data->total_eat / *get_input(NB_PHILO) && !data->one_dead)
-		usleep(5);
 	sem_wait(data->tickets);
 	sem_wait(data->forks);
-	ft_put_action(philo->id, FORKING);
+	ft_put_action(id, FORKING);
 	sem_wait(data->forks);
 	sem_post(data->tickets);
-	ft_put_action(philo->id, FORKING);
+	ft_put_action(id, FORKING);
 }
 
-void	*living(void *philo)
+int		living(t_philo *cur_phi)
 {
-	t_philo		*cur_phi;
 	t_data		*data;
+	pthread_t	check_dead;
 
-	while ((*get_data())->one_dead == -1)
-		usleep(10);
-	cur_phi = philo;
+	pthread_create(&(cur_phi->countdown), NULL, ft_countdown, cur_phi);
+	pthread_detach(cur_phi->countdown);
+	pthread_create(&check_dead, NULL, ft_check_for_dead, NULL);
+	pthread_detach(check_dead);
 	data = *get_data();
 	while ((cur_phi->eat_count < *get_input(NB_MUST_EAT)
 	|| !*get_input(IS_FINITE)) && !(*get_data())->one_dead)
 	{
 		ft_put_action(cur_phi->id, THINKING);
-		get_forks(cur_phi);
+		get_forks(cur_phi->id);
 		cur_phi->last_meal = ft_get_ms();
 		ft_put_action(cur_phi->id, EATING);
 		msleep(*get_input(TIME_TO_EAT));
@@ -79,5 +77,5 @@ void	*living(void *philo)
 		ft_put_action(cur_phi->id, SLEEPING);
 		msleep(*get_input(TIME_TO_SLEEP));
 	}
-	return (NULL);
+	return (0);
 }

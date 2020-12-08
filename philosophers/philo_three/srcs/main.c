@@ -14,7 +14,10 @@
 
 int		main(int argc, char const *argv[])
 {
-	int		ret;
+	int				i;
+	int				ret;
+	t_data			*data;
+	static pid_t	pids[300];
 
 	if (argc != 5 && argc != 6)
 		return (ft_error(ERROR_NB_ARG));
@@ -22,7 +25,17 @@ int		main(int argc, char const *argv[])
 		return (ret);
 	if ((ret = ft_set_data()))
 		return (ret);
-	pthread_join((*get_data())->all_done_eating, NULL);
-	ft_delete_data();
+	data = *get_data();
+	i = 0;
+	while (i++ < *get_input(NB_PHILO))
+		pids[i - 1] = ft_philo_create(i, data);
+	i = 0;
+	while (pids[i])
+		waitpid(pids[i++], NULL, 0);
+	sem_close(data->dead);
+	sem_close(data->write);
+	sem_close(data->tickets);
+	sem_close(data->forks);
+	free(data);
 	return (0);
 }

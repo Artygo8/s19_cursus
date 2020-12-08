@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <sys/time.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <pthread.h>
 # include <semaphore.h>
 # include <string.h>
@@ -33,6 +34,8 @@
 # define MAX_ULONG "4294967295"
 # define INT_MIN -2147483648
 
+# define SEM_FNAME_TIME "/time"
+# define SEM_FNAME_DEAD "/dead"
 # define SEM_FNAME_WRITE "/write"
 # define SEM_FNAME_TICKETS "/tickets"
 # define SEM_FNAME_FORKS "/forks"
@@ -47,12 +50,10 @@ typedef int						t_bool;
 typedef struct		s_data
 {
 	t_bool			one_dead;
-	ssize_t			total_eat;
+	sem_t			*dead;
 	sem_t			*write;
 	sem_t			*tickets;
 	sem_t			*forks;
-	t_philo			**table;
-	pthread_t		all_done_eating;
 }					t_data;
 
 struct				s_philosophers
@@ -60,7 +61,7 @@ struct				s_philosophers
 	int				id;
 	ssize_t			eat_count;
 	ssize_t			last_meal;
-	pthread_t		live;
+	pthread_t		countdown;
 };
 
 /*
@@ -93,8 +94,7 @@ int					set_input(int argc, char const *argv[]);
 /*
 ** PHILO.C
 */
-
-t_philo				*ft_philo_create(int id);
+pid_t				ft_philo_create(int id, t_data *data);
 t_philo				**ft_table_dup();
 void				ft_delete_table(t_philo **table);
 
@@ -161,7 +161,7 @@ void				msleep(ssize_t time);
 
 void				*ft_all_done_eating(void *data_ptr);
 void				*ft_countdown(void *philo_ptr);
-void				get_forks(t_philo *philo);
-void				*living(void *philo);
+void				get_forks(int id);
+int		living(t_philo *cur_phi);
 
 #endif

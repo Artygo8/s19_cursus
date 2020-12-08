@@ -11,7 +11,7 @@ SRCS	= srcs/main.c \
 
 OBJ		= $(SRCS:%c=%o)
 
-NAME	= philo_two
+NAME	= philo_three
 
 CC		= gcc
 CFLAGS	= -lpthread -Wall -Wextra -Werror -I srcs/.
