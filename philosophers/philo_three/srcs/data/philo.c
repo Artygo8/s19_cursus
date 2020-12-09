@@ -26,7 +26,7 @@ pid_t	ft_philo_create(int id, t_data *data)
 	if ((pid = fork()) == -1)
 	{
 		ft_error(ERROR);
-		return 0;
+		return (0);
 	}
 	else if (pid == 0)
 	{

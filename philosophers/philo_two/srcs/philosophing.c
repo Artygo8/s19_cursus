@@ -44,7 +44,8 @@ void	get_forks(t_philo *philo)
 	t_data	*data;
 
 	data = *get_data();
-	while (philo->eat_count > data->total_eat / *get_input(NB_PHILO) && !data->one_dead)
+	while (philo->eat_count > data->total_eat / *get_input(NB_PHILO)
+	&& !data->one_dead)
 		usleep(5);
 	sem_wait(data->tickets);
 	sem_wait(data->forks);

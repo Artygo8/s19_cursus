@@ -34,6 +34,7 @@ int		ft_set_data(void)
 	data->dead = sem_open(SEM_FNAME_DEAD, O_CREAT, 0660, 0);
 	data->write = sem_open(SEM_FNAME_WRITE, O_CREAT, 0660, 1);
 	data->tickets = sem_open(SEM_FNAME_TICKETS, O_CREAT, 0660, 1);
-	data->forks = sem_open(SEM_FNAME_FORKS, O_CREAT, 0660, *get_input(NB_PHILO));
+	data->forks =
+		sem_open(SEM_FNAME_FORKS, O_CREAT, 0660, *get_input(NB_PHILO));
 	return (0);
 }

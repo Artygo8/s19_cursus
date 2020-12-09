@@ -25,7 +25,7 @@ int	ft_put_action(size_t id, int e_action)
 	ft_putunbr(id);
 	if (e_action == FORKING)
 		ft_putstr_fd(" has taken fork\n", STDOUT_FILENO);
-	if (e_action == EATING)
+	if (e_action == EATING && ++((*get_data())->total_eat))
 		ft_putstr_fd(" is eating\n", STDOUT_FILENO);
 	if (e_action == SLEEPING)
 		ft_putstr_fd(" is sleeping\n", STDOUT_FILENO);

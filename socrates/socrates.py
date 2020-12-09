@@ -13,7 +13,7 @@ import signal
 N_LONG_TESTS = 3
 
 # How many seconds must a program run uninterrupted
-LONG_TEST_LENGTH = 30
+LONG_TEST_LENGTH = 10
 
 # The test that will be used for an even number of philosophers
 EVEN_NUMBER_TEST = "4 320 150 150"

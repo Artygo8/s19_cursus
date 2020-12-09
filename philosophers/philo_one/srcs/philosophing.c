@@ -41,8 +41,11 @@ void	*ft_countdown(void *philo_ptr)
 
 void	get_forks(t_philo *cur_phi, t_philo *next_phi)
 {
-	if (ft_time_elapsed_ms(*get_input(START)) < 2 && cur_phi->id % 2)
-		msleep(1);
+	while (cur_phi->eat_count > (*get_data())->total_eat / *get_input(NB_PHILO)
+	&& !(*get_data())->one_dead)
+		usleep(5);
+	if (ft_time_elapsed_ms(*get_input(START)) < 5 && cur_phi->id % 2)
+		msleep(3);
 	if ((cur_phi->id + next_phi->id) % 2)
 	{
 		pthread_mutex_lock(&(cur_phi->fork));

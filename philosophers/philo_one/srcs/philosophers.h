@@ -41,6 +41,7 @@ typedef int						t_bool;
 typedef struct		s_data
 {
 	t_bool			one_dead;
+	ssize_t			total_eat;
 	pthread_mutex_t	block;
 	t_philo			**table;
 	pthread_t		all_done_eating;

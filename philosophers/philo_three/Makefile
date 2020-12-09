@@ -14,7 +14,13 @@ OBJ		= $(SRCS:%c=%o)
 NAME	= philo_three
 
 CC		= gcc
-CFLAGS	= -lpthread -Wall -Wextra -Werror -I srcs/.
+
+CFLAGS	= -Wall -Wextra -Werror -I srcs/.
+
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	CFLAGS +=" -lpthread"
+endif
 
 all:$(NAME)
 

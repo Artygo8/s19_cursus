@@ -33,7 +33,8 @@ int		ft_set_data(void)
 	sem_unlink(SEM_FNAME_FORKS);
 	data->write = sem_open(SEM_FNAME_WRITE, O_CREAT, 0660, 1);
 	data->tickets = sem_open(SEM_FNAME_TICKETS, O_CREAT, 0660, 1);
-	data->forks = sem_open(SEM_FNAME_FORKS, O_CREAT, 0660, *get_input(NB_PHILO));
+	data->forks =
+		sem_open(SEM_FNAME_FORKS, O_CREAT, 0660, *get_input(NB_PHILO));
 	data->table = ft_table_dup();
 	data->one_dead = FALSE;
 	if (pthread_create(&(data->all_done_eating),

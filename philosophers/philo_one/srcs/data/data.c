@@ -27,6 +27,7 @@ int		ft_set_data(void)
 		return (ft_error(ERROR_MALLOC_FAIL));
 	data = *get_data();
 	data->one_dead = FALSE;
+	data->total_eat = 0;
 	if (pthread_mutex_init(&(data->block), NULL))
 	{
 		free(data);

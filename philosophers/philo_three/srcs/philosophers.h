@@ -162,6 +162,6 @@ void				msleep(ssize_t time);
 void				*ft_all_done_eating(void *data_ptr);
 void				*ft_countdown(void *philo_ptr);
 void				get_forks(int id);
-int		living(t_philo *cur_phi);
+int					living(t_philo *cur_phi);
 
 #endif
