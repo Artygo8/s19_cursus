@@ -14,117 +14,66 @@
 
 // Contructors /////////////////////////////////////////////////////////////////
 
-FragTrap::FragTrap(std::string name)
+FragTrap::FragTrap(std::string name) :
+ClapTrap(100, 100, 100, 100, 1, name, 30, 20, 5)
 {
-	std::cout << "I'm Trap, Claptrap. Double oh... Trap. (constructor)" << std::endl;
-	this->name = name;
+	std::cout << R_YLW << "    I'm Trap, Claptrap. Double oh... Trap. (constructor)" << NC << std::endl;
 }
 
-FragTrap::FragTrap(const FragTrap &source)
-{
-	std::cout << "Let's get this party started! (copy called)" << std::endl;
-}
+// FragTrap::FragTrap(const FragTrap &source)
+// {
+// 	std::cout << R_YLW << "    Let's get this party started! (copy)" << NC << std::endl;
+// 	this->setAttributes(source);
+// }
 
 FragTrap::~FragTrap()
 {
-	std::cout << "I can see... the code... (destructor)" << std::endl;
+	std::cout << R_YLW << "    I can see... the code... (destructor)    " << NC << std::endl;
 }
 
 // Operators ///////////////////////////////////////////////////////////////////
 
 FragTrap &FragTrap::operator=(const FragTrap &source)
 {
-	std::cout << "Recompiling my combat code! (assignation)" << std::endl;
+	std::cout << R_YLW << "*** Recompiling my combat code! (assignement) ***" << NC << std::endl;
 	this->setAttributes(source);
 	return *this;
-}
-
-// set-get ///////////////////////////////////////////////////////////////////////
-
-FragTrap FragTrap::setAttributes(const FragTrap &copy) //generic function
-{
-	this->hp = copy.hp;
-	this->max_hp = copy.max_hp;
-	this->energy = copy.energy;
-	this->max_energy = copy.max_energy;
-	this->lvl = copy.lvl;
-	this->name = copy.name;
-	this->melee = copy.melee;
-	this->ranged = copy.ranged;
-	this->armor = copy.armor;
-	return *this;
-}
-
-std::string FragTrap::getName() //generic function
-{
-	return name;
 }
 
 // Actions /////////////////////////////////////////////////////////////////////
 
 void FragTrap::rangedAttack(std::string const &target)
 {
-	if (max_hp == 0)
-		std::cout << "\e[33m--- I am dead... What can I do!? ---\e[m" << std::endl;
-	else
-	{
-		std::cout << "\e[33m--- Get off my lawn! ---\e[m" << std::endl;
-		std::cout << "FR4G - TP \e[32m" << name << "\e[m attacks \e[31m" << target << "\e[m at range, ";
-		std::cout << "causing " << ranged << " points of damage !" << std::endl;
-	}
+	std::cout << YLW << "--- Get off my lawn! ---" << NC << std::endl;
+	ClapTrap::rangedAttack(target);
 }
 
 void FragTrap::meleeAttack(std::string const &target)
 {
-	if (hp == 0)
-		std::cout << "\e[33m--- I am dead... What can I do!? ---\e[m" << std::endl;
-	else
-	{
-		std::cout << "\e[33m--- Ready for the PUNCHline?! ---\e[m" << std::endl;
-		std::cout << "FR4G - TP \e[32m" << name << "\e[m attacks \e[31m" << target << "\e[m melee, ";
-		std::cout << "causing " << melee << " points of damage !" << std::endl;
-	}
+	std::cout << YLW << "--- Ready for the PUNCHline?! ---" << NC << std::endl;
+	ClapTrap::meleeAttack(target);
 }
 
 void FragTrap::takeDamage(unsigned int amount)
 {
-	if (hp == 0)
-		std::cout << "\e[33m--- I am dead... How could I die more!? ---\e[m" << std::endl;
-	else if (hp <= amount)
-	{
-		std::cout << "\e[33m--- My servos... are seizing... ---\e[m" << std::endl;
-		std::cout << name << " is getting damaged by " << hp << " health points!" << std::endl;
-		hp = 0;
-	}
-	else
-	{
-		std::cout << "\e[33m--- Oh my God, I 'm leaking! I think I' m leaking !Ahhhh, I 'm leaking! There's oil everywhere ! ---\e[m" << std::endl;
-		std::cout << name << " is getting damaged by " << amount << " health points!" << std::endl;
-		hp -= amount;
-	}
+	std::cout << YLW << "--- Oh my God, I 'm leaking! I think I' m leaking !Ahhhh, I 'm leaking! There's oil everywhere ! ---" << NC << std::endl;
+	ClapTrap::takeDamage(amount);
 }
 
 void FragTrap::beRepaired(unsigned int amount)
 {
-	if (hp == 100)
-		std::cout << "\e[33m--- I am full HP! ---\e[m" << std::endl;
-	else
-	{
-		std::cout << "\e[33m--- Good as new, I think. Am I leaking? ---\e[m" << std::endl;
-		std::cout << name << " is getting " << amount << " health points back!" << std::endl;
-		hp += amount;
-		if (hp > amount)
-			hp = 100;
-	}
+	std::cout << YLW << "--- Good as new, I think. Am I leaking? ---" << NC << std::endl;
+	ClapTrap::beRepaired(amount);
 }
 
 void FragTrap::vaulthunter_dot_exe(std::string const &target)
 {
+	std::cout << R_YLW << "--- VAULTHUNTER DOT EXE : ---" << NC << std::endl;
 	if (energy < 25)
-		std::cout << "\e[33m--- Looks like I dont get the Power! ---\e[m" << std::endl;
+		std::cout << YLW << "--- Looks like I dont get the Power! ---" << NC << std::endl;
 	else
 	{
-		std::cout << "\e[33m";
+		std::cout << YLW << "";
 		int r = rand() % 5;
 		if (r == 1)
 			std::cout << "--- Don't ask me where this ammo's coming from! ---" << std::endl;
@@ -136,10 +85,10 @@ void FragTrap::vaulthunter_dot_exe(std::string const &target)
 			std::cout << "--- Ratattattattatta! Powpowpowpow! Powpowpowpow! Pew-pew, pew-pew-pewpew! ---" << std::endl;
 		else
 			std::cout << "--- Avast ye scurvy dogs! ---" << std::endl;
-		std::cout << "\e[m";
+		std::cout << "" << NC;
 		r = (rand() % melee) + 1;
-		std::cout << "FR4G - TP \e[32m" << name << "\e[m attacks \e[31m" << target << "\e[m melee, ";
-		std::cout << "causing " << r << " points of damage !" << std::endl;
+		std::cout << "+++ FR4G - TP " << GRN << this->toString() << "\e[m attacks " << RED << target << "\e[m melee, ";
+		std::cout << "causing " << r << " points of damage ! +++" << std::endl;
 		energy -= 25;
 	}
 }

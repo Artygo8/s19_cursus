@@ -115,21 +115,21 @@ void ScavTrap::takeDamage(unsigned int amount)
 
 void ScavTrap::beRepaired(unsigned int amount)
 {
-	if (hp == max_hp)
+	if (hp == 100)
 		std::cout << BLU << "--- I am full HP! ---" << NC << std::endl;
 	else
 	{
 		std::cout << BLU << "--- Good as new, I think. Am I leaking? ---" << NC << std::endl;
 		std::cout << "+++ " << name << " is getting " << amount << " health points back! +++" << std::endl;
 		hp += amount;
-		if (hp > max_hp)
-			hp = max_hp;
+		if (hp > amount)
+			hp = 100;
 	}
 }
 
 void ScavTrap::challengeNewcomer(void)
 {
-	std::cout << R_BLU << "--- CHALLENGE NEWCOMER : ---" << NC << std::endl;
+	std::cout << BLU << "--- CHALLENGE NEWCOMER : ---" << NC << std::endl;
 	std::cout << BLU << "";
 	int r = rand() % 5;
 	if (r == 1)

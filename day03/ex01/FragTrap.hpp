@@ -16,6 +16,23 @@
 # include <string>
 # include <cstdio>
 
+# ifndef MY_COLORS
+#  define MY_COLORS
+#  define R_CYN "\e[46;30m"
+#  define R_MGN "\e[45;30m"
+#  define R_BLU "\e[44;30m"
+#  define R_YLW "\e[43;30m"
+#  define R_GRN "\e[42;30m"
+#  define R_RED "\e[41;30m"
+#  define CYN "\e[36m"
+#  define MGN "\e[35m"
+#  define BLU "\e[34m"
+#  define YLW "\e[33m"
+#  define GRN "\e[32m"
+#  define RED "\e[31m"
+#  define NC "\e[m"
+# endif
+
 using std::string;
 using std::cout;
 
@@ -32,7 +49,6 @@ class FragTrap
 		int ranged;
 		int armor;
 
-
 	public :
 		// Constructors
 		FragTrap(std::string name);
@@ -45,7 +61,7 @@ class FragTrap
 		// Utils
 		std::string		getName();
 
-		FragTrap		setAttributes(const FragTrap &copy);
+		void			setAttributes(const FragTrap &copy);
 		void			rangedAttack(std::string const &target);
 		void			meleeAttack(std::string const &target);
 		void			takeDamage(unsigned int amount);

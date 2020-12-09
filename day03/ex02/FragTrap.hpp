@@ -15,23 +15,30 @@
 # include <iostream>
 # include <string>
 # include <cstdio>
+# include "ClapTrap.hpp"
+
+# ifndef MY_COLORS
+#  define MY_COLORS
+#  define R_CYN "\e[46;30m"
+#  define R_MGN "\e[45;30m"
+#  define R_BLU "\e[44;30m"
+#  define R_YLW "\e[43;30m"
+#  define R_GRN "\e[42;30m"
+#  define R_RED "\e[41;30m"
+#  define CYN "\e[36m"
+#  define MGN "\e[35m"
+#  define BLU "\e[34m"
+#  define YLW "\e[33m"
+#  define GRN "\e[32m"
+#  define RED "\e[31m"
+#  define NC "\e[m"
+# endif
 
 using std::string;
 using std::cout;
 
-class FragTrap
+class FragTrap : public ClapTrap
 {
-	private:
-		int hp = 100;
-		int max_hp = 100;
-		int energy = 100;
-		int max_energy = 100;
-		int lvl = 1;
-		std::string name;
-		int melee = 30;
-		int ranged = 20;
-		int armor = 5;
-
 
 	public :
 		// Constructors
@@ -43,9 +50,7 @@ class FragTrap
 		FragTrap &operator = (const FragTrap &source);
 
 		// Utils
-		std::string		getName();
 
-		FragTrap		setAttributes(const FragTrap &copy);
 		void			rangedAttack(std::string const &target);
 		void			meleeAttack(std::string const &target);
 		void			takeDamage(unsigned int amount);
