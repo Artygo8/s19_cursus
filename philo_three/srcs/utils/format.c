@@ -35,6 +35,7 @@ int	ft_put_action(size_t id, int e_action)
 	{
 		ft_putstr_fd(" died\n", STDOUT_FILENO);
 		sem_post((*get_data())->dead);
+		usleep(100);
 	}
 	sem_post((*get_data())->write);
 	return (0);

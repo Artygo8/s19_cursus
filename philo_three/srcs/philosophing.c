@@ -30,10 +30,10 @@ void	*ft_countdown(void *philo_ptr)
 	cur_phi = philo_ptr;
 	cur_phi->last_meal = ft_get_ms();
 	while (ft_time_elapsed_ms(cur_phi->last_meal) < *get_input(TIME_TO_DIE)
-	&& (!(*get_data())->one_dead || cur_phi->eat_count == 0))
+	&& (!(*get_data())->one_dead || cur_phi->eat_count == 0) && cur_phi->id)
 		msleep(1);
 	if ((cur_phi->eat_count < *get_input(NB_MUST_EAT)
-	|| (!*get_input(IS_FINITE) && !(*get_data())->one_dead)))
+	|| (!*get_input(IS_FINITE) && !(*get_data())->one_dead)) && cur_phi->id)
 		ft_put_action(cur_phi->id, DYING);
 	return (NULL);
 }
