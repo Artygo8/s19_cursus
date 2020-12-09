@@ -50,6 +50,11 @@ void	get_forks(t_philo *philo)
 	sem_wait(data->tickets);
 	sem_wait(data->forks);
 	ft_put_action(philo->id, FORKING);
+	if (*get_input(NB_PHILO) == 1)
+	{
+		msleep(*get_input(TIME_TO_DIE) + 10);
+		return ;
+	}
 	sem_wait(data->forks);
 	sem_post(data->tickets);
 	ft_put_action(philo->id, FORKING);

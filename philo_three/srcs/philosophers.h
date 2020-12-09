@@ -94,7 +94,7 @@ int					set_input(int argc, char const *argv[]);
 /*
 ** PHILO.C
 */
-pid_t				ft_philo_create(int id, t_data *data);
+pid_t				ft_philo_create(int id);
 t_philo				**ft_table_dup();
 void				ft_delete_table(t_philo **table);
 

@@ -18,8 +18,10 @@ void	*ft_check_for_dead(void *nothing)
 
 	data = *get_data();
 	sem_wait(data->dead);
-	data->one_dead = TRUE;
 	sem_post(data->dead);
+	sem_post(data->dead);
+	sem_post(data->dead);
+	exit(0);
 	return (nothing);
 }
 

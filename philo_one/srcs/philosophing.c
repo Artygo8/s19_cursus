@@ -46,7 +46,13 @@ void	get_forks(t_philo *cur_phi, t_philo *next_phi)
 		usleep(5);
 	if (ft_time_elapsed_ms(*get_input(START)) < 5 && cur_phi->id % 2)
 		msleep(1);
-	if ((cur_phi->id + next_phi->id) % 2)
+	if (*get_input(NB_PHILO) == 1)
+	{
+		pthread_mutex_lock(&(cur_phi->fork));
+		ft_put_action(cur_phi->id, FORKING);
+		msleep(*get_input(TIME_TO_DIE) + 10);
+	}
+	else if ((cur_phi->id + next_phi->id) % 2)
 	{
 		pthread_mutex_lock(&(cur_phi->fork));
 		ft_put_action(cur_phi->id, FORKING);

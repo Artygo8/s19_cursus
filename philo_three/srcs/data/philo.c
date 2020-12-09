@@ -12,7 +12,7 @@
 
 #include "philosophers.h"
 
-pid_t	ft_philo_create(int id, t_data *data)
+pid_t	ft_philo_create(int id)
 {
 	t_philo		*new;
 	pid_t		pid;
@@ -31,8 +31,6 @@ pid_t	ft_philo_create(int id, t_data *data)
 	else if (pid == 0)
 	{
 		living(new);
-		free(new);
-		free(data);
 		exit(0);
 	}
 	free(new);

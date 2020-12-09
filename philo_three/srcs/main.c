@@ -28,7 +28,7 @@ int		main(int argc, char const *argv[])
 	data = *get_data();
 	i = 0;
 	while (i++ < *get_input(NB_PHILO))
-		pids[i - 1] = ft_philo_create(i, data);
+		pids[i - 1] = ft_philo_create(i);
 	i = 0;
 	while (pids[i])
 		waitpid(pids[i++], NULL, 0);
