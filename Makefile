@@ -105,7 +105,7 @@ all:		${NAME}
 clean:
 			${RM} ${OBJS}
 			cd ${LIBFTDIR} && make $@
-			cd ${MINILIBDIR} && make $@
+			cd ${MINILIBDIR} && $@ || rm -rf *.a *.o
 
 fclean:		clean
 			@echo "miniRT - fclean"
