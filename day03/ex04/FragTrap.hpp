@@ -20,7 +20,7 @@
 using std::string;
 using std::cout;
 
-class FragTrap : public ClapTrap
+class FragTrap : virtual public ClapTrap
 {
 	public :
 		// Constructors

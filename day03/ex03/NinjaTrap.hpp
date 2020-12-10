@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   FragTrap.hpp                                       :+:      :+:    :+:   */
+/*   NinjaTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,33 +10,38 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRAGTRAP_HPP
-# define FRAGTRAP_HPP
+#ifndef NINJATRAP_HPP
+# define NINJATRAP_HPP
 # include <iostream>
 # include <string>
 # include <cstdio>
 # include "ClapTrap.hpp"
+# include "FragTrap.hpp"
+# include "ScavTrap.hpp"
 
 using std::string;
 using std::cout;
 
-class FragTrap : public ClapTrap
+class NinjaTrap : public ClapTrap
 {
 	public :
 		// Constructors
-		FragTrap(std::string name);
-		FragTrap (const FragTrap &source);
-		virtual ~FragTrap ();
+		NinjaTrap(std::string name);
+		NinjaTrap (const NinjaTrap &source);
+		virtual ~NinjaTrap ();
 
 		// Operators
-		FragTrap &operator = (const FragTrap &source);
+		NinjaTrap &operator = (const NinjaTrap &source);
 
 		// Utils
 		void			rangedAttack(std::string const &target);
 		void			meleeAttack(std::string const &target);
 		void			takeDamage(unsigned int amount);
-		void 			beRepaired(unsigned int amount);
-		void 			vaulthunter_dot_exe(std::string const &target);
+		void			beRepaired(unsigned int amount);
+		void			ninjaShoebox(ClapTrap &target);
+		void			ninjaShoebox(FragTrap &target);
+		void			ninjaShoebox(ScavTrap &target);
+		void			ninjaShoebox(NinjaTrap &target);
 };
 
 # endif

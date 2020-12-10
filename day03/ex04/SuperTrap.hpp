@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   FragTrap.hpp                                       :+:      :+:    :+:   */
+/*   SuperTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,33 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRAGTRAP_HPP
-# define FRAGTRAP_HPP
+#ifndef SuperTrap_HPP
+# define SuperTrap_HPP
 # include <iostream>
 # include <string>
 # include <cstdio>
-# include "ClapTrap.hpp"
+# include "FragTrap.hpp"
+# include "NinjaTrap.hpp"
 
 using std::string;
 using std::cout;
 
-class FragTrap : public ClapTrap
+class SuperTrap : public FragTrap, public NinjaTrap
 {
 	public :
 		// Constructors
-		FragTrap(std::string name);
-		FragTrap (const FragTrap &source);
-		virtual ~FragTrap ();
+		SuperTrap(std::string name);
+		SuperTrap (const SuperTrap &source);
+		virtual ~SuperTrap ();
 
 		// Operators
-		FragTrap &operator = (const FragTrap &source);
+		SuperTrap &operator = (const SuperTrap &source);
 
 		// Utils
 		void			rangedAttack(std::string const &target);
 		void			meleeAttack(std::string const &target);
 		void			takeDamage(unsigned int amount);
 		void 			beRepaired(unsigned int amount);
-		void 			vaulthunter_dot_exe(std::string const &target);
 };
 
 # endif
