@@ -5,6 +5,10 @@ MiniRT is a mini C RayTracer based on the mini graphic library "minilibx" furnis
 ## Usage
 MiniRayTracer working on linux and MacOS.
 ```bash
+name@name-PC:~$ make run
+```
+or
+```bash
 name@name-PC:~$ make
 name@name-PC:~$ ./miniRT scenes/nine_spheres.rt
 ```

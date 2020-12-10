@@ -107,6 +107,9 @@ clean:
 			cd ${LIBFTDIR} && make $@
 			cd ${MINILIBDIR} && $@ || rm -rf *.a *.o
 
+run:		${NAME}
+			./${NAME} scenes/nine_spheres.rt
+
 fclean:		clean
 			@echo "miniRT - fclean"
 			@${RM} ${NAME}
@@ -120,4 +123,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re run
