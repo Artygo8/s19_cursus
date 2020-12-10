@@ -2,3 +2,4 @@
 *.a
 miniRT
 .DS_Store
+miniRT.dSYM

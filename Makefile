@@ -47,7 +47,6 @@ DIRH		= ./src
 SRCSH		= minirt.h
 
 #	Libraries
-MINILIB		= libmlx.a
 LIBFTDIR	= ./includes/libft
 LIBFT		= libft.a
 BMPS		= bmps
@@ -84,9 +83,11 @@ ifeq (${OS},Darwin)
 	endif
 endif
 
+MINILIB		= ${MINILIBDIR}/libmlx.a
+
 $(NAME):	${OBJS} ${LIBFT} ${MINILIB} ${BMPS}
 			@echo "miniRT - compiling"
-			@${CC} ${CFLAGS} ${VPATH} ${PATHLIB} ${OBJS} ${MINILIBDIR}/${MINILIB} \
+			${CC} ${CFLAGS} ${VPATH} ${PATHLIB} ${OBJS} ${MINILIB} \
 			${LIBFTDIR}/${LIBFT} ${CFLAGS} -o ${NAME}
 			@echo "done."
 
