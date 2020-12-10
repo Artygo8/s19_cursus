@@ -12,7 +12,7 @@
 
 #include "Victim.hpp"
 
-// Contructors /////////////////////////////////////////////////////////////////
+// Coplien ////////////////////////////////////////////////////////////////////
 
 Victim::Victim(std::string n)
 {
@@ -29,8 +29,6 @@ Victim::~Victim()
 {
 	std::cout << "Victim " << name << " just died for no apparent reason!" << std::endl;
 }
-
-// Operators ///////////////////////////////////////////////////////////////////
 
 Victim& Victim::operator = (const Victim &source)
 {

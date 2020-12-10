@@ -27,12 +27,10 @@ class Sorcerer
 		std::string title;
 
 	public:
-		// Constructors
-		Sorcerer(string name, string title);
+		// Coplien
+		Sorcerer(string name = "Anonym", string title = "Unknown");
 		Sorcerer (const Sorcerer &source);
-		virtual ~Sorcerer ();
-
-		// Operators
+		~Sorcerer ();
 		Sorcerer &operator = (const Sorcerer &source);
 
 		// Utils

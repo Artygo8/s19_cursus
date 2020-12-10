@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Peon.cpp                                           :+:      :+:    :+:   */
+/*   Warrior.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,33 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Peon.hpp"
+#ifndef WARRIOR_HPP
+# define WARRIOR_HPP
+# include <iostream>
+# include <string>
+# include "Victim.hpp"
 
-// Contructors /////////////////////////////////////////////////////////////////
+using std::string;
+using std::cout;
 
-Peon::Peon(std::string name) : Victim(name)
+class Warrior : public Victim
 {
-	this->setName(name);
-	std::cout << "Zog zog." << std::endl;
-}
 
-Peon::Peon(const Peon &source)
-{
-	std::cout << "Copy constructor for Peon called" << std::endl;
-}
+	public:
+		// Coplien
+		Warrior(std::string name = "random warrior");
+		~Warrior ();
+		Warrior (const Warrior &source);
+		Warrior &operator = (const Warrior &source);
 
-Peon::~Peon()
-{
-	std::cout << "Bleuark..." << std::endl;
-}
+		void getPolymorphed() const;
 
-Peon& Peon::operator = (const Peon &source)
-{
-	std::cout << "Assignations operator for Peon called" << std::endl;
-	return *this;
-}
+};
 
-void Peon::getPolymorphed() const
-{
-	std::cout << name << " was just polymorphed into a pink pony!" << std::endl;
-}
+# endif

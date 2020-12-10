@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Peon.cpp                                           :+:      :+:    :+:   */
+/*   Warrior.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,33 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Peon.hpp"
+#include "Warrior.hpp"
 
 // Contructors /////////////////////////////////////////////////////////////////
 
-Peon::Peon(std::string name) : Victim(name)
+Warrior::Warrior(std::string name) : Victim(name)
 {
 	this->setName(name);
-	std::cout << "Zog zog." << std::endl;
+	std::cout << "I AM READY TO FIGHT." << std::endl;
 }
 
-Peon::Peon(const Peon &source)
+Warrior::Warrior(const Warrior &source)
 {
-	std::cout << "Copy constructor for Peon called" << std::endl;
+	std::cout << "Copy constructor for Warrior called" << std::endl;
 }
 
-Peon::~Peon()
+Warrior::~Warrior()
 {
-	std::cout << "Bleuark..." << std::endl;
+	std::cout << "I FAILED MY KINGDOM..." << std::endl;
 }
 
-Peon& Peon::operator = (const Peon &source)
+Warrior& Warrior::operator = (const Warrior &source)
 {
-	std::cout << "Assignations operator for Peon called" << std::endl;
+	std::cout << "Assignations operator for Warrior called" << std::endl;
 	return *this;
 }
 
-void Peon::getPolymorphed() const
+void Warrior::getPolymorphed() const
 {
-	std::cout << name << " was just polymorphed into a pink pony!" << std::endl;
+	std::cout << name << " is changed into a little mouse!" << std::endl;
 }

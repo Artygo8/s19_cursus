@@ -26,9 +26,9 @@ class Victim
 
 	public:
 		// Constructors
-		Victim(std::string name);
+		Victim(std::string name = "anonym");
 		Victim (const Victim &source);
-		virtual ~Victim ();
+		~Victim ();
 
 		// Operators
 		Victim &operator = (const Victim &source);
@@ -37,7 +37,7 @@ class Victim
 		std::string		getName() const;
 		std::string		getIntro() const;
 		void			setName(std::string name);
-		void			getPolymorphed() const;
+		virtual void	getPolymorphed() const;
 
 };
 

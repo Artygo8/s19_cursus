@@ -23,9 +23,13 @@ class Peon : public Victim
 {
 
 	public:
-		// Constructors
-		Peon(std::string name);
-		virtual ~Peon ();
+		// Coplien
+		Peon(std::string name = "random peon");
+		~Peon ();
+		Peon (const Peon &source);
+		Peon &operator = (const Peon &source);
+
+		void getPolymorphed() const;
 
 };
 
