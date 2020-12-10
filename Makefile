@@ -72,9 +72,16 @@ $(foreach S, $(SRCSC), $(eval VPATH += $(SRCDIR)/$(S)))
 ifeq (${OS},Linux)
 	MINILIBDIR	= ./includes/minilibx_linux
 	CFLAGS		= -lXext -lX11 -lm
-else
-	MINILIBDIR	= ./includes/minilibx
+endif
+ifeq (${OS},Darwin)
 	CFLAGS		= -framework OpenGL -framework AppKit -Wall -Wextra -Werror
+	# OS VERSION
+	OSX_V		=	$(shell sw_vers -productVersion | sed "s/[0-9]*.//" | sed "s/.[0-9]*$$//")
+	ifeq (${OSX_V}, 14)
+		MINILIBDIR	= ./includes/minilibx_pre_catalina
+	else
+		MINILIBDIR	= ./includes/minilibx
+	endif
 endif
 
 $(NAME):	${OBJS} ${LIBFT} ${MINILIB} ${BMPS}

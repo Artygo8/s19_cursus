@@ -62,3 +62,5 @@ tr - plane triangle
 The project is now working on Catalina. For previous versions, using X11, remove
  the "minilibx" folder and rename the "minilibx_pre_catalina" to "minilibx".
  (This could easily be automated but i didn't do it yet...)
+
+___ edit : version 14 should now be supported ___
