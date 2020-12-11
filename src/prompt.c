@@ -77,8 +77,7 @@ void	ft_prompt(void)
 	{
 		ft_set_child_process(FALSE);
 		ft_wait_line();
-		if (((!(*ft_get_msh())->line || !(*ft_get_msh())->line[0]))
-	&& (*ft_get_signal() != SIGINT || *ft_get_last_status() != SIGNAL_CTRL_C))
+		if (((!(*ft_get_msh())->line || !(*ft_get_msh())->line[0])))
 			fts_putstr_fd(PROMPT, STDERR_FILENO);
 		if (*ft_get_signal() == SIGQUIT)
 		{
