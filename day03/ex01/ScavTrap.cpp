@@ -14,6 +14,11 @@
 
 // Contructors /////////////////////////////////////////////////////////////////
 
+ScavTrap::ScavTrap()
+{
+	std::cout << R_BLU << "    I'm Trap, Claptrap. Double oh... Trap. (default constructor)" << NC << std::endl;
+}
+
 ScavTrap::ScavTrap(std::string name) :
 hp(100),
 max_hp(100),

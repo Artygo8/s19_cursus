@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// Download the generic Makefile
+// curl https://raw.githubusercontent.com/Artygo8/s19_cpp_piscine/master/day03/Makefile > Makefile
+
 #include "FragTrap.hpp"
 
 int main(int argc, char const *argv[])
@@ -19,6 +22,7 @@ int main(int argc, char const *argv[])
 	FragTrap claptrap("CP-TP");
 	FragTrap cptp2(claptrap);
 	FragTrap cptp3("TUCK");
+	FragTrap cptp4;
 
 	cout << "My name is " << cptp2.getName() << "\n";
 	cout << "My name is " << cptp3.getName() << "\n";

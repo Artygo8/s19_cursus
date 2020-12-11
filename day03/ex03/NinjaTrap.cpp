@@ -14,6 +14,12 @@
 
 // Contructors /////////////////////////////////////////////////////////////////
 
+NinjaTrap::NinjaTrap() :
+ClapTrap()
+{
+	std::cout << R_MGN << "    I'm Trap, Claptrap. Double oh... Trap. (default constructor)" << NC << std::endl;
+}
+
 NinjaTrap::NinjaTrap(std::string name) :
 ClapTrap(60, 60, 120, 120, 1, name, 60, 5, 0)
 {

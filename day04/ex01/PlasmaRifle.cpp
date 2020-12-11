@@ -12,14 +12,14 @@
 
 #include "PlasmaRifle.hpp"
 
-// Contructors /////////////////////////////////////////////////////////////////
+// Coplien /////////////////////////////////////////////////////////////////////
 
-PlasmaRifle::PlasmaRifle()
+PlasmaRifle::PlasmaRifle() : AWeapon("Plasma Rifle", 21, 5)
 {
 	std::cout << "Default constructor for PlasmaRifle called" << std::endl;
 }
 
-PlasmaRifle::PlasmaRifle(const PlasmaRifle &source)
+PlasmaRifle::PlasmaRifle(const PlasmaRifle &source) : AWeapon(source)
 {
 	std::cout << "Copy constructor for PlasmaRifle called" << std::endl;
 }
@@ -29,24 +29,10 @@ PlasmaRifle::~PlasmaRifle()
 	std::cout << "Destructor for PlasmaRifle called" << std::endl;
 }
 
-// Operators ///////////////////////////////////////////////////////////////////
-
 PlasmaRifle& PlasmaRifle::operator = (const PlasmaRifle &source)
 {
 	std::cout << "Assignations operator for PlasmaRifle called" << std::endl;
 	return *this;
-}
-
-// set-get ///////////////////////////////////////////////////////////////////////
-
-void		PlasmaRifle::setName(std::string name) //generic function
-{
-	name = name;
-}
-
-std::string	PlasmaRifle::getName() const//generic function
-{
-	return name;
 }
 
 // stream //////////////////////////////////////////////////////////////////////
@@ -57,3 +43,7 @@ std::ostream &operator<<(std::ostream &out, PlasmaRifle const &obj)
 	return out;
 }
 
+void	attack()
+{
+	std::cout << "* piouuu piouuu piouuu *" << std::endl;
+}

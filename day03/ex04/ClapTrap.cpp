@@ -14,6 +14,11 @@
 
 // Contructors /////////////////////////////////////////////////////////////////
 
+ClapTrap::ClapTrap()
+{
+	std::cout << R_GRN << "    I'm Trap, Claptrap. Double oh... Trap. (default parent constructor)" << NC << std::endl;
+}
+
 ClapTrap::ClapTrap(int hp, int max_hp, int energy, int max_energy, int lvl, std::string name, int melee, int ranged, int armor) :
 hp(hp),
 max_hp(max_hp),

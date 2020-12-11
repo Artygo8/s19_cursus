@@ -25,7 +25,7 @@ class Warrior : public Victim
 	public:
 		// Coplien
 		Warrior(std::string name = "random warrior");
-		~Warrior ();
+		virtual ~Warrior ();
 		Warrior (const Warrior &source);
 		Warrior &operator = (const Warrior &source);
 

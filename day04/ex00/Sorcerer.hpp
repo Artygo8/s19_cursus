@@ -30,7 +30,7 @@ class Sorcerer
 		// Coplien
 		Sorcerer(string name = "Anonym", string title = "Unknown");
 		Sorcerer (const Sorcerer &source);
-		~Sorcerer ();
+		virtual ~Sorcerer ();
 		Sorcerer &operator = (const Sorcerer &source);
 
 		// Utils

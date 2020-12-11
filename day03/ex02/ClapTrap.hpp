@@ -53,6 +53,7 @@ class ClapTrap
 
 	public :
 		// Constructors
+		ClapTrap();
 		ClapTrap(int hp, int max_hp, int energy, int max_energy, int lvl, std::string name, int melee, int ranged, int armor);
 		ClapTrap (const ClapTrap &source);
 		virtual ~ClapTrap ();

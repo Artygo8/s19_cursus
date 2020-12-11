@@ -14,6 +14,12 @@
 
 // Contructors /////////////////////////////////////////////////////////////////
 
+ScavTrap::ScavTrap() :
+ClapTrap()
+{
+	std::cout << R_BLU << "    I'm Trap, Claptrap. Double oh... Trap. (default constructor)" << NC << std::endl;
+}
+
 ScavTrap::ScavTrap(std::string name) :
 ClapTrap(100, 100, 50, 50, 1, name, 20, 15, 3)
 {

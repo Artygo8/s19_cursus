@@ -14,12 +14,14 @@
 
 // Contructors /////////////////////////////////////////////////////////////////
 
-AWeapon::AWeapon(std::string const &name, int apcost, int damage)
+AWeapon::AWeapon(std::string const &name, int damage, int apcost) :
+name(name), damage(damage), apcost(apcost)
 {
 	std::cout << "Default constructor for AWeapon called" << std::endl;
 }
 
-AWeapon::AWeapon(const AWeapon &source)
+AWeapon::AWeapon(const AWeapon &source) :
+name(source.name), damage(source.damage), apcost(source.apcost)
 {
 	std::cout << "Copy constructor for AWeapon called" << std::endl;
 }
@@ -35,13 +37,6 @@ AWeapon& AWeapon::operator = (const AWeapon &source)
 {
 	std::cout << "Assignations operator for AWeapon called" << std::endl;
 	return *this;
-}
-
-// set-get ///////////////////////////////////////////////////////////////////////
-
-void		AWeapon::setName(std::string name) //generic function
-{
-	name = name;
 }
 
 std::string	AWeapon::getName() const//generic function

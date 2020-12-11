@@ -28,7 +28,7 @@ class Victim
 		// Constructors
 		Victim(std::string name = "anonym");
 		Victim (const Victim &source);
-		~Victim ();
+		virtual ~Victim ();
 
 		// Operators
 		Victim &operator = (const Victim &source);

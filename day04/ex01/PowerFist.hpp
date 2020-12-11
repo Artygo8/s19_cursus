@@ -14,29 +14,26 @@
 # define POWERFIST_HPP
 # include <iostream>
 # include <string>
+# include "AWeapon.hpp"
 
 using std::string;
 using std::cout;
 
 
-class PowerFist
+class PowerFist : virtual public AWeapon
 {
 
 	private:
 		std::string		name;
 
 	public:
-		// Constructors
+		// Coplien
 		PowerFist ();
 		PowerFist (const PowerFist &source);
 		virtual ~PowerFist ();
-
-		// Operators
 		PowerFist &operator=(const PowerFist &source);
 
-		// Utils
-		std::string		getName() const;
-		void			setName(std::string name);
+		virtual void	attack() const;
 
 };
 

@@ -24,6 +24,7 @@ class ScavTrap : public ClapTrap
 {
 	public :
 		// Constructors
+		ScavTrap();
 		ScavTrap(std::string name);
 		ScavTrap (const ScavTrap &source);
 		virtual ~ScavTrap ();

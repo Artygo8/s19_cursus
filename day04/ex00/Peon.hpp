@@ -25,7 +25,7 @@ class Peon : public Victim
 	public:
 		// Coplien
 		Peon(std::string name = "random peon");
-		~Peon ();
+		virtual ~Peon ();
 		Peon (const Peon &source);
 		Peon &operator = (const Peon &source);
 

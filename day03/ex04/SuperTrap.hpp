@@ -25,6 +25,7 @@ class SuperTrap : public FragTrap, public NinjaTrap
 {
 	public :
 		// Constructors
+		SuperTrap();
 		SuperTrap(std::string name);
 		SuperTrap (const SuperTrap &source);
 		virtual ~SuperTrap ();

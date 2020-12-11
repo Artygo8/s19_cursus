@@ -14,12 +14,13 @@
 # define PLASMARIFLE_HPP
 # include <iostream>
 # include <string>
+# include "AWeapon.hpp"
 
 using std::string;
 using std::cout;
 
 
-class PlasmaRifle
+class PlasmaRifle : virtual public AWeapon
 {
 
 	private:
@@ -30,13 +31,9 @@ class PlasmaRifle
 		PlasmaRifle ();
 		PlasmaRifle (const PlasmaRifle &source);
 		virtual ~PlasmaRifle ();
-
-		// Operators
 		PlasmaRifle &operator=(const PlasmaRifle &source);
 
-		// Utils
-		std::string		getName() const;
-		void			setName(std::string name);
+		virtual void	attack() const;
 
 };
 

@@ -14,6 +14,12 @@
 
 // Contructors /////////////////////////////////////////////////////////////////
 
+FragTrap::FragTrap() :
+ClapTrap()
+{
+	std::cout << R_YLW << "    I'm Trap, Claptrap. Double oh... Trap. (default constructor)" << NC << std::endl;
+}
+
 FragTrap::FragTrap(std::string name) :
 ClapTrap(100, 100, 100, 100, 1, name, 30, 20, 5)
 {

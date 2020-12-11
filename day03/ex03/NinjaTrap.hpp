@@ -26,6 +26,7 @@ class NinjaTrap : public ClapTrap
 {
 	public :
 		// Constructors
+		NinjaTrap();
 		NinjaTrap(std::string name);
 		NinjaTrap (const NinjaTrap &source);
 		virtual ~NinjaTrap ();

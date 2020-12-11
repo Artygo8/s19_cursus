@@ -24,6 +24,7 @@ class FragTrap : public ClapTrap
 {
 	public :
 		// Constructors
+		FragTrap();
 		FragTrap(std::string name);
 		FragTrap (const FragTrap &source);
 		virtual ~FragTrap ();
