@@ -12,48 +12,58 @@
 
 #include "Enemy.hpp"
 
-// Contructors /////////////////////////////////////////////////////////////////
+// Coplien /////////////////////////////////////////////////////////////////////
 
-Enemy::Enemy()
+Enemy::Enemy(int hp, std::string const & type) :
+hp(hp) , type(type)
 {
-	std::cout << "Default constructor for Enemy called" << std::endl;
+	// std::cout << "Default constructor for Enemy called" << std::endl;
 }
 
-Enemy::Enemy(const Enemy &source)
+Enemy::Enemy(const Enemy &source) :
+hp(source.hp) , type(source.type)
 {
-	std::cout << "Copy constructor for Enemy called" << std::endl;
+	// std::cout << "Copy constructor for Enemy called" << std::endl;
 }
 
 Enemy::~Enemy()
 {
-	std::cout << "Destructor for Enemy called" << std::endl;
+	// std::cout << "Destructor for Enemy called" << std::endl;
 }
-
-// Operators ///////////////////////////////////////////////////////////////////
 
 Enemy& Enemy::operator = (const Enemy &source)
 {
-	std::cout << "Assignations operator for Enemy called" << std::endl;
+	// std::cout << "Assignations operator for Enemy called" << std::endl;
+	this->type = source.type;
+	this->hp = source.hp;
 	return *this;
 }
 
-// set-get ///////////////////////////////////////////////////////////////////////
+//
 
-void		Enemy::setName(std::string name) //generic function
+std::string const Enemy::getType() const
 {
-	name = name;
+	return (type);
 }
 
-std::string	Enemy::getName() const//generic function
+int Enemy::getHP() const
 {
-	return name;
+	return (hp);
 }
 
-// stream //////////////////////////////////////////////////////////////////////
+void Enemy::takeDamage(int amount)
+{
+	if (amount >= 0)
+	{
+		this->hp -= amount;
+		std::cout << this->type << " takes " << amount << " damages" << std::endl;
+		if (this->hp < 0)
+			this->hp = 0;
+	}
+}
 
 std::ostream &operator<<(std::ostream &out, Enemy const &obj)
 {
-	out << obj.getName();
+	out << obj.getType() << " has " << obj.getHP() << " hp" << std::endl;
 	return out;
 }
-

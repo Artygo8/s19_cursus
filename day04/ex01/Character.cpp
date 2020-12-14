@@ -12,48 +12,81 @@
 
 #include "Character.hpp"
 
-// Contructors /////////////////////////////////////////////////////////////////
+// Coplien ////////////////////////////////////////////////////////////////////
 
-Character::Character()
+Character::Character(std::string const &name) : name(name), ap(MAX_AP), wp(NULL)
 {
-	std::cout << "Default constructor for Character called" << std::endl;
+	// std::cout << "Default constructor for Character called" << std::endl;
 }
 
-Character::Character(const Character &source)
+Character::Character(const Character &source) : name(source.name), ap(source.ap), wp(source.wp)
 {
-	std::cout << "Copy constructor for Character called" << std::endl;
+	// std::cout << "Copy constructor for Character called" << std::endl;
 }
 
 Character::~Character()
 {
-	std::cout << "Destructor for Character called" << std::endl;
+	// std::cout << "Destructor for Character called" << std::endl;
 }
 
-// Operators ///////////////////////////////////////////////////////////////////
-
-Character& Character::operator = (const Character &source)
+Character & Character::operator = (const Character &source)
 {
-	std::cout << "Assignations operator for Character called" << std::endl;
+	// std::cout << "Assignations operator for Character called" << std::endl;
+	this->name = source.name;
+	this->ap = source.ap;
+	this->wp = source.wp;
 	return *this;
 }
 
-// set-get ///////////////////////////////////////////////////////////////////////
+// Utils //////////////////////////////////////////////////////////////////////
 
-void		Character::setName(std::string name) //generic function
+void				Character::recoverAP()
 {
-	name = name;
+	ap += 10;
+	if (ap > MAX_AP)
+		ap = MAX_AP;
 }
 
-std::string	Character::getName() const//generic function
+void				Character::equip(AWeapon *new_wp)
+{
+	wp = new_wp;
+}
+
+void				Character::attack(Enemy *enemy)
+{
+	if (enemy == NULL || this->wp == NULL || this->wp->getAPCost() > ap)
+		return ;
+	std::cout << getName() << " attacks " << enemy->getType() << " with a " << this->wp->getName() << std::endl;
+	this->wp->attack();
+	this->ap -= this->wp->getAPCost();
+	enemy->takeDamage(this->wp->getDamage());
+	if (enemy->getHP() <= 0)
+		delete (enemy);
+}
+
+std::string const	Character::getName() const
 {
 	return name;
 }
 
-// stream //////////////////////////////////////////////////////////////////////
+int const	Character::getAP() const
+{
+	return ap;
+}
+
+AWeapon		*Character::getWeapon() const
+{
+	return wp;
+}
+
+// Stream /////////////////////////////////////////////////////////////////////
 
 std::ostream &operator<<(std::ostream &out, Character const &obj)
 {
-	out << obj.getName();
+	if (obj.getWeapon())
+		out << YLW << obj.getName() << " has " << obj.getAP() << " AP and carries a " << *(obj.getWeapon()) << NC << std::endl;
+	else
+		out << YLW << obj.getName() << " has " << obj.getAP() << " AP is unarmed" << NC << std::endl;
 	return out;
 }
 

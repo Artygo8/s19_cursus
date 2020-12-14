@@ -31,11 +31,11 @@ Sorcerer::~Sorcerer()
 	std::cout << name << ", " << title << ", is dead. Consequences will never be the same!" << std::endl;
 }
 
-// Operators ///////////////////////////////////////////////////////////////////
-
 Sorcerer& Sorcerer::operator = (const Sorcerer &source)
 {
 	std::cout << "Assignations operator for Sorcerer called" << std::endl;
+	this->name = source.name;
+	this->title = source.title;
 	return *this;
 }
 

@@ -16,22 +16,23 @@
 
 PowerFist::PowerFist() : AWeapon("Power Fist", 50, 8)
 {
-	std::cout << "Default constructor for PowerFist called" << std::endl;
+	// std::cout << "Default constructor for PowerFist called" << std::endl;
 }
 
 PowerFist::PowerFist(const PowerFist &source) : AWeapon(source)
 {
-	std::cout << "Copy constructor for PowerFist called" << std::endl;
+	// std::cout << "Copy constructor for PowerFist called" << std::endl;
 }
 
 PowerFist::~PowerFist()
 {
-	std::cout << "Destructor for PowerFist called" << std::endl;
+	// std::cout << "Destructor for PowerFist called" << std::endl;
 }
 
 PowerFist& PowerFist::operator = (const PowerFist &source)
 {
-	std::cout << "Assignations operator for PowerFist called" << std::endl;
+	// std::cout << "Assignations operator for PowerFist called" << std::endl;
+	*this = source;
 	return *this;
 }
 
@@ -43,7 +44,7 @@ std::ostream &operator<<(std::ostream &out, PowerFist const &obj)
 	return out;
 }
 
-void	attack()
+void	PowerFist::attack() const
 {
 	std::cout << "* pschhh... SBAM ! *" << std::endl;
 }

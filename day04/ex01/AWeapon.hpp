@@ -40,7 +40,7 @@ class AWeapon
 {
 
 	private:
-		const std::string	&name;
+		std::string			name;
 		int					damage;
 		int					apcost;
 
@@ -52,11 +52,11 @@ class AWeapon
 		AWeapon &operator=(const AWeapon &source);
 
 		// Utils
-		std::string		virtual getName() const;
-		int				getAPCost() const;
-		int				getDamage() const;
+		std::string const	getName() const;
+		int					getAPCost() const;
+		int					getDamage() const;
 
-		virtual void	attack() const = 0;
+		virtual void		attack() const = 0;
 
 };
 

@@ -16,22 +16,23 @@
 
 PlasmaRifle::PlasmaRifle() : AWeapon("Plasma Rifle", 21, 5)
 {
-	std::cout << "Default constructor for PlasmaRifle called" << std::endl;
+	// std::cout << "Default constructor for PlasmaRifle called" << std::endl;
 }
 
 PlasmaRifle::PlasmaRifle(const PlasmaRifle &source) : AWeapon(source)
 {
-	std::cout << "Copy constructor for PlasmaRifle called" << std::endl;
+	// std::cout << "Copy constructor for PlasmaRifle called" << std::endl;
 }
 
 PlasmaRifle::~PlasmaRifle()
 {
-	std::cout << "Destructor for PlasmaRifle called" << std::endl;
+	// std::cout << "Destructor for PlasmaRifle called" << std::endl;
 }
 
 PlasmaRifle& PlasmaRifle::operator = (const PlasmaRifle &source)
 {
-	std::cout << "Assignations operator for PlasmaRifle called" << std::endl;
+	// std::cout << "Assignations operator for PlasmaRifle called" << std::endl;
+	*this = source;
 	return *this;
 }
 
@@ -43,7 +44,7 @@ std::ostream &operator<<(std::ostream &out, PlasmaRifle const &obj)
 	return out;
 }
 
-void	attack()
+void	PlasmaRifle::attack() const
 {
 	std::cout << "* piouuu piouuu piouuu *" << std::endl;
 }

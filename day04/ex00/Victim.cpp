@@ -33,6 +33,7 @@ Victim::~Victim()
 Victim& Victim::operator = (const Victim &source)
 {
 	std::cout << "Assignations operator for Victim called" << std::endl;
+	this->name = source.name;
 	return *this;
 }
 

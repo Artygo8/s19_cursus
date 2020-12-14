@@ -23,19 +23,20 @@ class Enemy
 {
 
 	private:
-		int hp;
-		std::string const &type;
+		std::string 		type;
+		int 				hp;
 
 	public:
 		// Coplien
-		Enemy (int hp = 100, std::string const & type = "unknown");
+		Enemy (int hp = 100, std::string const & type = "unknown enemy");
 		Enemy (const Enemy &source);
 		virtual ~Enemy ();
 		Enemy &operator=(const Enemy &source);
 
 		// Utils
-		std::string virtual getType() const;
+		std::string const getType() const;
 		int getHP() const;
+
 		virtual void takeDamage(int);
 
 };

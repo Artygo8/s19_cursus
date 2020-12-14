@@ -16,7 +16,6 @@
 
 Warrior::Warrior(std::string name) : Victim(name)
 {
-	this->setName(name);
 	std::cout << "I AM READY TO FIGHT." << std::endl;
 }
 
@@ -33,6 +32,7 @@ Warrior::~Warrior()
 Warrior& Warrior::operator = (const Warrior &source)
 {
 	std::cout << "Assignations operator for Warrior called" << std::endl;
+	this->name = source.name;
 	return *this;
 }
 

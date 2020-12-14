@@ -18,29 +18,64 @@
 #include "RadScorpion.hpp"
 #include "Character.hpp"
 
-int main(int argc, char const *argv[])
+int main()
 {
+	std::cout << R_RED << "Create character:" << NC << std::endl;
 	Character *me = new Character("me");
-
 	std::cout << *me;
 
-	Enemy *b = new RadScorpion();
+	std::cout << R_RED << "Create enemies:" << NC << std::endl;
+	Enemy *rs = new RadScorpion();
+	Enemy *sm = new SuperMutant();
 
+	std::cout << R_RED << "Try to attack with no weapon:" << NC << std::endl;
+	std::cout << "HP of the " << rs->getType() << " : " << rs->getHP() << std::endl;
+	me->attack(rs);
+	std::cout << "HP of the " << rs->getType() << " : " << rs->getHP() << std::endl;
+
+	std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
+	me->attack(sm);
+	std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
+
+	std::cout << R_RED << "Equip weapon:" << NC << std::endl;
 	AWeapon *pr = new PlasmaRifle();
+	me->equip(pr);
+	std::cout << *me;
+
+	std::cout << R_RED << "Try to attack with weapon:" << NC << std::endl;
+	std::cout << "HP of the " << rs->getType() << " : " << rs->getHP() << std::endl;
+	me->attack(rs);
+	std::cout << "HP of the " << rs->getType() << " : " << rs->getHP() << std::endl;
+	std::cout << *me;
+
+	std::cout << R_RED << "Equip new weapon:" << NC << std::endl;
 	AWeapon *pf = new PowerFist();
-
-	me->equip(pr);
-	std::cout << *me;
 	me->equip(pf);
-
-	me->attack(b);
-	std::cout << *me;
-	me->equip(pr);
-	std::cout << *me;
-	me->attack(b);
-	std::cout << *me;
-	me->attack(b);
 	std::cout << *me;
 
-	return 0;
+	std::cout << R_RED << "Kill SuperMutant:" << NC << std::endl;
+	std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
+	me->attack(sm);
+	std::cout << *me;
+	me->recoverAP();
+
+	std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
+	me->attack(sm);
+	std::cout << *me;
+	me->recoverAP();
+
+	std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
+	me->attack(sm);
+	std::cout << *me;
+	me->recoverAP();
+	std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
+	me->attack(sm);
+	std::cout << *me;
+
+	std::cout << R_RED << "Delete all:" << NC << std::endl;
+	delete(pr);
+	delete(pf);
+	delete(rs);
+	delete(me);
+	// I dont delete the SuperMutant 'sm', because it was already killed, deleted
 }

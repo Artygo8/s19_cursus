@@ -14,46 +14,38 @@
 
 // Contructors /////////////////////////////////////////////////////////////////
 
-SuperMutant::SuperMutant()
+SuperMutant::SuperMutant() : Enemy(170, "Super Mutant")
 {
-	std::cout << "Default constructor for SuperMutant called" << std::endl;
+	// std::cout << "Default constructor for SuperMutant called" << std::endl;
+	std::cout << "Gaaah. Break everything !" << std::endl;
 }
 
-SuperMutant::SuperMutant(const SuperMutant &source)
+SuperMutant::SuperMutant(const SuperMutant &source) : Enemy(source)
 {
-	std::cout << "Copy constructor for SuperMutant called" << std::endl;
+	// std::cout << "Copy constructor for SuperMutant called" << std::endl;
+	std::cout << "Gaaah. Break everything !" << std::endl;
 }
 
 SuperMutant::~SuperMutant()
 {
-	std::cout << "Destructor for SuperMutant called" << std::endl;
+	// std::cout << "Destructor for SuperMutant called" << std::endl;
+	std::cout << "Aaargh ..." << std::endl;
 }
-
-// Operators ///////////////////////////////////////////////////////////////////
 
 SuperMutant& SuperMutant::operator = (const SuperMutant &source)
 {
-	std::cout << "Assignations operator for SuperMutant called" << std::endl;
+	// std::cout << "Assignations operator for SuperMutant called" << std::endl;
+	std::cout << "Gaaah. Break everything !" << std::endl;
+	*this = source;
 	return *this;
 }
 
-// set-get ///////////////////////////////////////////////////////////////////////
-
-void		SuperMutant::setName(std::string name) //generic function
+void 		SuperMutant::takeDamage(int amount)
 {
-	name = name;
+	if (amount > 3)
+		this->Enemy::takeDamage(amount - 3);
+	else if (amount >= 0)
+		this->Enemy::takeDamage(0);
+	else
+		this->Enemy::takeDamage(amount);
 }
-
-std::string	SuperMutant::getName() const//generic function
-{
-	return name;
-}
-
-// stream //////////////////////////////////////////////////////////////////////
-
-std::ostream &operator<<(std::ostream &out, SuperMutant const &obj)
-{
-	out << obj.getName();
-	return out;
-}
-

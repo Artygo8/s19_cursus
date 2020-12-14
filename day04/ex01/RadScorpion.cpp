@@ -12,48 +12,36 @@
 
 #include "RadScorpion.hpp"
 
-// Contructors /////////////////////////////////////////////////////////////////
+// Coplien /////////////////////////////////////////////////////////////////////
 
-RadScorpion::RadScorpion()
+RadScorpion::RadScorpion() : Enemy(80, "RadScorpion")
 {
-	std::cout << "Default constructor for RadScorpion called" << std::endl;
+	// std::cout << "Default constructor for RadScorpion called" << std::endl;
+	std::cout << "* click click click *" << std::endl;
 }
 
-RadScorpion::RadScorpion(const RadScorpion &source)
+RadScorpion::RadScorpion(const RadScorpion &source) : Enemy(source)
 {
-	std::cout << "Copy constructor for RadScorpion called" << std::endl;
+	// std::cout << "Copy constructor for RadScorpion called" << std::endl;
+	std::cout << "* click click click *" << std::endl;
 }
 
 RadScorpion::~RadScorpion()
 {
-	std::cout << "Destructor for RadScorpion called" << std::endl;
+	// std::cout << "Destructor for RadScorpion called" << std::endl;
+	std::cout << "* SPROTCH *" << std::endl;
 }
-
-// Operators ///////////////////////////////////////////////////////////////////
 
 RadScorpion& RadScorpion::operator = (const RadScorpion &source)
 {
-	std::cout << "Assignations operator for RadScorpion called" << std::endl;
+	// std::cout << "Assignations operator for RadScorpion called" << std::endl;
+	std::cout << "* click click click *" << std::endl;
+	*this = source;
 	return *this;
 }
 
-// set-get ///////////////////////////////////////////////////////////////////////
-
-void		RadScorpion::setName(std::string name) //generic function
-{
-	name = name;
-}
-
-std::string	RadScorpion::getName() const//generic function
-{
-	return name;
-}
-
-// stream //////////////////////////////////////////////////////////////////////
-
 std::ostream &operator<<(std::ostream &out, RadScorpion const &obj)
 {
-	out << obj.getName();
-	return out;
+	out << obj.getType() << " has " << obj.getHP() << " hp" << std::endl;
+	return (out);
 }
-
