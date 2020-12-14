@@ -19,7 +19,7 @@ CFLAGS	= -Wall -Wextra -Werror -I srcs/.
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
-	CFLAGS +=" -lpthread"
+	CFLAGS += -lpthread
 endif
 
 all:$(NAME)
