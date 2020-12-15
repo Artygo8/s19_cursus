@@ -34,6 +34,8 @@ INCLUDES = """\
 #  define NC "\e[m"
 # endif
 
+# define TITLE(str) std::cout << R_RED << str << NC << std::endl
+
 using std::string;
 using std::cout;
 
