@@ -212,9 +212,9 @@ run : $(NAME)
 	./$(NAME)
 
 test :$(NAME)
-        @printf "$(SCY)
-        # put your custom tests here
-        @printf "$(RC)
+	@printf "$(SCY)
+	# put your custom tests here
+	@printf "$(RC)
 
 #	cleaning
 clean :
