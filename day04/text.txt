@@ -1,1 +1,1 @@
-Squad    TacticalMarine   AssaultTerminator   ISpaceMarine  ISquad 
+AMateria Ice Cure Character MateriaSource ICharacter IMateriaSource

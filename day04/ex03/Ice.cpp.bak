@@ -1,0 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Ice.cpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/15 00:00:23 by agossuin          #+#    #+#             */
+/*   Updated: 2020/12/15 00:00:23 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Ice.hpp"
+
+// Coplien's form //////////////////////////////////////////////////////////////
+
+Ice::Ice()
+{
+	std::cout << "Default constructor for Ice called" << std::endl;
+}
+
+Ice::Ice(const Ice &source)
+{
+	this->name = source.name;
+	std::cout << "Copy constructor for Ice called" << std::endl;
+}
+
+Ice& Ice::operator = (const Ice &source)
+{
+	this->name = source.name;
+	std::cout << "Assignations operator for Ice called" << std::endl;
+	return *this;
+}
+
+Ice::~Ice()
+{
+	std::cout << "Destructor for Ice called" << std::endl;
+}
+
+// set-get ///////////////////////////////////////////////////////////////////////
+
+void		Ice::setName(std::string name) //generic function
+{
+	this->name = name;
+}
+
+std::string	Ice::getName() const//generic function
+{
+	return name;
+}
+
+// stream //////////////////////////////////////////////////////////////////////
+
+std::ostream &operator<<(std::ostream &out, Ice const &obj)
+{
+	out << obj.getName();
+	return out;
+}
+
+// others //////////////////////////////////////////////////////////////////////
+
