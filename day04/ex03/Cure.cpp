@@ -18,8 +18,9 @@ Cure::Cure() : AMateria("cure")
 {
 }
 
-Cure::Cure(const Cure &source) : AMateria(source)
+Cure::Cure(const Cure &source) : AMateria("cure")
 {
+	this->setXP(source.getXP());
 }
 
 Cure& Cure::operator = (const Cure &source)
@@ -34,23 +35,14 @@ Cure::~Cure()
 
 // others //////////////////////////////////////////////////////////////////////
 
-std::string const & Cure::getType() const
+Cure* Cure::clone() const
 {
-	return "cure";
-} //Returns the materia type
-
-unsigned int Cure::getXP() const
-{
-	return this->AMateria::getXP();
-} //Returns the Materia's XP
-
-AMateria* Cure::clone() const
-{
-	return new Cure(*this);
+	Cure *clone = new Cure(*this);
+	return clone;
 }
 
 void Cure::use(ICharacter& target)
 {
-	std::cout << GRN << "* heals NOM’s wounds *" << NC << std::endl;
+	std::cout << GRN << "* heals " << target.getName() << "’s wounds *" << NC << std::endl;
 	this->AMateria::use(target);
 }

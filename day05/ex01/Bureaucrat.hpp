@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AMateria.hpp                                       :+:      :+:    :+:   */
+/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 00:00:23 by agossuin          #+#    #+#             */
-/*   Updated: 2020/12/15 00:00:23 by agossuin         ###   ########.fr       */
+/*   Created: 2020/12/15 20:59:03 by agossuin          #+#    #+#             */
+/*   Updated: 2020/12/15 20:59:03 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AMATERIA_HPP
-# define AMATERIA_HPP
+#ifndef BUREAUCRAT_HPP
+# define BUREAUCRAT_HPP
+# include <exception>
 # include <iostream>
 # include <string>
-# include "ICharacter.hpp"
+# include "Form.hpp"
 
 # ifndef MY_COLORS
 #  define MY_COLORS
@@ -33,31 +34,41 @@
 #  define NC "\e[m"
 # endif
 
+# define TITLE(str) std::cout << R_BLU << str << NC << std::endl
+
 using std::string;
 using std::cout;
 
-class ICharacter;
+class Form;
 
-class AMateria
+class Bureaucrat
 {
+
 	private:
-		std::string	const type;
-		unsigned int _xp;
+		const std::string	name;
+		int					grade;
 
 	public:
 		// Colpien's form
-		AMateria(std::string const & type = "none");
-		AMateria(const AMateria & source);
-		virtual AMateria &operator=(const AMateria &source);
-		virtual ~AMateria();
+		Bureaucrat (std::string name = "random", int grade = 150);
+		Bureaucrat (const Bureaucrat &source);
+		Bureaucrat &operator=(const Bureaucrat &source);
+		virtual ~Bureaucrat ();
 
-		std::string const & getType() const;
-		unsigned int getXP() const;
-		virtual AMateria* clone() const = 0;
-		virtual void use(ICharacter& target);
-		void		setXP(unsigned int xp);
+		// Utils
+		std::string		getName() const;
+
+		int		getGrade() const;
+		void	incGrade();
+		void	decGrade();
+
+		void	GradeTooLowException();
+		void	GradeTooHighException();
+
+		void	signForm(Form&f);
+
 };
 
-std::ostream &operator<<(std::ostream &out, AMateria const &obj);
+std::ostream &operator<<(std::ostream &out, Bureaucrat const &obj);
 
 # endif

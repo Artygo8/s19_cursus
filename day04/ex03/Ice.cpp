@@ -14,48 +14,35 @@
 
 // Coplien's form //////////////////////////////////////////////////////////////
 
-Ice::Ice()
+Ice::Ice() : AMateria("ice")
 {
-	std::cout << "Default constructor for Ice called" << std::endl;
 }
 
-Ice::Ice(const Ice &source)
+Ice::Ice(const Ice &source) : AMateria("ice")
 {
-	this->name = source.name;
-	std::cout << "Copy constructor for Ice called" << std::endl;
+	this->setXP(source.getXP());
 }
 
 Ice& Ice::operator = (const Ice &source)
 {
-	this->name = source.name;
-	std::cout << "Assignations operator for Ice called" << std::endl;
+	*this = source;
 	return *this;
 }
 
 Ice::~Ice()
 {
-	std::cout << "Destructor for Ice called" << std::endl;
-}
-
-// set-get ///////////////////////////////////////////////////////////////////////
-
-void		Ice::setName(std::string name) //generic function
-{
-	this->name = name;
-}
-
-std::string	Ice::getName() const//generic function
-{
-	return name;
-}
-
-// stream //////////////////////////////////////////////////////////////////////
-
-std::ostream &operator<<(std::ostream &out, Ice const &obj)
-{
-	out << obj.getName();
-	return out;
 }
 
 // others //////////////////////////////////////////////////////////////////////
 
+Ice* Ice::clone() const
+{
+	Ice *clone = new Ice(*this);
+	return clone;
+}
+
+void Ice::use(ICharacter& target)
+{
+	std::cout << BLU << "* shoots an ice bolt at " << target.getName() << " *" << NC << std::endl;
+	this->AMateria::use(target);
+}

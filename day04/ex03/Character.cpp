@@ -25,16 +25,25 @@ Character::Character(std::string name) : name(name)
 Character::Character(const Character &source)
 {
 	this->name = source.name;
+	this->inv[0] = (source.inv[0]) ? source.inv[0]->clone() : 0;
+	this->inv[1] = (source.inv[1]) ? source.inv[1]->clone() : 0;
+	this->inv[2] = (source.inv[2]) ? source.inv[2]->clone() : 0;
+	this->inv[3] = (source.inv[3]) ? source.inv[3]->clone() : 0;
 }
 
 Character& Character::operator = (const Character &source)
 {
-	this->name = source.name;
+	*this = source;
 	return *this;
 }
 
 Character::~Character()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		delete (inv[i]);
+		inv[i] = NULL;
+	}
 }
 
 // others //////////////////////////////////////////////////////////////////////
@@ -59,7 +68,10 @@ void Character::equip(AMateria* m)
 void Character::unequip(int idx)
 {
 	if (idx < 4 && inv[idx])
+	{
+		delete inv[idx];
 		inv[idx] = NULL;
+	}
 }
 
 void Character::use(int idx, ICharacter& target)

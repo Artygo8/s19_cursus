@@ -14,7 +14,7 @@
 # define CURE_HPP
 # include <iostream>
 # include <string>
-#include "AMateria.hpp"
+# include "AMateria.hpp"
 
 using std::string;
 using std::cout;
@@ -27,16 +27,12 @@ class Cure : public AMateria
 		// Colpien's form
 		Cure ();
 		Cure (const Cure &source);
-		virtual Cure &operator=(const Cure &source);
+		virtual Cure &operator = (const Cure &source);
 		virtual ~Cure ();
 
-		std::string const & getType() const; //Returns the materia type
-		unsigned int getXP() const; //Returns the Materia's XP
-		AMateria* clone() const;
-		void use(ICharacter& target);
+		virtual Cure* clone() const;
+		virtual void use(ICharacter& target);
 
 };
-
-std::ostream &operator<<(std::ostream &out, Cure const &obj);
 
 # endif

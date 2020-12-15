@@ -16,46 +16,59 @@
 
 MateriaSource::MateriaSource()
 {
-	std::cout << "Default constructor for MateriaSource called" << std::endl;
+	learned[0] = 0;
+	learned[1] = 0;
+	learned[2] = 0;
+	learned[3] = 0;
 }
 
 MateriaSource::MateriaSource(const MateriaSource &source)
 {
-	this->name = source.name;
-	std::cout << "Copy constructor for MateriaSource called" << std::endl;
+	learned[0] = source.learned[0];
+	learned[1] = source.learned[1];
+	learned[2] = source.learned[2];
+	learned[3] = source.learned[3];
 }
 
 MateriaSource& MateriaSource::operator = (const MateriaSource &source)
 {
-	this->name = source.name;
-	std::cout << "Assignations operator for MateriaSource called" << std::endl;
+	*this = source;
 	return *this;
 }
 
 MateriaSource::~MateriaSource()
 {
-	std::cout << "Destructor for MateriaSource called" << std::endl;
-}
-
-// set-get ///////////////////////////////////////////////////////////////////////
-
-void		MateriaSource::setName(std::string name) //generic function
-{
-	this->name = name;
-}
-
-std::string	MateriaSource::getName() const//generic function
-{
-	return name;
-}
-
-// stream //////////////////////////////////////////////////////////////////////
-
-std::ostream &operator<<(std::ostream &out, MateriaSource const &obj)
-{
-	out << obj.getName();
-	return out;
+	for (int i = 0; i < 4; i++)
+	{
+		delete (learned[i]);
+		learned[i] = NULL;
+	}
 }
 
 // others //////////////////////////////////////////////////////////////////////
 
+void MateriaSource::learnMateria(AMateria *am)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (learned[i] == NULL)
+		{
+			learned[i] = am;
+			return ;
+		}
+	}
+}
+
+AMateria* MateriaSource::createMateria(std::string const & type)
+{
+	srand(time(NULL));
+	int r = rand() % 4;
+	for (int i = 0; i < 4; i++)
+	{
+		if (learned[(r + i) % 4] && learned[(r + i) % 4]->getType() == type)
+		{
+			return learned[(r + i) % 4]->clone();
+		}
+	}
+	return 0;
+}

@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AMateria.hpp                                       :+:      :+:    :+:   */
+/*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 00:00:23 by agossuin          #+#    #+#             */
-/*   Updated: 2020/12/15 00:00:23 by agossuin         ###   ########.fr       */
+/*   Created: 2020/12/15 22:35:53 by agossuin          #+#    #+#             */
+/*   Updated: 2020/12/15 22:35:53 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AMATERIA_HPP
-# define AMATERIA_HPP
+#ifndef FORM_HPP
+# define FORM_HPP
 # include <iostream>
 # include <string>
-# include "ICharacter.hpp"
+
+# include "Bureaucrat.hpp"
 
 # ifndef MY_COLORS
 #  define MY_COLORS
@@ -33,31 +34,42 @@
 #  define NC "\e[m"
 # endif
 
+
 using std::string;
 using std::cout;
 
-class ICharacter;
+class Bureaucrat;
 
-class AMateria
+class Form
 {
+
 	private:
-		std::string	const type;
-		unsigned int _xp;
+		const std::string	name;
+		bool				is_signed;
+		const int			sign_grade;
+		const int			exec_grade;
 
 	public:
 		// Colpien's form
-		AMateria(std::string const & type = "none");
-		AMateria(const AMateria & source);
-		virtual AMateria &operator=(const AMateria &source);
-		virtual ~AMateria();
+		Form (const std::string name = "paperwork", int sign_grade = 1, int exec_grade = 1);
+		Form (const Form &source);
+		Form &operator=(const Form &source);
+		virtual ~Form ();
 
-		std::string const & getType() const;
-		unsigned int getXP() const;
-		virtual AMateria* clone() const = 0;
-		virtual void use(ICharacter& target);
-		void		setXP(unsigned int xp);
+		// getters
+		std::string		getName() const;
+		bool			getIsSigned() const;
+		int				getSignGrade() const;
+		int				getExecGrade() const;
+
+		// exceptions
+		void			GradeTooLowException();
+		void			GradeTooHighException();
+
+		void			beSigned(Bureaucrat &bu);
+
 };
 
-std::ostream &operator<<(std::ostream &out, AMateria const &obj);
+std::ostream &operator<<(std::ostream &out, Form const &obj);
 
 # endif

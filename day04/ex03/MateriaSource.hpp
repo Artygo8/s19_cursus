@@ -24,7 +24,7 @@ class MateriaSource : public IMateriaSource
 {
 
 	private:
-		std::string		name;
+		AMateria	*learned[4];
 
 	public:
 		// Colpien's form
@@ -36,12 +36,6 @@ class MateriaSource : public IMateriaSource
 		virtual void learnMateria(AMateria*);
 		virtual AMateria* createMateria(std::string const & type);
 
-		// Utils
-		std::string		getName() const;
-		void			setName(std::string name);
-
 };
-
-std::ostream &operator<<(std::ostream &out, MateriaSource const &obj);
 
 # endif
