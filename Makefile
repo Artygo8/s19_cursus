@@ -76,11 +76,7 @@ ifeq (${OS},Darwin)
 	CFLAGS		= -framework OpenGL -framework AppKit -Wall -Wextra -Werror
 	# OS VERSION
 	OSX_V		=	$(shell sw_vers -productVersion | sed "s/[0-9]*.//" | sed "s/.[0-9]*$$//")
-	ifeq (${OSX_V}, 14)
-		MINILIBDIR	= ./includes/minilibx_pre_catalina
-	else
-		MINILIBDIR	= ./includes/minilibx
-	endif
+	MINILIBDIR	= ./includes/minilibx
 endif
 
 MINILIB		= ${MINILIBDIR}/libmlx.a
@@ -88,7 +84,7 @@ MINILIB		= ${MINILIBDIR}/libmlx.a
 $(NAME):	${OBJS} ${LIBFT} ${MINILIB} ${BMPS}
 			@echo "miniRT - compiling"
 			${CC} ${CFLAGS} ${VPATH} ${PATHLIB} ${OBJS} ${MINILIB} \
-			${LIBFTDIR}/${LIBFT} ${CFLAGS} -o ${NAME}
+			${LIBFTDIR}/${LIBFT} -o ${NAME}
 			@echo "done."
 
 $(LIBFT):	${LIBFTDIR}
