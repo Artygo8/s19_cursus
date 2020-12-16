@@ -15,15 +15,48 @@
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
 
+void	incrementing_grade()
+{
+	Form a("28a", 19, 2);
+	Bureaucrat john("John", 23);
+
+	try
+	{
+		while (!a.getIsSigned())
+		{
+			john.signForm(a);
+			john.incGrade();
+		}
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << "The program failed because " << e.what() << std::endl;
+	}
+}
+
+void	decrementing_grade()
+{
+	Form a("28a", 19, 2);
+	Bureaucrat john("John", 148);
+
+	try
+	{
+		while (!a.getIsSigned())
+		{
+			john.signForm(a);
+			john.decGrade();
+		}
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << "The function failed because " << e.what() << std::endl;
+	}
+}
+
 int main(int argc, char const *argv[])
 {
-	for (int grade = 21 ; grade > 16 ; grade--)
-	{
-		Form a("28a", 19, 2);
-		Bureaucrat john("John", grade);
-
-		john.signForm(a);
-	}
+	incrementing_grade();
+	decrementing_grade();
 
 	return 0;
 }

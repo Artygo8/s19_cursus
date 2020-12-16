@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   ShrubberyCreationForm.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 22:35:53 by agossuin          #+#    #+#             */
-/*   Updated: 2020/12/15 22:35:53 by agossuin         ###   ########.fr       */
+/*   Created: 2020/12/16 13:15:29 by agossuin          #+#    #+#             */
+/*   Updated: 2020/12/16 13:15:29 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORM_HPP
-# define FORM_HPP
+#ifndef SHRUBBERYCREATIONFORM_HPP
+# define SHRUBBERYCREATIONFORM_HPP
 # include <iostream>
 # include <string>
 
-# include "Bureaucrat.hpp"
+# include "Form.hpp"
 
 # ifndef MY_COLORS
 #  define MY_COLORS
@@ -34,51 +34,26 @@
 #  define NC "\e[m"
 # endif
 
+# define TITLE(str) std::cout << R_RED << str << NC << std::endl
 
 using std::string;
 using std::cout;
 
-class Bureaucrat;
 
-class Form
+class ShrubberyCreationForm : public Form
 {
 
-	private:
-		const std::string	name;
-		bool				is_signed;
-		const int			sign_grade;
-		const int			exec_grade;
+	// ShrubberyCreationForm (Grades requis : signature 145, execution 137).
+	// Action : Crée un fichier nommé <target>_shrubbery, et dessines des
+	// arbres en ASCII dedans, dans le dossier courant.
 
 	public:
-
-		class GradeTooLowException : public std::exception
-		{
-			public:
-				virtual const char * what() const throw();
-		};
-
-		class GradeTooHighException : public std::exception
-		{
-			public:
-				virtual const char * what() const throw();
-		};
-
 		// Colpien's form
-		Form (const std::string name = "paperwork", int sign_grade = 1, int exec_grade = 1);
-		Form (const Form &source);
-		Form &operator=(const Form &source);
-		virtual ~Form ();
-
-		// getters
-		std::string		getName() const;
-		bool			getIsSigned() const;
-		int				getSignGrade() const;
-		int				getExecGrade() const;
-
-		void			beSigned(Bureaucrat &bu);
+		ShrubberyCreationForm (std::string cible = "default");
+		ShrubberyCreationForm (const ShrubberyCreationForm &source);
+		ShrubberyCreationForm &operator=(const ShrubberyCreationForm &source);
+		virtual ~ShrubberyCreationForm ();
 
 };
-
-std::ostream &operator<<(std::ostream &out, Form const &obj);
 
 # endif

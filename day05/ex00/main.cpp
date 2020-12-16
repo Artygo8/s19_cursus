@@ -26,11 +26,11 @@ void	test_high_grades(int start, int amount)
 		}
 		catch (Bureaucrat::GradeTooHighException & e)
 		{
-			std::cout << RED << e.what() << NC << std::endl;
+			std::cerr << RED << e.what() << NC << std::endl;
 		}
 		catch (Bureaucrat::GradeTooLowException & e)
 		{
-			std::cout << RED << e.what() << NC << std::endl;
+			std::cerr << RED << e.what() << NC << std::endl;
 		}
 	}
 }
@@ -49,11 +49,11 @@ void	test_low_grades(int start, int amount)
 		}
 		catch (Bureaucrat::GradeTooHighException & e)
 		{
-			std::cout << RED << e.what() << NC << std::endl;
+			std::cerr << RED << e.what() << NC << std::endl;
 		}
 		catch (Bureaucrat::GradeTooLowException & e)
 		{
-			std::cout << RED << e.what() << NC << std::endl;
+			std::cerr << RED << e.what() << NC << std::endl;
 		}
 	}
 }
@@ -72,11 +72,11 @@ void	test_random_grades(int amount)
 		}
 		catch (Bureaucrat::GradeTooHighException & e)
 		{
-			std::cout << RED << e.what() << NC << std::endl;
+			std::cerr << RED << e.what() << NC << std::endl;
 		}
 		catch (Bureaucrat::GradeTooLowException & e)
 		{
-			std::cout << RED << e.what() << NC << std::endl;
+			std::cerr << RED << e.what() << NC << std::endl;
 		}
 	}
 }

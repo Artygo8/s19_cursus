@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   PresidentialPardonForm.hpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/15 22:35:53 by agossuin          #+#    #+#             */
-/*   Updated: 2020/12/15 22:35:53 by agossuin         ###   ########.fr       */
+/*   Created: 2020/12/16 13:15:29 by agossuin          #+#    #+#             */
+/*   Updated: 2020/12/16 13:15:29 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORM_HPP
-# define FORM_HPP
+#ifndef PRESIDENTIALPARDONFORM_HPP
+# define PRESIDENTIALPARDONFORM_HPP
 # include <iostream>
 # include <string>
 
-# include "Bureaucrat.hpp"
+# include "Form.hpp"
 
 # ifndef MY_COLORS
 #  define MY_COLORS
@@ -34,51 +34,25 @@
 #  define NC "\e[m"
 # endif
 
+# define TITLE(str) std::cout << R_RED << str << NC << std::endl
 
 using std::string;
 using std::cout;
 
-class Bureaucrat;
 
-class Form
+class PresidentialPardonForm : public Form
 {
 
-	private:
-		const std::string	name;
-		bool				is_signed;
-		const int			sign_grade;
-		const int			exec_grade;
+	// PresidentialPardonForm (Grades requis : signature 25, execution 5).
+	// Action : Nous annonce que <target> a été pardonnée par Zafod Beeblebrox.
 
 	public:
-
-		class GradeTooLowException : public std::exception
-		{
-			public:
-				virtual const char * what() const throw();
-		};
-
-		class GradeTooHighException : public std::exception
-		{
-			public:
-				virtual const char * what() const throw();
-		};
-
 		// Colpien's form
-		Form (const std::string name = "paperwork", int sign_grade = 1, int exec_grade = 1);
-		Form (const Form &source);
-		Form &operator=(const Form &source);
-		virtual ~Form ();
-
-		// getters
-		std::string		getName() const;
-		bool			getIsSigned() const;
-		int				getSignGrade() const;
-		int				getExecGrade() const;
-
-		void			beSigned(Bureaucrat &bu);
+		PresidentialPardonForm (std::string cible = "default");
+		PresidentialPardonForm (const PresidentialPardonForm &source);
+		PresidentialPardonForm &operator=(const PresidentialPardonForm &source);
+		virtual ~PresidentialPardonForm ();
 
 };
-
-std::ostream &operator<<(std::ostream &out, Form const &obj);
 
 # endif
