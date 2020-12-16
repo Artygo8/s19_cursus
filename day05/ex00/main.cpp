@@ -24,9 +24,13 @@ void	test_high_grades(int start, int amount)
 			john.incGrade();
 			std::cout << john << " says hello." << std::endl;
 		}
-		catch (char const * msg)
+		catch (Bureaucrat::GradeTooHighException & e)
 		{
-			std::cout << RED << msg << NC << std::endl;
+			std::cout << RED << e.what() << NC << std::endl;
+		}
+		catch (Bureaucrat::GradeTooLowException & e)
+		{
+			std::cout << RED << e.what() << NC << std::endl;
 		}
 	}
 }
@@ -43,9 +47,13 @@ void	test_low_grades(int start, int amount)
 			john.decGrade();
 			std::cout << john << " says hello." << std::endl;
 		}
-		catch (char const * msg)
+		catch (Bureaucrat::GradeTooHighException & e)
 		{
-			std::cout << RED << msg << NC << std::endl;
+			std::cout << RED << e.what() << NC << std::endl;
+		}
+		catch (Bureaucrat::GradeTooLowException & e)
+		{
+			std::cout << RED << e.what() << NC << std::endl;
 		}
 	}
 }
@@ -62,9 +70,13 @@ void	test_random_grades(int amount)
 			Bureaucrat john("John", grade);
 			std::cout << john << " says hello." << std::endl;
 		}
-		catch (char const * msg)
+		catch (Bureaucrat::GradeTooHighException & e)
 		{
-			std::cout << RED << msg << NC << std::endl;
+			std::cout << RED << e.what() << NC << std::endl;
+		}
+		catch (Bureaucrat::GradeTooLowException & e)
+		{
+			std::cout << RED << e.what() << NC << std::endl;
 		}
 	}
 }

@@ -47,6 +47,19 @@ class Bureaucrat
 		int					grade;
 
 	public:
+
+		class GradeTooLowException : public std::exception
+		{
+			public:
+				virtual const char * what() const throw();
+		};
+
+		class GradeTooHighException : public std::exception
+		{
+			public:
+				virtual const char * what() const throw();
+		};
+
 		// Colpien's form
 		Bureaucrat (std::string name = "random", int grade = 150);
 		Bureaucrat (const Bureaucrat &source);
@@ -59,9 +72,6 @@ class Bureaucrat
 
 		void	incGrade();
 		void	decGrade();
-
-		void	GradeTooLowException();
-		void	GradeTooHighException();
 
 };
 
