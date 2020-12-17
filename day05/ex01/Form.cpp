@@ -65,10 +65,9 @@ int		Form::getExecGrade() const
 
 std::ostream &operator<<(std::ostream &out, Form const &obj)
 {
-	if (obj.getIsSigned())
-		out << "signed form \"" << obj.getName() <<"\" (sign grade=" << obj.getSignGrade() <<"/eg="<< obj.getExecGrade() << ")";
-	else
-		out << "pending form \"" << obj.getName() <<"\" (sign grade=" << obj.getSignGrade() <<"/eg="<< obj.getExecGrade() << ")";
+	out << "📄 \"" << obj.getName() <<"\" (sign grade=" << obj.getSignGrade()
+	<<" / execution grade="<< obj.getExecGrade()
+	<< ((obj.getIsSigned()) ? " / signed=✅)" : " / signed=❌)");
 	return out;
 }
 

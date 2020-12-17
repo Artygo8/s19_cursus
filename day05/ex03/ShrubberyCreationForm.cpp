@@ -15,7 +15,7 @@
 // Coplien's form //////////////////////////////////////////////////////////////
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string cible) :
-Form("ShrubberyCreationForm", 145, 137, cible)
+Form("shrubbery creation", 145, 137, cible)
 {
 }
 

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PresidentialPardonForm.cpp                         :+:      :+:    :+:   */
+/*   RobotomyRequestForm.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,34 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
 
 // Coplien's form //////////////////////////////////////////////////////////////
 
-PresidentialPardonForm::PresidentialPardonForm(std::string cible) :
-Form("PresidentialPardonForm", 25, 5, cible)
+RobotomyRequestForm::RobotomyRequestForm(std::string cible) :
+Form("robotomy request", 72, 45, cible)
 {
 }
 
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &source) :
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &source) :
 Form(source)
 {
 }
 
-PresidentialPardonForm& PresidentialPardonForm::operator = (const PresidentialPardonForm &source)
+RobotomyRequestForm& RobotomyRequestForm::operator = (const RobotomyRequestForm &source)
 {
 	*this = source;
 	return *this;
 }
 
-PresidentialPardonForm::~PresidentialPardonForm()
+RobotomyRequestForm::~RobotomyRequestForm()
 {
 }
 
 // others //////////////////////////////////////////////////////////////////////
 
-void	PresidentialPardonForm::execute (Bureaucrat const & executor) const
+void	RobotomyRequestForm::execute (Bureaucrat const & executor) const
 {
 	Form::execute(executor);
-	std::cout << getTarget() << " was forgiven by Zafod Beeblebrox." << std::endl;
+	std::cout << "Brzzz Brzzz Brzzz" << std::endl;
+	std::cout << getTarget() << " was robotomized." << std::endl;
 }

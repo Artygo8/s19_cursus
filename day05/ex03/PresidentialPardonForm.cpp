@@ -15,7 +15,7 @@
 // Coplien's form //////////////////////////////////////////////////////////////
 
 PresidentialPardonForm::PresidentialPardonForm(std::string cible) :
-Form("PresidentialPardonForm", 25, 5, cible)
+Form("presidential pardon", 25, 5, cible)
 {
 }
 

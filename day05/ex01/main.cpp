@@ -36,7 +36,7 @@ void	incrementing_grade()
 
 void	decrementing_grade()
 {
-	Form a("28a", 19, 2);
+	Form a("42d", 19, 2);
 	Bureaucrat john("John", 148);
 
 	try

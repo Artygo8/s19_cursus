@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RobotomyRequestForm.hpp                            :+:      :+:    :+:   */
+/*   Intern.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/16 13:15:29 by agossuin          #+#    #+#             */
-/*   Updated: 2020/12/16 13:15:29 by agossuin         ###   ########.fr       */
+/*   Created: 2020/12/15 20:59:03 by agossuin          #+#    #+#             */
+/*   Updated: 2020/12/15 20:59:03 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ROBOTOMYREQUESTFORM_HPP
-# define ROBOTOMYREQUESTFORM_HPP
+#ifndef Intern_HPP
+# define Intern_HPP
+# include <exception>
 # include <iostream>
 # include <string>
 
-# include "Form.hpp"
+# include "PresidentialPardonForm.hpp"
+# include "RobotomyRequestForm.hpp"
+# include "ShrubberyCreationForm.hpp"
 
 # ifndef MY_COLORS
 #  define MY_COLORS
@@ -40,21 +43,24 @@ using std::string;
 using std::cout;
 
 
-class RobotomyRequestForm : public Form
+class Intern
 {
 
-	// RobotomyRequestForm (Grades requis : signature 72, execution 45).
-	// Action : Fait des bruits de perceuses, et annonce que <target> a bien été
-	// robotomizée. Le reste du temps, annonce son échec.
-
 	public:
-		// Colpien's form
-		RobotomyRequestForm (std::string cible = "default");
-		RobotomyRequestForm (const RobotomyRequestForm &source);
-		RobotomyRequestForm &operator=(const RobotomyRequestForm &source);
-		virtual ~RobotomyRequestForm ();
 
-		virtual void	execute (Bureaucrat const & executor) const;
+		class UnrecognizedFormException : public std::exception
+		{
+			public:
+				virtual const char * what() const throw();
+		};
+
+		// Colpien's form
+		Intern ();
+		Intern (const Intern &source);
+		Intern &operator=(const Intern &source);
+		virtual ~Intern ();
+
+        Form    *makeForm(std::string name, std::string target);
 
 };
 
