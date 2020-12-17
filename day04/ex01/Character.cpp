@@ -89,4 +89,3 @@ std::ostream &operator<<(std::ostream &out, Character const &obj)
 		out << YLW << obj.getName() << " has " << obj.getAP() << " AP is unarmed" << NC << std::endl;
 	return out;
 }
-

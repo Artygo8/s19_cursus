@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RadScorpion.cpp                                    :+:      :+:    :+:   */
+/*   Duck.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,37 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RadScorpion.hpp"
+#include "Duck.hpp"
 
 // Coplien /////////////////////////////////////////////////////////////////////
 
-RadScorpion::RadScorpion() : Enemy(80, "RadScorpion")
+Duck::Duck() : Enemy(1, "Duck")
 {
-	// std::cout << "Default constructor for RadScorpion called" << std::endl;
-	std::cout << "* click click click *" << std::endl;
+	// std::cout << "Default constructor for Duck called" << std::endl;
+	std::cout << "* coin coin *" << std::endl;
 }
 
-RadScorpion::RadScorpion(const RadScorpion &source) : Enemy(source)
+Duck::Duck(const Duck &source) : Enemy(source)
 {
-	// std::cout << "Copy constructor for RadScorpion called" << std::endl;
-	std::cout << "* click click click *" << std::endl;
+	// std::cout << "Copy constructor for Duck called" << std::endl;
+	std::cout << "* coin coin *" << std::endl;
 }
 
-RadScorpion::~RadScorpion()
+Duck::~Duck()
 {
-	// std::cout << "Destructor for RadScorpion called" << std::endl;
-	std::cout << "* SPROTCH *" << std::endl;
+	// std::cout << "Destructor for Duck called" << std::endl;
+	std::cout << "* Blublblblb... *" << std::endl;
 }
 
-RadScorpion& RadScorpion::operator = (const RadScorpion &source)
+Duck& Duck::operator = (const Duck &source)
 {
-	// std::cout << "Assignations operator for RadScorpion called" << std::endl;
-	std::cout << "* click click click *" << std::endl;
+	// std::cout << "Assignations operator for Duck called" << std::endl;
+	std::cout << "* coin coin *" << std::endl;
 	*this = source;
 	return *this;
 }
 
-std::ostream &operator<<(std::ostream &out, RadScorpion const &obj)
+std::ostream &operator<<(std::ostream &out, Duck const &obj)
 {
 	out << obj.getType() << " has " << obj.getHP() << " hp" << std::endl;
 	return (out);

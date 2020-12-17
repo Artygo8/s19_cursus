@@ -64,4 +64,3 @@ std::ostream &operator<<(std::ostream &out, AWeapon const &obj)
 	out << obj.getName();
 	return out;
 }
-

@@ -1,46 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Sorcerer.hpp                                       :+:      :+:    :+:   */
+/*   UselessWeapon.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/04 12:00:01 by agossuin          #+#    #+#             */
-/*   Updated: 2020/05/04 12:00:01 by agossuin         ###   ########.fr       */
+/*   Created: 2020/05/04 16:47:03 by agossuin          #+#    #+#             */
+/*   Updated: 2020/05/04 16:47:03 by agossuin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SORCERER_HPP
-# define SORCERER_HPP
+#ifndef USELESSWEAPON_HPP
+# define USELESSWEAPON_HPP
 # include <iostream>
 # include <string>
-# include "Victim.hpp"
+# include "AWeapon.hpp"
 
 using std::string;
 using std::cout;
 
-class Sorcerer
+
+class UselessWeapon : virtual public AWeapon
 {
 
 	private:
-		std::string name;
-		std::string title;
-		Sorcerer();
+		std::string		name;
 
 	public:
-		// Coplien
-		Sorcerer(string name, string title);
-		Sorcerer (const Sorcerer &source);
-		virtual ~Sorcerer ();
-		Sorcerer &operator = (const Sorcerer &source);
+		// Constructors
+		UselessWeapon ();
+		UselessWeapon (const UselessWeapon &source);
+		virtual ~UselessWeapon ();
+		UselessWeapon &operator=(const UselessWeapon &source);
 
-		// Utils
-		std::string	getIntro() const;
-		void		setName(std::string name);
+		virtual void	attack() const;
 
-		void		polymorph(Victim const &vi) const;
 };
 
-std::ostream		&operator<<(std::ostream &out, Sorcerer const &so);
+std::ostream &operator<<(std::ostream &out, UselessWeapon const &obj);
 
 # endif
