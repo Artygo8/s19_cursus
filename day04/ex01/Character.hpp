@@ -41,7 +41,7 @@ class Character
 		void				equip(AWeapon*);
 		void				attack(Enemy*);
 		std::string const	getName() const;
-		int const			getAP() const;
+		int					getAP() const;
 		AWeapon				*getWeapon() const;
 
 };

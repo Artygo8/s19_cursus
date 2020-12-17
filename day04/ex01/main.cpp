@@ -21,93 +21,105 @@
 #include "UselessWeapon.hpp"
 #include "Duck.hpp"
 
+#define TITLE_BLU(str) std::cout << R_BLU << str << NC << std::endl
+#define TITLE_MGN(str) std::cout << R_MGN << str << NC << std::endl
+
 int main()
 {
 
 	{
-		std::cout << R_BLU << "Create character:" << NC << std::endl;
+		TITLE_BLU("Create new stuffs then test operator<<");
 		Character *me = new Character("me");
 		std::cout << *me;
-
-		std::cout << R_BLU << "Create enemies:" << NC << std::endl;
 		Enemy *rs = new RadScorpion();
+		std::cout << *rs;
 		Enemy *sm = new SuperMutant();
-
-		std::cout << R_BLU << "Try to attack with no weapon:" << NC << std::endl;
-		std::cout << "HP of the " << rs->getType() << " : " << rs->getHP() << std::endl;
-		me->attack(rs);
-		std::cout << "HP of the " << rs->getType() << " : " << rs->getHP() << std::endl;
-
-		std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
-		me->attack(sm);
-		std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
-
-		std::cout << R_BLU << "Equip weapon:" << NC << std::endl;
+		std::cout << *sm;
 		AWeapon *pr = new PlasmaRifle();
+		std::cout << *pr << std::endl;
+		AWeapon *pf = new PowerFist();
+		std::cout << *pf << std::endl;
+
+		TITLE_BLU("Try to attack with no weapon");
+		me->attack(rs);
+		std::cout << *rs;
+
+		TITLE_BLU("Equip Plasma Rifle");
 		me->equip(pr);
 		std::cout << *me;
 
-		std::cout << R_BLU << "Try to attack with weapon:" << NC << std::endl;
-		std::cout << "HP of the " << rs->getType() << " : " << rs->getHP() << std::endl;
+		TITLE_BLU("Try to attack with Plasma Rifle");
 		me->attack(rs);
-		std::cout << "HP of the " << rs->getType() << " : " << rs->getHP() << std::endl;
+		std::cout << *rs;
 		std::cout << *me;
 
-		std::cout << R_BLU << "Equip new weapon:" << NC << std::endl;
-		AWeapon *pf = new PowerFist();
+		TITLE_BLU("Equip Power Fist");
 		me->equip(pf);
 		std::cout << *me;
 
-		std::cout << R_BLU << "Kill SuperMutant:" << NC << std::endl;
-		std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
+		TITLE_BLU("Attack SuperMutant");
 		me->attack(sm);
-		std::cout << *me;
-		me->recoverAP();
-
-		std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
-		me->attack(sm);
-		std::cout << *me;
-		me->recoverAP();
-
-		std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
-		me->attack(sm);
-		std::cout << *me;
-		me->recoverAP();
-		std::cout << "HP of the " << sm->getType() << " : " << sm->getHP() << std::endl;
-		me->attack(sm);
+		std::cout << *sm;
 		std::cout << *me;
 
-		std::cout << R_BLU << "Delete all:" << NC << std::endl;
+		TITLE_BLU("Recover AP");
+		me->recoverAP();
+		std::cout << *me;
+
+		TITLE_BLU("Attack SuperMutant");
+		me->attack(sm);
+		std::cout << *sm;
+		std::cout << *me;
+
+		TITLE_BLU("Attack SuperMutant");
+		me->attack(sm);
+		std::cout << *sm;
+		std::cout << *me;
+
+		TITLE_BLU("Attack SuperMutant");
+		me->attack(sm);
+		std::cout << *me;
+
+		TITLE_BLU("Delete all that is left");
 		delete(pr);
 		delete(pf);
 		delete(rs);
 		delete(me);
-		// I dont delete the SuperMutant 'sm', because it was already killed, deleted
 	}
 
 	{
-		std::cout << R_BLU << "Custom objects:" << NC << std::endl;
+		TITLE_MGN("Create Custom objects:");
 		Character me("me");
-		Enemy *ducky = new Duck();
-		Enemy *duckyToo = new Duck();
-		AWeapon *uw = new UselessWeapon();
-		AWeapon *pr = new PlasmaRifle();
-
 		std::cout << me;
+		Enemy *ducky = new Duck();
+		std::cout << *ducky;
+		Enemy *duckyToo = new Duck();
+		std::cout << *duckyToo;
+		AWeapon *uw = new UselessWeapon();
+		std::cout << *uw << std::endl;
+		AWeapon *pr = new PlasmaRifle();
+		std::cout << *pr << std::endl;
+
+		TITLE_MGN("Equip Useless Weapon");
 		me.equip(uw);
 		std::cout << me;
+
+		TITLE_MGN("Attack the first duck");
 		me.attack(ducky);
 		std::cout << me;
 		
-		std::cout << R_BLU << "Trying attack the other duck:" << NC << std::endl;
+		TITLE_MGN("Try to attack the second duck");
 		me.attack(duckyToo);
 		std::cout << me;
 
-		std::cout << R_BLU << "change weapon:" << NC << std::endl;
+		TITLE_MGN("Change weapon");
 		me.equip(pr);
+		std::cout << me;
+		TITLE_MGN("Attack the second duck");
 		me.attack(duckyToo);
 		std::cout << me;
 
+		TITLE_MGN("Delete what's left");
 		delete uw;
 		delete pr;
 	}

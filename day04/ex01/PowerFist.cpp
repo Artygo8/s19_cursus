@@ -14,25 +14,15 @@
 
 // Coplien 	////////////////////////////////////////////////////////////////////
 
-PowerFist::PowerFist() : AWeapon("Power Fist", 50, 8)
-{
-	// std::cout << "Default constructor for PowerFist called" << std::endl;
-}
+PowerFist::PowerFist() : AWeapon("Power Fist", 50, 8) {}
 
-PowerFist::PowerFist(const PowerFist &source) : AWeapon(source)
-{
-	// std::cout << "Copy constructor for PowerFist called" << std::endl;
-}
+PowerFist::PowerFist(const PowerFist &source) : AWeapon(source) {}
 
-PowerFist::~PowerFist()
-{
-	// std::cout << "Destructor for PowerFist called" << std::endl;
-}
+PowerFist::~PowerFist() {}
 
 PowerFist& PowerFist::operator = (const PowerFist &source)
 {
-	// std::cout << "Assignations operator for PowerFist called" << std::endl;
-	*this = source;
+	AWeapon::operator= (source);
 	return *this;
 }
 

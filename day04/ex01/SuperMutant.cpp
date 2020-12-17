@@ -16,27 +16,22 @@
 
 SuperMutant::SuperMutant() : Enemy(170, "Super Mutant")
 {
-	// std::cout << "Default constructor for SuperMutant called" << std::endl;
 	std::cout << "Gaaah. Break everything !" << std::endl;
 }
 
 SuperMutant::SuperMutant(const SuperMutant &source) : Enemy(source)
 {
-	// std::cout << "Copy constructor for SuperMutant called" << std::endl;
 	std::cout << "Gaaah. Break everything !" << std::endl;
 }
 
 SuperMutant::~SuperMutant()
 {
-	// std::cout << "Destructor for SuperMutant called" << std::endl;
 	std::cout << "Aaargh ..." << std::endl;
 }
 
 SuperMutant& SuperMutant::operator = (const SuperMutant &source)
 {
-	// std::cout << "Assignations operator for SuperMutant called" << std::endl;
-	std::cout << "Gaaah. Break everything !" << std::endl;
-	*this = source;
+	Enemy::operator= (source);
 	return *this;
 }
 

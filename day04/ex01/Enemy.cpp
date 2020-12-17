@@ -14,41 +14,29 @@
 
 // Coplien /////////////////////////////////////////////////////////////////////
 
-Enemy::Enemy(int hp, std::string const & type) :
-hp(hp) , type(type)
-{
-	// std::cout << "Default constructor for Enemy called" << std::endl;
-}
+Enemy::Enemy(int hp, std::string const & type) : hp(hp) , type(type) {}
 
-Enemy::Enemy(const Enemy &source) :
-hp(source.hp) , type(source.type)
-{
-	// std::cout << "Copy constructor for Enemy called" << std::endl;
-}
+Enemy::Enemy(const Enemy &source) : Enemy(source.hp, source.type) {}
 
-Enemy::~Enemy()
-{
-	// std::cout << "Destructor for Enemy called" << std::endl;
-}
+Enemy::~Enemy() {}
 
 Enemy& Enemy::operator = (const Enemy &source)
 {
-	// std::cout << "Assignations operator for Enemy called" << std::endl;
 	this->type = source.type;
 	this->hp = source.hp;
 	return *this;
 }
 
-//
+// set-get ////////////////////////////////////////////////////////////////////
 
 std::string const Enemy::getType() const
 {
-	return (type);
+	return type;
 }
 
 int Enemy::getHP() const
 {
-	return (hp);
+	return hp;
 }
 
 void Enemy::takeDamage(int amount)
@@ -57,13 +45,11 @@ void Enemy::takeDamage(int amount)
 	{
 		this->hp -= amount;
 		std::cout << this->type << " takes " << amount << " damages" << std::endl;
-		if (this->hp < 0)
-			this->hp = 0;
+		if (this->hp < 0) this->hp = 0;
 	}
 }
 
 std::ostream &operator<<(std::ostream &out, Enemy const &obj)
 {
-	out << obj.getType() << " has " << obj.getHP() << " hp" << std::endl;
-	return out;
+	return out << RED << obj.getType() << " has " << obj.getHP() << " hp" << NC << std::endl;
 }

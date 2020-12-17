@@ -14,13 +14,12 @@
 
 // Coplien ////////////////////////////////////////////////////////////////////
 
-Victim::Victim(std::string n)
+Victim::Victim(std::string n) : name(n)
 {
-	this->name = n;
 	std::cout << "Some random victim called " << name << " just appeared!" << std::endl;
 }
 
-Victim::Victim(const Victim &source)
+Victim::Victim(const Victim &source) : Victim(source.name)
 {
 	std::cout << "Copy constructor for Victim called" << std::endl;
 }
@@ -44,12 +43,12 @@ void		Victim::setName(std::string name) //generic function
 	this->name = name;
 }
 
-void Victim::getPolymorphed() const
+void		Victim::getPolymorphed() const
 {
 	std::cout << name << " has been turned into a cute little sheep!" << std::endl;
 }
 
-std::string Victim::getName() const //generic function
+std::string	Victim::getName() const //generic function
 {
 	return name;
 }

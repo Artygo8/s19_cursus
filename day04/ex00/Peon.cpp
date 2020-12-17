@@ -19,10 +19,9 @@ Peon::Peon(std::string name) : Victim(name)
 	std::cout << "Zog zog." << std::endl;
 }
 
-Peon::Peon(const Peon &source)
+Peon::Peon(const Peon &source) : Peon(source.name)
 {
 	std::cout << "Copy constructor for Peon called" << std::endl;
-	std::cout << "Zog zog." << std::endl;
 }
 
 Peon::~Peon()
@@ -33,8 +32,7 @@ Peon::~Peon()
 Peon& Peon::operator = (const Peon &source)
 {
 	std::cout << "Assignations operator for Peon called" << std::endl;
-	std::cout << "Zog zog." << std::endl;
-	*this = source;
+	this->name = source.name;
 	return *this;
 }
 

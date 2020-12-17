@@ -16,27 +16,22 @@
 
 RadScorpion::RadScorpion() : Enemy(80, "RadScorpion")
 {
-	// std::cout << "Default constructor for RadScorpion called" << std::endl;
 	std::cout << "* click click click *" << std::endl;
 }
 
 RadScorpion::RadScorpion(const RadScorpion &source) : Enemy(source)
 {
-	// std::cout << "Copy constructor for RadScorpion called" << std::endl;
 	std::cout << "* click click click *" << std::endl;
 }
 
 RadScorpion::~RadScorpion()
 {
-	// std::cout << "Destructor for RadScorpion called" << std::endl;
 	std::cout << "* SPROTCH *" << std::endl;
 }
 
 RadScorpion& RadScorpion::operator = (const RadScorpion &source)
 {
-	// std::cout << "Assignations operator for RadScorpion called" << std::endl;
-	std::cout << "* click click click *" << std::endl;
-	*this = source;
+	Enemy::operator= (source);
 	return *this;
 }
 

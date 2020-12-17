@@ -14,25 +14,15 @@
 
 // Coplien /////////////////////////////////////////////////////////////////////
 
-UselessWeapon::UselessWeapon() : AWeapon("Useless Weapon", 1, 30)
-{
-	// std::cout << "Default constructor for UselessWeapon called" << std::endl;
-}
+UselessWeapon::UselessWeapon() : AWeapon("Useless Weapon", 1, 30) {}
 
-UselessWeapon::UselessWeapon(const UselessWeapon &source) : AWeapon(source)
-{
-	// std::cout << "Copy constructor for UselessWeapon called" << std::endl;
-}
+UselessWeapon::UselessWeapon(const UselessWeapon &source) : AWeapon(source) {}
 
-UselessWeapon::~UselessWeapon()
-{
-	// std::cout << "Destructor for UselessWeapon called" << std::endl;
-}
+UselessWeapon::~UselessWeapon() {}
 
 UselessWeapon& UselessWeapon::operator = (const UselessWeapon &source)
 {
-	// std::cout << "Assignations operator for UselessWeapon called" << std::endl;
-	*this = source;
+	AWeapon::operator= (source);
 	return *this;
 }
 

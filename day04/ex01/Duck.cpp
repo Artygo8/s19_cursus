@@ -16,27 +16,22 @@
 
 Duck::Duck() : Enemy(1, "Duck")
 {
-	// std::cout << "Default constructor for Duck called" << std::endl;
 	std::cout << "* coin coin *" << std::endl;
 }
 
 Duck::Duck(const Duck &source) : Enemy(source)
 {
-	// std::cout << "Copy constructor for Duck called" << std::endl;
 	std::cout << "* coin coin *" << std::endl;
 }
 
 Duck::~Duck()
 {
-	// std::cout << "Destructor for Duck called" << std::endl;
 	std::cout << "* Blublblblb... *" << std::endl;
 }
 
-Duck& Duck::operator = (const Duck &source)
+Duck& Duck::operator= (const Duck &source)
 {
-	// std::cout << "Assignations operator for Duck called" << std::endl;
-	std::cout << "* coin coin *" << std::endl;
-	*this = source;
+	Enemy::operator= (source);
 	return *this;
 }
 

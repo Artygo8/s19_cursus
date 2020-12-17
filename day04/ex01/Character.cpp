@@ -16,22 +16,20 @@
 
 Character::Character(std::string const &name) : name(name), ap(MAX_AP), wp(NULL)
 {
-	// std::cout << "Default constructor for Character called" << std::endl;
 }
 
-Character::Character(const Character &source) : name(source.name), ap(source.ap), wp(source.wp)
+Character::Character(const Character &source) : Character(source.name)
 {
-	// std::cout << "Copy constructor for Character called" << std::endl;
+	this->ap = source.ap;
+	this->wp = source.wp;
 }
 
 Character::~Character()
 {
-	// std::cout << "Destructor for Character called" << std::endl;
 }
 
 Character & Character::operator = (const Character &source)
 {
-	// std::cout << "Assignations operator for Character called" << std::endl;
 	this->name = source.name;
 	this->ap = source.ap;
 	this->wp = source.wp;
@@ -69,7 +67,7 @@ std::string const	Character::getName() const
 	return name;
 }
 
-int const	Character::getAP() const
+int			Character::getAP() const
 {
 	return ap;
 }
@@ -83,9 +81,10 @@ AWeapon		*Character::getWeapon() const
 
 std::ostream &operator<<(std::ostream &out, Character const &obj)
 {
+	out << YLW << obj.getName() << " has " << obj.getAP();
 	if (obj.getWeapon())
-		out << YLW << obj.getName() << " has " << obj.getAP() << " AP and carries a " << *(obj.getWeapon()) << NC << std::endl;
+		out << " AP and carries a " << *(obj.getWeapon());
 	else
-		out << YLW << obj.getName() << " has " << obj.getAP() << " AP is unarmed" << NC << std::endl;
-	return out;
+		out << " AP is unarmed";
+	return out << NC << std::endl;
 }

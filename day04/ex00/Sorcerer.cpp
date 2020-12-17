@@ -14,14 +14,12 @@
 
 // Contructors /////////////////////////////////////////////////////////////////
 
-Sorcerer::Sorcerer(std::string name, std::string title)
+Sorcerer::Sorcerer(std::string name, std::string title) : name(name), title(title)
 {
-	this->name = name;
-	this->title = title;
 	std::cout << name << ", " << title << ", is born."<< std::endl;
 }
 
-Sorcerer::Sorcerer(const Sorcerer &source)
+Sorcerer::Sorcerer(const Sorcerer &source) : Sorcerer(source.name, source.title)
 {
 	std::cout << "Copy constructor for Sorcerer called" << std::endl;
 }

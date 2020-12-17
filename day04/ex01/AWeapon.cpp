@@ -17,23 +17,19 @@
 AWeapon::AWeapon(std::string const &name, int damage, int apcost) :
 name(name), damage(damage), apcost(apcost)
 {
-	// std::cout << "Default constructor for AWeapon called" << std::endl;
 }
 
 AWeapon::AWeapon(const AWeapon &source) :
-name(source.name), damage(source.damage), apcost(source.apcost)
+AWeapon(source.name, source.damage, source.apcost)
 {
-	// std::cout << "Copy constructor for AWeapon called" << std::endl;
 }
 
 AWeapon::~AWeapon()
 {
-	// std::cout << "Destructor for AWeapon called" << std::endl;
 }
 
 AWeapon& AWeapon::operator = (const AWeapon &source)
 {
-	// std::cout << "Assignations operator for AWeapon called" << std::endl;
 	this->name = source.name;
 	this->damage = source.damage;
 	this->apcost = source.apcost;
