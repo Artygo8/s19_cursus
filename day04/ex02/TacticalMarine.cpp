@@ -21,12 +21,13 @@ TacticalMarine::TacticalMarine()
 
 TacticalMarine::TacticalMarine(const TacticalMarine &source)
 {
-	std::cout << "Tactical Marine ready for action !" << std::endl;
+	(void)source;
+	TacticalMarine();
 }
 
 TacticalMarine& TacticalMarine::operator = (const TacticalMarine &source)
 {
-	std::cout << "Tactical Marine ready for action !" << std::endl;
+	(void)source;
 	return *this;
 }
 

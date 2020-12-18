@@ -16,12 +16,15 @@
 #include "ISpaceMarine.hpp"
 #include "ISquad.hpp"
 
-int main(int argc, char const *argv[])
+#define TITLE_BLU(str) std::cout << R_BLU << str << NC << std::endl
+#define TITLE_MGN(str) std::cout << R_MGN << str << NC << std::endl
+
+int main()
 {
 	ISpaceMarine* bob = new TacticalMarine;
 	ISpaceMarine* jim = new AssaultTerminator;
 
-	std::cout << R_RED << "First Squad, 2 people" << NC << std::endl;
+	TITLE_BLU("First Squad, 2 people");
 
 	Squad* vlc = new Squad;
 	vlc->push(bob);
@@ -37,13 +40,11 @@ int main(int argc, char const *argv[])
 	}
 
 
-	std::cout << R_RED << "Second Squad, deep copy with 2 more people" << NC << std::endl;
+	TITLE_BLU("Second Squad, deep copy with 2 more people");
 
 	ISpaceMarine* john = new AssaultTerminator;
 	Squad* vlc2 = new Squad(*vlc);
 	vlc2->push(john);
-	// We can't add jim because he is in the other squad but we can add clones,
-	// vlc2->push(jim);
 	vlc2->push(jim->clone());
 
 	for (int i = 0; i < vlc2->getCount(); ++i)
@@ -55,7 +56,7 @@ int main(int argc, char const *argv[])
 		cur->meleeAttack();
 	}
 
-	std::cout << R_RED << "Third Squad, shallow copy of the first one" << NC << std::endl;
+	TITLE_BLU("Third Squad, deep copy by assignation");
 
 	Squad *vlc3 = vlc;
 
@@ -70,6 +71,7 @@ int main(int argc, char const *argv[])
 
 	delete vlc;
 	delete vlc2;
+	delete vlc3;
 
 	return 0;
 }

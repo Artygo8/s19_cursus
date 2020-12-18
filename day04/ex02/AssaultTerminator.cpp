@@ -21,12 +21,13 @@ AssaultTerminator::AssaultTerminator()
 
 AssaultTerminator::AssaultTerminator(const AssaultTerminator &source)
 {
-	std::cout << "* teleports from space *" << std::endl;
+	(void)source;
+	AssaultTerminator();
 }
 
 AssaultTerminator& AssaultTerminator::operator = (const AssaultTerminator &source)
 {
-	std::cout << "* teleports from space *" << std::endl;
+	(void)source;
 	return *this;
 }
 

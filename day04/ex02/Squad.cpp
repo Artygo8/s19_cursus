@@ -23,7 +23,6 @@ Squad::Squad()
 Squad::Squad(const Squad &source)
 {
 	ism_node *tmp;
-	ism_node *new_head;
 
 	this->count = 0;
 	while (this->head)
@@ -42,10 +41,25 @@ Squad::Squad(const Squad &source)
 	}
 }
 
-Squad& Squad::operator = (const Squad &source)
+Squad& Squad::operator= (const Squad &source)
 {
-	this->count = source.count;
-	this->head = source.head;
+	ism_node *tmp;
+
+	this->count = 0;
+	while (this->head)
+	{
+		tmp = this->head->next;
+		delete (this->head->value);
+		delete (this->head->value);
+		this->head = tmp;
+	}
+	this->head = NULL;
+	tmp = source.head;
+	while (tmp)
+	{
+		this->push(tmp->value->clone());
+		tmp = tmp->next;
+	}
 	return *this;
 }
 
