@@ -14,9 +14,7 @@
 
 // Coplien's form //////////////////////////////////////////////////////////////
 
-Cure::Cure() : AMateria("cure")
-{
-}
+Cure::Cure() : AMateria("cure") {}
 
 Cure::Cure(const Cure &source) : AMateria("cure")
 {
@@ -25,7 +23,8 @@ Cure::Cure(const Cure &source) : AMateria("cure")
 
 Cure& Cure::operator = (const Cure &source)
 {
-	*this = source;
+	Cure();
+	this->setXP(source.getXP());
 	return *this;
 }
 

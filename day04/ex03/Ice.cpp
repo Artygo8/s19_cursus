@@ -25,7 +25,8 @@ Ice::Ice(const Ice &source) : AMateria("ice")
 
 Ice& Ice::operator = (const Ice &source)
 {
-	*this = source;
+	Ice();
+	this->setXP(source.getXP());
 	return *this;
 }
 

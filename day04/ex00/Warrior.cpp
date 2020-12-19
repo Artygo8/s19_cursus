@@ -19,9 +19,10 @@ Warrior::Warrior(std::string name) : Victim(name)
 	std::cout << "I AM READY TO FIGHT." << std::endl;
 }
 
-Warrior::Warrior(const Warrior &source) : Warrior(source.name)
+Warrior::Warrior(const Warrior &source) : Victim(source)
 {
 	std::cout << "Copy constructor for Warrior called" << std::endl;
+	std::cout << "I AM READY TO FIGHT." << std::endl;
 }
 
 Warrior::~Warrior()

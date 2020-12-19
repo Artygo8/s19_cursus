@@ -14,13 +14,9 @@
 
 // Coplien's form //////////////////////////////////////////////////////////////
 
-AMateria::AMateria(std::string const & type) : type(type), _xp(0)
-{
-}
+AMateria::AMateria(std::string const & type) : type(type), _xp(0) {}
 
-AMateria::AMateria(const AMateria &source) : type(source.type), _xp(source._xp)
-{
-}
+AMateria::AMateria(const AMateria &source) : type(source.type), _xp(source._xp) {}
 
 AMateria& AMateria::operator = (const AMateria &source)
 {
@@ -51,6 +47,7 @@ void		AMateria::setXP(unsigned int xp)
 
 void AMateria::use(ICharacter& target)
 {
+	(void)target;
 	_xp += 10;
 }
 

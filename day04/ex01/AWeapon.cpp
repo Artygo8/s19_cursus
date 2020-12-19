@@ -15,18 +15,12 @@
 // Contructors /////////////////////////////////////////////////////////////////
 
 AWeapon::AWeapon(std::string const &name, int damage, int apcost) :
-name(name), damage(damage), apcost(apcost)
-{
-}
+name(name), damage(damage), apcost(apcost) {}
 
 AWeapon::AWeapon(const AWeapon &source) :
-AWeapon(source.name, source.damage, source.apcost)
-{
-}
+name(source.name), damage(source.damage), apcost(source.apcost) {}
 
-AWeapon::~AWeapon()
-{
-}
+AWeapon::~AWeapon() {}
 
 AWeapon& AWeapon::operator = (const AWeapon &source)
 {

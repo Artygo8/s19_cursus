@@ -22,26 +22,10 @@ Squad::Squad()
 
 Squad::Squad(const Squad &source)
 {
-	ism_node *tmp;
-
-	this->count = 0;
-	while (this->head)
-	{
-		tmp = this->head->next;
-		delete (this->head->value);
-		delete (this->head->value);
-		this->head = tmp;
-	}
-	this->head = NULL;
-	tmp = source.head;
-	while (tmp)
-	{
-		this->push(tmp->value->clone());
-		tmp = tmp->next;
-	}
+	deepCopy(source);
 }
 
-Squad& Squad::operator= (const Squad &source)
+void Squad::deepCopy(const Squad &source)
 {
 	ism_node *tmp;
 
@@ -55,11 +39,17 @@ Squad& Squad::operator= (const Squad &source)
 	}
 	this->head = NULL;
 	tmp = source.head;
-	while (tmp)
+	while (tmp != NULL)
 	{
 		this->push(tmp->value->clone());
 		tmp = tmp->next;
 	}
+}
+
+Squad& Squad::operator= (const Squad &source)
+{
+    // if (this != &source)
+    deepCopy(source);
 	return *this;
 }
 
@@ -133,5 +123,3 @@ int		Squad::push(ISpaceMarine* ism)
 	count += 1;
 	return count;
 }
-
-

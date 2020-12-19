@@ -19,9 +19,10 @@ Peon::Peon(std::string name) : Victim(name)
 	std::cout << "Zog zog." << std::endl;
 }
 
-Peon::Peon(const Peon &source) : Peon(source.name)
+Peon::Peon(const Peon &source) : Victim(source)
 {
 	std::cout << "Copy constructor for Peon called" << std::endl;
+	std::cout << "Zog zog." << std::endl;
 }
 
 Peon::~Peon()

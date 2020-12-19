@@ -14,19 +14,11 @@
 
 // Coplien ////////////////////////////////////////////////////////////////////
 
-Character::Character(std::string const &name) : name(name), ap(MAX_AP), wp(NULL)
-{
-}
+Character::Character(std::string const &name) : name(name), ap(MAX_AP), wp(NULL) {}
 
-Character::Character(const Character &source) : Character(source.name)
-{
-	this->ap = source.ap;
-	this->wp = source.wp;
-}
+Character::Character(const Character &source) : name(source.name), ap(source.ap), wp(source.wp) {}
 
-Character::~Character()
-{
-}
+Character::~Character() {}
 
 Character & Character::operator = (const Character &source)
 {

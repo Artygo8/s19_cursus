@@ -40,6 +40,8 @@ class Squad : public ISquad
 		Squad &operator=(const Squad &source);
 		virtual ~Squad ();
 
+		void deepCopy(const Squad &source);
+
 		int getCount() const;
 		ISpaceMarine* getUnit(int) const;
 		int push(ISpaceMarine*);

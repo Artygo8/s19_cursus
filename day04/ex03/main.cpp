@@ -18,31 +18,35 @@
 #include "ICharacter.hpp"
 #include "IMateriaSource.hpp"
 
-int main(int argc, char const *argv[])
+#define TITLE_BLU(str) std::cout << R_BLU << str << NC << std::endl;
+#define TITLE_MGN(str) std::cout << R_MGN << str << NC << std::endl;
+#define TITLE_CYN(str) std::cout << R_CYN << str << NC << std::endl;
+
+int main()
 {
 
 	{
-		std::cout << R_RED << "Testing methods on a Character with one AMateria:" << NC << std::endl;
+		TITLE_BLU("Testing methods on a Character with one AMateria:");
 		AMateria *c = new Cure();
 		ICharacter* moi = new Character("moi");
 
 		std::cout << *c;
 
-		std::cout << R_YLW << "equip c_clone" << NC << std::endl;
+		TITLE_BLU("equip c_clone");
 		moi->equip(c->clone());
-		std::cout << R_YLW << "equip c_clone" << NC << std::endl;
+		TITLE_BLU("equip c_clone");
 		moi->equip(c->clone());
-		std::cout << R_YLW << "equip c_clone" << NC << std::endl;
+		TITLE_BLU("equip c_clone");
 		moi->equip(c->clone());
-		std::cout << R_YLW << "unequip 0" << NC << std::endl;
+		TITLE_BLU("unequip 0");
 		moi->unequip(0);
-		std::cout << R_YLW << "use 0:" << NC << std::endl;
+		TITLE_BLU("use 0:");
 		moi->use(0, *moi);
-		std::cout << R_YLW << "use 1:" << NC << std::endl;
+		TITLE_BLU("use 1:");
 		moi->use(1, *moi);
-		std::cout << R_YLW << "use 2:" << NC << std::endl;
+		TITLE_BLU("use 2:");
 		moi->use(2, *moi);
-		std::cout << R_YLW << "use 3:" << NC << std::endl;
+		TITLE_BLU("use 3:");
 		moi->use(3, *moi);
 
 		std::cout << *c;
@@ -52,37 +56,37 @@ int main(int argc, char const *argv[])
 	}
 
 	{
-		std::cout << R_RED << "Testing deep_copy of a character:" << NC << std::endl;
+		TITLE_MGN("Testing deep_copy of a character:");
 
 		Character* moi = new Character("moi");
 		AMateria *i = new Ice();
 		AMateria *c = new Cure();
 
-		std::cout << R_YLW << "equip i" << NC << std::endl;
+		TITLE_MGN("equip i");
 		moi->equip(i);
-		std::cout << R_YLW << "equip c" << NC << std::endl;
+		TITLE_MGN("equip c");
 		moi->equip(c);
 
-		std::cout << R_YLW << "make deep_copy" << NC << std::endl;
+		TITLE_MGN("make deep_copy");
 		Character* toi = new Character(*moi);
 
-		std::cout << R_YLW << "delete original" << NC << std::endl;
+		TITLE_MGN("delete original");
 		delete(moi);
 
-		std::cout << R_YLW << "use 0:" << NC << std::endl;
+		TITLE_MGN("use 0:");
 		toi->use(0, *toi);
-		std::cout << R_YLW << "use 1:" << NC << std::endl;
+		TITLE_MGN("use 1:");
 		toi->use(1, *toi);
-		std::cout << R_YLW << "use 2:" << NC << std::endl;
+		TITLE_MGN("use 2:");
 		toi->use(2, *toi);
-		std::cout << R_YLW << "use 3:" << NC << std::endl;
+		TITLE_MGN("use 3:");
 		toi->use(3, *toi);
 
 		delete(toi);
 	}
 
 	{
-		std::cout << R_RED << "Original Main:" << NC << std::endl;
+		TITLE_CYN("Original Main:");
 
 		IMateriaSource* src = new MateriaSource();
 		src->learnMateria(new Ice());

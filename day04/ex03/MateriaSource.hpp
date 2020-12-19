@@ -33,6 +33,8 @@ class MateriaSource : public IMateriaSource
 		MateriaSource &operator=(const MateriaSource &source);
 		virtual ~MateriaSource ();
 
+		void	deepCopy(const MateriaSource &source);
+
 		virtual void learnMateria(AMateria*);
 		virtual AMateria* createMateria(std::string const & type);
 

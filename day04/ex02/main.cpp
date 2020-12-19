@@ -39,7 +39,6 @@ int main()
 		cur->meleeAttack();
 	}
 
-
 	TITLE_BLU("Second Squad, deep copy with 2 more people");
 
 	ISpaceMarine* john = new AssaultTerminator;
@@ -58,7 +57,9 @@ int main()
 
 	TITLE_BLU("Third Squad, deep copy by assignation");
 
-	Squad *vlc3 = vlc;
+	Squad *vlc3 = new Squad();
+	*vlc3 = *vlc;
+	delete (vlc);
 
 	for (int i = 0; i < vlc3->getCount(); ++i)
 	{
@@ -69,9 +70,8 @@ int main()
 		cur->meleeAttack();
 	}
 
-	delete vlc;
-	delete vlc2;
-	delete vlc3;
+	delete (vlc2);
+	delete (vlc3);
 
 	return 0;
 }

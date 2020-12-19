@@ -19,9 +19,10 @@ Sorcerer::Sorcerer(std::string name, std::string title) : name(name), title(titl
 	std::cout << name << ", " << title << ", is born."<< std::endl;
 }
 
-Sorcerer::Sorcerer(const Sorcerer &source) : Sorcerer(source.name, source.title)
+Sorcerer::Sorcerer(const Sorcerer &source) : name(source.name), title(source.title)
 {
 	std::cout << "Copy constructor for Sorcerer called" << std::endl;
+	std::cout << name << ", " << title << ", is born."<< std::endl;
 }
 
 Sorcerer::~Sorcerer()

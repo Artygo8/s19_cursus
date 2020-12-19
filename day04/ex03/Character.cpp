@@ -22,7 +22,7 @@ Character::Character(std::string name) : name(name)
 	inv[3] = NULL;
 }
 
-Character::Character(const Character &source)
+void Character::deepCopy(const Character &source)
 {
 	this->name = source.name;
 	this->inv[0] = (source.inv[0]) ? source.inv[0]->clone() : 0;
@@ -31,9 +31,15 @@ Character::Character(const Character &source)
 	this->inv[3] = (source.inv[3]) ? source.inv[3]->clone() : 0;
 }
 
+Character::Character(const Character &source)
+{
+	deepCopy(source);
+}
+
 Character& Character::operator = (const Character &source)
 {
-	*this = source;
+	if (&source != this)
+		deepCopy(source);
 	return *this;
 }
 

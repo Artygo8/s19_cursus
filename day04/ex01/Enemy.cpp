@@ -16,7 +16,7 @@
 
 Enemy::Enemy(int hp, std::string const & type) : hp(hp) , type(type) {}
 
-Enemy::Enemy(const Enemy &source) : Enemy(source.hp, source.type) {}
+Enemy::Enemy(const Enemy &source) : hp(source.hp) , type(source.type) {}
 
 Enemy::~Enemy() {}
 

@@ -22,7 +22,7 @@ MateriaSource::MateriaSource()
 	learned[3] = 0;
 }
 
-MateriaSource::MateriaSource(const MateriaSource &source)
+void	MateriaSource::deepCopy(const MateriaSource &source)
 {
 	learned[0] = source.learned[0];
 	learned[1] = source.learned[1];
@@ -30,9 +30,14 @@ MateriaSource::MateriaSource(const MateriaSource &source)
 	learned[3] = source.learned[3];
 }
 
+MateriaSource::MateriaSource(const MateriaSource &source)
+{
+	deepCopy(source);
+}
+
 MateriaSource& MateriaSource::operator = (const MateriaSource &source)
 {
-	*this = source;
+	deepCopy(source);
 	return *this;
 }
 

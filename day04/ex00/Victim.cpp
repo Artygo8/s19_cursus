@@ -19,7 +19,7 @@ Victim::Victim(std::string n) : name(n)
 	std::cout << "Some random victim called " << name << " just appeared!" << std::endl;
 }
 
-Victim::Victim(const Victim &source) : Victim(source.name)
+Victim::Victim(const Victim &source) : name(source.name)
 {
 	std::cout << "Copy constructor for Victim called" << std::endl;
 }
