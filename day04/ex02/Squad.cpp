@@ -48,8 +48,8 @@ void Squad::deepCopy(const Squad &source)
 
 Squad& Squad::operator= (const Squad &source)
 {
-    // if (this != &source)
-    deepCopy(source);
+    if (this != &source)
+	    deepCopy(source);
 	return *this;
 }
 
