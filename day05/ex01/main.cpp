@@ -53,7 +53,7 @@ void	decrementing_grade()
 	}
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
 	incrementing_grade();
 	decrementing_grade();

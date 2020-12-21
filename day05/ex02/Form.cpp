@@ -16,7 +16,7 @@
 
 
 Form::Form (const std::string name, int sign_grade, int exec_grade, std::string target) :
-name(name), is_signed(false), sign_grade(sign_grade), exec_grade(exec_grade), target(target)
+name(name), target(target), is_signed(false), sign_grade(sign_grade), exec_grade(exec_grade)
 {
 	if (sign_grade > 150 || exec_grade > 150)
 		throw GradeTooLowException();
@@ -31,7 +31,7 @@ name(source.name), is_signed(source.is_signed), sign_grade(source.sign_grade), e
 
 Form& Form::operator = (const Form &source)
 {
-	*this = source;
+	this->is_signed = source.is_signed;
 	return *this;
 }
 
@@ -100,12 +100,4 @@ void	Form::beSigned(Bureaucrat &bu)
 	if (sign_grade < bu.getGrade())
 		throw GradeTooHighException();
 	is_signed = true;
-}
-
-void	Form::execute (Bureaucrat const & executor) const
-{
-	if (!this->getIsSigned())
-		throw UnsignedFormException();
-	if (exec_grade < executor.getGrade())
-		throw GradeTooHighException();
 }

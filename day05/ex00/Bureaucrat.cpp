@@ -30,7 +30,7 @@ Bureaucrat::Bureaucrat(const Bureaucrat &source) : name(source.name)
 
 Bureaucrat& Bureaucrat::operator = (const Bureaucrat &source)
 {
-	*this = source;
+	this->grade = source.grade;
 	return *this;
 }
 

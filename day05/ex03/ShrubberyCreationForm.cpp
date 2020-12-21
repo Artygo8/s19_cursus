@@ -26,7 +26,7 @@ Form(source)
 
 ShrubberyCreationForm& ShrubberyCreationForm::operator = (const ShrubberyCreationForm &source)
 {
-	*this = source;
+	(void)source;
 	return *this;
 }
 

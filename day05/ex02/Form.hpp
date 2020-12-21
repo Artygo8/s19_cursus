@@ -85,7 +85,7 @@ class Form
 		int				getExecGrade() const;
 
 		virtual void	beSigned(Bureaucrat &bu);
-		virtual void	execute (Bureaucrat const & executor) const;
+		virtual void	execute (Bureaucrat const & executor) const = 0;
 
 };
 

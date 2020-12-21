@@ -26,7 +26,7 @@ Form(source)
 
 RobotomyRequestForm& RobotomyRequestForm::operator = (const RobotomyRequestForm &source)
 {
-	*this = source;
+	(void)source;
 	return *this;
 }
 

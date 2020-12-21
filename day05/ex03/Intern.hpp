@@ -42,9 +42,15 @@
 using std::string;
 using std::cout;
 
-
 class Intern
 {
+
+	private:
+		struct s_maker 
+		{
+			std::string	name;
+			Form		*(*function)(std::string target); 
+		};
 
 	public:
 
@@ -63,5 +69,6 @@ class Intern
         Form    *makeForm(std::string name, std::string target);
 
 };
+
 
 # endif
