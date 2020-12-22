@@ -166,7 +166,7 @@ FIRST_PART_MAKEFILE = """
 
 NAME	= exec
 CXX	= clang++
-CFLAGS	= -Wall -Werror -Wextra
+CXXFLAGS	= -Wall -Werror -Wextra
 
 SRCDIR	= ./
 INCDIR	= include/
