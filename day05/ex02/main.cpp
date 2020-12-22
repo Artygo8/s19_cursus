@@ -16,7 +16,7 @@
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
 
-int main(int argc, char const *argv[])
+int main()
 {
 	Bureaucrat arthur("Arthur", 1);
 	Bureaucrat john("John", 54);

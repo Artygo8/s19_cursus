@@ -26,7 +26,7 @@ Form(source)
 
 RobotomyRequestForm& RobotomyRequestForm::operator = (const RobotomyRequestForm &source)
 {
-	*this = source;
+	(void)source;
 	return *this;
 }
 
@@ -38,7 +38,10 @@ RobotomyRequestForm::~RobotomyRequestForm()
 
 void	RobotomyRequestForm::execute (Bureaucrat const & executor) const
 {
-	Form::execute(executor);
+	if (!this->getIsSigned())
+		throw UnsignedFormException();
+	if (this->getExecGrade() < executor.getGrade())
+		throw GradeTooHighException();
 	std::cout << "Brzzz Brzzz Brzzz" << std::endl;
 	std::cout << getTarget() << " was robotomized." << std::endl;
 }

@@ -17,7 +17,7 @@ void	test_high_grades(int start, int amount)
 	int grade;
 	Bureaucrat john("John", grade = start);
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < amount; i++)
 	{
 		try
 		{
@@ -47,11 +47,7 @@ void	test_low_grades(int start, int amount)
 			john.decGrade();
 			std::cout << john << " says hello." << std::endl;
 		}
-		catch (Bureaucrat::GradeTooHighException & e)
-		{
-			std::cerr << RED << e.what() << NC << std::endl;
-		}
-		catch (Bureaucrat::GradeTooLowException & e)
+		catch (std::exception & e)
 		{
 			std::cerr << RED << e.what() << NC << std::endl;
 		}
@@ -70,18 +66,14 @@ void	test_random_grades(int amount)
 			Bureaucrat john("John", grade);
 			std::cout << john << " says hello." << std::endl;
 		}
-		catch (Bureaucrat::GradeTooHighException & e)
-		{
-			std::cerr << RED << e.what() << NC << std::endl;
-		}
-		catch (Bureaucrat::GradeTooLowException & e)
+		catch (std::exception & e)
 		{
 			std::cerr << RED << e.what() << NC << std::endl;
 		}
 	}
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
 	srand(time(NULL));
 

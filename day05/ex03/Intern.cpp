@@ -25,7 +25,7 @@ Intern::Intern(const Intern &source)
 
 Intern& Intern::operator = (const Intern &source)
 {
-	*this = source;
+    (void)source;
 	return *this;
 }
 
@@ -42,24 +42,33 @@ char const *Intern::UnrecognizedFormException::what() const throw()
 
 // others //////////////////////////////////////////////////////////////////////
 
+Form    *makePresidentialPardonForm(std::string target)
+{
+    return new PresidentialPardonForm(target);
+}
+
+Form    *makeRobotomyRequestForm(std::string target)
+{
+    return new RobotomyRequestForm(target);
+}
+
+Form    *makeShrubberyCreationForm(std::string target)
+{
+    return new ShrubberyCreationForm(target);
+}
+
 Form    *Intern::makeForm(std::string name, std::string target)
 {
-    Form *result = nullptr;
-
-    Form   *all_forms[3] = {
-        new PresidentialPardonForm(target),
-        new RobotomyRequestForm(target),
-        new ShrubberyCreationForm(target),
+    struct s_maker all_forms[3] = {
+        {"presidential pardon", makePresidentialPardonForm},
+        {"robotomy request", makeRobotomyRequestForm},
+        {"shrubbery creation", makeShrubberyCreationForm}
     };
 
     for (int i = 0; i < 3; i++)
     {
-        if (all_forms[i]->getName() == name)
-            result = all_forms[i];
-        else
-            delete all_forms[i];
+        if (all_forms[i].name == name)
+            return (all_forms[i].function(target));
     }
-    if (result == nullptr)
-        throw UnrecognizedFormException();
-    return result;
+    throw UnrecognizedFormException();
 }

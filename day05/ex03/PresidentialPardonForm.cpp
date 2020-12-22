@@ -26,7 +26,7 @@ Form(source)
 
 PresidentialPardonForm& PresidentialPardonForm::operator = (const PresidentialPardonForm &source)
 {
-	*this = source;
+	(void)source;
 	return *this;
 }
 

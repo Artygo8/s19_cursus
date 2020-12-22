@@ -26,7 +26,7 @@ Form(source)
 
 ShrubberyCreationForm& ShrubberyCreationForm::operator = (const ShrubberyCreationForm &source)
 {
-	*this = source;
+	(void)source;
 	return *this;
 }
 
@@ -38,8 +38,10 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 
 void	ShrubberyCreationForm::execute (Bureaucrat const & executor) const
 {
-	Form::execute(executor);
-	
+	if (!this->getIsSigned())
+		throw UnsignedFormException();
+	if (this->getExecGrade() < executor.getGrade())
+		throw GradeTooHighException();
 	std::ofstream shrubberyFile(getTarget() + "_shrubbery");
 	shrubberyFile << "###########################'`################################\n\
 ###########################  V##'############################\n\

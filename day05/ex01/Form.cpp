@@ -31,7 +31,7 @@ name(source.name), is_signed(source.is_signed), sign_grade(source.sign_grade), e
 
 Form& Form::operator = (const Form &source)
 {
-	*this = source;
+	this->is_signed = source.is_signed;
 	return *this;
 }
 
