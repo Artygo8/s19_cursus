@@ -13,7 +13,6 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <cmath>
 
 int		is_nbr(char c)
 {
