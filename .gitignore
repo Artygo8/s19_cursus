@@ -1,2 +1,6 @@
 objs/
 *.pdf
+*.o
+exec
+exec.*
+a.*
