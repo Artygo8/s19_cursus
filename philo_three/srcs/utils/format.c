@@ -34,8 +34,8 @@ int	ft_put_action(size_t id, int e_action)
 	if (e_action == DYING)
 	{
 		ft_putstr_fd(" died\n", STDOUT_FILENO);
-		while (e_action++ <= *get_input(NB_PHILO) + DYING)
-			sem_post((*get_data())->dead);
+		sem_post((*get_data())->dead);
+		return (0);
 	}
 	sem_post((*get_data())->write);
 	return (0);
