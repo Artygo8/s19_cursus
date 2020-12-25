@@ -34,7 +34,7 @@ void Squad::deepCopy(const Squad &source)
 	{
 		tmp = this->head->next;
 		delete (this->head->value);
-		delete (this->head->value);
+		delete (this->head);
 		this->head = tmp;
 	}
 	this->head = NULL;

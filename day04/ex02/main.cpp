@@ -58,7 +58,7 @@ int main()
 	TITLE_BLU("Third Squad, deep copy by assignation");
 
 	Squad *vlc3 = new Squad();
-	*vlc3 = *vlc;
+	*vlc2 = *vlc;
 	delete (vlc);
 
 	for (int i = 0; i < vlc3->getCount(); ++i)
