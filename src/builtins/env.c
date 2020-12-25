@@ -19,17 +19,17 @@ t_list		**ft_get_env(void)
 	return (&env);
 }
 
-static char	*ft_underscore(void)
-{
-	char	*underscore;
-	char	*path;
+// static char	*ft_underscore(void)
+// {
+// 	char	*underscore;
+// 	char	*path;
 
-	path = ft_vardup_from_env("PATH");
-	underscore = fts_strjoin("_=", path);
-	underscore = fts_strjoinfree(underscore, fts_strdup("/env"));
-	free(path);
-	return (underscore);
-}
+// 	path = ft_vardup_from_env("PATH");
+// 	underscore = fts_strjoin("_=", path);
+// 	underscore = fts_strjoinfree(underscore, fts_strdup("/env"));
+// 	free(path);
+// 	return (underscore);
+// }
 
 static void	ft_set_shlvl(void)
 {
@@ -66,6 +66,7 @@ void		ft_init_env(char **envp)
 	env_ptr = ft_get_env();
 	while (envp[i])
 		ft_lstadd_back(env_ptr, fts_lstnew((void *)fts_strdup(envp[i++])));
+	ft_assign_to_env("_=/bin/bash");
 	ft_set_pwd();
 	ft_set_shlvl();
 }
@@ -73,15 +74,27 @@ void		ft_init_env(char **envp)
 void		ft_putenv_fd(int fd)
 {
 	t_list	*cpy_env;
-	char	*underscore;
+	char	*term;
 
+	ft_assign_to_env("_=/Users/artygo/Desktop/Artygo8-github/minishell_test/bin/env");
+	if ((term = ft_vardup_from_env("TERM")))
+	{
+		ft_putstr_fd("TERM=", fd);
+		ft_putendl_fd(term, fd);
+	}
+	free(term);
 	cpy_env = *ft_get_env();
 	while (cpy_env)
 	{
-		ft_putendl_fd(cpy_env->content, fd);
+		if (!ft_same_var(cpy_env->content, "TERM") && !ft_same_var(cpy_env->content, "_"))
+		{
+			ft_putendl_fd(cpy_env->content, fd);
+		}
 		cpy_env = cpy_env->next;
 	}
-	underscore = ft_underscore();
-	ft_putendl_fd(underscore, fd);
-	free(underscore);
+	ft_putendl_fd("_=/Users/artygo/Desktop/Artygo8-github/minishell_test/bin/env", fd);
+	ft_assign_to_env("_=env");
+	// underscore = ft_underscore();
+	// ft_putendl_fd(underscore, fd);
+	// free(underscore);
 }

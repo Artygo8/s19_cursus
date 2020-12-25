@@ -44,20 +44,23 @@ static void	ft_export_noargs(int fd)
 	while (cpy_env)
 	{
 		i = 0;
-		variable = fts_strdup(cpy_env->content);
-		fts_putstr_fd("declare -x ", fd);
-		while (variable[i] != '=')
-			fts_putchar_fd(variable[i++], fd);
-		fts_putchar_fd(variable[i++], fd);
-		fts_putchar_fd('"', fd);
-		while (variable[i])
+		if (!(((char*)cpy_env->content)[0] == '_' && ((char*)cpy_env->content)[1] == '='))
 		{
-			if (variable[i] == '"')
-				fts_putchar_fd('\\', fd);
+			variable = fts_strdup(cpy_env->content);
+			fts_putstr_fd("declare -x ", fd);
+			while (variable[i] != '=')
+				fts_putchar_fd(variable[i++], fd);
 			fts_putchar_fd(variable[i++], fd);
+			fts_putchar_fd('"', fd);
+			while (variable[i])
+			{
+				if (ft_isinset(variable[i], "\"\\$"))
+					fts_putchar_fd('\\', fd);
+				fts_putchar_fd(variable[i++], fd);
+			}
+			fts_putstr_fd("\"\n", fd);
+			free(variable);
 		}
-		fts_putstr_fd("\"\n", fd);
-		free(variable);
 		cpy_env = cpy_env->next;
 	}
 }

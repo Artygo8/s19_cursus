@@ -100,6 +100,7 @@ void	ft_execve(t_cmd *cmd, char *path)
 void	ft_exec(t_cmd *cmd)
 {
 	char	*path;
+	char	*tmp;
 
 	path = ft_get_path(cmd->tokens->content);
 	if (*ft_get_status() != 0)
@@ -107,6 +108,9 @@ void	ft_exec(t_cmd *cmd)
 		free(path);
 		return ;
 	}
+	tmp = ft_strjoin("_=", path);
+	ft_assign_to_env(tmp);
+	free(tmp);
 	ft_execve(cmd, path);
 	free(path);
 }

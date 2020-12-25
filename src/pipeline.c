@@ -14,6 +14,15 @@
 
 void	ft_last_command(t_cmd *cmd, int fd_in)
 {
+	char	*tmp;
+	t_list	*cpy;
+
+	cpy = cmd->tokens;
+	while (cpy->next)
+		cpy = cpy->next;
+	tmp = ft_strjoin("_=", cpy->content);
+	ft_assign_to_env(tmp);
+	free(tmp);
 	dup2(fd_in, STDIN_FILENO);
 	dup2(cmd->fd_out, STDOUT_FILENO);
 	ft_parser(cmd);
