@@ -13,13 +13,31 @@
 #ifndef EASYFIND_HPP
 # define EASYFIND_HPP
 # include <iostream>
-# include <string>
-
+# include <vector>
+# include <set>
+# include <list>
+# include <algorithm>
 
 template< typename T >
-int easyfind (const T & val, int n)
+const int &easyfind (const T & array, int n)
 {
+    typename T::const_iterator it = std::find(array.begin(), array.end(), n);
+    if (it == array.end())
+        throw std::exception();
+    return *it;
+}
 
+template< typename T >
+void test_easyfind (const T & array, int n)
+{
+    try
+    {
+        std::cout << easyfind(array, n) << " found !" << std::endl;
+    }
+    catch (std::exception)
+    {
+        std::cerr << n << " not found !" << std::endl;
+    }
 }
 
 #endif
