@@ -76,9 +76,8 @@ int main()
 		// ft::list<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
 
 		cout << "The contents of fifth are: ";
-		// for (ft::list<int>::iterator it = second.begin(); it != second.end(); it++)
-		ft::list<int>::iterator it = second.begin();
-		cout << *it << ' ';
+		for (ft::list<int>::iterator it = second.begin(); it != second.end(); it++)
+			cout << *it << ' ';
 		cout << '\n';
 	}
 
