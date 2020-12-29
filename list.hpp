@@ -59,29 +59,37 @@ private:
 			node(T & content, node *previous, node *next) : content(content), previous(previous), next(next) {}
 			node & operator =(const node & other)
 			{
-				this->content = other.content;
-				this->next = other.next;
-				this->previous = other.previous;
+				*this = other;
 				return *this;
 			}
 
 			// OPERATORS
-			bool		operator== (const node & rhs) { return this->current == rhs.current; }
-			bool		operator!= (const node & rhs) { return this->current != rhs.current; }
-			T &			operator* () { return this->content; }
-			void		operator++ () { *this = *(this->next); }
-			void		operator++ (int) { *this = *(this->next); }
-			void		operator-- () { *this = *(this->previous); }
-			void		operator-- (int) { *this = *(this->previous); }
+			bool		operator== (const node & rhs) { return content == rhs.content; }
+			bool		operator!= (const node & rhs) { return content != rhs.current; }
+			T &			operator* () { return content; }
+			void		operator++ ()
+			{
+				this->content = next->content;
+				this->previous = next->previous;
+				this->next = next->next;
+			}
+			void		operator++ (int)
+			{
+				this->content = next->content;
+				this->previous = next->previous;
+				this->next = next->next;
+			}
+			void		operator-- () { *this = *(previous); }
+			void		operator-- (int) { *this = *(previous); }
 
-			void add_back(node & new_node)
+			void add_back(node * new_node)
 			{
 				node *last;
 				last = this;
 				while (last->next)
 					last = last->next;
-				new_node.previous = last;
-				last->next = &new_node;
+				new_node->previous = last;
+				last->next = new_node;
 			}
 	};
 
@@ -116,7 +124,7 @@ public:
 	{
 		private:
 			node *current;
-		
+
 		public:
 			// CONSTRUCTORS
 			iterator (node * current = nullptr) : current(current) {}
@@ -126,7 +134,10 @@ public:
 			iterator	operator= (const iterator & other) { this->current = other.current; return *this;}
 			bool		operator== (const iterator & rhs) { return this->current == rhs.current; }
 			bool		operator!= (const iterator & rhs) { return this->current != rhs.current; }
-			T &			operator* () { return *(*current); }
+			T			operator* ()
+			{
+				return *(*current);
+			}
 			void		operator++ () { ++(*current); }
 			void		operator++ (int) { (*current)++; }
 			void		operator-- () { --(*current); }
@@ -139,27 +150,28 @@ public:
 // |    |   ||   |`---.|    |    |   ||    |    |   ||    
 // `---'`---'`   '`---'`---'`    `---'`---'`---'`---'`    
 
-	list () : size(0), head(nullptr), tail(nullptr) {
+	list () : size(0), head(nullptr), tail(nullptr)
+	{
 
-			std::cout << "hey" << std::endl;
 	}
 
 	// https://stackoverflow.com/questions/45847787/how-to-differentiate-fill-constructor-and-range-constructor-in-c11
 
-	list (const size_t n, const T val)
-	: size(n)
+	list (const size_t n, const T val) : size(n)
 	{
 		for (size_t i = 0; i < n; i++)
 		{
 			T tmp_val(val);
-			std::cout << "hey1" << std::endl;
-			node new_node(tmp_val, nullptr, nullptr);
-			head->add_back(new_node);
-			tail = &new_node;
+			node *new_node = new node(tmp_val, nullptr, nullptr);
+			if (i == 0)
+				head = new_node;
+			else
+				head->add_back(new_node);
+			tail = new_node;
 		}
 	}
 
-	template <class InputIterator>
+	template <typename InputIterator, typename = std::_RequireInputIter<InputIterator>>
 	list (InputIterator first, InputIterator last)
 	{
 		size = 0;
@@ -174,7 +186,7 @@ public:
 	}
 
 	iterator begin() { return iterator(head); }
-	iterator end() { return iterator(nullptr); }
+	iterator end() { return iterator(tail); }
 
 };
 
