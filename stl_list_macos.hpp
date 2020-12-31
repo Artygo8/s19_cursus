@@ -208,44 +208,49 @@ template <class _Tp, class _VoidPtr> struct __list_node_base;
 template <class _Tp, class _VoidPtr>
 struct __list_node_pointer_traits {
 
-  typedef typename __rebind_pointer<_VoidPtr, __list_node<_Tp, _VoidPtr> >::type __node_pointer;
-  typedef typename __rebind_pointer<_VoidPtr, __list_node_base<_Tp, _VoidPtr> >::type __base_pointer;
-  typedef __base_pointer __link_pointer;
-  typedef typename conditional<is_same<__link_pointer, __node_pointer>::value,__base_pointer,__node_pointer>::type __non_link_pointer;
+  typedef typename __rebind_pointer<_VoidPtr, __list_node<_Tp, _VoidPtr> >::type                                    __node_pointer;
+  typedef typename __rebind_pointer<_VoidPtr, __list_node_base<_Tp, _VoidPtr> >::type                               __base_pointer;
+  typedef __base_pointer                                                                                            __link_pointer;
+  typedef typename conditional<is_same<__link_pointer, __node_pointer>::value,__base_pointer,__node_pointer>::type  __non_link_pointer;
 
-  __link_pointer __unsafe_link_pointer_cast(__link_pointer __p) {
+  __link_pointer __unsafe_link_pointer_cast(__link_pointer __p)
+  {
       return __p;
   }
 
-  __link_pointer __unsafe_link_pointer_cast(__non_link_pointer __p) {
+  __link_pointer __unsafe_link_pointer_cast(__non_link_pointer __p)
+  {
       return static_cast<__link_pointer>(static_cast<_VoidPtr>(__p));
   }
 
 };
 
-//|    o     |                      |         |
-//|    .,---.|---     ,---.,---.,---|,---.    |---.,---.,---.,---.
-//|    |`---.|        |   ||   ||   ||---'    |   |,---|`---.|---'
-//`---'``---'`---'    `   '`---'`---'`---'    `---'`---^`---'`---'
+// |    o     |                      |         |
+// |    .,---.|---     ,---.,---.,---|,---.    |---.,---.,---.,---.
+// |    |`---.|        |   ||   ||   ||---'    |   |,---|`---.|---'
+// `---'``---'`---'    `   '`---'`---'`---'    `---'`---^`---'`---'
 
 template <class _Tp, class _VoidPtr>
 struct __list_node_base
 {
-    typedef __list_node_pointer_traits<_Tp, _VoidPtr> _NodeTraits;
-    typedef typename _NodeTraits::__node_pointer __node_pointer;
-    typedef typename _NodeTraits::__base_pointer __base_pointer;
-    typedef typename _NodeTraits::__link_pointer __link_pointer;
+    typedef __list_node_pointer_traits<_Tp, _VoidPtr>   _NodeTraits;
+    typedef typename _NodeTraits::__node_pointer        __node_pointer;
+    typedef typename _NodeTraits::__base_pointer        __base_pointer;
+    typedef typename _NodeTraits::__link_pointer        __link_pointer;
 
     __link_pointer __prev_;
     __link_pointer __next_;
 
-    __list_node_base() : __prev_(_NodeTraits::__unsafe_link_pointer_cast(__self())), __next_(_NodeTraits::__unsafe_link_pointer_cast(__self())) {}
+    __list_node_base() : __prev_(_NodeTraits::__unsafe_link_pointer_cast(__self())), __next_(_NodeTraits::__unsafe_link_pointer_cast(__self()))
+    {}
     
-    __base_pointer __self() {
+    __base_pointer __self()
+    {
         return pointer_traits<__base_pointer>::pointer_to(*this);
     }
 
-    __node_pointer __as_node() {
+    __node_pointer __as_node()
+    {
         return static_cast<__node_pointer>(__self());
     }
 };
@@ -260,17 +265,18 @@ struct __list_node : public __list_node_base<_Tp, _VoidPtr>
 {
     _Tp __value_;
 
-    typedef __list_node_base<_Tp, _VoidPtr> __base;
-    typedef typename __base::__link_pointer __link_pointer;
+    typedef __list_node_base<_Tp, _VoidPtr>     __base;
+    typedef typename __base::__link_pointer     __link_pointer;
 
-    __link_pointer __as_link() {
+    __link_pointer __as_link()
+    {
         return static_cast<__link_pointer>(__base::__self());
     }
 };
 
-template <class _Tp, class _Alloc = allocator<_Tp> > class _LIBCPP_TEMPLATE_VIS list;
-template <class _Tp, class _Alloc> class __list_imp;
-template <class _Tp, class _VoidPtr> class _LIBCPP_TEMPLATE_VIS __list_const_iterator;
+template <class _Tp, class _Alloc = allocator<_Tp> >    class _LIBCPP_TEMPLATE_VIS list;
+template <class _Tp, class _Alloc>                      class __list_imp;
+template <class _Tp, class _VoidPtr>                    class _LIBCPP_TEMPLATE_VIS __list_const_iterator;
 
 // |    o     |        o|                   |
 // |    .,---.|---     .|--- ,---.,---.,---.|--- ,---.,---.
@@ -285,7 +291,8 @@ class _LIBCPP_TEMPLATE_VIS __list_iterator
 
     __link_pointer __ptr_;
 
-    explicit __list_iterator(__link_pointer __p) _NOEXCEPT : __ptr_(__p) {}
+    explicit __list_iterator(__link_pointer __p) _NOEXCEPT : __ptr_(__p)
+    {}
 
     template<class, class> friend class list;
     template<class, class> friend class __list_imp;
@@ -298,43 +305,52 @@ public:
     typedef typename __rebind_pointer<_VoidPtr, value_type>::type pointer;
     typedef typename pointer_traits<pointer>::difference_type difference_type;
 
-    __list_iterator() _NOEXCEPT : __ptr_(nullptr) {}
+    __list_iterator() _NOEXCEPT : __ptr_(nullptr)
+    {}
 
-    reference operator*() const {
+    reference operator*() const
+    {
         return __ptr_->__as_node()->__value_;
     }
 
-    pointer operator->() const {
+    pointer operator->() const
+    {
         return pointer_traits<pointer>::pointer_to(__ptr_->__as_node()->__value_);
     }
 
-    __list_iterator& operator++() {
+    __list_iterator& operator++()
+    {
         __ptr_ = __ptr_->__next_;
         return *this;
     }
 
-    __list_iterator operator++(int) {
+    __list_iterator operator++(int)
+    {
         __list_iterator __t(*this);
         ++(*this);
         return __t;
     }
 
-    __list_iterator& operator--() {
+    __list_iterator& operator--()
+    {
         __ptr_ = __ptr_->__prev_;
         return *this;
     }
 
-    __list_iterator operator--(int) {
+    __list_iterator operator--(int)
+    {
         __list_iterator __t(*this);
         --(*this);
         return __t;
     }
 
-    friend bool operator==(const __list_iterator& __x, const __list_iterator& __y) {
+    friend bool operator==(const __list_iterator& __x, const __list_iterator& __y)
+    {
         return __x.__ptr_ == __y.__ptr_;
     }
     
-    friend bool operator!=(const __list_iterator& __x, const __list_iterator& __y) {
+    friend bool operator!=(const __list_iterator& __x, const __list_iterator& __y)
+    {
         return !(__x == __y);
     }
 };
@@ -353,7 +369,8 @@ class _LIBCPP_TEMPLATE_VIS __list_const_iterator
     __link_pointer __ptr_;
 
     _LIBCPP_INLINE_VISIBILITY
-    explicit __list_const_iterator(__link_pointer __p) _NOEXCEPT : __ptr_(__p) {}
+    explicit __list_const_iterator(__link_pointer __p) _NOEXCEPT : __ptr_(__p)
+{}
 
     template<class, class> friend class list;
     template<class, class> friend class __list_imp;
@@ -365,8 +382,10 @@ public:
     typedef typename __rebind_pointer<_VoidPtr, const value_type>::type pointer;
     typedef typename pointer_traits<pointer>::difference_type difference_type;
 
-    __list_const_iterator() _NOEXCEPT : __ptr_(nullptr) {}
-    __list_const_iterator(const __list_iterator<_Tp, _VoidPtr>& __p) _NOEXCEPT : __ptr_(__p.__ptr_) {}
+    __list_const_iterator() _NOEXCEPT : __ptr_(nullptr)
+{}
+    __list_const_iterator(const __list_iterator<_Tp, _VoidPtr>& __p) _NOEXCEPT : __ptr_(__p.__ptr_)
+{}
 
     reference operator*() const {
         return __ptr_->__as_node()->__value_;
@@ -376,33 +395,39 @@ public:
         return pointer_traits<pointer>::pointer_to(__ptr_->__as_node()->__value_);
     }
 
-    __list_const_iterator& operator++() {
+    __list_const_iterator& operator++()
+{
         __ptr_ = __ptr_->__next_;
         return *this;
     }
 
-    __list_const_iterator operator++(int) {
+    __list_const_iterator operator++(int)
+{
         __list_const_iterator __t(*this);
         ++(*this);
         return __t;
     }
 
-    __list_const_iterator& operator--() {
+    __list_const_iterator& operator--()
+{
         __ptr_ = __ptr_->__prev_;
         return *this;
     }
 
-    __list_const_iterator operator--(int) {
+    __list_const_iterator operator--(int)
+{
         __list_const_iterator __t(*this);
         --(*this);
         return __t;
     }
 
-    friend bool operator==(const __list_const_iterator& __x, const __list_const_iterator& __y) {
+    friend bool operator==(const __list_const_iterator& __x, const __list_const_iterator& __y)
+{
         return __x.__ptr_ == __y.__ptr_;
     }
     
-    friend bool operator!=(const __list_const_iterator& __x, const __list_const_iterator& __y) {
+    friend bool operator!=(const __list_const_iterator& __x, const __list_const_iterator& __y)
+{
         return !(__x == __y);
     }
 };
@@ -416,12 +441,15 @@ public:
 template <class _Tp, class _Alloc>
 class __list_imp
 {
+
     __list_imp(const __list_imp&);
-    __list_imp& operator=(const __list_imp&);
+    __list_imp& operator=(const __list_imp&)
+
 public:
     typedef _Alloc                                                  allocator_type;
     typedef allocator_traits<allocator_type>                        __alloc_traits;
     typedef typename __alloc_traits::size_type                      size_type;
+
 protected:
     typedef _Tp                                                     value_type;
     typedef typename __alloc_traits::void_pointer                   __void_pointer;
@@ -449,25 +477,30 @@ protected:
     __node_base __end_;
     __compressed_pair<size_type, __node_allocator> __size_alloc_;
 
-    __link_pointer __end_as_link() const _NOEXCEPT {
+    __link_pointer __end_as_link() const _NOEXCEPT
+    {
         return __node_pointer_traits::__unsafe_link_pointer_cast(const_cast<__node_base&>(__end_).__self());
     }
 
     size_type& __sz() _NOEXCEPT {return __size_alloc_.first();}
 
-    const size_type& __sz() const _NOEXCEPT {
+    const size_type& __sz() const _NOEXCEPT
+    {
         return __size_alloc_.first();
     }
 
-    __node_allocator& __node_alloc() _NOEXCEPT {
+    __node_allocator& __node_alloc() _NOEXCEPT
+    {
         return __size_alloc_.second();
     }
 
-    const __node_allocator& __node_alloc() const _NOEXCEPT {
+    const __node_allocator& __node_alloc() const _NOEXCEPT
+    {
         return __size_alloc_.second();
     }
 
-    size_type __node_alloc_max_size() const _NOEXCEPT {
+    size_type __node_alloc_max_size() const _NOEXCEPT
+    {
         return __node_alloc_traits::max_size(__node_alloc());
     }
 
@@ -483,50 +516,60 @@ protected:
     void clear() _NOEXCEPT;
     bool empty() const _NOEXCEPT {return __sz() == 0;}
 
-    iterator begin() _NOEXCEPT {
+    iterator begin() _NOEXCEPT
+    {
         return iterator(__end_.__next_);
     }
 
-    const_iterator begin() const  _NOEXCEPT {
+    const_iterator begin() const  _NOEXCEPT
+    {
         return const_iterator(__end_.__next_);
     }
 
-    iterator end() _NOEXCEPT {
+    iterator end() _NOEXCEPT
+    {
         return iterator(__end_as_link());
     }
 
-    const_iterator end() const _NOEXCEPT {
+    const_iterator end() const _NOEXCEPT
+    {
         return const_iterator(__end_as_link());
     }
 
     void swap(__list_imp& __c) _NOEXCEPT_(!__alloc_traits::propagate_on_container_swap::value || __is_nothrow_swappable<allocator_type>::value);
 
-    void __copy_assign_alloc(const __list_imp& __c) {
+    void __copy_assign_alloc(const __list_imp& __c)
+    {
         __copy_assign_alloc(__c, integral_constant<bool, __node_alloc_traits::propagate_on_container_copy_assignment::value>());
     }
 
-    void __move_assign_alloc(__list_imp& __c) _NOEXCEPT_(!__node_alloc_traits::propagate_on_container_move_assignment::value || is_nothrow_move_assignable<__node_allocator>::value) {
+    void __move_assign_alloc(__list_imp& __c) _NOEXCEPT_(!__node_alloc_traits::propagate_on_container_move_assignment::value || is_nothrow_move_assignable<__node_allocator>::value)
+    {
         __move_assign_alloc(__c, integral_constant<bool, __node_alloc_traits::propagate_on_container_move_assignment::value>());
     }
 
 private:
 
-    void __copy_assign_alloc(const __list_imp& __c, true_type) {
+    void __copy_assign_alloc(const __list_imp& __c, true_type)
+    {
         if (__node_alloc() != __c.__node_alloc())
             clear();
         __node_alloc() = __c.__node_alloc();
     }
 
-    void __copy_assign_alloc(const __list_imp&, false_type) {}
+    void __copy_assign_alloc(const __list_imp&, false_type)
+    {}
 
     void __move_assign_alloc(__list_imp& __c, true_type) _NOEXCEPT_(is_nothrow_move_assignable<__node_allocator>::value)
     {
         __node_alloc() = _VSTD::move(__c.__node_alloc());
     }
 
-    void __move_assign_alloc(__list_imp&, false_type) _NOEXCEPT {}
+    void __move_assign_alloc(__list_imp&, false_type) _NOEXCEPT
+    {}
 
-    void __invalidate_all_iterators() {}
+    void __invalidate_all_iterators()
+    {}
 };
 
 // o     |    o              |    o     |        o
@@ -550,25 +593,30 @@ template <class _Tp, class _Alloc>
 inline
 __list_imp<_Tp, _Alloc>::__list_imp()
         _NOEXCEPT_(is_nothrow_default_constructible<__node_allocator>::value)
-    : __size_alloc_(0, __default_init_tag()) {}
+    : __size_alloc_(0, __default_init_tag())
+{}
 
 template <class _Tp, class _Alloc>
 inline
 __list_imp<_Tp, _Alloc>::__list_imp(const allocator_type& __a)
-    : __size_alloc_(0, __node_allocator(__a)) {}
+    : __size_alloc_(0, __node_allocator(__a))
+{}
 
 template <class _Tp, class _Alloc>
 inline __list_imp<_Tp, _Alloc>::__list_imp(const __node_allocator& __a)
-    : __size_alloc_(0, __a) {}
+    : __size_alloc_(0, __a)
+{}
 
 #ifndef _LIBCPP_CXX03_LANG
 template <class _Tp, class _Alloc>
 inline __list_imp<_Tp, _Alloc>::__list_imp(__node_allocator&& __a) _NOEXCEPT
-    : __size_alloc_(0, std::move(__a)) {}
+    : __size_alloc_(0, std::move(__a))
+{}
 #endif
 
 template <class _Tp, class _Alloc>
-__list_imp<_Tp, _Alloc>::~__list_imp() {
+__list_imp<_Tp, _Alloc>::~__list_imp()
+{
   clear();
 }
 
@@ -655,9 +703,11 @@ public:
 
 
     list()
-        _NOEXCEPT_(is_nothrow_default_constructible<__node_allocator>::value) {}
+        _NOEXCEPT_(is_nothrow_default_constructible<__node_allocator>::value)
+{}
 
-    explicit list(const allocator_type& __a) : base(__a) {}
+    explicit list(const allocator_type& __a) : base(__a)
+{}
 
     explicit list(size_type __n);
 
@@ -687,11 +737,13 @@ public:
 
     list& operator=(list&& __c) _NOEXCEPT_(__node_alloc_traits::propagate_on_container_move_assignment::value && is_nothrow_move_assignable<__node_allocator>::value);
 
-    list& operator=(initializer_list<value_type> __il) {
+    list& operator=(initializer_list<value_type> __il)
+{
         assign(__il.begin(), __il.end()); return *this;
     }
 
-    void assign(initializer_list<value_type> __il) {
+    void assign(initializer_list<value_type> __il)
+{
         assign(__il.begin(), __il.end());
     }
 #endif  // _LIBCPP_CXX03_LANG
@@ -725,7 +777,8 @@ public:
     const_reverse_iterator crbegin() const _NOEXCEPT {return const_reverse_iterator(end());}
     const_reverse_iterator crend()   const _NOEXCEPT {return const_reverse_iterator(begin());}
 
-    reference front() {
+    reference front()
+{
         _LIBCPP_ASSERT(!empty(), "list::front called on empty list");
         return base::__end_.__next_->__as_node()->__value_;
     }
@@ -735,7 +788,8 @@ public:
         return base::__end_.__next_->__as_node()->__value_;
     }
 
-    reference back() {
+    reference back()
+{
         _LIBCPP_ASSERT(!empty(), "list::back called on empty list");
         return base::__end_.__prev_->__as_node()->__value_;
     }
@@ -758,7 +812,8 @@ public:
 
     iterator insert(const_iterator __p, value_type&& __x);
 
-    iterator insert(const_iterator __p, initializer_list<value_type> __il) {
+    iterator insert(const_iterator __p, initializer_list<value_type> __il)
+{
         return insert(__p, __il.begin(), __il.end());
     }
 #endif  // _LIBCPP_CXX03_LANG
@@ -768,9 +823,11 @@ public:
 
 #ifndef _LIBCPP_CXX03_LANG
     template <class _Arg>
-    void __emplace_back(_Arg&& __arg) { emplace_back(_VSTD::forward<_Arg>(__arg)); }
+    void __emplace_back(_Arg&& __arg)
+{ emplace_back(_VSTD::forward<_Arg>(__arg)); }
 #else
-    void __emplace_back(value_type const& __arg) { push_back(__arg); }
+    void __emplace_back(value_type const& __arg)
+{ push_back(__arg); }
 #endif
 
     iterator insert(const_iterator __p, const value_type& __x);
@@ -778,7 +835,8 @@ public:
     template <class _InpIter>
     iterator insert(const_iterator __p, _InpIter __f, _InpIter __l, typename enable_if<__is_cpp17_input_iterator<_InpIter>::value>::type* = 0);
 
-    void swap(list& __c) _NOEXCEPT_(!__node_alloc_traits::propagate_on_container_swap::value || __is_nothrow_swappable<__node_allocator>::value) {
+    void swap(list& __c) _NOEXCEPT_(!__node_alloc_traits::propagate_on_container_swap::value || __is_nothrow_swappable<__node_allocator>::value)
+{
         base::swap(__c);
     }
 
@@ -798,15 +856,18 @@ public:
     void splice(const_iterator __p, list& __c);
 #ifndef _LIBCPP_CXX03_LANG
     
-    void splice(const_iterator __p, list&& __c) {
+    void splice(const_iterator __p, list&& __c)
+{
         splice(__p, __c);
     }
     
-    void splice(const_iterator __p, list&& __c, const_iterator __i) {
+    void splice(const_iterator __p, list&& __c, const_iterator __i)
+{
         splice(__p, __c, __i);
     }
     
-    void splice(const_iterator __p, list&& __c, const_iterator __f, const_iterator __l) {
+    void splice(const_iterator __p, list&& __c, const_iterator __f, const_iterator __l)
+{
         splice(__p, __c, __f, __l);
     }
 
@@ -819,7 +880,8 @@ public:
 
     template <class _Pred> __remove_return_type remove_if(_Pred __pred);
     
-    __remove_return_type unique() {
+    __remove_return_type unique()
+{
         return unique(__equal_to<value_type>());
     }
 
@@ -829,10 +891,12 @@ public:
 
 #ifndef _LIBCPP_CXX03_LANG
 
-    void merge(list&& __c) {merge(__c);}
+    void merge(list&& __c)
+{merge(__c);}
 
     template <class _Comp>
-        void merge(list&& __c, _Comp __comp) {merge(__c, __comp);}
+        void merge(list&& __c, _Comp __comp)
+{merge(__c, __comp);}
 
 #endif
 
@@ -848,7 +912,8 @@ public:
     typedef __allocator_destructor<__node_allocator> __node_destructor;
     typedef unique_ptr<__node, __node_destructor> __hold_pointer;
 
-    __hold_pointer __allocate_node(__node_allocator& __na) {
+    __hold_pointer __allocate_node(__node_allocator& __na)
+{
         __node_pointer __p = __node_alloc_traits::allocate(__na, 1);
         __p->__prev_ = nullptr;
         return __hold_pointer(__p, __node_destructor(__na, 1));
@@ -865,20 +930,17 @@ private:
     void __move_assign(list& __c, false_type);
 };
 
-
+//               |    |    o     |
+// ,---.,---.,---|    |    .,---.|---
+// |---'|   ||   |    |    |`---.|
+// `---'`   '`---'    `---'``---'`---'
 
 #ifndef _LIBCPP_HAS_NO_DEDUCTION_GUIDES
-template<class _InputIterator,
-         class _Alloc = typename std::allocator<typename iterator_traits<_InputIterator>::value_type>,
-         class = typename enable_if<__is_allocator<_Alloc>::value, void>::type
-         >
+template<class _InputIterator, class _Alloc = typename std::allocator<typename iterator_traits<_InputIterator>::value_type>, class = typename enable_if<__is_allocator<_Alloc>::value, void>::type>
 list(_InputIterator, _InputIterator)
   -> list<typename iterator_traits<_InputIterator>::value_type, _Alloc>;
 
-template<class _InputIterator,
-         class _Alloc,
-         class = typename enable_if<__is_allocator<_Alloc>::value, void>::type
-         >
+template<class _InputIterator, class _Alloc, class = typename enable_if<__is_allocator<_Alloc>::value, void>::type>
 list(_InputIterator, _InputIterator, _Alloc)
   -> list<typename iterator_traits<_InputIterator>::value_type, _Alloc>;
 #endif
@@ -925,16 +987,12 @@ inline
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::__iterator(size_type __n)
 {
-    return __n <= base::__sz() / 2 ? _VSTD::next(begin(), __n)
-                                   : _VSTD::prev(end(), base::__sz() - __n);
+    return __n <= base::__sz() / 2 ? _VSTD::next(begin(), __n) : _VSTD::prev(end(), base::__sz() - __n);
 }
 
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(size_type __n)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
     for (; __n > 0; --__n)
 #ifndef _LIBCPP_CXX03_LANG
         emplace_back();
@@ -943,82 +1001,50 @@ list<_Tp, _Alloc>::list(size_type __n)
 #endif
 }
 
-#if _LIBCPP_STD_VER > 11
-template <class _Tp, class _Alloc>
-list<_Tp, _Alloc>::list(size_type __n, const allocator_type& __a) : base(__a)
-{
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
-    for (; __n > 0; --__n)
-        emplace_back();
-}
-#endif
-
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(size_type __n, const value_type& __x)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
     for (; __n > 0; --__n)
         push_back(__x);
 }
 
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(size_type __n, const value_type& __x, const allocator_type& __a)
-    : base(__a)
+: base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
     for (; __n > 0; --__n)
         push_back(__x);
 }
 
 template <class _Tp, class _Alloc>
 template <class _InpIter>
-list<_Tp, _Alloc>::list(_InpIter __f, _InpIter __l,
-                        typename enable_if<__is_cpp17_input_iterator<_InpIter>::value>::type*)
+list<_Tp, _Alloc>::list(_InpIter __f, _InpIter __l, typename enable_if<__is_cpp17_input_iterator<_InpIter>::value>::type*)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
     for (; __f != __l; ++__f)
         __emplace_back(*__f);
 }
 
 template <class _Tp, class _Alloc>
 template <class _InpIter>
-list<_Tp, _Alloc>::list(_InpIter __f, _InpIter __l, const allocator_type& __a,
-                        typename enable_if<__is_cpp17_input_iterator<_InpIter>::value>::type*)
-    : base(__a)
+list<_Tp, _Alloc>::list(_InpIter __f, _InpIter __l, const allocator_type& __a, typename enable_if<__is_cpp17_input_iterator<_InpIter>::value>::type*)
+: base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
     for (; __f != __l; ++__f)
         __emplace_back(*__f);
 }
 
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(const list& __c)
-    : base(__node_alloc_traits::select_on_container_copy_construction(
-          __c.__node_alloc())) {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
+: base(__node_alloc_traits::select_on_container_copy_construction(__c.__node_alloc()))
+{
     for (const_iterator __i = __c.begin(), __e = __c.end(); __i != __e; ++__i)
         push_back(*__i);
 }
 
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(const list& __c, const allocator_type& __a)
-    : base(__a)
+: base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
     for (const_iterator __i = __c.begin(), __e = __c.end(); __i != __e; ++__i)
         push_back(*__i);
 }
@@ -1027,45 +1053,30 @@ list<_Tp, _Alloc>::list(const list& __c, const allocator_type& __a)
 
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(initializer_list<value_type> __il, const allocator_type& __a)
-    : base(__a)
+: base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
-    for (typename initializer_list<value_type>::const_iterator __i = __il.begin(),
-            __e = __il.end(); __i != __e; ++__i)
+    for (typename initializer_list<value_type>::const_iterator __i = __il.begin(), __e = __il.end(); __i != __e; ++__i)
         push_back(*__i);
 }
 
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(initializer_list<value_type> __il)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
-    for (typename initializer_list<value_type>::const_iterator __i = __il.begin(),
-            __e = __il.end(); __i != __e; ++__i)
+    for (typename initializer_list<value_type>::const_iterator __i = __il.begin(), __e = __il.end(); __i != __e; ++__i)
         push_back(*__i);
 }
 
 template <class _Tp, class _Alloc>
-inline list<_Tp, _Alloc>::list(list&& __c)
-    _NOEXCEPT_(is_nothrow_move_constructible<__node_allocator>::value)
-    : base(_VSTD::move(__c.__node_alloc())) {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
+inline list<_Tp, _Alloc>::list(list&& __c) _NOEXCEPT_(is_nothrow_move_constructible<__node_allocator>::value)
+: base(_VSTD::move(__c.__node_alloc()))
+{
     splice(end(), __c);
 }
 
 template <class _Tp, class _Alloc>
-inline
-list<_Tp, _Alloc>::list(list&& __c, const allocator_type& __a)
-    : base(__a)
+inline list<_Tp, _Alloc>::list(list&& __c, const allocator_type& __a)
+: base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __get_db()->__insert_c(this);
-#endif
     if (__a == __c.get_allocator())
         splice(end(), __c);
     else
@@ -1076,21 +1087,14 @@ list<_Tp, _Alloc>::list(list&& __c, const allocator_type& __a)
 }
 
 template <class _Tp, class _Alloc>
-inline
-list<_Tp, _Alloc>&
-list<_Tp, _Alloc>::operator=(list&& __c)
-        _NOEXCEPT_(
-            __node_alloc_traits::propagate_on_container_move_assignment::value &&
-            is_nothrow_move_assignable<__node_allocator>::value)
+inline list<_Tp, _Alloc>& list<_Tp, _Alloc>::operator=(list&& __c) _NOEXCEPT_(__node_alloc_traits::propagate_on_container_move_assignment::value && is_nothrow_move_assignable<__node_allocator>::value)
 {
-    __move_assign(__c, integral_constant<bool,
-          __node_alloc_traits::propagate_on_container_move_assignment::value>());
+    __move_assign(__c, integral_constant<bool, __node_alloc_traits::propagate_on_container_move_assignment::value>());
     return *this;
 }
 
 template <class _Tp, class _Alloc>
-void
-list<_Tp, _Alloc>::__move_assign(list& __c, false_type)
+void list<_Tp, _Alloc>::__move_assign(list& __c, false_type)
 {
     if (base::__node_alloc() != __c.__node_alloc())
     {
@@ -1102,9 +1106,7 @@ list<_Tp, _Alloc>::__move_assign(list& __c, false_type)
 }
 
 template <class _Tp, class _Alloc>
-void
-list<_Tp, _Alloc>::__move_assign(list& __c, true_type)
-        _NOEXCEPT_(is_nothrow_move_assignable<__node_allocator>::value)
+void list<_Tp, _Alloc>::__move_assign(list& __c, true_type) _NOEXCEPT_(is_nothrow_move_assignable<__node_allocator>::value)
 {
     clear();
     base::__move_assign_alloc(__c);
@@ -1114,9 +1116,7 @@ list<_Tp, _Alloc>::__move_assign(list& __c, true_type)
 #endif  // _LIBCPP_CXX03_LANG
 
 template <class _Tp, class _Alloc>
-inline
-list<_Tp, _Alloc>&
-list<_Tp, _Alloc>::operator=(const list& __c)
+inline list<_Tp, _Alloc>& list<_Tp, _Alloc>::operator=(const list& __c)
 {
     if (this != &__c)
     {
@@ -1128,9 +1128,7 @@ list<_Tp, _Alloc>::operator=(const list& __c)
 
 template <class _Tp, class _Alloc>
 template <class _InpIter>
-void
-list<_Tp, _Alloc>::assign(_InpIter __f, _InpIter __l,
-                          typename enable_if<__is_cpp17_input_iterator<_InpIter>::value>::type*)
+void list<_Tp, _Alloc>::assign(_InpIter __f, _InpIter __l, typename enable_if<__is_cpp17_input_iterator<_InpIter>::value>::type*)
 {
     iterator __i = begin();
     iterator __e = end();
@@ -1140,14 +1138,10 @@ list<_Tp, _Alloc>::assign(_InpIter __f, _InpIter __l,
         insert(__e, __f, __l);
     else
         erase(__i, __e);
-#if _LIBCPP_DEBUG_LEVEL >= 2
-      __get_db()->__invalidate_all(this);
-#endif
 }
 
 template <class _Tp, class _Alloc>
-void
-list<_Tp, _Alloc>::assign(size_type __n, const value_type& __x)
+void list<_Tp, _Alloc>::assign(size_type __n, const value_type& __x)
 {
     iterator __i = begin();
     iterator __e = end();
@@ -1157,15 +1151,10 @@ list<_Tp, _Alloc>::assign(size_type __n, const value_type& __x)
         insert(__e, __n, __x);
     else
         erase(__i, __e);
-#if _LIBCPP_DEBUG_LEVEL >= 2
-      __get_db()->__invalidate_all(this);
-#endif
 }
 
 template <class _Tp, class _Alloc>
-inline
-_Alloc
-list<_Tp, _Alloc>::get_allocator() const _NOEXCEPT
+inline _Alloc list<_Tp, _Alloc>::get_allocator() const _NOEXCEPT
 {
     return allocator_type(base::__node_alloc());
 }
@@ -1174,35 +1163,18 @@ template <class _Tp, class _Alloc>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::insert(const_iterator __p, const value_type& __x)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
-        "list::insert(iterator, x) called with an iterator not"
-        " referring to this list");
-#endif
     __node_allocator& __na = base::__node_alloc();
     __hold_pointer __hold = __allocate_node(__na);
     __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), __x);
     __link_nodes(__p.__ptr_, __hold->__as_link(), __hold->__as_link());
     ++base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    return iterator(__hold.release()->__as_link(), this);
-#else
     return iterator(__hold.release()->__as_link());
-#endif
 }
 
 template <class _Tp, class _Alloc>
-typename list<_Tp, _Alloc>::iterator
-list<_Tp, _Alloc>::insert(const_iterator __p, size_type __n, const value_type& __x)
+typename list<_Tp, _Alloc>::iterator list<_Tp, _Alloc>::insert(const_iterator __p, size_type __n, const value_type& __x)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
-        "list::insert(iterator, n, x) called with an iterator not"
-        " referring to this list");
-    iterator __r(__p.__ptr_, this);
-#else
     iterator __r(__p.__ptr_);
-#endif
     if (__n > 0)
     {
         size_type __ds = 0;
@@ -1210,11 +1182,7 @@ list<_Tp, _Alloc>::insert(const_iterator __p, size_type __n, const value_type& _
         __hold_pointer __hold = __allocate_node(__na);
         __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), __x);
         ++__ds;
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        __r = iterator(__hold->__as_link(), this);
-#else
         __r = iterator(__hold->__as_link());
-#endif
         __hold.release();
         iterator __e = __r;
 #ifndef _LIBCPP_NO_EXCEPTIONS
@@ -1240,11 +1208,7 @@ list<_Tp, _Alloc>::insert(const_iterator __p, size_type __n, const value_type& _
                 __node_alloc_traits::deallocate(__na, __e.__ptr_->__as_node(), 1);
                 if (__prev == 0)
                     break;
-#if _LIBCPP_DEBUG_LEVEL >= 2
-                __e = iterator(__prev, this);
-#else
                 __e = iterator(__prev);
-#endif
             }
             throw;
         }
@@ -1258,17 +1222,9 @@ list<_Tp, _Alloc>::insert(const_iterator __p, size_type __n, const value_type& _
 template <class _Tp, class _Alloc>
 template <class _InpIter>
 typename list<_Tp, _Alloc>::iterator
-list<_Tp, _Alloc>::insert(const_iterator __p, _InpIter __f, _InpIter __l,
-             typename enable_if<__is_cpp17_input_iterator<_InpIter>::value>::type*)
+list<_Tp, _Alloc>::insert(const_iterator __p, _InpIter __f, _InpIter __l, typename enable_if<__is_cpp17_input_iterator<_InpIter>::value>::type*)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
-        "list::insert(iterator, range) called with an iterator not"
-        " referring to this list");
-    iterator __r(__p.__ptr_, this);
-#else
     iterator __r(__p.__ptr_);
-#endif
     if (__f != __l)
     {
         size_type __ds = 0;
@@ -1276,11 +1232,7 @@ list<_Tp, _Alloc>::insert(const_iterator __p, _InpIter __f, _InpIter __l,
         __hold_pointer __hold = __allocate_node(__na);
         __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), *__f);
         ++__ds;
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        __r = iterator(__hold.get()->__as_link(), this);
-#else
         __r = iterator(__hold.get()->__as_link());
-#endif
         __hold.release();
         iterator __e = __r;
 #ifndef _LIBCPP_NO_EXCEPTIONS
@@ -1306,11 +1258,7 @@ list<_Tp, _Alloc>::insert(const_iterator __p, _InpIter __f, _InpIter __l,
                 __node_alloc_traits::deallocate(__na, __e.__ptr_->__as_node(), 1);
                 if (__prev == 0)
                     break;
-#if _LIBCPP_DEBUG_LEVEL >= 2
-                __e = iterator(__prev, this);
-#else
                 __e = iterator(__prev);
-#endif
             }
             throw;
         }
@@ -1374,11 +1322,7 @@ list<_Tp, _Alloc>::push_back(value_type&& __x)
 
 template <class _Tp, class _Alloc>
 template <class... _Args>
-#if _LIBCPP_STD_VER > 14
-typename list<_Tp, _Alloc>::reference
-#else
 void
-#endif
 list<_Tp, _Alloc>::emplace_front(_Args&&... __args)
 {
     __node_allocator& __na = base::__node_alloc();
@@ -1386,20 +1330,12 @@ list<_Tp, _Alloc>::emplace_front(_Args&&... __args)
     __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), _VSTD::forward<_Args>(__args)...);
     __link_nodes_at_front(__hold.get()->__as_link(), __hold.get()->__as_link());
     ++base::__sz();
-#if _LIBCPP_STD_VER > 14
-    return __hold.release()->__value_;
-#else
     __hold.release();
-#endif
 }
 
 template <class _Tp, class _Alloc>
 template <class... _Args>
-#if _LIBCPP_STD_VER > 14
-typename list<_Tp, _Alloc>::reference
-#else
 void
-#endif
 list<_Tp, _Alloc>::emplace_back(_Args&&... __args)
 {
     __node_allocator& __na = base::__node_alloc();
@@ -1408,11 +1344,7 @@ list<_Tp, _Alloc>::emplace_back(_Args&&... __args)
     __link_pointer __nl = __hold->__as_link();
     __link_nodes_at_back(__nl, __nl);
     ++base::__sz();
-#if _LIBCPP_STD_VER > 14
-    return __hold.release()->__value_;
-#else
     __hold.release();
-#endif
 }
 
 template <class _Tp, class _Alloc>
@@ -1420,11 +1352,6 @@ template <class... _Args>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::emplace(const_iterator __p, _Args&&... __args)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
-        "list::emplace(iterator, args...) called with an iterator not"
-        " referring to this list");
-#endif
     __node_allocator& __na = base::__node_alloc();
     __hold_pointer __hold = __allocate_node(__na);
     __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), _VSTD::forward<_Args>(__args)...);
@@ -1432,22 +1359,13 @@ list<_Tp, _Alloc>::emplace(const_iterator __p, _Args&&... __args)
     __link_nodes(__p.__ptr_, __nl, __nl);
     ++base::__sz();
     __hold.release();
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    return iterator(__nl, this);
-#else
     return iterator(__nl);
-#endif
 }
 
 template <class _Tp, class _Alloc>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::insert(const_iterator __p, value_type&& __x)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
-        "list::insert(iterator, x) called with an iterator not"
-        " referring to this list");
-#endif
     __node_allocator& __na = base::__node_alloc();
     __hold_pointer __hold = __allocate_node(__na);
     __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), _VSTD::move(__x));
@@ -1455,11 +1373,7 @@ list<_Tp, _Alloc>::insert(const_iterator __p, value_type&& __x)
     __link_nodes(__p.__ptr_, __nl, __nl);
     ++base::__sz();
     __hold.release();
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    return iterator(__nl, this);
-#else
     return iterator(__nl);
-#endif
 }
 
 #endif  // _LIBCPP_CXX03_LANG
@@ -1473,21 +1387,6 @@ list<_Tp, _Alloc>::pop_front()
     __link_pointer __n = base::__end_.__next_;
     base::__unlink_nodes(__n, __n);
     --base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __c_node* __c = __get_db()->__find_c_and_lock(this);
-    for (__i_node** __p = __c->end_; __p != __c->beg_; )
-    {
-        --__p;
-        iterator* __i = static_cast<iterator*>((*__p)->__i_);
-        if (__i->__ptr_ == __n)
-        {
-            (*__p)->__c_ = nullptr;
-            if (--__c->end_ != __p)
-                memmove(__p, __p+1, (__c->end_ - __p)*sizeof(__i_node*));
-        }
-    }
-    __get_db()->unlock();
-#endif
     __node_pointer __np = __n->__as_node();
     __node_alloc_traits::destroy(__na, _VSTD::addressof(__np->__value_));
     __node_alloc_traits::deallocate(__na, __np, 1);
@@ -1502,21 +1401,6 @@ list<_Tp, _Alloc>::pop_back()
     __link_pointer __n = base::__end_.__prev_;
     base::__unlink_nodes(__n, __n);
     --base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __c_node* __c = __get_db()->__find_c_and_lock(this);
-    for (__i_node** __p = __c->end_; __p != __c->beg_; )
-    {
-        --__p;
-        iterator* __i = static_cast<iterator*>((*__p)->__i_);
-        if (__i->__ptr_ == __n)
-        {
-            (*__p)->__c_ = nullptr;
-            if (--__c->end_ != __p)
-                memmove(__p, __p+1, (__c->end_ - __p)*sizeof(__i_node*));
-        }
-    }
-    __get_db()->unlock();
-#endif
     __node_pointer __np = __n->__as_node();
     __node_alloc_traits::destroy(__na, _VSTD::addressof(__np->__value_));
     __node_alloc_traits::deallocate(__na, __np, 1);
@@ -1526,11 +1410,6 @@ template <class _Tp, class _Alloc>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::erase(const_iterator __p)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
-        "list::erase(iterator) called with an iterator not"
-        " referring to this list");
-#endif
     _LIBCPP_ASSERT(__p != end(),
         "list::erase(iterator) called with a non-dereferenceable iterator");
     __node_allocator& __na = base::__node_alloc();
@@ -1538,43 +1417,16 @@ list<_Tp, _Alloc>::erase(const_iterator __p)
     __link_pointer __r = __n->__next_;
     base::__unlink_nodes(__n, __n);
     --base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    __c_node* __c = __get_db()->__find_c_and_lock(this);
-    for (__i_node** __ip = __c->end_; __ip != __c->beg_; )
-    {
-        --__ip;
-        iterator* __i = static_cast<iterator*>((*__ip)->__i_);
-        if (__i->__ptr_ == __n)
-        {
-            (*__ip)->__c_ = nullptr;
-            if (--__c->end_ != __ip)
-                memmove(__ip, __ip+1, (__c->end_ - __ip)*sizeof(__i_node*));
-        }
-    }
-    __get_db()->unlock();
-#endif
     __node_pointer __np = __n->__as_node();
     __node_alloc_traits::destroy(__na, _VSTD::addressof(__np->__value_));
     __node_alloc_traits::deallocate(__na, __np, 1);
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    return iterator(__r, this);
-#else
     return iterator(__r);
-#endif
 }
 
 template <class _Tp, class _Alloc>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::erase(const_iterator __f, const_iterator __l)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__f) == this,
-        "list::erase(iterator, iterator) called with an iterator not"
-        " referring to this list");
-   _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__l) == this,
-        "list::erase(iterator, iterator) called with an iterator not"
-        " referring to this list");
-#endif
     if (__f != __l)
     {
         __node_allocator& __na = base::__node_alloc();
@@ -1584,31 +1436,12 @@ list<_Tp, _Alloc>::erase(const_iterator __f, const_iterator __l)
             __link_pointer __n = __f.__ptr_;
             ++__f;
             --base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
-            __c_node* __c = __get_db()->__find_c_and_lock(this);
-            for (__i_node** __p = __c->end_; __p != __c->beg_; )
-            {
-                --__p;
-                iterator* __i = static_cast<iterator*>((*__p)->__i_);
-                if (__i->__ptr_ == __n)
-                {
-                    (*__p)->__c_ = nullptr;
-                    if (--__c->end_ != __p)
-                        memmove(__p, __p+1, (__c->end_ - __p)*sizeof(__i_node*));
-                }
-            }
-            __get_db()->unlock();
-#endif
             __node_pointer __np = __n->__as_node();
             __node_alloc_traits::destroy(__na, _VSTD::addressof(__np->__value_));
             __node_alloc_traits::deallocate(__na, __np, 1);
         }
     }
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    return iterator(__l.__ptr_, this);
-#else
     return iterator(__l.__ptr_);
-#endif
 }
 
 template <class _Tp, class _Alloc>
@@ -1625,11 +1458,7 @@ list<_Tp, _Alloc>::resize(size_type __n)
         __hold_pointer __hold = __allocate_node(__na);
         __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_));
         ++__ds;
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        iterator __r = iterator(__hold.release()->__as_link(), this);
-#else
         iterator __r = iterator(__hold.release()->__as_link());
-#endif
         iterator __e = __r;
 #ifndef _LIBCPP_NO_EXCEPTIONS
         try
@@ -1654,11 +1483,7 @@ list<_Tp, _Alloc>::resize(size_type __n)
                 __node_alloc_traits::deallocate(__na, __e.__ptr_->__as_node(), 1);
                 if (__prev == 0)
                     break;
-#if _LIBCPP_DEBUG_LEVEL >= 2
-                __e = iterator(__prev, this);
-#else
                 __e = iterator(__prev);
-#endif
             }
             throw;
         }
@@ -1683,11 +1508,7 @@ list<_Tp, _Alloc>::resize(size_type __n, const value_type& __x)
         __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), __x);
         ++__ds;
         __link_pointer __nl = __hold.release()->__as_link();
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        iterator __r = iterator(__nl, this);
-#else
         iterator __r = iterator(__nl);
-#endif
         iterator __e = __r;
 #ifndef _LIBCPP_NO_EXCEPTIONS
         try
@@ -1712,11 +1533,7 @@ list<_Tp, _Alloc>::resize(size_type __n, const value_type& __x)
                 __node_alloc_traits::deallocate(__na, __e.__ptr_->__as_node(), 1);
                 if (__prev == 0)
                     break;
-#if _LIBCPP_DEBUG_LEVEL >= 2
-                __e = iterator(__prev, this);
-#else
                 __e = iterator(__prev);
-#endif
             }
             throw;
         }
@@ -1732,11 +1549,6 @@ list<_Tp, _Alloc>::splice(const_iterator __p, list& __c)
 {
     _LIBCPP_ASSERT(this != &__c,
                    "list::splice(iterator, list) called with this == &list");
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
-        "list::splice(iterator, list) called with an iterator not"
-        " referring to this list");
-#endif
     if (!__c.empty())
     {
         __link_pointer __f = __c.__end_.__next_;
@@ -1745,26 +1557,6 @@ list<_Tp, _Alloc>::splice(const_iterator __p, list& __c)
         __link_nodes(__p.__ptr_, __f, __l);
         base::__sz() += __c.__sz();
         __c.__sz() = 0;
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        if (&__c != this) {
-            __libcpp_db* __db = __get_db();
-            __c_node* __cn1 = __db->__find_c_and_lock(this);
-            __c_node* __cn2 = __db->__find_c(&__c);
-            for (__i_node** __ip = __cn2->end_; __ip != __cn2->beg_;)
-            {
-                --__ip;
-                iterator* __i = static_cast<iterator*>((*__ip)->__i_);
-                if (__i->__ptr_ != __c.__end_as_link())
-                {
-                    __cn1->__add(*__ip);
-                    (*__ip)->__c_ = __cn1;
-                    if (--__cn2->end_ != __ip)
-                        memmove(__ip, __ip+1, (__cn2->end_ - __ip)*sizeof(__i_node*));
-                }
-            }
-            __db->unlock();
-        }
-#endif
     }
 }
 
@@ -1772,17 +1564,6 @@ template <class _Tp, class _Alloc>
 void
 list<_Tp, _Alloc>::splice(const_iterator __p, list& __c, const_iterator __i)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
-        "list::splice(iterator, list, iterator) called with first iterator not"
-        " referring to this list");
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__i) == &__c,
-        "list::splice(iterator, list, iterator) called with second iterator not"
-        " referring to list argument");
-    _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(&__i),
-        "list::splice(iterator, list, iterator) called with second iterator not"
-        " derefereceable");
-#endif
     if (__p.__ptr_ != __i.__ptr_ && __p.__ptr_ != __i.__ptr_->__next_)
     {
         __link_pointer __f = __i.__ptr_;
@@ -1790,26 +1571,6 @@ list<_Tp, _Alloc>::splice(const_iterator __p, list& __c, const_iterator __i)
         __link_nodes(__p.__ptr_, __f, __f);
         --__c.__sz();
         ++base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        if (&__c != this) {
-            __libcpp_db* __db = __get_db();
-            __c_node* __cn1 = __db->__find_c_and_lock(this);
-            __c_node* __cn2 = __db->__find_c(&__c);
-            for (__i_node** __ip = __cn2->end_; __ip != __cn2->beg_;)
-            {
-                --__ip;
-                iterator* __j = static_cast<iterator*>((*__ip)->__i_);
-                if (__j->__ptr_ == __f)
-                {
-                    __cn1->__add(*__ip);
-                    (*__ip)->__c_ = __cn1;
-                    if (--__cn2->end_ != __ip)
-                        memmove(__ip, __ip+1, (__cn2->end_ - __ip)*sizeof(__i_node*));
-                }
-            }
-            __db->unlock();
-        }
-#endif
     }
 }
 
@@ -1817,22 +1578,6 @@ template <class _Tp, class _Alloc>
 void
 list<_Tp, _Alloc>::splice(const_iterator __p, list& __c, const_iterator __f, const_iterator __l)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
-        "list::splice(iterator, list, iterator, iterator) called with first iterator not"
-        " referring to this list");
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__f) == &__c,
-        "list::splice(iterator, list, iterator, iterator) called with second iterator not"
-        " referring to list argument");
-    if (this == &__c)
-    {
-        for (const_iterator __i = __f; __i != __l; ++__i)
-            _LIBCPP_ASSERT(__i != __p,
-                           "list::splice(iterator, list, iterator, iterator)"
-                           " called with the first iterator within the range"
-                           " of the second and third iterators");
-    }
-#endif
     if (__f != __l)
     {
         __link_pointer __first = __f.__ptr_;
@@ -1846,30 +1591,6 @@ list<_Tp, _Alloc>::splice(const_iterator __p, list& __c, const_iterator __f, con
         }
         base::__unlink_nodes(__first, __last);
         __link_nodes(__p.__ptr_, __first, __last);
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        if (&__c != this) {
-            __libcpp_db* __db = __get_db();
-            __c_node* __cn1 = __db->__find_c_and_lock(this);
-            __c_node* __cn2 = __db->__find_c(&__c);
-            for (__i_node** __ip = __cn2->end_; __ip != __cn2->beg_;)
-            {
-                --__ip;
-                iterator* __j = static_cast<iterator*>((*__ip)->__i_);
-                for (__link_pointer __k = __f.__ptr_;
-                                              __k != __l.__ptr_; __k = __k->__next_)
-                {
-                    if (__j->__ptr_ == __k)
-                    {
-                        __cn1->__add(*__ip);
-                        (*__ip)->__c_ = __cn1;
-                        if (--__cn2->end_ != __ip)
-                            memmove(__ip, __ip+1, (__cn2->end_ - __ip)*sizeof(__i_node*));
-                    }
-                }
-            }
-            __db->unlock();
-        }
-#endif
     }
 }
 
@@ -1933,10 +1654,11 @@ list<_Tp, _Alloc>::unique(_BinaryPred __binary_pred)
         iterator __j = _VSTD::next(__i);
         for (; __j != __e && __binary_pred(*__i, *__j); ++__j)
             ;
-        if (++__i != __j) {
+        if (++__i != __j)
+        {
             __deleted_nodes.splice(__deleted_nodes.end(), *this, __i, __j);
             __i = __j;
-            }
+        }
     }
 
     return (__remove_return_type) __deleted_nodes.size();
@@ -1983,24 +1705,6 @@ list<_Tp, _Alloc>::merge(list& __c, _Comp __comp)
                 ++__f1;
         }
         splice(__e1, __c);
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        __libcpp_db* __db = __get_db();
-        __c_node* __cn1 = __db->__find_c_and_lock(this);
-        __c_node* __cn2 = __db->__find_c(&__c);
-        for (__i_node** __p = __cn2->end_; __p != __cn2->beg_;)
-        {
-            --__p;
-            iterator* __i = static_cast<iterator*>((*__p)->__i_);
-            if (__i->__ptr_ != __c.__end_as_link())
-            {
-                __cn1->__add(*__p);
-                (*__p)->__c_ = __cn1;
-                if (--__cn2->end_ != __p)
-                    memmove(__p, __p+1, (__cn2->end_ - __p)*sizeof(__i_node*));
-            }
-        }
-        __db->unlock();
-#endif
     }
 }
 
@@ -2107,38 +1811,6 @@ list<_Tp, _Alloc>::__invariants() const
     return size() == _VSTD::distance(begin(), end());
 }
 
-#if _LIBCPP_DEBUG_LEVEL >= 2
-
-template <class _Tp, class _Alloc>
-bool
-list<_Tp, _Alloc>::__dereferenceable(const const_iterator* __i) const
-{
-    return __i->__ptr_ != this->__end_as_link();
-}
-
-template <class _Tp, class _Alloc>
-bool
-list<_Tp, _Alloc>::__decrementable(const const_iterator* __i) const
-{
-    return !empty() &&  __i->__ptr_ != base::__end_.__next_;
-}
-
-template <class _Tp, class _Alloc>
-bool
-list<_Tp, _Alloc>::__addable(const const_iterator*, ptrdiff_t) const
-{
-    return false;
-}
-
-template <class _Tp, class _Alloc>
-bool
-list<_Tp, _Alloc>::__subscriptable(const const_iterator*, ptrdiff_t) const
-{
-    return false;
-}
-
-#endif  // _LIBCPP_DEBUG_LEVEL >= 2
-
 template <class _Tp, class _Alloc>
 inline _LIBCPP_INLINE_VISIBILITY
 bool
@@ -2195,18 +1867,6 @@ swap(list<_Tp, _Alloc>& __x, list<_Tp, _Alloc>& __y)
 {
     __x.swap(__y);
 }
-
-#if _LIBCPP_STD_VER > 17
-template <class _Tp, class _Allocator, class _Predicate>
-inline _LIBCPP_INLINE_VISIBILITY
-void erase_if(list<_Tp, _Allocator>& __c, _Predicate __pred)
-{ __c.remove_if(__pred); }
-
-template <class _Tp, class _Allocator, class _Up>
-inline _LIBCPP_INLINE_VISIBILITY
-void erase(list<_Tp, _Allocator>& __c, const _Up& __v)
-{ _VSTD::erase_if(__c, [&](auto& __elem) { return __elem == __v; }); }
-#endif
 
 _LIBCPP_END_NAMESPACE_STD
 
