@@ -96,12 +96,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     {
       std::size_t _M_size;
 
-      _List_node_header() _GLIBCXX_NOEXCEPT
+      _List_node_header() noexcept
       {
             _M_init();
       }
 
-      void _M_init() _GLIBCXX_NOEXCEPT
+      void _M_init() noexcept
       {
 	      this->_M_next = this->_M_prev = this;
 	      this->_M_size = 0;
@@ -155,66 +155,66 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       typedef _List_iterator<_Tp>		_Self;
       typedef _List_node<_Tp>			_Node;
 
-      typedef ptrdiff_t				difference_type;
+      typedef ptrdiff_t				      difference_type;
       typedef std::bidirectional_iterator_tag	iterator_category;
-      typedef _Tp				value_type;
-      typedef _Tp*				pointer;
-      typedef _Tp&				reference;
+      typedef _Tp				            value_type;
+      typedef _Tp*				      pointer;
+      typedef _Tp&				      reference;
 
-      _List_iterator() _GLIBCXX_NOEXCEPT
+      _List_iterator() noexcept
       : _M_node() {}
 
-      explicit _List_iterator(__detail::_List_node_base* __x) _GLIBCXX_NOEXCEPT
+      explicit _List_iterator(__detail::_List_node_base* __x) noexcept
       : _M_node(__x) {}
 
-      _Self _M_const_cast() const _GLIBCXX_NOEXCEPT
+      _Self _M_const_cast() const noexcept
       {
             return *this;
       }
 
       // Must downcast from _List_node_base to _List_node to get to value.
-      reference operator*() const _GLIBCXX_NOEXCEPT
+      reference operator*() const noexcept
       {
             return *static_cast<_Node*>(_M_node)->_M_valptr();
       }
 
-      pointer operator->() const _GLIBCXX_NOEXCEPT
+      pointer operator->() const noexcept
       {
             return static_cast<_Node*>(_M_node)->_M_valptr();
       }
 
-      _Self& operator++() _GLIBCXX_NOEXCEPT
+      _Self& operator++() noexcept
       {
 	      _M_node = _M_node->_M_next;
 	      return *this;
       }
 
-      _Self operator++(int) _GLIBCXX_NOEXCEPT
+      _Self operator++(int) noexcept
       {
 	      _Self __tmp = *this;
 	      _M_node = _M_node->_M_next;
 	      return __tmp;
       }
 
-      _Self& operator--() _GLIBCXX_NOEXCEPT
+      _Self& operator--() noexcept
       {
 	      _M_node = _M_node->_M_prev;
 	      return *this;
       }
 
-      _Self operator--(int) _GLIBCXX_NOEXCEPT
+      _Self operator--(int) noexcept
       {
 	      _Self __tmp = *this;
 	      _M_node = _M_node->_M_prev;
 	      return __tmp;
       }
 
-      friend bool operator==(const _Self& __x, const _Self& __y) _GLIBCXX_NOEXCEPT
+      friend bool operator==(const _Self& __x, const _Self& __y) noexcept
       {
             return __x._M_node == __y._M_node;
       }
 
-      friend bool operator!=(const _Self& __x, const _Self& __y) _GLIBCXX_NOEXCEPT
+      friend bool operator!=(const _Self& __x, const _Self& __y) noexcept
       {
             return __x._M_node != __y._M_node;
       }
@@ -248,63 +248,63 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       typedef const _Tp*			      pointer;
       typedef const _Tp&			      reference;
 
-      _List_const_iterator() _GLIBCXX_NOEXCEPT
+      _List_const_iterator() noexcept
       : _M_node() {}
 
-      explicit _List_const_iterator(const __detail::_List_node_base* __x) _GLIBCXX_NOEXCEPT
+      explicit _List_const_iterator(const __detail::_List_node_base* __x) noexcept
       : _M_node(__x) {}
 
-      _List_const_iterator(const iterator& __x) _GLIBCXX_NOEXCEPT
+      _List_const_iterator(const iterator& __x) noexcept
       : _M_node(__x._M_node) {}
 
-      iterator _M_const_cast() const _GLIBCXX_NOEXCEPT
+      iterator _M_const_cast() const noexcept
       {
             return iterator(const_cast<__detail::_List_node_base*>(_M_node));
       }
 
       // Must downcast from List_node_base to _List_node to get to value.
-      reference operator*() const _GLIBCXX_NOEXCEPT
+      reference operator*() const noexcept
       {
             return *static_cast<_Node*>(_M_node)->_M_valptr();
       }
 
-      pointer operator->() const _GLIBCXX_NOEXCEPT
+      pointer operator->() const noexcept
       {
             return static_cast<_Node*>(_M_node)->_M_valptr();
       }
 
-      _Self& operator++() _GLIBCXX_NOEXCEPT
+      _Self& operator++() noexcept
       {
 	      _M_node = _M_node->_M_next;
 	      return *this;
       }
 
-      _Self operator++(int) _GLIBCXX_NOEXCEPT
+      _Self operator++(int) noexcept
       {
 	      _Self __tmp = *this;
 	      _M_node = _M_node->_M_next;
 	      return __tmp;
       }
 
-      _Self& operator--() _GLIBCXX_NOEXCEPT
+      _Self& operator--() noexcept
       {
 	      _M_node = _M_node->_M_prev;
 	      return *this;
       }
 
-      _Self operator--(int) _GLIBCXX_NOEXCEPT
+      _Self operator--(int) noexcept
       {
 	      _Self __tmp = *this;
 	      _M_node = _M_node->_M_prev;
 	      return __tmp;
       }
 
-      friend bool operator==(const _Self& __x, const _Self& __y) _GLIBCXX_NOEXCEPT
+      friend bool operator==(const _Self& __x, const _Self& __y) noexcept
       {
             return __x._M_node == __y._M_node;
       }
 
-      friend bool operator!=(const _Self& __x, const _Self& __y) _GLIBCXX_NOEXCEPT
+      friend bool operator!=(const _Self& __x, const _Self& __y) noexcept
       {
             return __x._M_node != __y._M_node;
       }
@@ -353,10 +353,10 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
       {
 	__detail::_List_node_header _M_node;
 
-	_List_impl() _GLIBCXX_NOEXCEPT_IF(is_nothrow_default_constructible<_Node_alloc_type>::value)
+	_List_impl() noexcept_IF(is_nothrow_default_constructible<_Node_alloc_type>::value)
 	: _Node_alloc_type() {}
 
-	_List_impl(const _Node_alloc_type& __a) _GLIBCXX_NOEXCEPT
+	_List_impl(const _Node_alloc_type& __a) noexcept
 	: _Node_alloc_type(__a) {}
 
       };
@@ -420,7 +420,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
             return _Node_alloc_traits::allocate(_M_impl, 1);
       }
 
-      void _M_put_node(typename _Node_alloc_traits::pointer __p) _GLIBCXX_NOEXCEPT
+      void _M_put_node(typename _Node_alloc_traits::pointer __p) noexcept
       {
             _Node_alloc_traits::deallocate(_M_impl, __p, 1);
       }
@@ -428,12 +428,12 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
   public:
       typedef _Alloc allocator_type;
 
-      _Node_alloc_type& _M_get_Node_allocator() _GLIBCXX_NOEXCEPT
+      _Node_alloc_type& _M_get_Node_allocator() noexcept
       {
             return _M_impl;
       }
 
-      const _Node_alloc_type& _M_get_Node_allocator() const _GLIBCXX_NOEXCEPT
+      const _Node_alloc_type& _M_get_Node_allocator() const noexcept
       {
             return _M_impl;
       }
@@ -441,19 +441,19 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
       _List_base()
       {}
 
-      _List_base(const _Node_alloc_type& __a) _GLIBCXX_NOEXCEPT
+      _List_base(const _Node_alloc_type& __a) noexcept
       : _M_impl(__a)
       {}
 
       // This is what actually destroys the list.
-      ~_List_base() _GLIBCXX_NOEXCEPT
+      ~_List_base() noexcept
       {
             _M_clear();
       }
 
-      void _M_clear() _GLIBCXX_NOEXCEPT;
+      void _M_clear() noexcept;
 
-      void _M_init() _GLIBCXX_NOEXCEPT
+      void _M_init() noexcept
       {
             this->_M_impl._M_node._M_init();
       }
@@ -521,11 +521,11 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
       __glibcxx_class_requires2(_Tp, _Alloc_value_type, _SameTypeConcept)
 #endif
 
-      typedef _List_base<_Tp, _Alloc>			_Base;
-      typedef typename _Base::_Tp_alloc_type		_Tp_alloc_type;
-      typedef typename _Base::_Tp_alloc_traits		_Tp_alloc_traits;
-      typedef typename _Base::_Node_alloc_type		_Node_alloc_type;
-      typedef typename _Base::_Node_alloc_traits	_Node_alloc_traits;
+      typedef _List_base<_Tp, _Alloc>			      _Base;
+      typedef typename _Base::_Tp_alloc_type		      _Tp_alloc_type;
+      typedef typename _Base::_Tp_alloc_traits		      _Tp_alloc_traits;
+      typedef typename _Base::_Node_alloc_type		      _Node_alloc_type;
+      typedef typename _Base::_Node_alloc_traits	      _Node_alloc_traits;
 
     public:
       typedef _Tp					                  value_type;
@@ -608,7 +608,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  @brief  Creates a %list with no elements.
        *  @param  __a  An allocator object.
        */
-      explicit list(const allocator_type& __a) _GLIBCXX_NOEXCEPT
+      explicit list(const allocator_type& __a) noexcept
       : _Base(_Node_alloc_type(__a))
       {}
 
@@ -709,7 +709,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
 
 
       /// Get a copy of the memory allocation object.
-      allocator_type get_allocator() const _GLIBCXX_NOEXCEPT
+      allocator_type get_allocator() const noexcept
       {
             return allocator_type(_Base::_M_get_Node_allocator());
       }
@@ -719,7 +719,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  Returns a read/write iterator that points to the first element in the
        *  %list.  Iteration is done in ordinary element order.
        */
-      iterator begin() _GLIBCXX_NOEXCEPT
+      iterator begin() noexcept
       {
             return iterator(this->_M_impl._M_node._M_next);
       }
@@ -729,7 +729,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  first element in the %list.  Iteration is done in ordinary
        *  element order.
        */
-      const_iterator begin() const _GLIBCXX_NOEXCEPT
+      const_iterator begin() const noexcept
       {
             return const_iterator(this->_M_impl._M_node._M_next);
       }
@@ -739,7 +739,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  element in the %list.  Iteration is done in ordinary element
        *  order.
        */
-      iterator end() _GLIBCXX_NOEXCEPT
+      iterator end() noexcept
       {
             return iterator(&this->_M_impl._M_node);
       }
@@ -750,7 +750,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  element order.
        */
       const_iterator
-      end() const _GLIBCXX_NOEXCEPT
+      end() const noexcept
       {
             return const_iterator(&this->_M_impl._M_node);
       }
@@ -760,7 +760,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  element in the %list.  Iteration is done in reverse element
        *  order.
        */
-      reverse_iterator rbegin() _GLIBCXX_NOEXCEPT
+      reverse_iterator rbegin() noexcept
       {
             return reverse_iterator(end());
       }
@@ -770,7 +770,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  the last element in the %list.  Iteration is done in reverse
        *  element order.
        */
-      const_reverse_iterator rbegin() const _GLIBCXX_NOEXCEPT
+      const_reverse_iterator rbegin() const noexcept
       {
             return const_reverse_iterator(end());
       }
@@ -780,7 +780,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  before the first element in the %list.  Iteration is done in
        *  reverse element order.
        */
-      reverse_iterator rend() _GLIBCXX_NOEXCEPT
+      reverse_iterator rend() noexcept
       {
             return reverse_iterator(begin());
       }
@@ -790,7 +790,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  before the first element in the %list.  Iteration is done in reverse
        *  element order.
        */
-      const_reverse_iterator rend() const _GLIBCXX_NOEXCEPT
+      const_reverse_iterator rend() const noexcept
       {
             return const_reverse_iterator(begin());
       }
@@ -801,19 +801,19 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  Returns true if the %list is empty.  (Thus begin() would equal
        *  end().)
        */
-      _GLIBCXX_NODISCARD bool empty() const _GLIBCXX_NOEXCEPT
+      _GLIBCXX_NODISCARD bool empty() const noexcept
       {
             return this->_M_impl._M_node._M_next == &this->_M_impl._M_node;
       }
 
       /**  Returns the number of elements in the %list.  */
-      size_type size() const _GLIBCXX_NOEXCEPT
+      size_type size() const noexcept
       {
             return _M_node_count();
       }
 
       /**  Returns the size() of the largest possible %list.  */
-      size_type max_size() const _GLIBCXX_NOEXCEPT
+      size_type max_size() const noexcept
       {
             return _Node_alloc_traits::max_size(_M_get_Node_allocator());
       }
@@ -836,7 +836,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  Returns a read/write reference to the data at the first
        *  element of the %list.
        */
-      reference front() _GLIBCXX_NOEXCEPT
+      reference front() noexcept
       {
             return *begin();
       }
@@ -845,7 +845,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  Returns a read-only (constant) reference to the data at the first
        *  element of the %list.
        */
-      const_reference front() const _GLIBCXX_NOEXCEPT
+      const_reference front() const noexcept
       {
             return *begin();
       }
@@ -854,7 +854,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  Returns a read/write reference to the data at the last element
        *  of the %list.
        */
-      reference back() _GLIBCXX_NOEXCEPT
+      reference back() noexcept
       {
 	      iterator __tmp = end();
 	      --__tmp;
@@ -865,7 +865,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  Returns a read-only (constant) reference to the data at the last
        *  element of the %list.
        */
-      const_reference back() const _GLIBCXX_NOEXCEPT
+      const_reference back() const noexcept
       {
       	const_iterator __tmp = end();
       	--__tmp;
@@ -901,7 +901,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  is needed, it should be retrieved before pop_front() is
        *  called.
        */
-      void pop_front() _GLIBCXX_NOEXCEPT
+      void pop_front() noexcept
       {
             this->_M_erase(begin());
       }
@@ -933,7 +933,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  Note that no data is returned, and if the last element's data
        *  is needed, it should be retrieved before pop_back() is called.
        */
-      void pop_back() _GLIBCXX_NOEXCEPT
+      void pop_back() noexcept
       {
             this->_M_erase(iterator(this->_M_impl._M_node._M_prev));
       }
@@ -1044,7 +1044,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *
        *  Whether the allocators are swapped depends on the allocator traits.
        */
-      void swap(list& __x) _GLIBCXX_NOEXCEPT
+      void swap(list& __x) noexcept
       {
 	      __detail::_List_node_base::swap(this->_M_impl._M_node, __x._M_impl._M_node);
 
@@ -1061,7 +1061,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *  pointers, the pointed-to memory is not touched in any way.
        *  Managing the pointer is the user's responsibility.
        */
-      void clear() _GLIBCXX_NOEXCEPT
+      void clear() noexcept
       {
       	_Base::_M_clear();
 	      _Base::_M_init();
@@ -1241,7 +1241,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
        *
        *  Reverse the order of elements in the list in linear time.
        */
-      void reverse() _GLIBCXX_NOEXCEPT
+      void reverse() noexcept
       {
             this->_M_impl._M_node._M_reverse();
       }
@@ -1331,7 +1331,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
       }
 
       // Erases element at position given.
-      void _M_erase(iterator __position) _GLIBCXX_NOEXCEPT
+      void _M_erase(iterator __position) noexcept
       {
 	      this->_M_dec_size(1);
 	      __position._M_node->_M_unhook();
@@ -1342,7 +1342,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
       }
 
       // To implement the splice (and merge) bits of N1599.
-      void _M_check_equal_allocators(list& __x) _GLIBCXX_NOEXCEPT
+      void _M_check_equal_allocators(list& __x) noexcept
       {
 	      if (std::__alloc_neq<typename _Base::_Node_alloc_type>::_S_do_it(_M_get_Node_allocator(), __x._M_get_Node_allocator()))
 	            __builtin_abort();
@@ -1456,7 +1456,7 @@ _GLIBCXX_END_NAMESPACE_CXX11
 
   /// See std::list::swap().
   template<typename _Tp, typename _Alloc>
-    inline void swap(list<_Tp, _Alloc>& __x, list<_Tp, _Alloc>& __y) _GLIBCXX_NOEXCEPT_IF(noexcept(__x.swap(__y)))
+    inline void swap(list<_Tp, _Alloc>& __x, list<_Tp, _Alloc>& __y)
     {
           __x.swap(__y);
     }
