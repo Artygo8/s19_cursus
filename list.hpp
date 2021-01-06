@@ -18,18 +18,29 @@
 # include <list>
 # include <memory>
 
-namespace ft { template < class T > class list; };
+# define DEBUG(x) std::cout << x << std::endl << std::flush;
 
-//  .o88o.     .           oooo   o8o               .   
-//  888 `"   .o8           `888   `"'             .o8   
-// o888oo  .o888oo          888  oooo   .oooo.o .o888oo 
-//  888      888            888  `888  d88(  "8   888   
-//  888      888   o8o o8o  888   888  `"Y88b.    888   
-//  888      888 . `"' `"'  888   888  o.  )88b   888 . 
-// o888o     "888" o8o o8o o888o o888o 8""888P'   "888" 
-//                 `"' `"'                              
 
-template < typename T > class ft::list
+namespace ft
+{
+	template <typename T>
+	class list;
+};
+
+
+template<bool Condition, typename T = void>
+struct enable_if {};
+
+
+template<typename T>
+struct enable_if<true, T>
+{
+	typedef T type;
+};
+
+
+template <typename T = int>
+class ft::list
 {
 
 //                      o8o                            .             
@@ -44,60 +55,61 @@ template < typename T > class ft::list
 
 private:
 
-//               |     
-// ,---.,---.,---|,---.
-// |   ||   ||   ||---'
-// `   '`---'`---'`---'
+	//               |     
+	// ,---.,---.,---|,---.
+	// |   ||   ||   ||---'
+	// `   '`---'`---'`---'
 
-	class node
+	struct node
 	{
-		public:
-			T		&content;
-			node	*previous;
-			node	*next;
-			
-			node(T & content, node *previous, node *next) : content(content), previous(previous), next(next) {}
-			node & operator =(const node & other)
-			{
-				*this = other;
-				return *this;
-			}
+		T		data;
+		node	*previous;
+		node	*next;
 
-			// OPERATORS
-			bool		operator== (const node & rhs) { return content == rhs.content; }
-			bool		operator!= (const node & rhs) { return content != rhs.current; }
-			T &			operator* () { return content; }
-			void		operator++ ()
-			{
-				this->content = next->content;
-				this->previous = next->previous;
-				this->next = next->next;
-			}
-			void		operator++ (int)
-			{
-				this->content = next->content;
-				this->previous = next->previous;
-				this->next = next->next;
-			}
-			void		operator-- () { *this = *(previous); }
-			void		operator-- (int) { *this = *(previous); }
+		node(T data, node *previous = nullptr, node *next = nullptr)
+		: data(data), previous(previous), next(next) {}
 
-			void add_back(node * new_node)
+		node(node & other)
+		: data(other.data), previous(other.previous), next(other.next) {}
+
+		node & operator =(const node & other)
+		{
+			data = other.data;
+			previous = other.previous;
+			next = other.next;
+			return *this;
+		}
+
+		friend			std::ostream & operator << (std::ostream &out, const node & n)
+		{
+			out << "data : " << n.data;
+		}
+
+		void push_back(node * new_node)
+		{
+			node *last;
+			last = this;
+			while (last->next)
 			{
-				node *last;
-				last = this;
-				while (last->next)
-					last = last->next;
-				new_node->previous = last;
-				last->next = new_node;
+				last = last->next;
 			}
+			new_node->next = nullptr;
+			new_node->previous = last;
+			last->next = new_node;
+		}
+
+		node * clone()
+		{
+			node * _clone = new node(*this);
+			return _clone;
+		}
 	};
 
 
-//                 o     |    |              
-// .    ,,---.,---..,---.|---.|    ,---.,---.
-//  \  / ,---||    |,---||   ||    |---'`---.
-//   `'  `---^`    ``---^`---'`---'`---'`---'
+	//                 o     |    |              
+	// .    ,,---.,---..,---.|---.|    ,---.,---.
+	//  \  / ,---||    |,---||   ||    |---'`---.
+	//   `'  `---^`    ``---^`---'`---'`---'`---'
 
 	size_t		size;
 	node		*head;
@@ -115,69 +127,121 @@ private:
 
 public:
 
-// o|                   |              
-// .|--- ,---.,---.,---.|--- ,---.,---.
-// ||    |---'|    ,---||    |   ||    
-// ``---'`---'`    `---^`---'`---'`    
+	//                      
+	//      |    o          
+	// ,---.|    .,---.,---.
+	// ,---||    |,---|`---.
+	// `---^`---'``---^`---'
+	//                      
 
-	class iterator
+	typedef T						value_type;
+	typedef value_type&				reference;
+	typedef const value_type&		const_reference;
+	typedef value_type*				pointer;
+	typedef const value_type*		const_pointer;
+	typedef size_t					size_type;
+	typedef ptrdiff_t				difference_type;
+
+	// o|                   |              
+	// .|--- ,---.,---.,---.|--- ,---.,---.
+	// ||    |---'|    ,---||    |   ||    
+	// ``---'`---'`    `---^`---'`---'`    
+
+	struct iterator
 	{
-		private:
-			node *current;
+		node		*current;
 
-		public:
-			// CONSTRUCTORS
-			iterator (node * current = nullptr) : current(current) {}
-			iterator (const iterator & other) : current(other.current) {}
-			
-			// OPERATORS
-			iterator	operator= (const iterator & other) { this->current = other.current; return *this;}
-			bool		operator== (const iterator & rhs) { return this->current == rhs.current; }
-			bool		operator!= (const iterator & rhs) { return this->current != rhs.current; }
-			T			operator* ()
-			{
-				return *(*current);
-			}
-			void		operator++ () { ++(*current); }
-			void		operator++ (int) { (*current)++; }
-			void		operator-- () { --(*current); }
-			void		operator-- (int) { (*current)--; }
+		// CONSTRUCTORS
+		iterator (node * current = nullptr)
+		: current(current) {}
+
+		// OPERATORS
+		friend bool		operator== (const iterator & lhs, const iterator & rhs)
+		{
+			return lhs.current == rhs.current;
+		}
+
+		friend bool		operator!= (const iterator & lhs, const iterator & rhs)
+		{
+			return lhs.current != rhs.current;
+		}
+
+		// debug
+		friend			std::ostream & operator << (std::ostream &out, const iterator & n)
+		{
+			out << "my node : " << n.current;
+		}
+
+		T				operator* ()
+		{
+			return current->data;
+		}
+
+		iterator&		operator++ ()
+		{
+			current = current->next;
+			return *this;
+		}
+
+		iterator		operator++ (int)
+		{
+			iterator tmp = iterator(current);
+			current = current->next;
+			return tmp;
+		}
+
+		iterator&		operator-- ()
+		{
+			current = current->previous;
+			return *this;
+		}
+
+		iterator		operator-- (int)
+		{
+			iterator tmp = iterator(current);
+			current = current->previous;
+			return tmp;
+		}
 
 	};
 
-//                     |                   |              
-// ,---.,---.,---.,---.|--- ,---..   .,---.|--- ,---.,---.
-// |    |   ||   |`---.|    |    |   ||    |    |   ||    
-// `---'`---'`   '`---'`---'`    `---'`---'`---'`---'`    
+	//                     |                   |              
+	// ,---.,---.,---.,---.|--- ,---..   .,---.|--- ,---.,---.
+	// |    |   ||   |`---.|    |    |   ||    |    |   ||    
+	// `---'`---'`   '`---'`---'`    `---'`---'`---'`---'`    
 
-	list () : size(0), head(nullptr), tail(nullptr)
-	{
+	explicit list ()
+	: size(0), head(nullptr), tail(nullptr) {}
 
-	}
-
-	// https://stackoverflow.com/questions/45847787/how-to-differentiate-fill-constructor-and-range-constructor-in-c11
-
-	list (const size_t n, const T val) : size(n)
+	// https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/
+	explicit list (size_type n, const value_type& val = value_type())
+	: size(n), head(nullptr), tail(nullptr)
 	{
 		for (size_t i = 0; i < n; i++)
 		{
-			T tmp_val(val);
-			node *new_node = new node(tmp_val, nullptr, nullptr);
-			if (i == 0)
+			node *new_node = new node(val);
+			if (!head)
 				head = new_node;
 			else
-				head->add_back(new_node);
+				head->push_back(new_node);
 			tail = new_node;
 		}
 	}
 
-	template <typename InputIterator, typename = std::_RequireInputIter<InputIterator>>
-	list (InputIterator first, InputIterator last)
+	template <typename InputIterator>
+	list (InputIterator first, InputIterator last, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type = 0)
+	: size(0), head(nullptr), tail(nullptr)
 	{
-		size = 0;
-		std::cout << "hey2" << std::endl;
-		(void) first;
-		(void) last;
+		for (; first != last; first++)
+		{
+			node *new_node = new node(*first);
+			if (!head)
+				head = new_node;
+			else
+				head->push_back(new_node);
+			tail = new_node;
+			size++;
+		}
 	}
 
 	list (const list & x)
@@ -185,9 +249,26 @@ public:
 		(void) x;
 	}
 
-	iterator begin() { return iterator(head); }
-	iterator end() { return iterator(tail); }
+	iterator begin()
+	{
+		return iterator(head);
+	}
+
+	iterator end()
+	{
+		return iterator(nullptr);
+	}
 
 };
 
 #endif
+
+
+
+
+// https://stackoverflow.com/questions/45847787/how-to-differentiate-fill-constructor-and-range-constructor-in-c11
+// #if __APPLE__
+// 	template <typename InputIterator, typename std::enable_if<std::__is_cpp17_input_iterator<InputIterator>::value>::type*>
+// #else
+// 	template <typename InputIterator, typename = std::_RequireInputIter<InputIterator> >
+// #endif

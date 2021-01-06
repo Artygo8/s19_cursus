@@ -152,8 +152,8 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
   template<typename _Tp>
     struct _List_iterator
     {
-      typedef _List_iterator<_Tp>		_Self;
-      typedef _List_node<_Tp>			_Node;
+      typedef _List_iterator<_Tp>		      _Self;
+      typedef _List_node<_Tp>			      _Node;
 
       typedef ptrdiff_t				      difference_type;
       typedef std::bidirectional_iterator_tag	iterator_category;
