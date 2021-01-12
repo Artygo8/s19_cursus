@@ -21,53 +21,77 @@ class Array
 {
 
 public:
-    
-    class ArrayOutOfBoundsException: public std::exception
-    {
-        virtual const char * what() const throw()
-        {
-            return "Array index Out Of Bounds.";
-        }
-    };
+	
+	class ArrayOutOfBoundsException: public std::exception
+	{
+		virtual const char * what() const throw()
+		{
+			return "Array index Out Of Bounds.";
+		}
+	};
 
-    Array( int n = 0 ) : array( new T[n] ), size( n ) {}
-    
-    ~Array() { delete[] this->array; }
-    
-    Array( Array const & source )
-    {
-        this->array = new T[source.size];
-        this->size = source.size;
-        
-        for ( int i = 0; i < source.size; i++ )
-        {
-            this->array[i] = T( source.array[i] );
-        }
-    }
-    
-    Array & operator= ( Array const & source )
-    {
-        this->array = new T[source.size];
-        this->size = source.size;
+	Array( unsigned int n = 0 ) : array( new T[n] ), _size( n ) {}
 
-        for ( int i = 0; i < source.size; i++ )
-        {
-            this->array[i] = T( source.array[i] );
-        }
-        return *this;
-    }
+	~Array() { delete[] this->array; }
 
-    T & operator[] ( int index )
-    {
-        if ( index >= this->size || index < 0 )
-            throw ArrayOutOfBoundsException();
-        return this->array[index];
-    }
+	Array( const Array & source )
+	{
+		this->array = new T[source._size];
+		this->_size = source._size;
+		
+		for ( unsigned int i = 0; i < source._size; i++ )
+		{
+			this->array[i] = T( source.array[i] );
+		}
+	}
+
+	Array & operator= ( Array & source )
+	{
+		this->array = new T[source._size];
+		this->_size = source._size;
+
+		for ( unsigned int i = 0; i < source._size; i++ )
+		{
+			this->array[i] = T( source.array[i] );
+		}
+		return *this;
+	}
+
+	const Array & operator= ( const Array & source )
+	{
+		this->array = new T[source._size];
+		this->_size = source._size;
+
+		for ( unsigned int i = 0; i < source._size; i++ )
+		{
+			this->array[i] = T( source.array[i] );
+		}
+		return *this;
+	}
+
+	T & operator[] ( unsigned int index )
+	{
+		if ( index >= this->_size || index < 0 )
+			throw ArrayOutOfBoundsException();
+		return this->array[index];
+	}
+
+	const T & operator[] ( unsigned int index ) const
+	{
+		if ( index >= this->_size || index < 0 )
+			throw ArrayOutOfBoundsException();
+		return this->array[index];
+	}
+
+	unsigned int size()
+	{
+		return _size;
+	}
 
 private:
-    
-    T * array;
-    int size;
+	
+	T * array;
+	unsigned int _size;
 
 };
 

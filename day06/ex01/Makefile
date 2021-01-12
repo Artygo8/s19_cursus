@@ -3,7 +3,7 @@
 
 NAME	= exec
 CXX	= clang++
-CXXFLAGS	= -Wall -Werror -Wextra
+CXXFLAGS	= -Wall -Werror -Wextra -std=c++98
 
 SRCDIR	= ./
 INCDIR	= include/

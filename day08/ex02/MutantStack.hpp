@@ -49,9 +49,9 @@ class MutantStack : public std::stack < T >
 
 		MutantStack(const MutantStack &source) : std::stack < T > (source) {}
 
-		MutantStack<T> operator=(const MutantStack &source)
+		MutantStack<T> operator= (const MutantStack &source)
 		{
-			std::stack<T>::operator =(source);
+			std::stack<T>::operator= (source);
 			return *this;
 		}
 
