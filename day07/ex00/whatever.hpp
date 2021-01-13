@@ -23,12 +23,22 @@ void	swap( T & x, T & y ) {
 }
 
 template< typename T >
-T const &	min( T const & x, T const & y ) {
+const T &	min( const T & x, const T & y ) {
 	return ( x < y ? x : y );
 }
 
 template< typename T >
-T const &	max( T const & x, T const & y ) {
+T &	min( T & x, T & y ) {
+	return ( x < y ? x : y );
+}
+
+template< typename T >
+const T &	max( const T & x, const T & y ) {
+	return ( x > y ? x : y );
+}
+
+template< typename T >
+T &	max( T & x, T & y ) {
 	return ( x > y ? x : y );
 }
 

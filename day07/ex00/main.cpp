@@ -31,6 +31,22 @@
 
 #define TITLE(str) std::cout << "\n" << R_CYN << str << NC << std::endl
 
+class Awesome {
+	public:
+		Awesome( int n ) : _n( n ) {}
+		bool operator==( Awesome const & rhs ) { return (this->_n == rhs._n); }
+		bool operator!=( Awesome const & rhs ) { return (this->_n != rhs._n); }
+		bool operator>( Awesome const & rhs ) { return (this->_n > rhs._n); }
+		bool operator<( Awesome const & rhs ) { return (this->_n < rhs._n); }
+		bool operator>=( Awesome const & rhs ) { return (this->_n >= rhs._n); }
+		bool operator<=( Awesome const & rhs ) { return (this->_n <= rhs._n); }
+
+		int value() { return _n; }
+
+	private:
+		int _n;
+};
+
 int main()
 {
 	{
@@ -42,6 +58,7 @@ int main()
 		std::cout << "b is equal to " << b << std::endl;
 
 		std::cout << "== SWAP ==" << std::endl;
+
 		::swap(a, b);
 
 		std::cout << "a is equal to " << a << std::endl;
@@ -123,6 +140,22 @@ int main()
 		std::cout << "c = " << c << ", d = " << d << std::endl;
 		std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
 		std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
+	}
+
+	{
+		TITLE("AWESOME CLASS");
+
+		Awesome a(19);
+		Awesome b(42);
+
+		std::cout << "a = " << a.value() << ", b = " << b.value() << std::endl;
+		std::cout << "min( a, b ) = " << ::min( a, b ).value() << std::endl;
+		std::cout << "max( a, b ) = " << ::max( a, b ).value() << std::endl;
+
+		::swap( a, b );
+		std::cout << "a = " << a.value() << ", b = " << b.value() << std::endl;
+		std::cout << "min( a, b ) = " << ::min( a, b ).value() << std::endl;
+		std::cout << "max( a, b ) = " << ::max( a, b ).value() << std::endl;
 	}
 
 	return 0;
