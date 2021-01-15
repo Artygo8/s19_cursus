@@ -11,7 +11,7 @@ OBJDIR	= objs/
 
 CXXFLAGS	+= -I $(INCDIR)
 
-SRCS	= 		main.cpp
+SRCS	= 		main_vector.cpp
 
 SRC		:= $(notdir $(SRCS)) # 					Files only
 OBJ		:= $(SRC:.cpp=.o)	#					Files only

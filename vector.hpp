@@ -15,5 +15,31 @@
 # include <iostream>
 # include <string>
 
+# define DEBUG(x) std::cout << x << std::endl << std::flush;
+
+
+namespace ft
+{
+	template <typename T>
+	class vector;
+};
+
+
+template<bool Condition, typename T = void>
+struct enable_if {};
+
+
+template<typename T>
+struct enable_if<true, T>
+{
+	typedef T type;
+};
+
+
+template <typename T = int>
+class ft::vector
+{
+	
+};
 
 #endif
