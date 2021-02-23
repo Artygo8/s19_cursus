@@ -10,12 +10,10 @@
 /*																																						*/
 /* ************************************************************************** */
 
+#include <list>
 #include <vector>
-#include "list.hpp"
-#include "vector.hpp"
-#include "map.hpp"
-#include "stack.hpp"
-#include "queue.hpp"
+#include <math.h>
+#include "List.hpp"
 
 #ifndef MY_COLORS
 # define MY_COLORS

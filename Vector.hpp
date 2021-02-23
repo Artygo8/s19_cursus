@@ -14,8 +14,7 @@
 # define VECTOR_HPP
 # include <iostream>
 # include <string>
-
-# define DEBUG(x) std::cout << x << std::endl << std::flush;
+# include <type_traits>
 
 
 namespace ft

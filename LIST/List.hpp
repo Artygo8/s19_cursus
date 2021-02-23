@@ -16,31 +16,34 @@
 # include <string>
 # include <algorithm>
 # include <list>
-# include <memory>
-
-# define DEBUG(x) std::cout << x << std::endl << std::flush;
+# include <limits>
 
 
-namespace ft
-{
-	template <typename T>
-	class list;
-};
+namespace ft {
 
 
-template<bool Condition, typename T = void>
-struct enable_if {};
+// tools
+// template<bool Condition, typename T = void>
+// struct enable_if {};
 
+// template<typename T>
+// struct enable_if<true, T>
+// {
+// 	typedef T type;
+// };
 
-template<typename T>
-struct enable_if<true, T>
-{
-	typedef T type;
-};
+// template <class T, T v>
+// struct integral_constant {
+//   static const T value = v;
+//   typedef T value_type;
+//   typedef integral_constant<T,v> type;
+//   const operator T() { return v; }
+// };
+
 
 
 template <typename T = int>
-class ft::list
+class list
 {
 
 //                      o8o                            .             
@@ -66,7 +69,7 @@ private:
 		node	*previous;
 		node	*next;
 
-		node(T data = 0, node *previous = nullptr, node *next = nullptr)
+		node(T data = 0, node *previous = 0, node *next = 0)
 		: data(data), previous(previous), next(next) {}
 
 		node(node & other)
@@ -122,7 +125,7 @@ public:
 	typedef const T&								const_reference;
 	typedef const T*								const_pointer;
 	typedef size_t									size_type;
-	typedef ptrdiff_t								difference_type;
+	typedef std::ptrdiff_t							difference_type;
 
 
 	// o|                   |              
@@ -130,10 +133,9 @@ public:
 	// ||    |---'|    ,---||    |   ||    
 	// ``---'`---'`    `---^`---'`---'`    
 
-	
 	struct iterator
 	{
-		typedef ptrdiff_t								difference_type;
+		typedef std::ptrdiff_t							difference_type;
 		typedef std::bidirectional_iterator_tag			iterator_category;
 		typedef T										value_type;
 		typedef T&										reference;
@@ -142,7 +144,7 @@ public:
 		node		*current;
 
 		// CONSTRUCTORS
-		iterator (node * current = nullptr)
+		iterator (node * current = 0)
 		: current(current) {}
 
 		// OPERATORS
@@ -210,7 +212,7 @@ public:
 
 	struct reverse_iterator
 	{
-		typedef ptrdiff_t								difference_type;
+		typedef std::ptrdiff_t							difference_type;
 		typedef std::bidirectional_iterator_tag			iterator_category;
 		typedef T										value_type;
 		typedef T&										reference;
@@ -219,7 +221,7 @@ public:
 		node		*current;
 
 		// CONSTRUCTORS
-		reverse_iterator (node * current = nullptr)
+		reverse_iterator (node * current = 0)
 		: current(current) {}
 
 		// OPERATORS
@@ -293,23 +295,31 @@ public:
 	//           |                    
 
 	explicit list ()
-	: _size(0), head(nullptr), tail(nullptr) {}
+	: _size(0), head(0), tail(0) {}
 
 	explicit list (size_type n, const value_type& val = value_type())
-	: _size(n), head(nullptr), tail(nullptr)
+	: _size(n), head(0), tail(0)
 	{
 		assign(n, val);
 	}
 
+protected:
 	template <typename InputIterator>
-	list (InputIterator first, InputIterator last, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type = 0)
-	: _size(0), head(nullptr), tail(nullptr)
+	list (InputIterator first, InputIterator last, std::input_iterator_tag)
+	: _size(0), head(0), tail(0)
 	{
-		assign(first, last);
+		assign(first, last, std::input_iterator_tag);
+	}
+
+public:
+	template <typename InputIterator>
+	list (InputIterator first, InputIterator last)
+	{
+		list (first, last, typename std::iterator_traits<InputIterator>::iterator_category());
 	}
 
 	list (const list & x)
-	: _size(0), head(nullptr), tail(nullptr)
+	: _size(0), head(0), tail(0)
 	{
 		node *tmp = x.head;
 		while (tmp)
@@ -372,7 +382,7 @@ public:
 
 	bool empty() const
 	{
-		return head == nullptr;
+		return head == 0;
 	}
 
 	size_type size()
@@ -420,7 +430,7 @@ public:
 	//                                      
 
 	template <class InputIterator>
-	void assign (InputIterator first, InputIterator last, typename std::enable_if<!std::is_integral<InputIterator>::value>::type * = nullptr)
+	void assign (InputIterator first, InputIterator last, std::input_iterator_tag)
 	{
 		clear();
 		for (; first != last; first++)
@@ -458,7 +468,7 @@ public:
 		delete head;
 		head = tmp;
 		_size--;
-		if (_size == 0) tail = nullptr;
+		if (_size == 0) tail = 0;
 	}
 
 	void	push_back(const T & val)
@@ -481,9 +491,9 @@ public:
 		node *tmp = tail->previous;
 		delete tail;
 		tail = tmp;
-		if (tail) tail->next = nullptr;
+		if (tail) tail->next = 0;
 		_size--;
-		if (_size == 0) head = nullptr;
+		if (_size == 0) head = 0;
 	}
 
 	iterator insert (iterator position, const value_type& val)
@@ -519,7 +529,7 @@ public:
 	}
 
 	template <class InputIterator>
-	void insert (iterator position, InputIterator first, InputIterator last, typename std::enable_if<!std::is_integral<InputIterator>::value>::type * = nullptr)
+	void insert (iterator position, InputIterator first, InputIterator last, std::input_iterator_tag)
 	{
 		node	*pos_next;
 
@@ -587,7 +597,7 @@ public:
 			head = head->next;
 			delete tmp;
 		}
-		head = tail = nullptr;
+		head = tail = 0;
 		_size = 0;
 	}
 
@@ -627,7 +637,7 @@ public:
 			else tail = x.tail;
 		}
 		// forget x
-		x.head = x.tail = nullptr;
+		x.head = x.tail = 0;
 		x._size = 0;
 	}
 	
@@ -644,7 +654,7 @@ public:
 		if (new_node->next) new_node->next->previous = new_node->previous;
 		else x.tail = new_node->previous;
 		(x._size)--;
-		new_node->next = new_node->previous = nullptr;
+		new_node->next = new_node->previous = 0;
 
 		// new list
 		_size++;
@@ -654,7 +664,7 @@ public:
 			if (!head)
 			{
 				head = tail = new_node;
-				head->next = head->previous = nullptr;
+				head->next = head->previous = 0;
 			}
 			else
 			{
@@ -712,7 +722,7 @@ public:
 
 	void unique()
 	{
-		node *last_node = nullptr;
+		node *last_node = 0;
 
 		for (iterator it = begin(); it != end();)
 		{
@@ -732,7 +742,7 @@ public:
 	template <class BinaryPredicate>
 	void unique (BinaryPredicate binary_pred)
 	{
-		node *last_node = nullptr;
+		node *last_node = 0;
 
 		for (iterator it = begin(); it != end();)
 		{
@@ -829,7 +839,9 @@ public:
 		tail = new_tail;
 	}
 
-};
+}; // class llist
+
+}; // namespace ft
 
 #endif
 
