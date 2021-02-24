@@ -44,6 +44,7 @@ public:
 
     // Only declarations
     class iterator;
+    typedef std::reverse_iterator<iterator>             reverse_iterator;
 
 private:
     struct          ListNode;
@@ -53,29 +54,41 @@ private:
     size_type       size_;
     ListNode        *head_;
     ListNode        *tail_;
+    ListNode        *after_tail;
+
+    void set_after_tail() { after_tail->next = head_; after_tail->prev = tail_; }
+    void set_head(ListNode *n) { head_ = n; set_after_tail(); };
+    void set_tail(ListNode *n) { tail_ = n; set_after_tail(); };
 
 public:
     explicit list (const allocator_type& alloc = allocator_type())
-    : alloc_(alloc), size_(0), head_(0), tail_(0) {}
+    : alloc_(alloc), size_(0), head_(0), tail_(0) {
+        after_tail = new ListNode(0);
+    }
 
     explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
     : alloc_(alloc), size_(0), head_(0), tail_(0) {
+        after_tail = new ListNode(0);
         insert(begin(), n, val);
     }
 
     template <class InputIterator>
     list (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
     : alloc_(alloc), size_(0), head_(0), tail_(0) {
+        after_tail = new ListNode(0);
         insert(begin(), first, last);
     }
 
     list (const list& x)
     : alloc_(x.alloc_), size_(0), head_(0), tail_(0) {
+        after_tail = new ListNode(0);
         insert(begin(), x.begin(), x.end());
     }
 
     list& operator= (const list& x)
     {
+        // if (*this == x)
+        //     return *this;
         size_ = 0;
         insert(begin(), x.begin(), x.end());
         return *this;
@@ -89,28 +102,39 @@ public:
             delete head_;
             head_ = next;
         }
+        delete after_tail;
     }
 
-    size_type size() { return size_; }
+    size_type   size() { return size_; }
+    size_type   max_size() { return std::numeric_limits<long>::max() / sizeof(ListNode);}
+    bool        empty() { return size_ == 0; }
 
+	void swap (list& x)
+	{
+		list tmp = *this;
+		*this = x;
+		x = tmp;
+	}
+
+    // ++INSERT
     iterator insert (iterator position, const value_type& val) {
         ListNode *n = new ListNode(val);
 
         ++size_;
-        n->prev = position.current;
+        n->next = position.current;
 
         if (position.current) {
-            n->next = position.current->next;
-            position.current->next = n;
+            n->prev = position.current->prev;
+            position.current->prev = n;
         }
         else {
-            n->next = head_;
-            head_ = n;
+            n->prev = tail_;
+            set_tail(n);
         }
-        if (n->next)
-            n->next->prev = n;
+        if (n->prev)
+            n->prev->next = n;
         else
-            tail_ = n;
+            set_head(n);
 
         return iterator(n); // ++?
     }
@@ -127,21 +151,64 @@ public:
             first++;
         }
     }
+    // --INSERT
+    // ++ERASE
+    iterator erase (iterator position) {
+        ListNode *n = (position++).current;
 
-    void push_back(const T &e)      { insertInternal(e, 0); }
-    void push_front(const T &e)     { insertInternal(e, head_); }
-    void pop_back()                 { removeInternal(tail_); }
-    void pop_front()                { removeInternal(head_); }
+        if (n) {
+            if (n->prev) n->prev->next = n->next;
+            else set_head(n->next);
+            if (n->next) n->next->prev = n->prev;
+            else set_tail(n->prev);
+            size_--;
+            delete n;
+        }
+        return position;
+    }
+
+    iterator erase (iterator first, iterator last) {
+        while (first != last) {
+            erase(first++);
+        }
+        return last;
+    }
+
+    void    clear() { while (size_) erase(begin()); }
+    // --ERASE
+
+    // ++ASSIGN
+    template <class InputIterator>
+    void assign (InputIterator first, InputIterator last) {
+        clear();
+        insert(begin(), first, last);
+    }
+
+    void assign (size_type n, const value_type& val) {
+        clear();
+        while (n--) push_back(val);
+    }
+    // --ASSIGN
+
+    void pop_back()                 { erase(iterator(tail_)); }
+    void pop_front()                { erase(begin()); }
+
+    void push_back(const T &e)      { insert(0, e); }
+    void push_front(const T &e)     { insert(head_, e); }
     T &front()                      { return head_->data; }
     T &back()                       { return tail_->data; }
     iterator begin()                { return iterator(head_); }
     const iterator begin()    const { return iterator(head_); }
     iterator end()                  { return iterator(0); }
     const iterator end()      const { return iterator(0); }
+    reverse_iterator rbegin()               { return reverse_iterator(after_tail); }
+    const reverse_iterator rbegin()   const { return reverse_iterator(after_tail); }
+    reverse_iterator rend()                 { return reverse_iterator(head_); }
+    const reverse_iterator rend()     const { return reverse_iterator(head_); }
 
-// INTERNAL
+
+// LIST_NODE
 private:
-    // LIST_NODE
     struct ListNode
     {
         T           data;
@@ -154,24 +221,37 @@ private:
 
 // iterator
 public:
-    class iterator : public std::bidirectional_iterator_tag {
+    class iterator {
 
     public:
-        iterator(ListNode *p=0) : current(p) {}
+        // typedef iterator                            iterator_type;
+        typedef std::bidirectional_iterator_tag     iterator_category;
+        typedef T                                   value_type;
+        typedef T&                                  reference;
+        typedef T*                                  pointer;
+
+        typedef std::ptrdiff_t                      difference_type;
+        typedef size_t                              size_type;
+
+
+        iterator(ListNode* p=0) : current(p) {}
+        iterator(const iterator& it) : current(it.current) {}
+        ~iterator() {}
+
+        iterator operator= (const iterator& it) { this->current = it.current; return *this; }
 
         T &operator*()                          { return current->data; }
         T *operator->()                         { return &(current->data); }
         bool operator!=(const iterator &rhs)    { return this->current != rhs.current; }
         bool operator==(const iterator &rhs)    { return this->current == rhs.current; }
-        iterator operator++(int)                { iterator tmp = iterator(current); current = current->next; return tmp; }
-        iterator operator--(int)                { iterator tmp = iterator(current); current = current->prev; return tmp; }
+        iterator operator++(int)                { iterator tmp = iterator(current); ++*this; return tmp; }
+        iterator operator--(int)                { iterator tmp = iterator(current); --*this; return tmp; }
         iterator &operator++()                  { current = current->next; return *this; }
         iterator &operator--()                  { current = current->prev; return *this; }
 
         ListNode *current;
     };
 
-    typedef std::reverse_iterator<iterator>              reverse_iterator;
 
 }; // list
 
