@@ -38,7 +38,9 @@ public:
 
     // Only declarations
     class iterator;
+    class const_iterator;
     typedef std::reverse_iterator<iterator>             reverse_iterator;
+    typedef std::reverse_iterator<const_iterator>       const_reverse_iterator;
 
 private:
     struct          ListNode;
@@ -149,8 +151,6 @@ public:
             erase(first++);
         return last;
     }
-
-    void    clear() { while (size_) erase(begin()); }
     // --ERASE
 
     // ++ASSIGN
@@ -354,6 +354,7 @@ public:
     // --REVERSE
 
     // ONE_LINE_STUFFS
+    void clear()                            { while (size_) erase(begin()); }
     size_type size()                        { return size_; }
     size_type max_size()                    { return std::numeric_limits<long>::max() / sizeof(ListNode); }
     bool empty()                            { return size_ == 0; }
@@ -365,14 +366,13 @@ public:
     T &front()                              { return head_->data; }
     T &back()                               { return tail_->data; }
     iterator begin()                        { return iterator(head_); }
-    const iterator begin()            const { return iterator(head_); }
+    const_iterator begin()            const { return const_iterator(head_); }
     iterator end()                          { return iterator(0); }
-    const iterator end()              const { return iterator(0); }
+    const_iterator end()              const { return const_iterator(0); }
     reverse_iterator rbegin()               { return reverse_iterator(after_tail()); }
-    const reverse_iterator rbegin()   const { return reverse_iterator(after_tail()); }
+    const_reverse_iterator rbegin()   const { return const_reverse_iterator(after_tail()); }
     reverse_iterator rend()                 { return reverse_iterator(head_); }
-    const reverse_iterator rend()     const { return reverse_iterator(head_); }
-
+    const_reverse_iterator rend()     const { return const_reverse_iterator(head_); }
 
 // LIST_NODE
 private:
