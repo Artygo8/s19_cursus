@@ -6,7 +6,7 @@ SRCDIR	= ./
 INCDIR	= include/
 OBJDIR	= objs/
 
-SRCS	= main_list.cpp
+SRCS	= main_vector.cpp
 
 SRC		:= $(notdir $(SRCS))# Files only
 OBJ		:= $(SRC:.cpp=.o)# Files only

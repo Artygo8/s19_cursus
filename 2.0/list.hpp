@@ -16,8 +16,6 @@
 # include <iostream>
 # include <string>
 
-# define DEBUG(x) std::cout << x << std::endl;
-
 namespace ft {
 
 template < class T, class Alloc = ft::allocator<T> >
