@@ -44,49 +44,6 @@ void TITLE_BLU(T str) {std::cout << R_BLU << str << NC << std::endl;}
 template< typename T >
 void TITLE_GRN(T str) {std::cout << R_GRN << str << NC << std::endl;}
 
-//  _              _     
-// | |            | |    
-// | |_ ___   ___ | |___ 
-// | __/ _ \ / _ \| / __|
-// | || (_) | (_) | \__ \\
-//  \__\___/ \___/|_|___/
-//                       
-
-// a predicate implemented as a function:
-bool single_digit (const int& value) { return (value<10); }
-
-// a predicate implemented as a class:
-struct is_odd {
-  bool operator() (const int& value) { return (value%2)==1; }
-};
-
-// a binary predicate implemented as a function:
-bool same_integral_part (double first, double second)
-{ return ( int(first)==int(second) ); }
-
-// a binary predicate implemented as a class:
-struct is_near {
-  bool operator() (double first, double second)
-  { return (fabs(first-second)<5.0); }
-};
-
-// compare only integral part:
-bool mycomparison (double first, double second)
-{ return ( int(first)<int(second) ); }
-
-// comparison, not case sensitive.
-bool compare_nocase (const std::string& first, const std::string& second)
-{
-  unsigned int i=0;
-  while ( (i<first.length()) && (i<second.length()) )
-  {
-    if (tolower(first[i])<tolower(second[i])) return true;
-    else if (tolower(first[i])>tolower(second[i])) return false;
-    ++i;
-  }
-  return ( first.length() < second.length() );
-}
-
 //                  _       
 //                 (_)      
 //  _ __ ___   __ _ _ _ __  
@@ -618,22 +575,27 @@ int main()
     TITLE_RED("__INSERT__");
     {
         TITLE_GRN("std");
-        std::vector<int> myvector (3,100);
+        std::vector<int> myvector (10);   // 10 zero-initialized ints
+
+        // assign some values:
+        for (unsigned i=0; i<myvector.size(); i++)
+          myvector.at(i)=i;
+
         std::vector<int>::iterator it;
 
         it = myvector.begin();
         it = myvector.insert ( it , static_cast<size_t>(200) );
 
-        // myvector.insert (it,2,300);
+        myvector.insert (it,2,300);
 
-        // // "it" no longer valid, get a new one:
-        // it = myvector.begin();
+        // "it" no longer valid, get a new one:
+        it = myvector.begin();
 
-        // std::vector<int> anothervector (2,400);
-        // myvector.insert (it+2,anothervector.begin(),anothervector.end());
+        std::vector<int> anothervector (2,400);
+        myvector.insert (it+2,anothervector.begin(),anothervector.end());
 
-        // int myarray [] = { 501,502,503 };
-        // myvector.insert (myvector.begin(), myarray, myarray+3);
+        int myarray [] = { 501,502,503 };
+        myvector.insert (myvector.begin(), myarray, myarray+3);
 
         std::cout << "myvector contains:";
         for (it=myvector.begin(); it<myvector.end(); it++)
@@ -642,22 +604,27 @@ int main()
     }
     {
         TITLE_GRN("ft");
-        ft::vector<int> myvector (3,static_cast<size_t>(100));
+        ft::vector<int> myvector (10);   // 10 zero-initialized ints
+
+        // assign some values:
+        for (unsigned i=0; i<myvector.size(); i++)
+          myvector.at(i)=i;
+
         ft::vector<int>::iterator it;
 
         it = myvector.begin();
         it = myvector.insert ( it , 200 );
 
-        // myvector.insert (it,2,static_cast<size_t>(300));
+        myvector.insert (it,static_cast<size_t>(2),300);
 
-        // // "it" no longer valid, get a new one:
-        // it = myvector.begin();
+        // "it" no longer valid, get a new one:
+        it = myvector.begin();
 
-        // ft::vector<int> anothervector (2,static_cast<size_t>(400));
-        // myvector.insert (it+2,anothervector.begin(),anothervector.end());
+        ft::vector<int> anothervector (2,static_cast<size_t>(400));
+        myvector.insert (it+2,anothervector.begin(),anothervector.end());
 
-        // int myarray [] = { 501,502,503 };
-        // myvector.insert (myvector.begin(), myarray, myarray+3);
+        int myarray [] = { 501,502,503 };
+        myvector.insert (myvector.begin(), myarray, myarray+3);
 
         std::cout << "myvector contains:";
         for (it=myvector.begin(); it<myvector.end(); it++)
@@ -665,229 +632,123 @@ int main()
         std::cout << '\n';
     }
 
-return 0;
-    TITLE_RED("____");
+    TITLE_RED("__ERASE__");
     {
         TITLE_GRN("std");
+        std::vector<int> myvector;
+
+        // set some values (from 1 to 10)
+        for (int i=1; i<=10; i++) myvector.push_back(i);
+
+        // erase the 6th element
+        myvector.erase (myvector.begin()+5);
+
+        // erase the first 3 elements:
+        myvector.erase (myvector.begin(),myvector.begin()+3);
+
+        std::cout << "myvector contains:";
+        for (unsigned i=0; i<myvector.size(); ++i)
+            std::cout << ' ' << myvector[i];
+        std::cout << '\n';
     }
     {
         TITLE_GRN("ft");
+        ft::vector<int> myvector;
+
+        // set some values (from 1 to 10)
+        for (int i=1; i<=10; i++) myvector.push_back(i);
+
+        // erase the 6th element
+        myvector.erase (myvector.begin()+5);
+
+        // erase the first 3 elements:
+        myvector.erase (myvector.begin(),myvector.begin()+3);
+
+        std::cout << "myvector contains:";
+        for (unsigned i=0; i<myvector.size(); ++i)
+            std::cout << ' ' << myvector[i];
+        std::cout << '\n';
     }
 
-    TITLE_RED("____");
+
+    TITLE_RED("__CLEAR__");
     {
         TITLE_GRN("std");
+        std::vector<int> myvector;
+        myvector.push_back (100);
+        myvector.push_back (200);
+        myvector.push_back (300);
+
+        std::cout << "myvector contains:";
+        for (unsigned i=0; i<myvector.size(); i++)
+            std::cout << ' ' << myvector[i];
+        std::cout << '\n';
+
+        myvector.clear();
+        myvector.push_back (1101);
+        myvector.push_back (2202);
+
+        std::cout << "myvector contains:";
+        for (unsigned i=0; i<myvector.size(); i++)
+            std::cout << ' ' << myvector[i];
+        std::cout << '\n';
     }
     {
         TITLE_GRN("ft");
+        ft::vector<int> myvector;
+        myvector.push_back (100);
+        myvector.push_back (200);
+        myvector.push_back (300);
+
+        std::cout << "myvector contains:";
+        for (unsigned i=0; i<myvector.size(); i++)
+            std::cout << ' ' << myvector[i];
+        std::cout << '\n';
+
+        myvector.clear();
+        myvector.push_back (1101);
+        myvector.push_back (2202);
+
+        std::cout << "myvector contains:";
+        for (unsigned i=0; i<myvector.size(); i++)
+            std::cout << ' ' << myvector[i];
+        std::cout << '\n';
     }
 
-    TITLE_RED("____");
+    TITLE_RED("__SWAP__");
     {
         TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
+        std::vector<int> foo (3,100);   // three ints with a value of 100
+        std::vector<int> bar (5,200);   // five ints with a value of 200
 
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
+        foo.swap(bar);
 
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
+        std::cout << "foo contains:";
+        for (unsigned i=0; i<foo.size(); i++)
+            std::cout << ' ' << foo[i];
+        std::cout << '\n';
 
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
+        std::cout << "bar contains:";
+        for (unsigned i=0; i<bar.size(); i++)
+            std::cout << ' ' << bar[i];
+        std::cout << '\n';
     }
     {
         TITLE_GRN("ft");
-    }
+        ft::vector<int> foo (3, static_cast<size_t>(100));   // three ints with a value of 100
+        ft::vector<int> bar (5, static_cast<size_t>(200));   // five ints with a value of 200
 
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
+        foo.swap(bar);
 
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
+        std::cout << "foo contains:";
+        for (unsigned i=0; i<foo.size(); i++)
+            std::cout << ' ' << foo[i];
+        std::cout << '\n';
 
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
-    }
-
-    TITLE_RED("____");
-    {
-        TITLE_GRN("std");
-    }
-    {
-        TITLE_GRN("ft");
+        std::cout << "bar contains:";
+        for (unsigned i=0; i<bar.size(); i++)
+            std::cout << ' ' << bar[i];
+        std::cout << '\n';
     }
 
     return 0;

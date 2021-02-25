@@ -16,45 +16,51 @@
 # include <string>
 # include <algorithm>
 # include <list>
-# include <limits>
+# include <memory>
+
+# ifndef MY_COLORS
+#  define MY_COLORS
+#  define R_CYN "\e[46;30m"
+#  define R_MGN "\e[45;30m"
+#  define R_BLU "\e[44;30m"
+#  define R_YLW "\e[43;30m"
+#  define R_GRN "\e[42;30m"
+#  define R_RED "\e[41;30m"
+#  define CYN "\e[36m"
+#  define MGN "\e[35m"
+#  define BLU "\e[34m"
+#  define YLW "\e[33m"
+#  define GRN "\e[32m"
+#  define RED "\e[31m"
+#  define NC "\e[m"
+# endif
 
 
-namespace ft {
+# define DEBUG(x) std::cout << MGN << x << NC << std::endl;
 
 
-// tools
-// template<bool Condition, typename T = void>
-// struct enable_if {};
+namespace ft
+{
+	template <typename T>
+	class list;
+};
 
-// template<typename T>
-// struct enable_if<true, T>
-// {
-// 	typedef T type;
-// };
 
-// template <class T, T v>
-// struct integral_constant {
-//   static const T value = v;
-//   typedef T value_type;
-//   typedef integral_constant<T,v> type;
-//   const operator T() { return v; }
-// };
+template<bool Condition, typename T = void>
+struct enable_if {};
 
+
+template<typename T>
+struct enable_if<true, T>
+{
+	typedef T type;
+};
 
 
 template <typename T = int>
-class list
+class ft::list
 {
 
-//                      o8o                            .             
-//                      `"'                          .o8             
-// oo.ooooo.  oooo d8b oooo  oooo    ooo  .oooo.   .o888oo  .ooooo.  
-//  888' `88b `888""8P `888   `88.  .8'  `P  )88b    888   d88' `88b 
-//  888   888  888      888    `88..8'    .oP"888    888   888ooo888 
-//  888   888  888      888     `888'    d8(  888    888 . 888    .o 
-//  888bod8P' d888b    o888o     `8'     `Y888""8o   "888" `Y8bod8P' 
-//  888                                                              
-// o888o                                                             
 
 private:
 
@@ -69,7 +75,7 @@ private:
 		node	*previous;
 		node	*next;
 
-		node(T data = 0, node *previous = 0, node *next = 0)
+		node(T data = 0, node *previous = nullptr, node *next = nullptr)
 		: data(data), previous(previous), next(next) {}
 
 		node(node & other)
@@ -100,15 +106,6 @@ private:
 	node		*head;
 	node		*tail;
 
-//                         .o8       oooo   o8o            
-//                        "888       `888   `"'            
-// oo.ooooo.  oooo  oooo   888oooo.   888  oooo   .ooooo.  
-//  888' `88b `888  `888   d88' `88b  888  `888  d88' `"Y8 
-//  888   888  888   888   888   888  888   888  888       
-//  888   888  888   888   888   888  888   888  888   .o8 
-//  888bod8P'  `V88V"V8P'  `Y8bod8P' o888o o888o `Y8bod8P' 
-//  888                                                    
-// o888o                                                   
 
 public:
 
@@ -125,7 +122,7 @@ public:
 	typedef const T&								const_reference;
 	typedef const T*								const_pointer;
 	typedef size_t									size_type;
-	typedef std::ptrdiff_t							difference_type;
+	typedef ptrdiff_t								difference_type;
 
 
 	// o|                   |              
@@ -133,9 +130,10 @@ public:
 	// ||    |---'|    ,---||    |   ||    
 	// ``---'`---'`    `---^`---'`---'`    
 
+	
 	struct iterator
 	{
-		typedef std::ptrdiff_t							difference_type;
+		typedef ptrdiff_t								difference_type;
 		typedef std::bidirectional_iterator_tag			iterator_category;
 		typedef T										value_type;
 		typedef T&										reference;
@@ -144,7 +142,7 @@ public:
 		node		*current;
 
 		// CONSTRUCTORS
-		iterator (node * current = 0)
+		iterator (node * current = nullptr)
 		: current(current) {}
 
 		// OPERATORS
@@ -210,9 +208,10 @@ public:
 
 	};
 
+
 	struct reverse_iterator
 	{
-		typedef std::ptrdiff_t							difference_type;
+		typedef ptrdiff_t								difference_type;
 		typedef std::bidirectional_iterator_tag			iterator_category;
 		typedef T										value_type;
 		typedef T&										reference;
@@ -221,7 +220,7 @@ public:
 		node		*current;
 
 		// CONSTRUCTORS
-		reverse_iterator (node * current = 0)
+		reverse_iterator (node * current = nullptr)
 		: current(current) {}
 
 		// OPERATORS
@@ -295,31 +294,23 @@ public:
 	//           |                    
 
 	explicit list ()
-	: _size(0), head(0), tail(0) {}
+	: _size(0), head(nullptr), tail(nullptr) {}
 
 	explicit list (size_type n, const value_type& val = value_type())
-	: _size(n), head(0), tail(0)
+	: _size(n), head(nullptr), tail(nullptr)
 	{
 		assign(n, val);
 	}
 
-protected:
 	template <typename InputIterator>
-	list (InputIterator first, InputIterator last, std::input_iterator_tag)
-	: _size(0), head(0), tail(0)
+	list (InputIterator first, InputIterator last, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type = 0)
+	: _size(0), head(nullptr), tail(nullptr)
 	{
-		assign(first, last, std::input_iterator_tag);
-	}
-
-public:
-	template <typename InputIterator>
-	list (InputIterator first, InputIterator last)
-	{
-		list (first, last, typename std::iterator_traits<InputIterator>::iterator_category());
+		assign(first, last);
 	}
 
 	list (const list & x)
-	: _size(0), head(0), tail(0)
+	: _size(0), head(nullptr), tail(nullptr)
 	{
 		node *tmp = x.head;
 		while (tmp)
@@ -382,7 +373,7 @@ public:
 
 	bool empty() const
 	{
-		return head == 0;
+		return head == nullptr;
 	}
 
 	size_type size()
@@ -430,7 +421,7 @@ public:
 	//                                      
 
 	template <class InputIterator>
-	void assign (InputIterator first, InputIterator last, std::input_iterator_tag)
+	void assign (InputIterator first, InputIterator last, typename std::enable_if<!std::is_integral<InputIterator>::value>::type * = nullptr)
 	{
 		clear();
 		for (; first != last; first++)
@@ -468,7 +459,7 @@ public:
 		delete head;
 		head = tmp;
 		_size--;
-		if (_size == 0) tail = 0;
+		if (_size == 0) tail = nullptr;
 	}
 
 	void	push_back(const T & val)
@@ -491,9 +482,9 @@ public:
 		node *tmp = tail->previous;
 		delete tail;
 		tail = tmp;
-		if (tail) tail->next = 0;
+		if (tail) tail->next = nullptr;
 		_size--;
-		if (_size == 0) head = 0;
+		if (_size == 0) head = nullptr;
 	}
 
 	iterator insert (iterator position, const value_type& val)
@@ -529,7 +520,7 @@ public:
 	}
 
 	template <class InputIterator>
-	void insert (iterator position, InputIterator first, InputIterator last, std::input_iterator_tag)
+	void insert (iterator position, InputIterator first, InputIterator last, typename std::enable_if<!std::is_integral<InputIterator>::value>::type * = nullptr)
 	{
 		node	*pos_next;
 
@@ -597,7 +588,7 @@ public:
 			head = head->next;
 			delete tmp;
 		}
-		head = tail = 0;
+		head = tail = nullptr;
 		_size = 0;
 	}
 
@@ -637,7 +628,7 @@ public:
 			else tail = x.tail;
 		}
 		// forget x
-		x.head = x.tail = 0;
+		x.head = x.tail = nullptr;
 		x._size = 0;
 	}
 	
@@ -654,7 +645,7 @@ public:
 		if (new_node->next) new_node->next->previous = new_node->previous;
 		else x.tail = new_node->previous;
 		(x._size)--;
-		new_node->next = new_node->previous = 0;
+		new_node->next = new_node->previous = nullptr;
 
 		// new list
 		_size++;
@@ -664,7 +655,7 @@ public:
 			if (!head)
 			{
 				head = tail = new_node;
-				head->next = head->previous = 0;
+				head->next = head->previous = nullptr;
 			}
 			else
 			{
@@ -722,7 +713,7 @@ public:
 
 	void unique()
 	{
-		node *last_node = 0;
+		node *last_node = nullptr;
 
 		for (iterator it = begin(); it != end();)
 		{
@@ -742,7 +733,7 @@ public:
 	template <class BinaryPredicate>
 	void unique (BinaryPredicate binary_pred)
 	{
-		node *last_node = 0;
+		node *last_node = nullptr;
 
 		for (iterator it = begin(); it != end();)
 		{
@@ -839,9 +830,7 @@ public:
 		tail = new_tail;
 	}
 
-}; // class llist
-
-}; // namespace ft
+};
 
 #endif
 

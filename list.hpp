@@ -10,750 +10,310 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIST_HPP
-# define LIST_HPP
+#ifndef FT_LIST_HPP
+# define FT_LIST_HPP
+# include "alloc.hpp"
 # include <iostream>
 # include <string>
-# include <algorithm>
-# include <list>
-# include <memory>
 
-# ifndef MY_COLORS
-#  define MY_COLORS
-#  define R_CYN "\e[46;30m"
-#  define R_MGN "\e[45;30m"
-#  define R_BLU "\e[44;30m"
-#  define R_YLW "\e[43;30m"
-#  define R_GRN "\e[42;30m"
-#  define R_RED "\e[41;30m"
-#  define CYN "\e[36m"
-#  define MGN "\e[35m"
-#  define BLU "\e[34m"
-#  define YLW "\e[33m"
-#  define GRN "\e[32m"
-#  define RED "\e[31m"
-#  define NC "\e[m"
-# endif
+namespace ft {
 
-
-# define DEBUG(x) std::cout << MGN << x << NC << std::endl;
-
-
-namespace ft
-{
-	template <typename T>
-	class list;
-};
-
-
-template<bool Condition, typename T = void>
-struct enable_if {};
-
-
-template<typename T>
-struct enable_if<true, T>
-{
-	typedef T type;
-};
-
-
-template <typename T = int>
-class ft::list
-{
-
-
-private:
-
-	//               |     
-	// ,---.,---.,---|,---.
-	// |   ||   ||   ||---'
-	// `   '`---'`---'`---'
-
-	struct node
-	{
-		T		data;
-		node	*previous;
-		node	*next;
-
-		node(T data = 0, node *previous = nullptr, node *next = nullptr)
-		: data(data), previous(previous), next(next) {}
-
-		node(node & other)
-		: data(other.data), previous(other.previous), next(other.next) {}
-
-		node & operator= (const node & other)
-		{
-			data = other.data;
-			previous = other.previous;
-			next = other.next;
-			return *this;
-		}
-
-		node *	clone()
-		{
-			node * _clone = new node(*this);
-			return _clone;
-		}
-	};
-
-
-	//                 o     |    |              
-	// .    ,,---.,---..,---.|---.|    ,---.,---.
-	//  \  / ,---||    |,---||   ||    |---'`---.
-	//   `'  `---^`    ``---^`---'`---'`---'`---'
-
-	size_t		_size;
-	node		*head;
-	node		*tail;
-
+template < class T, class Alloc = ft::allocator<T> >
+class list {
 
 public:
 
-	//                      
-	//      |    o          
-	// ,---.|    .,---.,---.
-	// ,---||    |,---|`---.
-	// `---^`---'``---^`---'
-	//                      
+    // Member types
+    typedef T                                           value_type;
+    typedef Alloc                                       allocator_type;
+    typedef typename allocator_type::reference	        reference;
+    typedef typename allocator_type::pointer            pointer;
+    typedef typename allocator_type::const_reference    const_reference;
+    typedef typename allocator_type::const_pointer	    const_pointer;
 
-	typedef T										value_type;
-	typedef T&										reference;
-	typedef T*										pointer;
-	typedef const T&								const_reference;
-	typedef const T*								const_pointer;
-	typedef size_t									size_type;
-	typedef ptrdiff_t								difference_type;
+    typedef std::ptrdiff_t                              difference_type;
+    typedef size_t                                      size_type;
 
+    // Only declarations
+    class iterator;
+    class const_iterator;
+    typedef std::reverse_iterator<iterator>             reverse_iterator;
+    typedef std::reverse_iterator<const_iterator>       const_reverse_iterator;
 
-	// o|                   |              
-	// .|--- ,---.,---.,---.|--- ,---.,---.
-	// ||    |---'|    ,---||    |   ||    
-	// ``---'`---'`    `---^`---'`---'`    
+private:
+    struct          ListNode;
 
-	
-	struct iterator
-	{
-		typedef ptrdiff_t								difference_type;
-		typedef std::bidirectional_iterator_tag			iterator_category;
-		typedef T										value_type;
-		typedef T&										reference;
-		typedef T*										pointer;
+    // Actual list
+    allocator_type  alloc_;
+    size_type       size_;
+    ListNode        *head_;
+    ListNode        *tail_;
 
-		node		*current;
+    ListNode *after_tail() {
+        static ListNode after_tail = ListNode(0);
+        after_tail.next = head_;
+        after_tail.prev = tail_;
+        return &after_tail;
+    };
 
-		// CONSTRUCTORS
-		iterator (node * current = nullptr)
-		: current(current) {}
+public:
+    explicit list (const allocator_type& alloc = allocator_type())
+    : alloc_(alloc), size_(0), head_(0), tail_(0) {}
 
-		// OPERATORS
-		friend bool		operator== (const iterator & lhs, const iterator & rhs)
-		{
-			return lhs.current == rhs.current;
-		}
+    explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
+    : alloc_(alloc), size_(0), head_(0), tail_(0) {
+        insert(begin(), n, val);
+    }
 
-		friend bool		operator!= (const iterator & lhs, const iterator & rhs)
-		{
-			return lhs.current != rhs.current;
-		}
+    template <class InputIterator>
+    list (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+    : alloc_(alloc), size_(0), head_(0), tail_(0) {
+        assign(first, last);
+    }
 
-		operator		node*()
-		{
-			return current;
-		}
+    list (const list& x)
+    : alloc_(x.alloc_), size_(0), head_(0), tail_(0) {
+        assign(x.begin(), x.end());
+    }
 
-		reference		operator* () const
-		{
-			return current->data;
-		}
+    list& operator= (const list& x)
+    {
+        alloc_ = x.alloc_;
+        assign(x.begin(), x.end());
+        return *this;
+    }
 
-		pointer			operator-> () const
-		{
-			return &(current->data);
-		}
-
-		iterator&		operator++ ()
-		{
-			if (!current) return *this;
-			current = current->next;
-			return *this;
-		}
-
-		iterator		operator++ (int)
-		{
-			if (!current) return *this;
-			iterator tmp = iterator(current);
-			current = current->next;
-			return tmp;
-		}
-
-		iterator&		operator-- ()
-		{
-			if (!current) return *this;
-			current = current->previous;
-			return *this;
-		}
-
-		iterator		operator-- (int)
-		{
-			if (!current) return *this;
-			iterator tmp = iterator(current);
-			current = current->previous;
-			return tmp;
-		}
-
-		node			get_content()
-		{
-			return *current;
-		}
-
-	};
+    ~list()
+    {
+        while (head_)
+        {
+            ListNode *next(head_->next);
+            delete head_;
+            head_ = next;
+        }
+    }
 
 
-	struct reverse_iterator
-	{
-		typedef ptrdiff_t								difference_type;
-		typedef std::bidirectional_iterator_tag			iterator_category;
-		typedef T										value_type;
-		typedef T&										reference;
-		typedef T*										pointer;
+    // ++INSERT
+    iterator insert (iterator position, const value_type& val) {
+        ListNode *n = new ListNode(val);
 
-		node		*current;
+        ++size_;
+        n->next = position.current;
 
-		// CONSTRUCTORS
-		reverse_iterator (node * current = nullptr)
-		: current(current) {}
+        if (position.current) {
+            n->prev = position.current->prev;
+            position.current->prev = n;
+        }
+        else {
+            n->prev = tail_;
+            tail_ = n;
+        }
+        if (n->prev)
+            n->prev->next = n;
+        else
+            head_ = n;
 
-		// OPERATORS
-		friend bool		operator== (const reverse_iterator & lhs, const reverse_iterator & rhs)
-		{
-			return lhs.current == rhs.current;
-		}
+        return iterator(n);
+    }
 
-		friend bool		operator!= (const reverse_iterator & lhs, const reverse_iterator & rhs)
-		{
-			return lhs.current != rhs.current;
-		}
+    void insert (iterator position, size_type n, const value_type& val) {
+        while (n-- > 0)
+            position = insert(position, val);
+    }
 
-		operator		node*()
-		{
-			return current;
-		}
+    template <class InputIterator>
+    void insert (iterator position, InputIterator first, InputIterator last) {
+        while (first != last)
+            insert(position, *first++);
+    }
+    // --INSERT
 
-		reference		operator* () const
-		{
-			return current->data;
-		}
+    // ++ERASE
+    iterator erase (iterator position) {
+        ListNode *n = (position++).current;
 
-		pointer			operator-> () const
-		{
-			return &(current->data);
-		}
+        if (n) {
+            if (n->prev) n->prev->next = n->next;
+            else head_ = n->next;
+            if (n->next) n->next->prev = n->prev;
+            else tail_ = n->prev;
+            size_--;
+            delete n;
+        }
+        return position;
+    }
 
-		reverse_iterator&		operator++ ()
-		{
-			if (!current) return *this;
-			current = current->previous;
-			return *this;
-		}
+    iterator erase (iterator first, iterator last) {
+        while (first != last)
+            erase(first++);
+        return last;
+    }
+    // --ERASE
 
-		reverse_iterator		operator++ (int)
-		{
-			if (!current) return *this;
-			iterator tmp = iterator(current);
-			current = current->previous;
-			return tmp;
-		}
+    // ++ASSIGN
+    template <class InputIterator>
+    void assign (InputIterator first, InputIterator last) {
+        clear();
+        insert(begin(), first, last);
+    }
 
-		reverse_iterator&		operator-- ()
-		{
-			if (!current) return *this;
-			current = current->next;
-			return *this;
-		}
+    void assign (size_type n, const value_type& val) {
+        clear();
+        while (n--) push_back(val);
+    }
+    // --ASSIGN
 
-		reverse_iterator		operator-- (int)
-		{
-			if (!current) return *this;
-			iterator tmp = iterator(current);
-			current = current->next;
-			return tmp;
-		}
+    // ++RESIZE
+    void resize (size_type n, value_type val = value_type()) {
+        while (n < size_) pop_back();
+        while (n > size_) push_back(val);
+    }
+    // --RESIZE
 
-		node			get_content()
-		{
-			return *current;
-		}
+    // ++SPLICE
+private:
+    void unlink(list& x, iterator item) {
+        ListNode *n = item.current;
 
-	};
+        if (n) {
+            if (n->prev) n->prev->next = n->next;
+            else x.head_ = n->next;
+            if (n->next) n->next->prev = n->prev;
+            else x.tail_ = n->prev;
+        }
+    }
 
+    void place(iterator position, iterator item) {
+        ListNode *n = item.current;
+        ListNode *p = position.current;
 
-	//                |    o          
-	// ,---.,---.,---.|    .,---.,---.
-	// |    |   ||   ||    ||---'|   |
-	// `---'`---'|---'`---'``---'`   '
-	//           |                    
+        if (!p) {
+            n->prev = tail_;
+            if (tail_ && head_) tail_->next = n;
+            else head_ = n;
+            n->next = 0;
+            tail_ = n;
+        }
 
-	explicit list ()
-	: _size(0), head(nullptr), tail(nullptr) {}
+        else {
+            n->prev = p->prev;
+            if (p->prev) p->prev->next = n;
+            else head_ = n;
+            n->next = p;
+            p->prev = n;
+        }
+    }
 
-	explicit list (size_type n, const value_type& val = value_type())
-	: _size(n), head(nullptr), tail(nullptr)
-	{
-		assign(n, val);
-	}
+public:
+    void splice (iterator position, list& x) {
+        splice(position, x, x.begin(), x.end());
+    }
 
-	template <typename InputIterator>
-	list (InputIterator first, InputIterator last, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type = 0)
-	: _size(0), head(nullptr), tail(nullptr)
-	{
-		assign(first, last);
-	}
+    void splice (iterator position, list& x, iterator i) {
+        iterator j = i++;
+        splice(position, x, j, i);
+    }
 
-	list (const list & x)
-	: _size(0), head(nullptr), tail(nullptr)
-	{
-		node *tmp = x.head;
-		while (tmp)
-		{
-			this->push_back(tmp->data);
-			tmp = tmp->next;
-		}
-	}
+    void splice (iterator position, list& x, iterator first, iterator last) {
 
-	~list()
-	{
+        size_t count = 0;
+        for (iterator it = first; it != last; ++it)
+            count++;
+
+        iterator it = first;
+        for (size_t i=0;i<count;++i) {
+            unlink(x, it);
+            place(position, it++);
+        }
+    }
+    // --SPLICE
+
+    // ++REMOVE
+    void remove (const value_type& val) {
+        for (iterator it = begin(); it != end();) {
+            if (*it == val)
+                erase (it++);
+            else
+                it++;
+        }
+    }
+
+    template <class Predicate>
+    void remove_if (Predicate pred) {
+        for (iterator it = begin(); it != end();) {
+            if (pred(*it))
+                erase(it++);
+            else
+                it++;
+        }
+    }
+    // --REMOVE
+
+    // ++SORT
+    void sort() {
+		list tmp_list;
+
+		swap(tmp_list);
 		clear();
+		while(tmp_list.size_)
+		{
+			iterator smallest_it = tmp_list.begin();
+			for (iterator it = tmp_list.begin(); it != tmp_list.end(); it++)
+				if (*smallest_it > *it) smallest_it = it;
+			push_back(*smallest_it);
+			tmp_list.erase(smallest_it);
+		}
 	}
 
-	list& operator= (const list& x)
-	{
+	template <class Compare>
+	void sort (Compare comp) {
+		list tmp_list;
+
+		swap(tmp_list);
 		clear();
-		node *tmp = x.head;
-		while (tmp)
-		{
-			this->push_back(tmp->data);
-			tmp = tmp->next;
-		}
-		return *this;
-	}
-
-	//                                                
-	// |              o                              |
-	// |---.,---.,---..,---.           ,---.,---.,---|
-	// |   ||---'|   |||   |    ---    |---'|   ||   |
-	// `---'`---'`---|``   '           `---'`   '`---'
-	//           `---'                                
-
-	iterator begin()
-	{
-		return iterator(head);
-	}
-
-	iterator end()
-	{
-		return iterator();
-	}
-
-	reverse_iterator rbegin()
-	{
-		return reverse_iterator(tail);
-	}
-
-	reverse_iterator rend()
-	{
-		return reverse_iterator();
-	}
-
-	//                                     
-	//                          o|         
-	// ,---.,---.,---.,---.,---..|--- ,   .
-	// |    ,---||   |,---||    ||    |   |
-	// `---'`---^|---'`---^`---'``---'`---|
-	//           |                    `---'
-
-	bool empty() const
-	{
-		return head == nullptr;
-	}
-
-	size_type size()
-	{
-		return _size;
-	}
-
-	size_type max_size()
-	{
-		return std::numeric_limits<size_type>::max() / sizeof(node);
-	}
-
-	//                                                                      
-	//      |                        |                                      
-	// ,---.|    ,---.,-.-.,---.,---.|---     ,---.,---.,---.,---.,---.,---.
-	// |---'|    |---'| | ||---'|   ||        ,---||    |    |---'`---.`---.
-	// `---'`---'`---'` ' '`---'`   '`---'    `---^`---'`---'`---'`---'`---'
-	//                                                                      
-
-	reference front()
-	{
-		return head->data;
-	}
-
-	const_reference front() const
-	{
-		return head->data;
-	}
-
-	reference back()
-	{
-		return tail->data;
-	}
-
-	const_reference back() const
-	{
-		return tail->data;
-	}
-
-	//                                      
-	//               |o,---.o               
-	// ,-.-.,---.,---|.|__. .,---.,---.,---.
-	// | | ||   ||   |||    ||---'|    `---.
-	// ` ' '`---'`---'``    ``---'`    `---'
-	//                                      
-
-	template <class InputIterator>
-	void assign (InputIterator first, InputIterator last, typename std::enable_if<!std::is_integral<InputIterator>::value>::type * = nullptr)
-	{
-		clear();
-		for (; first != last; first++)
-		{
-			this->push_back(*first);
+		while(tmp_list.size_) {
+			iterator smallest_it = tmp_list.begin();
+			for (iterator it = tmp_list.begin(); it != tmp_list.end(); it++)
+				if (!comp(*smallest_it, *it)) smallest_it = it;
+			push_back(*smallest_it);
+			tmp_list.erase(smallest_it);
 		}
 	}
+    // --SORT
 
-	void assign (size_type n, const value_type& val)
-	{
-		clear();
-		for (size_t i = 0; i < n; i++)
-		{
-			this->push_back(val);
-		}
-	}
+    // ++UNIQUE
+	void unique() {
+		ListNode *last_node = 0;
 
-	void push_front (const value_type& val)
-	{
-		if (!head)
-		{
-			head = tail = new node(val);
-		}
-		else
-		{
-			node * new_head = new node(val);
-			new_head->next = head;
-			head = new_head;
-		}
-	}
-
-	void pop_front()
-	{
-		node *tmp = head->next;
-		delete head;
-		head = tmp;
-		_size--;
-		if (_size == 0) tail = nullptr;
-	}
-
-	void	push_back(const T & val)
-	{
-		if (!head || !tail)
-		{
-			head = tail = new node(val);
-		}
-		else
-		{
-			tail->next = new node(val);
-			tail->next->previous = tail;
-			tail = tail->next;
-		}
-		_size++;
-	}
-
-	void pop_back()
-	{
-		node *tmp = tail->previous;
-		delete tail;
-		tail = tmp;
-		if (tail) tail->next = nullptr;
-		_size--;
-		if (_size == 0) head = nullptr;
-	}
-
-	iterator insert (iterator position, const value_type& val)
-	{
-		node		*current_node;
-		node		*previous_tail;
-		iterator	ret;
-
-		current_node = static_cast<node*> (position);
-		previous_tail = tail;
-		tail = current_node->previous;
-		push_back(val);
-		ret = iterator(tail);
-		tail->next = current_node;
-		current_node->previous = tail;
-		if (!previous_tail->next) tail = previous_tail;
-		return (ret);
-	}
-	
-	void insert (iterator position, size_type n, const value_type& val)
-	{
-		node	*pos_next;
-
-		pos_next = static_cast<node*> (position);
-		tail = pos_next->previous;
-		for (size_type i = 0; i < n; i++)
-		{
-			push_back(val);
-		}
-		tail->next = pos_next;
-		pos_next->previous = tail;
-		while (tail->next) tail = tail->next;
-	}
-
-	template <class InputIterator>
-	void insert (iterator position, InputIterator first, InputIterator last, typename std::enable_if<!std::is_integral<InputIterator>::value>::type * = nullptr)
-	{
-		node	*pos_next;
-
-		pos_next = static_cast<node*> (position);
-		tail = pos_next->previous;
-		for (; first != last; ++first)
-		{
-			push_back(*first);
-		}
-		tail->next = pos_next;
-		pos_next->previous = tail;
-		while (tail->next) tail = tail->next;
-	}
-
-	iterator erase (iterator position)
-	{
-		node		*cur_node;
-		iterator	ret;
-
-		cur_node = static_cast<node*> (position);
-		if (cur_node->next) cur_node->next->previous = cur_node->previous;
-		else if (!cur_node->next) tail = cur_node->previous;
-		if (cur_node->previous) cur_node->previous->next = cur_node->next;
-		else if (!cur_node->previous) head = cur_node->next;
-		ret = ++position;
-		delete cur_node;
-		_size--;
-		return ret;
-	}
-	
-	iterator erase (iterator first, iterator last)
-	{
-		while (first != last)
-		{
-			first = erase(first);
-		}
-		return (first);
-	}
-
-	void swap (list& x)
-	{
-		list tmp = *this;
-		*this = x;
-		x = tmp;
-	}
-
-	void resize (size_type n, value_type val = value_type())
-	{
-		while (n < _size)
-		{
-			pop_back();
-		}
-		while (_size < n)
-		{
-			push_back(val);
-		}
-	}
-
-	void	clear()
-	{
-		node *tmp;
-		while (head)
-		{
-			tmp = head;
-			head = head->next;
-			delete tmp;
-		}
-		head = tail = nullptr;
-		_size = 0;
-	}
-
-	//                          |    o               
-	// ,---.,---.,---.,---.,---.|--- .,---.,---.,---.
-	// |   ||   ||---'|    ,---||    ||   ||   |`---.
-	// `---'|---'`---'`    `---^`---'``---'`   '`---'
-	//      |                                        
-
-	void splice (iterator position, list& x)
-	{
-		node		*current_node;
-
-		current_node = static_cast<node*> (position);
-		_size += x._size;
-		if (!current_node)
-		{
-			if (head)
-			{
-				tail->next = x.head;
-				if (x.head) x.head->previous = tail;
-				tail = x.tail;
-			}
-			else
-			{
-				head = x.head;
-				tail = x.tail;
-			}
-		}
-		else // we have a current_node
-		{
-			x.head->previous = current_node->previous;
-			if (current_node->previous) current_node->previous->next = x.head;
-			else head = x.head;
-			x.tail->next = current_node;
-			if (current_node) current_node->previous = x.tail;
-			else tail = x.tail;
-		}
-		// forget x
-		x.head = x.tail = nullptr;
-		x._size = 0;
-	}
-	
-	void splice (iterator position, list& x, iterator i)
-	{
-		node		*current_node;
-		node		*new_node;
-
-		// retrieve my node
-		new_node = static_cast<node*> (i);
-		if (!new_node) return ;
-		if (new_node->previous) new_node->previous->next = new_node->next;
-		else x.head = new_node->next;
-		if (new_node->next) new_node->next->previous = new_node->previous;
-		else x.tail = new_node->previous;
-		(x._size)--;
-		new_node->next = new_node->previous = nullptr;
-
-		// new list
-		_size++;
-		current_node = static_cast<node*> (position);
-		if (!current_node)
-		{
-			if (!head)
-			{
-				head = tail = new_node;
-				head->next = head->previous = nullptr;
-			}
-			else
-			{
-				new_node->previous = tail;
-				tail->next = new_node;
-				tail = new_node;
-			}
-			return ;
-		}
-		if (current_node->previous) current_node->previous->next = new_node;
-		else head = new_node;
-		new_node->previous = current_node->previous;
-		new_node->next = current_node;
-		current_node->previous = new_node;
-	}
-	
-	void splice (iterator position, list& x, iterator first, iterator last)
-	{
-		while (first != last)
-		{
-			splice (position, x, first++);
-		}
-	}
-
-	void remove (const value_type& val)
-	{
-		for (iterator it = begin(); it != end();)
-		{
-			if (*it == val)
-			{
-				erase (it++);
-			}
-			else
-			{
-				it++;
-			}
-		}
-	}
-
-	template <class Predicate>
-	void remove_if (Predicate pred)
-	{
-		for (iterator it = begin(); it != end();)
-		{
-			if (pred(*it))
-			{
-				erase(it++);
-			}
-			else
-			{
-				it++;
-			}
-		}
-	}
-
-	void unique()
-	{
-		node *last_node = nullptr;
-
-		for (iterator it = begin(); it != end();)
-		{
-			node *cur_node = static_cast<node*> (it);
+		for (iterator it = begin(); it != end();) {
+			ListNode *cur_node = it.current;
 			if (last_node && cur_node->data == last_node->data)
-			{
 				erase(it++);
-			}
 			else
-			{
 				it++;
-			}
 			last_node = cur_node;
 		}
 	}
 
 	template <class BinaryPredicate>
-	void unique (BinaryPredicate binary_pred)
-	{
-		node *last_node = nullptr;
+	void unique (BinaryPredicate binary_pred) {
+		ListNode *last_node = 0;
 
-		for (iterator it = begin(); it != end();)
-		{
-			node *cur_node = static_cast<node*> (it);
+		for (iterator it = begin(); it != end();) {
+			ListNode *cur_node = it.current;
 			if (last_node && binary_pred(cur_node->data, last_node->data))
-			{
 				erase(it++);
-			}
 			else
-			{
 				it++;
-			}
 			last_node = cur_node;
 		}
 	}
+    // --UNIQUE
 
-	void merge (list& x)
-	{
-		for (iterator it = begin(); it != end();)
-		{
+    // ++MERGE
+    void merge (list& x) {
+		for (iterator it = begin(); it != end();) {
 			if (*it > x.front())
 				splice(it, x, x.begin());
 			else
@@ -763,77 +323,122 @@ public:
 	}
 
 	template <class Compare>
-	void merge (list& x, Compare comp)
-	{
-		for (iterator it = begin(); it != end();)
-		{
-			if (x.head && comp(x.front(), *it))
+	void merge (list& x, Compare comp) {
+		for (iterator it = begin(); it != end();) {
+			if (x.head_ && comp(x.front(), *it))
 				splice(it, x, x.begin());
 			else
 				it++;
 		}
 		splice(end(), x);
 	}
+    // --MERGE
 
-	void sort()
-	{
-		list tmp_list;
-
-		swap(tmp_list);
-
-		clear();
-		while(tmp_list._size)
-		{
-			iterator smallest_it = tmp_list.begin();
-			for (iterator it = tmp_list.begin(); it != tmp_list.end(); it++)
-			{
-				if (*smallest_it > *it) smallest_it = it;
-			}
-			this->push_back(*smallest_it);
-			tmp_list.erase(smallest_it);
-		}
-	}
-
-	template <class Compare>
-	void sort (Compare comp)
-	{
-		list tmp_list;
-
-		swap(tmp_list);
-		clear();
-		while(tmp_list._size)
-		{
-			iterator smallest_it = tmp_list.begin();
-			for (iterator it = tmp_list.begin(); it != tmp_list.end(); it++)
-			{
-				if (!comp(*smallest_it, *it)) smallest_it = it;
-			}
-			this->push_back(*smallest_it);
-			tmp_list.erase(smallest_it);
-		}
-	}
-
-	void reverse()
-	{
-		node *new_head = tail;
-		node *new_tail = head;
+    // ++REVERSE
+	void reverse() {
+		ListNode *new_head = tail_;
+		ListNode *new_tail = head_;
 		
-		while (head)
-		{
-			node *new_next = head->previous;
+		while (head_) {
+			ListNode *new_next = head_->prev;
 
-			head->previous = head->next;
-			head->next = new_next;
-			head = head->previous;
+			head_->prev = head_->next;
+			head_->next = new_next;
+			head_ = head_->prev;
 		}
-		head = new_head;
-		tail = new_tail;
+		head_ = new_head;
+		tail_ = new_tail;
 	}
+    // --REVERSE
 
-};
+    // ONE_LINE_STUFFS
+    void clear()                            { while (size_) erase(begin()); }
+    size_type size()                        { return size_; }
+    size_type max_size()                    { return std::numeric_limits<long>::max() / sizeof(ListNode); }
+    bool empty()                            { return size_ == 0; }
+    void swap (list& x)                     { list tmp = *this;*this = x;x = tmp; }
+    void pop_back()                         { erase(iterator(tail_)); }
+    void pop_front()                        { erase(begin()); }
+    void push_back(const T &e)              { insert(0, e); }
+    void push_front(const T &e)             { insert(head_, e); }
+    T &front()                              { return head_->data; }
+    T &back()                               { return tail_->data; }
+    iterator begin()                        { return iterator(head_); }
+    const_iterator begin()            const { return const_iterator(head_); }
+    iterator end()                          { return iterator(0); }
+    const_iterator end()              const { return const_iterator(0); }
+    reverse_iterator rbegin()               { return reverse_iterator(after_tail()); }
+    const_reverse_iterator rbegin()   const { return const_reverse_iterator(after_tail()); }
+    reverse_iterator rend()                 { return reverse_iterator(head_); }
+    const_reverse_iterator rend()     const { return const_reverse_iterator(head_); }
+
+// LIST_NODE
+private:
+    struct ListNode {
+        T           data;
+        ListNode    *next;
+        ListNode    *prev;
+
+        ListNode(const T &e) : data(e), next(0), prev(0) {}
+    };
+
+    ListNode *get_last(ListNode *n) {
+        while (n && n->next) n = n->next;
+        return n;
+    }
+
+
+// iterator
+public:
+    class iterator {
+        friend class list<T>;
+    public:
+        // typedef iterator                            iterator_type;
+        typedef std::bidirectional_iterator_tag     iterator_category;
+        typedef T                                   value_type;
+        typedef T&                                  reference;
+        typedef T*                                  pointer;
+
+        typedef std::ptrdiff_t                      difference_type;
+        typedef size_t                              size_type;
+
+
+        iterator(ListNode* p=0) : current(p) {}
+        iterator(const iterator& it) : current(it.current) {}
+        ~iterator() {}
+
+        iterator operator= (const iterator& it) { this->current = it.current; return *this; }
+
+        T &operator*()                          { return current->data; }
+        T *operator->()                         { return &(current->data); }
+        bool operator!=(const iterator &rhs)    { return this->current != rhs.current; }
+        bool operator==(const iterator &rhs)    { return this->current == rhs.current; }
+        iterator operator++(int)                { iterator tmp = iterator(current); ++*this; return tmp; }
+        iterator operator--(int)                { iterator tmp = iterator(current); --*this; return tmp; }
+        iterator &operator++()                  { current = current->next; return *this; }
+        iterator &operator--()                  { current = current->prev; return *this; }
+
+    protected:
+        ListNode *current;
+    };
+
+    class const_iterator : public iterator {
+
+    public:
+        const_iterator(ListNode *p=0) : iterator(p) {}
+        const_iterator(const iterator& it) : iterator(it) {}
+        ~const_iterator() {}
+        const T &operator*()              const { return this->current->data; }
+        const T *operator->()             const { return &(this->current->data); }
+    };
+
+}; // list
+
+}; // namespace ft::
 
 #endif
 
+// REFERENCES
 // https://stackoverflow.com/questions/45847787/how-to-differentiate-fill-constructor-and-range-constructor-in-c11
 // #if __APPLE__
 // 	template <typename InputIterator, typename std::enable_if<std::__is_cpp17_input_iterator<InputIterator>::value>::type*>
@@ -842,5 +447,9 @@ public:
 // #endif
 
 // https://www.fluentcpp.com/2018/05/15/make-sfinae-pretty-1-what-value-sfinae-brings-to-code/
-
 // https://h-deb.clg.qc.ca/Sujets/TrucsScouts/Comprendre_enable_if.html
+
+// https://gcc.gnu.org/onlinedocs/gcc-4.6.2/libstdc++/api/a00588.html
+// https://codereview.stackexchange.com/questions/201368/modern-c-singly-linked-list
+// https://codereview.stackexchange.com/questions/185166/implementing-a-linked-list-in-c
+// https://codefreakr.com/how-is-c-stl-list-implemented-internally/

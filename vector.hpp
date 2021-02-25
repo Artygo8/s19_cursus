@@ -76,7 +76,7 @@ public:
     }
 
     vector& operator= (const vector& x) {
-        clear();
+        delete[] array_;
         this->array_ = new T[x.reserved_size_];
         this->reserved_size_ = x.reserved_size_;
         this->size_ = x.size_;
@@ -100,8 +100,7 @@ public:
         if(n > reserved_size_)
         {
             T *new_array( new T[n] );
-            for(size_t i=0; i<size_; i++)
-                new_array[i] = array_[i];
+            for(size_t i=0; i<size_; i++) new_array[i] = array_[i];
             delete[] array_;
             array_ = new_array;
             reserved_size_ = n;
@@ -113,17 +112,38 @@ public:
         size_ = n;
     }
 
+    void swap (vector& x) {
+        {
+            T* tmp = x.array_;
+            x.array_ = array_;
+            array_ = tmp;
+        }
+        {
+            size_t tmp = x.size_;
+            x.size_ = size_;
+            size_ = tmp;
+            tmp = x.reserved_size_;
+            x.reserved_size_ = reserved_size_;
+            reserved_size_ = tmp;
+        }
+        {
+            allocator_type tmp = x.alloc_;
+            x.alloc_ = alloc_;
+            alloc_ = tmp;
+        }
+    }
+
     // ++ASSIGN
     template <class InputIterator>
     void assign (InputIterator first, InputIterator last) {
-        for (size_t i = 0; first != last; ++i) {
-            array_[i] = *first++;
-            size_ = i + 1;
-        }
+        size_ = 0;
+        while (first != last)
+            push_back(*first++);
     }
 
     void assign (size_type n, const value_type& val) {
         size_ = n;
+        while (size_ >= reserved_size_) grow();
         for (size_t i = 0; i < n; ++i) {
             array_[i] = val;
         }
@@ -131,48 +151,94 @@ public:
     // --ASSIGN
 
     // ++INSERT
+private:
+    size_type get_index(iterator position) {
+        size_t index = 0;
+        while (iterator(array_ + index) < position)
+            ++index; // we need to do that because when we grow, we lose the iterator.
+        return index;
+    }
+
+    size_type get_quantity(iterator first, iterator last) {
+        size_t n = 0;
+        for (iterator it = first; it < last; ++it)
+            n++;
+        return n;
+    }
+
+public:
     iterator insert (iterator position, const value_type& val) {
         insert(position, static_cast<size_type>(1), val);
         return position;
     }
 
     void insert (iterator position, size_type n, const value_type& val) {
+        size_t pos_index = 0;
+        while (iterator(array_ + pos_index) < position) ++pos_index; // we need to do that because when we grow, we lose the iterator.
+
         while (size_ + n >= reserved_size_) grow();
-        for (iterator i = array_ + size_; i != position; i--) {
-            i[n] = *i;
+
+        for (size_type i = size_ - 1; i + 1 > pos_index; --i) {
+            array_[i + n] = array_[i];
         }
+
         for (size_type i = 0; i < n; ++i) {
-            position[i] = val;
+            array_[pos_index + i] = val;
         }
+
         size_ += n;
     }
 
     template <class InputIterator>
     void insert (iterator position, InputIterator first, InputIterator last) {
+
         size_t n = 0;
         for (iterator it = first; it != last; ++it) {
             n++;
         }
+
+        size_t pos_index = 0;
+        while (iterator(array_ + pos_index) < position) ++pos_index; // we need to do that because when we grow, we lose the iterator.
+       
         while (size_ + n >= reserved_size_) grow();
-        for (iterator i = array_ + size_; i != position; i--) {
-            i[n] = *i;
+
+        for (size_type i = size_; i + 1 > pos_index; --i) {
+            array_[i + n] = array_[i];
         }
+
         for (size_type i = 0; i < n; ++i) {
-            position[i] = *first++;
+            array_[pos_index + i] = *first++;
         }
         size_ += n;
     }
     // --INSERT
 
+    // ++ERASE
+    iterator erase (iterator position) {
+        for (iterator it = position;it + 1 != end();++it)
+            *it = *(it + 1);
+        size_ -= size_ ? 1 : 0;
+        return position;
+    }
+
+    iterator erase (iterator first, iterator last) {
+        size_t n = get_quantity(first, last);
+        for (iterator it = first;it + n != end();++it)
+            *it = *(it + n);
+        size_ -= n > size_ ? size_ : n;
+        return first;
+    }
+    // --ERASE
+
     // ONE_LINE
-    bool empty() const { return size_ == 0; }
+    bool empty()                      const { return size_ == 0; }
     void pop_back()                         { if (size_ > 0) --size_; }
-    void clear()                            { delete[] array_; size_ = 0; reserved_size_ = 0; }
-    size_type max_size()              const { return std::numeric_limits<unsigned long>::max() / sizeof(T); }
+    void clear()                            { size_ = 0; reserved_size_ = 0; }
+    size_type max_size()              const { return std::numeric_limits<long>::max() / sizeof(T); }
     size_type capacity()              const { return reserved_size_; }
     size_type size()                        { return size_; }
-    iterator begin()                        { return array_; }
-    iterator end()                          { return array_ + size_; }
+    iterator begin()                        { return iterator(array_); }
+    iterator end()                          { return iterator(array_ + size_); }
     reverse_iterator rbegin()               { return reverse_iterator(end()); }
     reverse_iterator rend()                 { return reverse_iterator(begin()); }
 
