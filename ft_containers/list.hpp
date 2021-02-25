@@ -427,6 +427,7 @@ public:
         const_iterator(ListNode *p=0) : iterator(p) {}
         const_iterator(const iterator& it) : iterator(it) {}
         ~const_iterator() {}
+
         const T &operator*()              const { return this->current->data; }
         const T *operator->()             const { return &(this->current->data); }
     };

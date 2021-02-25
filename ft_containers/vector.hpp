@@ -35,11 +35,10 @@ public:
     typedef size_t                                      size_type;
 
     // Only declarations
-    // typedef T*                                          iterator;
-    // typedef const T*                                    const_iterator;
     class iterator;
+    class const_iterator;
     typedef std::reverse_iterator<iterator>             reverse_iterator;
-    // typedef std::reverse_iterator<const_iterator>       const_reverse_iterator;
+    typedef std::reverse_iterator<const_iterator>       const_reverse_iterator;
 
 private :
 	T *array_;
@@ -238,13 +237,13 @@ public:
     size_type capacity()              const { return reserved_size_; }
     size_type size()                  const { return size_; }
     iterator begin()                        { return iterator(array_); }
-    iterator begin()                  const { return iterator(array_); }
+    const_iterator begin()            const { return const_iterator(array_); }
     iterator end()                          { return iterator(array_ + size_); }
-    iterator end()                    const { return iterator(array_ + size_); }
+    const_iterator end()              const { return const_iterator(array_ + size_); }
     reverse_iterator rbegin()               { return reverse_iterator(end()); }
-    reverse_iterator rbegin()         const { return reverse_iterator(end()); }
+    const_reverse_iterator rbegin()   const { return const_reverse_iterator(end()); }
     reverse_iterator rend()                 { return reverse_iterator(begin()); }
-    reverse_iterator rend()           const { return reverse_iterator(begin()); }
+    const_reverse_iterator rend()     const { return const_reverse_iterator(begin()); }
 
     reference operator[] (size_type n)              { return array_[n]; }
     const_reference operator[] (size_type n) const  { return array_[n]; }
@@ -297,6 +296,18 @@ public:
 
     protected:
         T *current;
+    };
+
+    class const_iterator : public iterator {
+
+    public:
+        const_iterator(T *p=0) : iterator(p) {}
+        const_iterator(const iterator& it) : iterator(it) {}
+        ~const_iterator() {}
+
+        const T &operator*()              const { return *this->current; }
+        const T *operator->()             const { return this->current; }
+        const T &operator[](int n)        const { return this->current[n]; }
     };
 
 }; // ft::vector
