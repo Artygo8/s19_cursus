@@ -1,8 +1,8 @@
 
 # ================================ VARIABLES ================================= #
 
-NAME		= exec
-CXX			= clang++
+NAME	= exec
+CXX	= clang++
 CXXFLAGS	= -Wall -Werror -Wextra -std=c++98
 
 SRCDIR	= ./
@@ -11,7 +11,7 @@ OBJDIR	= objs/
 
 CXXFLAGS	+= -I $(INCDIR)
 
-SRCS	= 	main_list.cpp
+SRCS	= 		main_vector.cpp
 
 SRC		:= $(notdir $(SRCS)) # 					Files only
 OBJ		:= $(SRC:.cpp=.o)	#					Files only

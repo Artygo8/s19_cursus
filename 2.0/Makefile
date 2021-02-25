@@ -14,7 +14,7 @@ OBJS	:= $(addprefix $(OBJDIR),$(OBJ))# Full path
 CSRCS	:= $(addprefix ../, $(SRCS))# Compiler
 
 CXX		= clang++
-CXXFLAGS= -Wall -Werror -Wextra -std=c++98
+CXXFLAGS= -Wall -Werror -Wextra -std=c++98 -g3
 CXXFLAGS+= -I $(INCDIR)
 
 GR	= \033[32;1m # Green
