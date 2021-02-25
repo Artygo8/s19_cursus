@@ -2,6 +2,7 @@
 #ifndef FT_ALLOC_HPP
 # define FT_ALLOC_HPP
 # include <limits>
+# include <iostream> // size_t
 
 namespace ft {
     template <class T> class allocator;

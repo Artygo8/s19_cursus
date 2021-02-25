@@ -14,45 +14,10 @@
 #include <vector>
 #include <math.h>
 #include <iostream>
-#include "vector.hpp"
+#include "test.hpp"
 
-#ifndef MY_COLORS
-# define MY_COLORS
-# define R_CYN "\e[46;30m"
-# define R_MGN "\e[45;30m"
-# define R_BLU "\e[44;30m"
-# define R_YLW "\e[43;30m"
-# define R_GRN "\e[42;30m"
-# define R_RED "\e[41;30m"
-# define CYN "\e[36m"
-# define MGN "\e[35m"
-# define BLU "\e[34m"
-# define YLW "\e[33m"
-# define GRN "\e[32m"
-# define RED "\e[31m"
-# define NC "\e[m"
-#endif
 
-using std::string;
-using std::cout;
-using std::endl;
-
-template< typename T >
-void TITLE_RED(T str) {std::cout << R_RED << str << NC << std::endl;}
-template< typename T >
-void TITLE_BLU(T str) {std::cout << R_BLU << str << NC << std::endl;}
-template< typename T >
-void TITLE_GRN(T str) {std::cout << R_GRN << str << NC << std::endl;}
-
-//                  _       
-//                 (_)      
-//  _ __ ___   __ _ _ _ __  
-// | '_ ` _ \ / _` | | '_ | 
-// | | | | | | (_| | | | | |
-// |_| |_| |_|\__,_|_|_| |_|
-//                          
-
-int main()
+void test_vector()
 {
     TITLE_RED("__VECTOR_CONSTRUCTORS__");
     {
@@ -751,5 +716,66 @@ int main()
         std::cout << '\n';
     }
 
-    return 0;
+
+    TITLE_RED("__COMPARISON__");
+    {
+        TITLE_GRN("std");
+        std::vector<int> foo (3,100);   // three ints with a value of 100
+        std::vector<int> bar (2,200);   // two ints with a value of 200
+
+        if (foo==bar) std::cout << "foo and bar are equal\n";
+        if (foo!=bar) std::cout << "foo and bar are not equal\n";
+        if (foo< bar) std::cout << "foo is less than bar\n";
+        if (foo> bar) std::cout << "foo is greater than bar\n";
+        if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+        if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+    }
+    {
+        TITLE_GRN("ft");
+        ft::vector<int> foo (static_cast<size_t>(3),100);   // three ints with a value of 100
+        ft::vector<int> bar (static_cast<size_t>(2),200);   // two ints with a value of 200
+
+        if (foo==bar) std::cout << "foo and bar are equal\n";
+        if (foo!=bar) std::cout << "foo and bar are not equal\n";
+        if (foo< bar) std::cout << "foo is less than bar\n";
+        if (foo> bar) std::cout << "foo is greater than bar\n";
+        if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+        if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+    }
+
+    TITLE_RED("__N-M_SWAP__");
+    {
+        TITLE_GRN("std");
+        std::vector<int> foo (3,100);   // three ints with a value of 100
+        std::vector<int> bar (5,200);   // five ints with a value of 200
+
+        swap(foo,bar);
+
+        std::cout << "foo contains:";
+        for (std::vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+            std::cout << ' ' << *it;
+        std::cout << '\n';
+
+        std::cout << "bar contains:";
+        for (std::vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+            std::cout << ' ' << *it;
+        std::cout << '\n';
+    }
+    {
+        TITLE_GRN("ft");
+        ft::vector<int> foo (static_cast<size_t>(3),100);   // three ints with a value of 100
+        ft::vector<int> bar (static_cast<size_t>(5),200);   // five ints with a value of 200
+
+        swap(foo,bar);
+
+        std::cout << "foo contains:";
+        for (ft::vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+            std::cout << ' ' << *it;
+        std::cout << '\n';
+
+        std::cout << "bar contains:";
+        for (ft::vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+            std::cout << ' ' << *it;
+        std::cout << '\n';
+    }
 }

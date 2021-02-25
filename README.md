@@ -1,9 +1,7 @@
 # ft_containers
 
- - [x] list
- - [x] vector
+ - [x] list (const iterators?)
+ - [x] vector (const iterators)
  - [ ] map - WIP
- - [ ] stack
- - [ ] queue
-
-(still have to implement external overloads)
+ - [x] stack
+ - [x] queue

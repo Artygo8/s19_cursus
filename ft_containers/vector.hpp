@@ -236,11 +236,15 @@ public:
     void clear()                            { size_ = 0; reserved_size_ = 0; }
     size_type max_size()              const { return std::numeric_limits<long>::max() / sizeof(T); }
     size_type capacity()              const { return reserved_size_; }
-    size_type size()                        { return size_; }
+    size_type size()                  const { return size_; }
     iterator begin()                        { return iterator(array_); }
+    iterator begin()                  const { return iterator(array_); }
     iterator end()                          { return iterator(array_ + size_); }
+    iterator end()                    const { return iterator(array_ + size_); }
     reverse_iterator rbegin()               { return reverse_iterator(end()); }
+    reverse_iterator rbegin()         const { return reverse_iterator(end()); }
     reverse_iterator rend()                 { return reverse_iterator(begin()); }
+    reverse_iterator rend()           const { return reverse_iterator(begin()); }
 
     reference operator[] (size_type n)              { return array_[n]; }
     const_reference operator[] (size_type n) const  { return array_[n]; }
@@ -298,5 +302,58 @@ public:
 }; // ft::vector
 
 }; // ft::
+
+
+template <class T, class Alloc>
+bool operator== (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs) {
+    if (lhs.size() != rhs.size())
+        return false;
+    typename ft::vector<T>::iterator lit = lhs.begin();
+    typename ft::vector<T>::iterator rit = rhs.begin();
+    while (lit != lhs.end()) {
+        if (*lit++ != *rit++)
+            return false;
+    }
+    return true;
+}
+
+template <class T, class Alloc>
+bool operator!= (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs) {
+    return !(lhs == rhs);
+}
+
+template <class T, class Alloc>
+bool operator<  (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs) {
+    if (lhs == rhs)
+        return false;
+    typename ft::vector<T>::iterator lit = lhs.begin();
+    typename ft::vector<T>::iterator rit = rhs.begin();
+    while (*lit == *rit && lit != lhs.end()) {
+        ++lit;++rit;
+    }
+    if (*lit < *rit)
+        return true;
+    return false;
+}
+
+template <class T, class Alloc>
+bool operator<= (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs) {
+    return (lhs < rhs || lhs == rhs);
+}
+
+template <class T, class Alloc>
+bool operator>  (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs) {
+    return !(lhs <= rhs);
+}
+
+template <class T, class Alloc>
+bool operator>= (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs) {
+    return !(lhs < rhs);
+}
+
+template <class T, class Alloc>
+void swap (ft::vector<T,Alloc>& x, ft::vector<T,Alloc>& y) {
+    x.swap(y);
+}
 
 #endif

@@ -13,8 +13,7 @@
 #ifndef FT_LIST_HPP
 # define FT_LIST_HPP
 # include "alloc.hpp"
-# include <iostream>
-# include <string>
+# include <limits>
 
 namespace ft {
 
@@ -353,9 +352,9 @@ public:
 
     // ONE_LINE_STUFFS
     void clear()                            { while (size_) erase(begin()); }
-    size_type size()                        { return size_; }
-    size_type max_size()                    { return std::numeric_limits<long>::max() / sizeof(ListNode); }
-    bool empty()                            { return size_ == 0; }
+    size_type size()                  const { return size_; }
+    size_type max_size()              const { return std::numeric_limits<long>::max() / sizeof(ListNode); }
+    bool empty()                      const { return size_ == 0; }
     void swap (list& x)                     { list tmp = *this;*this = x;x = tmp; }
     void pop_back()                         { erase(iterator(tail_)); }
     void pop_front()                        { erase(begin()); }
@@ -435,6 +434,60 @@ public:
 }; // list
 
 }; // namespace ft::
+
+
+template <class T, class Alloc>
+bool operator== (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+    if (lhs.size() != rhs.size())
+        return false;
+    typename ft::list<T>::iterator lit = lhs.begin();
+    typename ft::list<T>::iterator rit = rhs.begin();
+    while (lit != lhs.end()) {
+        if (*lit++ != *rit++)
+            return false;
+    }
+    return true;
+}
+
+template <class T, class Alloc>
+bool operator!= (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+    return !(lhs == rhs);
+}
+
+template <class T, class Alloc>
+bool operator<  (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+    if (lhs.size() > rhs.size() || lhs == rhs)
+        return false;
+    typename ft::list<T>::iterator lit = lhs.begin();
+    typename ft::list<T>::iterator rit = rhs.begin();
+    while (*lit == *rit) {
+        ++lit;++rit;
+    }
+    if (*lit < *rit)
+        return true;
+    return false;
+}
+
+template <class T, class Alloc>
+bool operator<= (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+    return (lhs < rhs || lhs == rhs);
+}
+
+template <class T, class Alloc>
+bool operator>  (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+    return !(lhs <= rhs);
+}
+
+template <class T, class Alloc>
+bool operator>= (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+    return !(lhs < rhs);
+}
+
+template <class T, class Alloc>
+void swap (ft::list<T,Alloc>& x, ft::list<T,Alloc>& y) {
+    x.swap(y);
+}
+
 
 #endif
 

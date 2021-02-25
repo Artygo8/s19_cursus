@@ -1,21 +1,18 @@
 # ================================ VARIABLES ================================= #
 
-NAME	= exec
+NAME	= test_containers
 
-SRCDIR	= ./
-INCDIR	= include/
-OBJDIR	= objs/
+SRCS	= main.cpp \
+			tests/test_list.cpp \
+			tests/test_queue.cpp \
+			tests/test_stack.cpp \
+			tests/test_vector.cpp
 
-SRCS	= main_map.cpp
-
-SRC		:= $(notdir $(SRCS))# Files only
-OBJ		:= $(SRC:.cpp=.o)# Files only
-OBJS	:= $(addprefix $(OBJDIR),$(OBJ))# Full path
-CSRCS	:= $(addprefix ../, $(SRCS))# Compiler
+OBJS	= $(SRCS:.cpp=.o)
 
 CXX		= clang++
-CXXFLAGS= -Wall -Werror -Wextra -std=c++98 -g3
-CXXFLAGS+= -I $(INCDIR)
+CXXFLAGS= -Wall -Werror -Wextra -std=c++98 -g3 -I tests -I ft_containers
+# CXXFLAGS+= -I $(INCDIR)
 
 GR	= \033[32;1m # Green
 RE	= \033[31;1m # Red
@@ -27,7 +24,7 @@ RC	= \033[0m    # Reset Colors
 # ================================== RULES =================================== #
 
 $(NAME)	: $(OBJS)
-	@printf "$(YE)&&& Linking $(OBJ) to $(NAME)$(RC)\n"
+	@printf "$(YE)&&& Linking $(OBJS) to $(NAME)$(RC)\n"
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
 all : $(NAME)
@@ -38,17 +35,13 @@ run : $(NAME)
 
 clean :
 	@printf "$(RE)--- Removing $(OBJ)$(RC)\n"
-	@rm -fd $(OBJS) $(OBJDIR)
+	rm -rf $(OBJS) $(OBJDIR)
 
 fclean : clean
 	@printf "$(RE)--- Removing $(NAME)$(RC)\n"
-	@rm -rf $(NAME)
+	rm -rf $(NAME)
 
 re : fclean all
 
-$(OBJS) : $(SRCS)
-	@printf "$(GR)+++ Compiling $(SRC) to $(OBJ)$(RC)\n"
-	@mkdir -p $(OBJDIR)
-	@cd $(OBJDIR) && $(CXX) $(CXXFLAGS) -I ../$(INCDIR) -c $(CSRCS)
 
 .PHONY	= all run clean fclean re test

@@ -13,37 +13,7 @@
 #include <list>
 #include <vector>
 #include <math.h>
-#include <iostream>
-#include "alloc.hpp"
-#include "list.hpp"
-
-#ifndef MY_COLORS
-# define MY_COLORS
-# define R_CYN "\e[46;30m"
-# define R_MGN "\e[45;30m"
-# define R_BLU "\e[44;30m"
-# define R_YLW "\e[43;30m"
-# define R_GRN "\e[42;30m"
-# define R_RED "\e[41;30m"
-# define CYN "\e[36m"
-# define MGN "\e[35m"
-# define BLU "\e[34m"
-# define YLW "\e[33m"
-# define GRN "\e[32m"
-# define RED "\e[31m"
-# define NC "\e[m"
-#endif
-
-using std::string;
-using std::cout;
-using std::endl;
-
-template< typename T >
-void TITLE_RED(T str) {std::cout << R_RED << str << NC << std::endl;}
-template< typename T >
-void TITLE_BLU(T str) {std::cout << R_BLU << str << NC << std::endl;}
-template< typename T >
-void TITLE_GRN(T str) {std::cout << R_GRN << str << NC << std::endl;}
+#include "test.hpp"
 
 //  _              _     
 // | |            | |    
@@ -96,7 +66,7 @@ bool compare_nocase (const std::string& first, const std::string& second)
 // |_| |_| |_|\__,_|_|_| |_|
 //                          
 
-int main()
+void test_list()
 {
     TITLE_RED("__LIST_CONSTRUCTORS__");
     {
@@ -1027,7 +997,6 @@ int main()
         std::cout << '\n';
     }
 
-
     TITLE_RED("__REVERSE__");
     {
         TITLE_GRN("std");
@@ -1058,5 +1027,84 @@ int main()
         std::cout << '\n';
     }
 
-    return 0;
+
+    TITLE_RED("__LIST_COMPARISON__");
+    {
+        TITLE_GRN("std");
+        std::list<int> a; // = {10, 20, 30};
+        for (int i=10; i<=30; i+=10) a.push_back(i);
+        std::list<int> b; // = {10, 20, 30};
+        for (int i=10; i<=30; i+=10) b.push_back(i);
+        std::list<int> c; // = {30, 20, 10};
+        for (int i=30; i>0; i-=10) c.push_back(i);
+
+        if (a==b) std::cout << "a and b are equal\n";
+        if (b!=c) std::cout << "b and c are not equal\n";
+        if (b<c) std::cout << "b is less than c\n";
+        if (c>b) std::cout << "c is greater than b\n";
+        if (a<=b) std::cout << "a is less than or equal to b\n";
+        if (a>=b) std::cout << "a is greater than or equal to b\n";
+    }
+    {
+        TITLE_GRN("ft");
+        ft::list<int> a; // = {10, 20, 30};
+        for (int i=10; i<=30; i+=10) a.push_back(i);
+        ft::list<int> b; // = {10, 20, 30};
+        for (int i=10; i<=30; i+=10) b.push_back(i);
+        ft::list<int> c; // = {30, 20, 10};
+        for (int i=30; i>0; i-=10) c.push_back(i);
+
+        if (a==b) std::cout << "a and b are equal\n";
+        if (b!=c) std::cout << "b and c are not equal\n";
+        if (b<c) std::cout << "b is less than c\n";
+        if (c>b) std::cout << "c is greater than b\n";
+        if (a<=b) std::cout << "a is less than or equal to b\n";
+        if (a>=b) std::cout << "a is greater than or equal to b\n";
+    }
+
+
+    TITLE_RED("__NON-MEMBER_SWAP__");
+    {
+        TITLE_GRN("std");
+        std::list<int> foo (3,100);   // three ints with a value of 100
+        std::list<int> bar (5,200);   // five ints with a value of 200
+
+        std::swap(foo,bar);
+
+        std::cout << "foo contains:";
+        for (std::list<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+            std::cout << ' ' << *it;
+        std::cout << '\n';
+
+        std::cout << "bar contains:";
+        for (std::list<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+            std::cout << ' ' << *it;
+        std::cout << '\n';
+    }
+    {
+        TITLE_GRN("ft");
+        ft::list<int> foo (static_cast<size_t>(3),100);   // three ints with a value of 100
+        ft::list<int> bar (static_cast<size_t>(5),200);   // five ints with a value of 200
+
+        std::swap(foo,bar);
+
+        std::cout << "foo contains:";
+        for (ft::list<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+            std::cout << ' ' << *it;
+        std::cout << '\n';
+
+        std::cout << "bar contains:";
+        for (ft::list<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+            std::cout << ' ' << *it;
+        std::cout << '\n';
+    }
+return ;
+
+    TITLE_RED("____");
+    {
+        TITLE_GRN("std");
+    }
+    {
+        TITLE_GRN("ft");
+    }
 }
