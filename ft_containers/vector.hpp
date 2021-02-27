@@ -75,6 +75,8 @@ public:
     }
 
     vector& operator= (const vector& x) {
+        if (array_ == x.array_)
+            return *this;
         delete[] array_;
         this->array_ = new T[x.reserved_size_];
         this->reserved_size_ = x.reserved_size_;
@@ -111,25 +113,20 @@ public:
         size_ = n;
     }
 
+private:
+    template<class U>
+    void my_swap(U &lhs, U&rhs) {
+        U tmp = lhs;
+        lhs = rhs;
+        rhs = tmp;
+    }
+
+public:
     void swap (vector& x) {
-        {
-            T* tmp = x.array_;
-            x.array_ = array_;
-            array_ = tmp;
-        }
-        {
-            size_t tmp = x.size_;
-            x.size_ = size_;
-            size_ = tmp;
-            tmp = x.reserved_size_;
-            x.reserved_size_ = reserved_size_;
-            reserved_size_ = tmp;
-        }
-        {
-            allocator_type tmp = x.alloc_;
-            x.alloc_ = alloc_;
-            alloc_ = tmp;
-        }
+        my_swap(array_, x.array_);
+        my_swap(size_, x.size_);
+        my_swap(reserved_size_, x.reserved_size_);
+        my_swap(alloc_, x.alloc_);
     }
 
     // ++ASSIGN

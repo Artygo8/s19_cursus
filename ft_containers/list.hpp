@@ -77,6 +77,8 @@ public:
 
     list& operator= (const list& x)
     {
+        if (this->head_ == x.head_)
+            return *this;
         alloc_ = x.alloc_;
         assign(x.begin(), x.end());
         return *this;

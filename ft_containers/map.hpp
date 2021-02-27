@@ -168,6 +168,8 @@ public:
     }
 
     map& operator= (const map& x) {
+        if (this->root_ == x.root_)
+            return *this;
         clear();
         insert(x.begin(), x.end());
         return *this;
@@ -215,8 +217,51 @@ public:
     }
 
     iterator insert (iterator position, const value_type& val) { // remonter jusqu'a un compare different, puis redescendre et chercher.
-        (void)position;
-        return insert(val).first;
+        iterator it = position;
+        // go forward
+        while (comp_((*it).first,val.first)) {
+            iterator tmpit = it;
+            if (++it == end()) {
+                MapNode *last = tmpit.current;
+                MapNode *n = new MapNode(val);
+                n->parent = last;
+                last->next = n;
+                return ++tmpit;
+            }
+        }
+        if ((*it).first == val.first) {
+            (*it).second = val.second;
+            return it;
+        }
+        // go backward
+        while (!comp_((*it).first,val.first)) {
+            iterator tmpit = it;
+            if (--it == end()) {
+                MapNode *first = tmpit.current;
+                MapNode *n = new MapNode(val);
+                n->parent = first;
+                first->next = n;
+                return --tmpit;
+            }
+        }
+        if ((*it).first == val.first) {
+            (*it).second = val.second;
+            return it;
+        }
+        MapNode *inser = it.current;
+        if (!inser->next) {
+            MapNode *n = new MapNode(val);
+            n->parent = inser;
+            inser->next = n;
+            return it;
+        }
+        else {
+            inser = (++it).current;
+            MapNode *n = new MapNode(val);
+            n->parent = inser;
+            inser->prev = n;
+            return it;
+        }
     }
 
     template <class InputIterator>
@@ -338,7 +383,6 @@ private:
 
 public:
     void swap (map& x) {
-        // if (*this == x) return ;
         my_swap(root_, x.root_);
         my_swap(size_, x.size_);
         my_swap(comp_, x.comp_);

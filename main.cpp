@@ -10,13 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// to compile, use the following :
+// clang++ -Wall -Wextra -Werror -std=c++98 -I tests -I ft_containers main.cpp tests/*.cpp
+
 #include "test.hpp"
 
 int main() {
-    test_list();
-    test_vector();
+    // test_list();
+    // test_vector();
     test_map();
-    test_stack();
-    test_queue();
+    // test_stack();
+    // test_queue();
     return 0;
 }
