@@ -4,6 +4,7 @@ NAME	= test_containers
 
 SRCS	= main.cpp \
 			tests/test_list.cpp \
+			tests/test_map.cpp \
 			tests/test_queue.cpp \
 			tests/test_stack.cpp \
 			tests/test_vector.cpp

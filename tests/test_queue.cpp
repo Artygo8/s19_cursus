@@ -6,6 +6,13 @@
 
 void test_queue()
 {
+    TITLE_MGN("                             ");
+    TITLE_MGN("  __ _ _   _  ___ _   _  ___ ");
+    TITLE_MGN(" / _` | | | |/ _ \\ | | |/ _ \\");
+    TITLE_MGN("| (_| | |_| |  __/ |_| |  __/");
+    TITLE_MGN(" \\__, |\\__,_|\\___|\\__,_|\\___|");
+    TITLE_MGN("    |_|                      ");
+
     TITLE_RED("__QUEUE_CONSTRUCTORS__");
     {
         TITLE_GRN("std");

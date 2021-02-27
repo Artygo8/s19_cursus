@@ -19,6 +19,7 @@
 # endif
 
 # include "list.hpp"
+# include "map.hpp"
 # include "queue.hpp"
 # include "stack.hpp"
 # include "vector.hpp"
@@ -36,6 +37,8 @@ template< typename T >
 void TITLE_BLU(T str) {std::cout << R_BLU << str << NC << std::endl;}
 template< typename T >
 void TITLE_GRN(T str) {std::cout << R_GRN << str << NC << std::endl;}
+template< typename T >
+void TITLE_MGN(T str) {std::cout << MGN << str << NC << std::endl;}
 
 void test_list();
 void test_vector();

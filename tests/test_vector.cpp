@@ -19,6 +19,14 @@
 
 void test_vector()
 {
+
+    TITLE_MGN("                _             ");
+    TITLE_MGN("__   _____  ___| |_ ___  _ __ ");
+    TITLE_MGN("\\ \\ / / _ \\/ __| __/ _ \\| '__|");
+    TITLE_MGN(" \\ V /  __/ (__| || (_) | |   ");
+    TITLE_MGN("  \\_/ \\___|\\___|\\__\\___/|_|   ");
+    TITLE_MGN("                              ");
+
     TITLE_RED("__VECTOR_CONSTRUCTORS__");
     {
         TITLE_GRN("std");

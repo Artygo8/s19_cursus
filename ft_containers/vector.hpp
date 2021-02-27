@@ -255,7 +255,6 @@ public:
     const_reference back() const                    { return array_[size_ - 1]; }
 
     class iterator {
-        friend class vector<T>;
     public:
         typedef iterator                            iterator_type;
         typedef std::random_access_iterator_tag     iterator_category;

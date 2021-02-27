@@ -68,6 +68,13 @@ bool compare_nocase (const std::string& first, const std::string& second)
 
 void test_list()
 {
+    TITLE_MGN("  _ _     _    ");
+    TITLE_MGN(" | (_)___| |_  ");
+    TITLE_MGN(" | | / __| __| ");
+    TITLE_MGN(" | | \\__ \\ |_  ");
+    TITLE_MGN(" |_|_|___/\\__| ");
+    TITLE_MGN("               ");
+
     TITLE_RED("__LIST_CONSTRUCTORS__");
     {
         TITLE_GRN("std");

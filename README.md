@@ -1,7 +1,7 @@
 # ft_containers
 
- - [x] list (const iterators?)
- - [x] vector (const iterators)
+ - [x] list
+ - [x] vector
  - [ ] map - WIP
  - [x] stack
  - [x] queue

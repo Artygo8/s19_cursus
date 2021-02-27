@@ -17,6 +17,13 @@
 
 void test_stack()
 {
+    TITLE_MGN("     _             _    ");
+    TITLE_MGN(" ___| |_ __ _  ___| | __");
+    TITLE_MGN("/ __| __/ _` |/ __| |/ /");
+    TITLE_MGN("\\__ \\ || (_| | (__|   < ");
+    TITLE_MGN("|___/\\__\\__,_|\\___|_|\\_\\");
+                        
+
     TITLE_RED("__STACK_CONSTRUCTORS__");
     {
         TITLE_GRN("std");
