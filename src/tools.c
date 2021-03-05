@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,21 +10,46 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include <push_swap.h>
 
-int	main(int argc, char *argv[])
+char	**get_line(void)
 {
-	int index;
+	static char *line = NULL;
 
-	index = argc;
-	while (index > 1)
+	return (&line);
+}
+
+void	gtfo(const char *status)
+{
+	ft_putendl_fd((char*)status, STDERR_FILENO);
+	free(*get_line());
+	my_stacks_delete();
+	exit(0);
+}
+
+int		is_int(const char *arg)
+{
+	size_t i;
+	size_t len;
+
+	i = 0;
+	if (arg[0] == '-')
+		++i;
+	len = ft_strlen(&arg[i]);
+	if (len > 10)
+		return (0);
+	while (arg[i])
 	{
-		if (!is_int(argv[--index]))
-			gtfo("Error");
-		push_stack(get_my_stacks(0), ft_atoi(argv[index]));
+		if (arg[i] > '9' || arg[i] < '0')
+			return (0);
+		++i;
 	}
-	while (!my_stacks_is_perfect())
+	if (len == 10)
 	{
-		my_stacks_algo();
+		if (ft_atoi(arg) > 0 && arg[0] == '-')
+			return (0);
+		if (ft_atoi(arg) < 0 && arg[0] != '-')
+			return (0);
 	}
+	return (1);
 }

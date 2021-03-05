@@ -11,11 +11,14 @@
 # **************************************************************************** #
 
 
-SRC_NAMES       =       my_stacks.c \
+SRC_NAMES       =       my_stacks_basic.c \
+                        my_stacks_action.c \
+                        my_stacks_algo.c \
                         stack_access.c \
                         stack_action.c \
                         stack_basic.c \
                         stack_info.c \
+                        tools.c \
 
 
 SRC_DIR         =       src/

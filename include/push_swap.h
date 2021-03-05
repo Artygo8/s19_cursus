@@ -1,18 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   include/push_swap.h                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/05 10:56:30 by agossuin          #+#    #+#             */
+/*   Updated: 2021/03/05 10:56:30 by agossuin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_PUSH_SWAP_H
 # define FT_PUSH_SWAP_H
 
 # include "libft.h"
 # include <stdio.h>
 
-typedef	struct s_stack t_stack;
+# ifndef INT_MIN
+#  define INT_MIN -2147483648
+# endif
 
-struct s_stack
+typedef struct s_stack	t_stack;
+
+struct		s_stack
 {
 	int		value;
 	t_stack	*next;
 };
 
-enum actions {
+enum		e_actions {
 	SA = 0b01,
 	SB = 0b10,
 	SS = 0b11,
@@ -27,56 +43,62 @@ enum actions {
 };
 
 /*
- * stack_access.c
- */
+** stack_access.c
+*/
 
-t_stack *get_bot_stack(t_stack* stack);
-t_stack *get_pre_bot_stack(t_stack* stack);
-
-/*
- * stack_basics.c
- */
-
-t_stack *new_stack(const int value);
-void    push_stack(t_stack** stack_ad, const int value);
-void    pop_stack(t_stack** stack_ad);
-void    delete_stack(t_stack **stack_ad);
-void    show_stack(t_stack* stack);
+t_stack		*get_bot_stack(t_stack *stack);
+t_stack		*get_pre_bot_stack(t_stack *stack);
 
 /*
- * stack_info.c
- */
+** stack_basics.c
+*/
 
-size_t     disorder_stack(t_stack* stack);
-size_t     disorder_reverse_stack(t_stack* stack);
-size_t     stack_max_value_index(t_stack* stack);
-size_t  stack_len(t_stack* stack);
-
-/*
- * stack_action.c
- */
-
-void    swap_stack(t_stack **stack_ad);
-void    push_from_stack(t_stack **from_ad, t_stack **to_ad);
-void    rotate_stack(t_stack **stack_ad);
-void    rotate_reverse_stack(t_stack **stack_ad);
+t_stack		*new_stack(const int value);
+void		push_stack(t_stack **stack_ad, const int value);
+void		pop_stack(t_stack **stack_ad);
+void		delete_stack(t_stack **stack_ad);
+void		show_stack(t_stack *stack);
 
 /*
- * my_stacks.c
- */
+** stack_info.c
+*/
 
-t_stack **get_my_stacks(int id);
-void    my_stacks_delete();
-int     my_stacks_is_perfect();
-int     my_stacks_is_ordered();
-void    my_stacks_show();
+size_t		disorder_stack(t_stack *stack);
+size_t		disorder_reverse_stack(t_stack *stack);
+size_t		stack_max_value_index(t_stack *stack);
+size_t		stack_len(t_stack *stack);
 
-void    gtfo(const char *status);
-void    my_stacks_action(int id);
-void    my_stacks_algo();
+/*
+** stack_action.c
+*/
 
-void    my_stacks_put_action(int id);
-void    my_stacks_apply_and_put(int action);
+void		swap_stack(t_stack **stack_ad);
+void		push_from_stack(t_stack **from_ad, t_stack **to_ad);
+void		rotate_stack(t_stack **stack_ad);
+void		rotate_reverse_stack(t_stack **stack_ad);
 
+/*
+** my_stacks.c
+*/
+
+t_stack		**get_my_stacks(int id);
+void		my_stacks_delete();
+int			my_stacks_is_perfect();
+int			my_stacks_is_ordered();
+void		my_stacks_show();
+
+void		my_stacks_action(int id);
+void		my_stacks_algo();
+
+void		my_stacks_put_action(int id);
+void		my_stacks_apply_and_put(int action);
+
+/*
+** tools.c
+*/
+
+void		gtfo(const char *status);
+char		**get_line();
+int			is_int(const char *arg);
 
 #endif
