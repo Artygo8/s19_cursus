@@ -67,6 +67,7 @@ size_t		disorder_stack(t_stack *stack);
 size_t		disorder_reverse_stack(t_stack *stack);
 size_t		stack_max_value_index(t_stack *stack);
 size_t		stack_len(t_stack *stack);
+int			is_in_stack(t_stack *stack, int value);
 
 /*
 ** stack_action.c

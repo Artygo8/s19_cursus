@@ -46,15 +46,17 @@ int			main(int argc, char **argv)
 	index = argc;
 	while (index > 1)
 	{
-		if (!is_int(argv[--index]))
+		if (!is_int(argv[--index]) ||
+				is_in_stack(*get_my_stacks(0), ft_atoi(argv[index])))
 			gtfo("Error");
 		push_stack(get_my_stacks(0), ft_atoi(argv[index]));
 	}
-	while (get_next_line(STDIN_FILENO, get_line()) > 0 &&
-									!my_stacks_is_perfect())
+	while (!my_stacks_is_perfect() &&
+				get_next_line(STDIN_FILENO, get_line()) > 0)
 	{
 		apply_on_stacks(*get_line());
 		free(*get_line());
+		*get_line() = NULL;
 	}
 	free(*get_line());
 	if (my_stacks_is_perfect())

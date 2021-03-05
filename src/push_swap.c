@@ -19,7 +19,8 @@ int	main(int argc, char *argv[])
 	index = argc;
 	while (index > 1)
 	{
-		if (!is_int(argv[--index]))
+		if (!is_int(argv[--index]) ||
+				is_in_stack(*get_my_stacks(0), ft_atoi(argv[index])))
 			gtfo("Error");
 		push_stack(get_my_stacks(0), ft_atoi(argv[index]));
 	}

@@ -78,3 +78,14 @@ size_t	stack_max_value_index(t_stack *stack)
 	}
 	return (max_index);
 }
+
+int		is_in_stack(t_stack *stack, int value)
+{
+	while (stack)
+	{
+		if (stack->value == value)
+			return 1;
+		stack = stack->next;
+	}
+	return 0;
+}
