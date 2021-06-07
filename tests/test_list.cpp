@@ -96,17 +96,17 @@ void test_list()
     {
         TITLE_GRN("ft");
         // constructors used in the same order as described above:
-        ft::list<int> first;                                // empty list of ints
-        ft::list<int> second (static_cast<ft::list<int>::size_type>(4), static_cast<ft::list<int>::value_type>(100));                      // four ints with value 100
-        ft::list<int> third (second.begin(),second.end());  // iterating through second
-        ft::list<int> fourth (third);                       // a copy of third
+        ft::List<int> first;                                // empty list of ints
+        ft::List<int> second (static_cast<ft::List<int>::size_type>(4), static_cast<ft::List<int>::value_type>(100));                      // four ints with value 100
+        ft::List<int> third (second.begin(),second.end());  // iterating through second
+        ft::List<int> fourth (third);                       // a copy of third
 
         // the iterator constructor can also be used to construct from arrays:
         int myints[] = {16,2,77,29};
-        ft::list<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+        ft::List<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
 
         std::cout << "The contents of fifth are: ";
-        for (ft::list<int>::iterator it = fifth.begin(); it != fifth.end(); it++)
+        for (ft::List<int>::iterator it = fifth.begin(); it != fifth.end(); it++)
             std::cout << *it << ' ';
         std::cout << '\n';
     }
@@ -125,11 +125,11 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> first (3);      // list of 3 zero-initialized ints
-        ft::list<int> second (5);     // list of 5 zero-initialized ints
+        ft::List<int> first (3);      // list of 3 zero-initialized ints
+        ft::List<int> second (5);     // list of 5 zero-initialized ints
 
         second = first;
-        first = ft::list<int>();
+        first = ft::List<int>();
 
         std::cout << "Size of first: " << int (first.size()) << '\n';
         std::cout << "Size of second: " << int (second.size()) << '\n';
@@ -150,10 +150,10 @@ void test_list()
     {
         TITLE_GRN("ft");
         int myints[] = {75,23,65,42,13};
-        ft::list<int> mylist (myints,myints+5);
+        ft::List<int> mylist (myints,myints+5);
 
         std::cout << "mylist contains:";
-        for (ft::list<int>::iterator it=mylist.begin(); it != mylist.end(); ++it)
+        for (ft::List<int>::iterator it=mylist.begin(); it != mylist.end(); ++it)
             std::cout << ' ' << *it;
 
         std::cout << '\n';
@@ -172,11 +172,11 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
+        ft::List<int> mylist;
         for (int i=1; i<=5; ++i) mylist.push_back(i);
 
         std::cout << "mylist backwards:";
-        for (ft::list<int>::reverse_iterator rit=mylist.rbegin(); rit!=mylist.rend(); ++rit)
+        for (ft::List<int>::reverse_iterator rit=mylist.rbegin(); rit!=mylist.rend(); ++rit)
             std::cout << ' ' << *rit;
         std::cout << '\n';
     }
@@ -200,7 +200,7 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
+        ft::List<int> mylist;
         int sum (0);
 
         for (int i=1;i<=10;++i) mylist.push_back(i);
@@ -231,7 +231,7 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> myints;
+        ft::List<int> myints;
         std::cout << "0. size: " << myints.size() << '\n';
 
         for (int i=0; i<10; i++) myints.push_back(i);
@@ -253,7 +253,7 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
+        ft::List<int> mylist;
 
         std::cout << "max_size : " << mylist.max_size() << std::endl;
     }
@@ -274,7 +274,7 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
+        ft::List<int> mylist;
     
         mylist.push_back(77);
         mylist.push_back(22);
@@ -306,7 +306,7 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
+        ft::List<int> mylist;
     
         mylist.push_back(10);
     
@@ -316,7 +316,7 @@ void test_list()
         }
     
         std::cout << "mylist contains:";
-        for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end() ; ++it)
+        for (ft::List<int>::iterator it=mylist.begin(); it!=mylist.end() ; ++it)
             std::cout << ' ' << *it;
     
         std::cout << '\n';
@@ -340,8 +340,8 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> first;
-        ft::list<int> second;
+        ft::List<int> first;
+        ft::List<int> second;
     
         first.assign (static_cast<size_t>(7),100);                      // 7 ints with value 100
     
@@ -369,12 +369,12 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist (static_cast<size_t>(2),100);         // two ints with a value of 100
+        ft::List<int> mylist (static_cast<size_t>(2),100);         // two ints with a value of 100
         mylist.push_front (200);
         mylist.push_front (300);
 
         std::cout << "mylist contains:";
-        for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+        for (ft::List<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
             std::cout << ' ' << *it;
 
         std::cout << '\n';
@@ -399,7 +399,7 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
+        ft::List<int> mylist;
         mylist.push_back (100);
         mylist.push_back (200);
         mylist.push_back (300);
@@ -427,7 +427,7 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
+        ft::List<int> mylist;
     
         mylist.push_back (100);
         mylist.push_back (200);
@@ -456,7 +456,7 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
+        ft::List<int> mylist;
         int sum (0);
         mylist.push_back (100);
         mylist.push_back (200);
@@ -501,8 +501,8 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
-        ft::list<int>::iterator it;
+        ft::List<int> mylist;
+        ft::List<int>::iterator it;
 
         // set some initial values:
         for (int i=1; i<=5; ++i) mylist.push_back(i); // 1 2 3 4 5
@@ -560,8 +560,8 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
-        ft::list<int>::iterator it1,it2;
+        ft::List<int> mylist;
+        ft::List<int>::iterator it1,it2;
 
         // set some values:
         for (int i=1; i<10; ++i) mylist.push_back(i*10);
@@ -609,18 +609,18 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> first (static_cast<size_t>(3),100);   // three ints with a value of 100
-        ft::list<int> second (static_cast<size_t>(5),200);  // five ints with a value of 200
+        ft::List<int> first (static_cast<size_t>(3),100);   // three ints with a value of 100
+        ft::List<int> second (static_cast<size_t>(5),200);  // five ints with a value of 200
 
         first.swap(second);
 
         std::cout << "first contains:";
-        for (ft::list<int>::iterator it=first.begin(); it!=first.end(); it++)
+        for (ft::List<int>::iterator it=first.begin(); it!=first.end(); it++)
             std::cout << ' ' << *it;
         std::cout << '\n';
 
         std::cout << "second contains:";
-        for (ft::list<int>::iterator it=second.begin(); it!=second.end(); it++)
+        for (ft::List<int>::iterator it=second.begin(); it!=second.end(); it++)
             std::cout << ' ' << *it;
         std::cout << '\n';
     }
@@ -646,7 +646,7 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
+        ft::List<int> mylist;
 
         // set some initial content:
         for (int i=1; i<10; ++i) mylist.push_back(i);
@@ -656,7 +656,7 @@ void test_list()
         mylist.resize(12);
 
         std::cout << "mylist contains:";
-        for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+        for (ft::List<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
             std::cout << ' ' << *it;
 
         std::cout << '\n';
@@ -689,8 +689,8 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
-        ft::list<int>::iterator it;
+        ft::List<int> mylist;
+        ft::List<int>::iterator it;
 
         mylist.push_back (100);
         mylist.push_back (200);
@@ -754,8 +754,8 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist1, mylist2;
-        ft::list<int>::iterator it;
+        ft::List<int> mylist1, mylist2;
+        ft::List<int>::iterator it;
 
         // set some initial values:
         for (int i=1; i<=4; ++i)
@@ -810,12 +810,12 @@ void test_list()
     {
         TITLE_GRN("ft");
         int myints[]= {17,89,7,14};
-        ft::list<int> mylist (myints,myints+4);
+        ft::List<int> mylist (myints,myints+4);
 
         mylist.remove(89);
 
         std::cout << "mylist contains:";
-        for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+        for (ft::List<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
             std::cout << ' ' << *it;
         std::cout << '\n';
     }
@@ -839,14 +839,14 @@ void test_list()
     {
         TITLE_GRN("ft");
         int myints[]= {15,36,7,17,20,39,4,1};
-        ft::list<int> mylist (myints,myints+8);   // 15 36 7 17 20 39 4 1
+        ft::List<int> mylist (myints,myints+8);   // 15 36 7 17 20 39 4 1
         
         mylist.remove_if (single_digit);           // 15 36 17 20 39
         
         mylist.remove_if (is_odd());               // 36 20
         
         std::cout << "mylist contains:";
-        for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+        for (ft::List<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
             std::cout << ' ' << *it;
         std::cout << '\n';
     }
@@ -879,7 +879,7 @@ void test_list()
         TITLE_GRN("ft");
         double mydoubles[]={ 12.15,  2.72, 73.0,  12.77,  3.14,
                              12.77, 73.35, 72.25, 15.3,  72.25 };
-        ft::list<double> mylist (mydoubles,mydoubles+10);
+        ft::List<double> mylist (mydoubles,mydoubles+10);
         
         mylist.sort();             //  2.72,  3.14, 12.15, 12.77, 12.77,
                                    // 15.3,  72.25, 72.25, 73.0,  73.35
@@ -893,7 +893,7 @@ void test_list()
         mylist.unique (is_near());           //  2.72, 12.15, 72.25
 
         std::cout << "mylist contains:";
-        for (ft::list<double>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+        for (ft::List<double>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
             std::cout << ' ' << *it;
         std::cout << '\n';
     }
@@ -930,7 +930,7 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<double> first, second;
+        ft::List<double> first, second;
 
         first.push_back (3.1);
         first.push_back (2.2);
@@ -952,7 +952,7 @@ void test_list()
         first.merge(second,mycomparison);
 
         std::cout << "first contains:";
-        for (ft::list<double>::iterator it=first.begin(); it!=first.end(); ++it)
+        for (ft::List<double>::iterator it=first.begin(); it!=first.end(); ++it)
             std::cout << ' ' << *it;
         std::cout << '\n';
     }
@@ -983,8 +983,8 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<std::string> mylist;
-        ft::list<std::string>::iterator it;
+        ft::List<std::string> mylist;
+        ft::List<std::string>::iterator it;
         mylist.push_back ("one");
         mylist.push_back ("two");
         mylist.push_back ("Three");
@@ -1021,14 +1021,14 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> mylist;
+        ft::List<int> mylist;
 
         for (int i=1; i<10; ++i) mylist.push_back(i);
 
         mylist.reverse();
 
         std::cout << "mylist contains:";
-        for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+        for (ft::List<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
             std::cout << ' ' << *it;
 
         std::cout << '\n';
@@ -1054,11 +1054,11 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> a; // = {10, 20, 30};
+        ft::List<int> a; // = {10, 20, 30};
         for (int i=10; i<=30; i+=10) a.push_back(i);
-        ft::list<int> b; // = {10, 20, 30};
+        ft::List<int> b; // = {10, 20, 30};
         for (int i=10; i<=30; i+=10) b.push_back(i);
-        ft::list<int> c; // = {30, 20, 10};
+        ft::List<int> c; // = {30, 20, 10};
         for (int i=30; i>0; i-=10) c.push_back(i);
 
         if (a==b) std::cout << "a and b are equal\n";
@@ -1090,18 +1090,18 @@ void test_list()
     }
     {
         TITLE_GRN("ft");
-        ft::list<int> foo (static_cast<size_t>(3),100);   // three ints with a value of 100
-        ft::list<int> bar (static_cast<size_t>(5),200);   // five ints with a value of 200
+        ft::List<int> foo (static_cast<size_t>(3),100);   // three ints with a value of 100
+        ft::List<int> bar (static_cast<size_t>(5),200);   // five ints with a value of 200
 
         std::swap(foo,bar);
 
         std::cout << "foo contains:";
-        for (ft::list<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+        for (ft::List<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
             std::cout << ' ' << *it;
         std::cout << '\n';
 
         std::cout << "bar contains:";
-        for (ft::list<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+        for (ft::List<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
             std::cout << ' ' << *it;
         std::cout << '\n';
     }

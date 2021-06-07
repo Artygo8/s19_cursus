@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.hpp                                            :+:      :+:    :+:   */
+/*   Map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -69,25 +69,25 @@ pair<T1, T2> make_pair(const T1& x, const T2& y) {
 }
 
 // MAP
-template < class Key,                                     // map::key_type
-           class T,                                       // map::mapped_type
-           class Compare = std::less<Key>,                     // map::key_compare
-           class Alloc = allocator<ft::pair<const Key,T> >    // map::allocator_type
-           > class map {
+template < class Key,                                     // Map::key_type
+           class T,                                       // Map::Mapped_type
+           class Compare = std::less<Key>,                     // Map::key_compare
+           class Alloc = allocator<ft::pair<const Key,T> >    // Map::allocator_type
+           > class Map {
 
 public:
 
     // Member types
     typedef Key                                         key_type;
-    typedef T                                           mapped_type;
+    typedef T                                           Mapped_type;
     typedef ft::pair<const Key,T>                       value_type;
     typedef Compare                                     key_compare;
 
     class value_compare {   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
-        friend class map;
+        friend class Map;
     protected:
         Compare comp;
-        value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
+        value_compare (Compare c) : comp(c) {}  // constructed with Map's comparison object
     public:
         typedef bool result_type;
         typedef value_type first_argument_type;
@@ -139,16 +139,16 @@ protected:
 
 public:
 
-    explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+    explicit Map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
     : root_(0), size_(0), comp_(comp), alloc_(alloc) {}
 
     template <class InputIterator>
-    map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+    Map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
     : root_(0), size_(0), comp_(comp), alloc_(alloc) {
         insert(first, last);
     }
 
-    map (const map& x)
+    Map (const Map& x)
     : root_(0), size_(0), comp_(x.comp_), alloc_(x.alloc_) {
         insert(x.begin(), x.end());
     }
@@ -163,11 +163,11 @@ private:
     }
 
 public:
-    ~map() {
+    ~Map() {
         clear();
     }
 
-    map& operator= (const map& x) {
+    Map& operator= (const Map& x) {
         if (this->root_ == x.root_)
             return *this;
         clear();
@@ -175,11 +175,11 @@ public:
         return *this;
     }
 
-    // +++ ft::map::operator[] +++
-    mapped_type& operator[] (const key_type& k) {
-        return (*(((insert(ft::make_pair<const Key,T>(k, mapped_type())))).first)).second;
+    // +++ ft::Map::operator[] +++
+    Mapped_type& operator[] (const key_type& k) {
+        return (*(((insert(ft::make_pair<const Key,T>(k, Mapped_type())))).first)).second;
     }
-    // --- ft::map::operator[] ---
+    // --- ft::Map::operator[] ---
 
     // ++ INSERT
     pair<iterator,bool> insert (const value_type& val) {
@@ -382,7 +382,7 @@ private:
     }
 
 public:
-    void swap (map& x) {
+    void swap (Map& x) {
         my_swap(root_, x.root_);
         my_swap(size_, x.size_);
         my_swap(comp_, x.comp_);
@@ -487,11 +487,11 @@ public:
 // iterator
     class iterator {
     public:
-        friend class map;
+        friend class Map;
         typedef iterator                            iterator_type;
         typedef std::bidirectional_iterator_tag     iterator_category;
         typedef Key                                 key_type;
-        typedef T                                   mapped_type;
+        typedef T                                   Mapped_type;
         typedef ft::pair<const Key,T>               value_type;
         typedef value_type&                         reference;
         typedef value_type*                         pointer;

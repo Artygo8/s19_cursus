@@ -35,11 +35,11 @@ void test_queue()
         std::deque<int> mydeck (3,100);        // deque with 3 elements
         std::list<int> mylist (2,200);         // list with 2 elements
 
-        ft::queue<int,std::deque<int> > first;                 // empty queue
-        ft::queue<int,std::deque<int> > second (mydeck);       // queue initialized to copy of deque
+        ft::Queue<int,std::deque<int> > first;                 // empty queue
+        ft::Queue<int,std::deque<int> > second (mydeck);       // queue initialized to copy of deque
 
-        ft::queue<int,std::list<int> > third; // empty queue with list as underlying container
-        ft::queue<int,std::list<int> > fourth (mylist);
+        ft::Queue<int,std::list<int> > third; // empty queue with list as underlying container
+        ft::Queue<int,std::list<int> > fourth (mylist);
 
         std::cout << "size of first: " << first.size() << '\n';
         std::cout << "size of second: " << second.size() << '\n';
@@ -65,7 +65,7 @@ void test_queue()
     }
     {
         TITLE_GRN("ft");
-        ft::queue<int> myqueue;
+        ft::Queue<int> myqueue;
         int sum (0);
 
         for (int i=1;i<=10;i++) myqueue.push(i);
@@ -93,7 +93,7 @@ void test_queue()
     }
     {
         TITLE_GRN("ft");
-        ft::queue<int> myints;
+        ft::Queue<int> myints;
         std::cout << "0. size: " << myints.size() << '\n';
 
         for (int i=0; i<5; i++) myints.push(i);
@@ -117,7 +117,7 @@ void test_queue()
     }
     {
         TITLE_GRN("ft");
-        ft::queue<int> myqueue;
+        ft::Queue<int> myqueue;
 
         myqueue.push(77);
         myqueue.push(16);
@@ -141,7 +141,7 @@ void test_queue()
     }
     {
         TITLE_GRN("ft");
-        ft::queue<int> myqueue;
+        ft::Queue<int> myqueue;
 
         myqueue.push(12);
         myqueue.push(75);   // this is now the back
@@ -169,7 +169,7 @@ void test_queue()
     }
     {
         TITLE_GRN("ft");
-        ft::queue<int> myqueue;
+        ft::Queue<int> myqueue;
 
         for (int i = 0; i < 5; ++i)
             myqueue.push (i);

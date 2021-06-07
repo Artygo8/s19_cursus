@@ -2,6 +2,6 @@
 
  - [x] list
  - [x] vector
- - [ ] map - WIP
+ - [x] map
  - [x] stack
  - [x] queue

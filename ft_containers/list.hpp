@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.hpp                                           :+:      :+:    :+:   */
+/*   List.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agossuin <agossuin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -18,7 +18,7 @@
 namespace ft {
 
 template < class T, class Alloc = ft::allocator<T> >
-class list {
+class List {
 
 public:
 
@@ -42,7 +42,7 @@ public:
 private:
     struct          ListNode;
 
-    // Actual list
+    // Actual List
     allocator_type  alloc_;
     size_type       size_;
     ListNode        *head_;
@@ -56,26 +56,26 @@ private:
     };
 
 public:
-    explicit list (const allocator_type& alloc = allocator_type())
+    explicit List (const allocator_type& alloc = allocator_type())
     : alloc_(alloc), size_(0), head_(0), tail_(0) {}
 
-    explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
+    explicit List (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
     : alloc_(alloc), size_(0), head_(0), tail_(0) {
         insert(begin(), n, val);
     }
 
     template <class InputIterator>
-    list (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+    List (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
     : alloc_(alloc), size_(0), head_(0), tail_(0) {
         assign(first, last);
     }
 
-    list (const list& x)
+    List (const List& x)
     : alloc_(x.alloc_), size_(0), head_(0), tail_(0) {
         assign(x.begin(), x.end());
     }
 
-    list& operator= (const list& x)
+    List& operator= (const List& x)
     {
         if (this->head_ == x.head_)
             return *this;
@@ -84,7 +84,7 @@ public:
         return *this;
     }
 
-    ~list()
+    ~List()
     {
         while (head_)
         {
@@ -174,7 +174,7 @@ public:
 
     // ++SPLICE
 private:
-    void unlink(list& x, iterator item) {
+    void unlink(List& x, iterator item) {
         ListNode *n = item.current;
 
         if (n) {
@@ -207,16 +207,16 @@ private:
     }
 
 public:
-    void splice (iterator position, list& x) {
+    void splice (iterator position, List& x) {
         splice(position, x, x.begin(), x.end());
     }
 
-    void splice (iterator position, list& x, iterator i) {
+    void splice (iterator position, List& x, iterator i) {
         iterator j = i++;
         splice(position, x, j, i);
     }
 
-    void splice (iterator position, list& x, iterator first, iterator last) {
+    void splice (iterator position, List& x, iterator first, iterator last) {
 
         size_t count = 0;
         for (iterator it = first; it != last; ++it)
@@ -253,7 +253,7 @@ public:
 
     // ++SORT
     void sort() {
-		list tmp_list;
+		List tmp_list;
 
 		swap(tmp_list);
 		clear();
@@ -269,7 +269,7 @@ public:
 
 	template <class Compare>
 	void sort (Compare comp) {
-		list tmp_list;
+		List tmp_list;
 
 		swap(tmp_list);
 		clear();
@@ -313,7 +313,7 @@ public:
     // --UNIQUE
 
     // ++MERGE
-    void merge (list& x) {
+    void merge (List& x) {
 		for (iterator it = begin(); it != end();) {
 			if (*it > x.front())
 				splice(it, x, x.begin());
@@ -324,7 +324,7 @@ public:
 	}
 
 	template <class Compare>
-	void merge (list& x, Compare comp) {
+	void merge (List& x, Compare comp) {
 		for (iterator it = begin(); it != end();) {
 			if (x.head_ && comp(x.front(), *it))
 				splice(it, x, x.begin());
@@ -357,7 +357,7 @@ public:
     size_type size()                  const { return size_; }
     size_type max_size()              const { return std::numeric_limits<long>::max() / sizeof(ListNode); }
     bool empty()                      const { return size_ == 0; }
-    void swap (list& x)                     { list tmp = *this;*this = x;x = tmp; }
+    void swap (List& x)                     { List tmp = *this;*this = x;x = tmp; }
     void pop_back()                         { erase(iterator(tail_)); }
     void pop_front()                        { erase(begin()); }
     void push_back(const T &e)              { insert(0, e); }
@@ -392,7 +392,7 @@ private:
 // iterator
 public:
     class iterator {
-        friend class list<T>;
+        friend class List<T>;
     public:
         // typedef iterator                            iterator_type;
         typedef std::bidirectional_iterator_tag     iterator_category;
@@ -434,17 +434,17 @@ public:
         const T *operator->()             const { return &(this->current->data); }
     };
 
-}; // list
+}; // List
 
 }; // namespace ft::
 
 
 template <class T, class Alloc>
-bool operator== (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+bool operator== (const ft::List<T,Alloc>& lhs, const ft::List<T,Alloc>& rhs) {
     if (lhs.size() != rhs.size())
         return false;
-    typename ft::list<T>::iterator lit = lhs.begin();
-    typename ft::list<T>::iterator rit = rhs.begin();
+    typename ft::List<T>::iterator lit = lhs.begin();
+    typename ft::List<T>::iterator rit = rhs.begin();
     while (lit != lhs.end()) {
         if (*lit++ != *rit++)
             return false;
@@ -453,16 +453,16 @@ bool operator== (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
 }
 
 template <class T, class Alloc>
-bool operator!= (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+bool operator!= (const ft::List<T,Alloc>& lhs, const ft::List<T,Alloc>& rhs) {
     return !(lhs == rhs);
 }
 
 template <class T, class Alloc>
-bool operator<  (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+bool operator<  (const ft::List<T,Alloc>& lhs, const ft::List<T,Alloc>& rhs) {
     if (lhs.size() > rhs.size() || lhs == rhs)
         return false;
-    typename ft::list<T>::iterator lit = lhs.begin();
-    typename ft::list<T>::iterator rit = rhs.begin();
+    typename ft::List<T>::iterator lit = lhs.begin();
+    typename ft::List<T>::iterator rit = rhs.begin();
     while (*lit == *rit) {
         ++lit;++rit;
     }
@@ -472,22 +472,22 @@ bool operator<  (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
 }
 
 template <class T, class Alloc>
-bool operator<= (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+bool operator<= (const ft::List<T,Alloc>& lhs, const ft::List<T,Alloc>& rhs) {
     return (lhs < rhs || lhs == rhs);
 }
 
 template <class T, class Alloc>
-bool operator>  (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+bool operator>  (const ft::List<T,Alloc>& lhs, const ft::List<T,Alloc>& rhs) {
     return !(lhs <= rhs);
 }
 
 template <class T, class Alloc>
-bool operator>= (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs) {
+bool operator>= (const ft::List<T,Alloc>& lhs, const ft::List<T,Alloc>& rhs) {
     return !(lhs < rhs);
 }
 
 template <class T, class Alloc>
-void swap (ft::list<T,Alloc>& x, ft::list<T,Alloc>& y) {
+void swap (ft::List<T,Alloc>& x, ft::List<T,Alloc>& y) {
     x.swap(y);
 }
 
@@ -506,6 +506,6 @@ void swap (ft::list<T,Alloc>& x, ft::list<T,Alloc>& y) {
 // https://h-deb.clg.qc.ca/Sujets/TrucsScouts/Comprendre_enable_if.html
 
 // https://gcc.gnu.org/onlinedocs/gcc-4.6.2/libstdc++/api/a00588.html
-// https://codereview.stackexchange.com/questions/201368/modern-c-singly-linked-list
-// https://codereview.stackexchange.com/questions/185166/implementing-a-linked-list-in-c
-// https://codefreakr.com/how-is-c-stl-list-implemented-internally/
+// https://codereview.stackexchange.com/questions/201368/modern-c-singly-linked-List
+// https://codereview.stackexchange.com/questions/185166/implementing-a-linked-List-in-c
+// https://codefreakr.com/how-is-c-stl-List-implemented-internally/

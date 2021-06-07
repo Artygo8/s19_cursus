@@ -18,11 +18,11 @@
 #  define NC "\e[m"
 # endif
 
-# include "list.hpp"
-# include "map.hpp"
-# include "queue.hpp"
-# include "stack.hpp"
-# include "vector.hpp"
+# include "List.hpp"
+# include "Map.hpp"
+# include "Queue.hpp"
+# include "Stack.hpp"
+# include "Vector.hpp"
 # include "alloc.hpp"
 
 # include <iostream>
