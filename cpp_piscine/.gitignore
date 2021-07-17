@@ -1,0 +1,7 @@
+objs/
+*.pdf
+*.o
+exec
+exec.*
+a.*
+.vscode/
