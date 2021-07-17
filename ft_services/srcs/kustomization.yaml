@@ -1,0 +1,10 @@
+resources:
+  - ./yaml/secrets.yaml
+  - ./yaml/metallb-configmap.yaml
+  - ./yaml/mysql-deployment.yaml
+  - ./yaml/wordpress-deployment.yaml
+  - ./yaml/phpmyadmin-deployment.yaml
+  - ./yaml/ftps-deployment.yaml
+  - ./yaml/nginx-deployment.yaml
+  - ./yaml/influxdb-deployment.yaml
+  - ./yaml/grafana-deployment.yaml

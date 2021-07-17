@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftps
+spec:
+  ports:
+  - port: 21
+    protocol: TCP
+    name: ftps
+  - port: 30020
+    protocol: TCP
+    name: ftps-data0
+  - port: 30021
+    protocol: TCP
+    name: ftps-data1
+  - port: 30022
+    protocol: TCP
+    name: ftps-data2
+  - port: 30023
+    protocol: TCP
+    name: ftps-data3
+  selector:
+    app: ftps-app
+  type: LoadBalancer
+  loadBalancerIP: 172.17.0.13
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps
+spec:
+  selector:
+    matchLabels:
+      app: ftps-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ftps-app
+    spec:
+      containers:
+      - name: ftps
+        image: ftps:agossuin
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 21
+          hostPort: 21
+        - containerPort: 30020
+          hostPort: 30020
+        - containerPort: 30021
+          hostPort: 30021
+        - containerPort: 30022
+          hostPort: 30022
+        - containerPort: 30023
+          hostPort: 30023
