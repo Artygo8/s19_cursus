@@ -1,0 +1,7 @@
+*.o
+*.a
+*.dSYM/
+.vscode/
+checker
+push_swap
+vgcore.*
