@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PREFIX="s19_"
+PREFIX=""
 FILE="repo_name.txt"
 REPO="https://github.com/Artygo8/"
 
